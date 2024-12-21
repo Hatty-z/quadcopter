@@ -1,0 +1,30 @@
+.\objects\bluetooth.o: Hardware\Bluetooth.c
+.\objects\bluetooth.o: .\Start\stm32f4xx.h
+.\objects\bluetooth.o: .\Start\core_cm4.h
+.\objects\bluetooth.o: D:\keil 5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\bluetooth.o: .\Start\core_cmInstr.h
+.\objects\bluetooth.o: .\Start\core_cmFunc.h
+.\objects\bluetooth.o: .\Start\core_cmSimd.h
+.\objects\bluetooth.o: .\Start\system_stm32f4xx.h
+.\objects\bluetooth.o: .\Start\stm32f4xx_conf.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_adc.h
+.\objects\bluetooth.o: .\Start\stm32f4xx.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_crc.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_dbgmcu.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_dma.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_exti.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_flash.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_gpio.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_i2c.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_iwdg.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_pwr.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_rcc.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_rtc.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_sdio.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_spi.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_syscfg.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_tim.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_usart.h
+.\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_wwdg.h
+.\objects\bluetooth.o: .\Libraries\inc\misc.h
+.\objects\bluetooth.o: D:\keil 5\ARM\ARMCC\Bin\..\include\stdio.h
