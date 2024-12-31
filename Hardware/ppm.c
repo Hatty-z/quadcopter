@@ -1,94 +1,72 @@
-#include "stm32f4xx.h"
+#include "stm32f4xx.h"                  // Device header
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_gpio.h"
+#include "stm32f4xx_exti.h"
+#include "misc.h"
 #include "stm32f4xx_tim.h"
-#include "Delay.h"
+#include "stm32f4xx_syscfg.h"
 
-#define NUM_CHANNELS 8
-extern uint16_t channel_values[NUM_CHANNELS]; 
-uint8_t channel_index=0; 
-uint8_t PPM_OK=0;
+uint16_t PPM_Time = 0;
+uint8_t PPM_CNT = 0;
+extern uint16_t PPM[8];
 
-/*
-//PA6
-void PPM_GPIO_Config(void){
-	RCC->AHB1ENR |=RCC_AHB1ENR_GPIOAEN;//使能
-	
-	GPIOA->MODER &=~GPIO_MODER_MODER6;//输入模式
-	GPIOA->MODER |= GPIO_MODER_MODER6_1;//复用
-	GPIOA->PUPDR &=~GPIO_PUPDR_PUPDR6;//无上拉下拉电阻
-	GPIOA->AFR[0] &= ~(0xF << (6 * 4));      
-	GPIOA->AFR[0] |= (2 << (6 * 4)); // AF2
-}
-*/
-
-//PB4
-void PPM_GPIO_Config(void){
-	RCC->AHB1ENR |=RCC_AHB1ENR_GPIOAEN;//使能
-	
-	GPIOA->MODER &=~GPIO_MODER_MODER4;//输入模式
-	GPIOA->MODER |= GPIO_MODER_MODER4_1;//复用
-	GPIOA->PUPDR &=~GPIO_PUPDR_PUPDR4;//无上拉下拉电阻
-	GPIOA->AFR[0] &= ~(0xF << (4 * 4));      
-	GPIOA->AFR[0] |= (2 << (4 * 4)); // AF2
-}
-
-//TIM3CH1
-void TIM3_Config(void){
-	RCC->APB1ENR|=RCC_APB1ENR_TIM3EN;//使能时钟
-	
-	TIM3->PSC=84-1;
-	TIM3->ARR=0xFFFF;
-	TIM3->CNT=0;
-
-	TIM3->CCMR1 |= TIM_CCMR1_CC1S_0;        // 输入捕获模式，IC1映射到TI1
-    TIM3->CCER |= TIM_CCER_CC1E;            // 使能捕获
-    TIM3->DIER |= TIM_DIER_CC1IE;           // 使能捕获中断
-	
-	TIM3->SMCR |= TIM_SMCR_TS_2 | TIM_SMCR_TS_0;  // 触发源：通道 1 的上升沿
-    TIM3->SMCR |= TIM_SMCR_SMS_2;               // 从模式：复位模式
-	
-	TIM3->CR1 |= TIM_CR1_CEN;     // 启动定时器
-}
-
-
-void INT_Config(void){
-	/*
-	RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
-	
-	SYSCFG->EXTICR[1] |= SYSCFG_EXTICR2_EXTI6_PA; // 将 PA6 连接到 EXTI6
-	EXTI->IMR |= EXTI_IMR_IM6;//使能中断线
-	EXTI->RTSR |=EXTI_RTSR_TR6;//上升沿触发中断
-	*/
-	NVIC_EnableIRQ(TIM3_IRQn);              // 启用TIM3中断
-    NVIC_SetPriority(TIM3_IRQn, 1);         // 设置中断优先级
+void PPM_Init(void)
+{
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+    
+    GPIO_InitTypeDef GPIO_InitStructure;
+    
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
+    GPIO_InitStructure.GPIO_Speed = GPIO_High_Speed;
+    GPIO_Init(GPIOB, &GPIO_InitStructure);
+    
+    SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOB, EXTI_PinSource4);        //选择GPIOB_6为EXTI源输入
+    
+    TIM_TimeBaseInitTypeDef TimeBase_InitStructure;
+    TimeBase_InitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+    TimeBase_InitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+    TimeBase_InitStructure.TIM_Period = 65536 - 1;        //ARR
+    TimeBase_InitStructure.TIM_Prescaler = 100 - 1;                //PSC
+    TimeBase_InitStructure.TIM_RepetitionCounter = 0;
+    TIM_TimeBaseInit(TIM2, &TimeBase_InitStructure);
+    
+    EXTI_InitTypeDef EXTI_InitStructure;
+    EXTI_InitStructure.EXTI_Line = EXTI_Line4;        //开启EXTI线6中断
+    EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+    EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;                //中断模式
+    EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;                //下降沿触发
+    EXTI_Init(&EXTI_InitStructure);
+    
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);        //设置NVIC优先级分组
+    
+    NVIC_InitTypeDef NVIC_InitStructure;
+    NVIC_InitStructure.NVIC_IRQChannel = EXTI4_IRQn;        //开启EXTI5-9到NVIC中断通道
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;        //响应优先级
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;        //抢占优先级
+    NVIC_Init(&NVIC_InitStructure);
+    
+    TIM_Cmd(TIM2, ENABLE);                //开启定时器
 }
 
-void PPM_Init(void){
-	PPM_GPIO_Config();
-	TIM3_Config();
-	INT_Config();
+void EXTI4_IRQHandler(void)
+{
+    if(EXTI_GetITStatus(EXTI_Line4) != RESET)
+    {
+        PPM_Time = TIM2->CNT;        //获取计数器值
+        TIM2->CNT = 0;
+        if(PPM_Time <= 2050)        //时间小于2ms,是通道值
+        {
+            PPM[PPM_CNT++] = PPM_Time;
+        }
+        else
+        {
+            PPM_CNT = 0;
+        }
+    }
+    EXTI_ClearITPendingBit(EXTI_Line4);
 }
-
-void TIM3_IRQHandler(void){
-	if(TIM3->SR &TIM_SR_CC1IF){
-		uint16_t pulse_width=TIM3->CCR1;
-		//标志数据帧结束，开启新一帧捕获
-		if(pulse_width>=4000){
-			PPM_OK=1;
-			channel_index=0;		
-		}else if(PPM_OK==1){
-			if(pulse_width<=2100){
-				if(channel_index<NUM_CHANNELS){
-					channel_values[channel_index]=pulse_width;
-					channel_index++;
-				}else{
-					PPM_OK=0;
-					channel_index=0;
-				}
-			}
-		}
-	}
-	TIM3->SR &=~TIM_SR_CC1IF;
-}
-

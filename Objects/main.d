@@ -27,8 +27,4 @@
 .\objects\main.o: .\Libraries\inc\stm32f4xx_usart.h
 .\objects\main.o: .\Libraries\inc\stm32f4xx_wwdg.h
 .\objects\main.o: .\Libraries\inc\misc.h
-.\objects\main.o: .\Hardware\bluetooth.h
-.\objects\main.o: D:\keil 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: .\Hardware\oled.h
-.\objects\main.o: User\delay.h
-.\objects\main.o: .\Hardware\ppm.h

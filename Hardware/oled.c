@@ -1,19 +1,19 @@
-#include "stm32f4xx.h"           
+#include "stm32f4xx.h"           // 引入 STM32F4 标准库头文件
+#include "OLED.h"
+#include "OLED_Font.h"
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_gpio.h"
-#include "OLED_Font.h"
-#include "OLED.h"
-#include "delay.h"
+#include "Delay.h"
 
 void OLED_W_SCL(uint8_t x)
 {
-	GPIO_WriteBit(GPIOB, GPIO_Pin_8, (BitAction)(x));
+	GPIO_WriteBit(GPIOB, GPIO_Pin_8, (BitAction)x);
 	Delay_us(1);
 }
 
 void OLED_W_SDA(uint8_t x)
 {
-	GPIO_WriteBit(GPIOB, GPIO_Pin_9, (BitAction)(x));
+	GPIO_WriteBit(GPIOB, GPIO_Pin_9, (BitAction)x);
 	Delay_us(1);
 }
 
@@ -21,12 +21,11 @@ void OLED_W_SDA(uint8_t x)
 void OLED_I2C_Init(void)
 {
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);  // STM32F4使用AHB1时钟
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE);    // 启用I2C1时钟（如果用I2C）
-
+	
     GPIO_InitTypeDef GPIO_InitStructure;
     
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Speed = GPIO_High_Speed;
     GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;   // 开漏输出
     GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL; // 无上拉/下拉
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;

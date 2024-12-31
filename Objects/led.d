@@ -1,1 +1,1 @@
-.\objects\led.o: Hardware\led.c
+.\objects\led.o: Hardware\led.s

@@ -27,6 +27,6 @@
 .\objects\oled.o: .\Libraries\inc\stm32f4xx_usart.h
 .\objects\oled.o: .\Libraries\inc\stm32f4xx_wwdg.h
 .\objects\oled.o: .\Libraries\inc\misc.h
-.\objects\oled.o: Hardware\OLED_Font.h
 .\objects\oled.o: Hardware\OLED.h
-.\objects\oled.o: .\User\delay.h
+.\objects\oled.o: Hardware\OLED_Font.h
+.\objects\oled.o: .\User\Delay.h
