@@ -1,7 +1,8 @@
-#ifndef _PPM_H
-#define _PPM_H
+#ifndef __PPM_H__
+#define __PPM_H__
+
+extern uint16_t PPM[8];
 
 void PPM_Init(void);
-void EXTI4_IRQHandler(void);
 
 #endif

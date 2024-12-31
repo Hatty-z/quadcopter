@@ -27,4 +27,4 @@
 .\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_usart.h
 .\objects\bluetooth.o: .\Libraries\inc\stm32f4xx_wwdg.h
 .\objects\bluetooth.o: .\Libraries\inc\misc.h
-.\objects\bluetooth.o: D:\keil 5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\bluetooth.o: Hardware\BLUETOOTH.h

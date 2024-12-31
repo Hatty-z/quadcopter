@@ -110,3 +110,17 @@ void Unlock_ESC(int motor){
 	PWM_SetCompare(motor,1000);
 	Delay_s(1);
 }
+
+void Unlock_ALL_ESC(void)
+{
+	PWM_SetCompare(1, 2000);
+	PWM_SetCompare(2, 2000);
+	PWM_SetCompare(3, 2000);
+	PWM_SetCompare(4, 2000);
+	Delay_s(5);
+	PWM_SetCompare(1, 1000);
+	PWM_SetCompare(2, 1000);
+	PWM_SetCompare(3, 1000);
+	PWM_SetCompare(4, 1000);
+	Delay_s(1);
+}

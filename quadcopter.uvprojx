@@ -474,56 +474,6 @@
               <FileName>Bluetooth.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\Bluetooth.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>0</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
-                    <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
-                    <vShortEn>2</vShortEn>
-                    <vShortWch>2</vShortWch>
-                    <v6Lto>2</v6Lto>
-                    <v6WtE>2</v6WtE>
-                    <v6Rtti>2</v6Rtti>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
             </File>
             <File>
               <FileName>Bluetooth.h</FileName>
@@ -549,6 +499,21 @@
               <FileName>ppm.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\ppm.c</FilePath>
+            </File>
+            <File>
+              <FileName>ppm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\ppm.h</FilePath>
+            </File>
+            <File>
+              <FileName>led.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Hardware\led.s</FilePath>
+            </File>
+            <File>
+              <FileName>ppm.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Hardware\ppm.s</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -567,53 +532,26 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArmAds>
-                  <Cads>
+                  <Aads>
                     <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
+                    <thumb>2</thumb>
+                    <SplitLS>2</SplitLS>
+                    <SwStkChk>2</SwStkChk>
+                    <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
                     <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
-                    <vShortEn>2</vShortEn>
-                    <vShortWch>2</vShortWch>
-                    <v6Lto>2</v6Lto>
-                    <v6WtE>2</v6WtE>
-                    <v6Rtti>2</v6Rtti>
+                    <uClangAs>2</uClangAs>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Cads>
+                  </Aads>
                 </FileArmAds>
               </FileOption>
-            </File>
-            <File>
-              <FileName>ppm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\ppm.h</FilePath>
-            </File>
-            <File>
-              <FileName>led.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\Hardware\led.s</FilePath>
-            </File>
-            <File>
-              <FileName>ppm.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\Hardware\ppm.s</FilePath>
             </File>
             <File>
               <FileName>Final.c</FileName>
@@ -624,6 +562,26 @@
               <FileName>Final.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Hardware\Final.h</FilePath>
+            </File>
+            <File>
+              <FileName>GY86.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\GY86.c</FilePath>
+            </File>
+            <File>
+              <FileName>GY86.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\GY86.h</FilePath>
+            </File>
+            <File>
+              <FileName>GY86_Reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\GY86_Reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>MS5611_CMD.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MS5611_CMD.h</FilePath>
             </File>
           </Files>
         </Group>

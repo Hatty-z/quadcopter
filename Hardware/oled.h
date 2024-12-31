@@ -1,7 +1,6 @@
 #ifndef __OLED_H
 #define __OLED_H
 
-
 void OLED_W_SCL(uint8_t x);
 void OLED_W_SDA(uint8_t x);
 void OLED_Init(void);

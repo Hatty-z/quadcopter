@@ -27,4 +27,5 @@
 .\objects\main.o: .\Libraries\inc\stm32f4xx_usart.h
 .\objects\main.o: .\Libraries\inc\stm32f4xx_wwdg.h
 .\objects\main.o: .\Libraries\inc\misc.h
+.\objects\main.o: .\Hardware\FINAL.h
 .\objects\main.o: .\Hardware\oled.h
