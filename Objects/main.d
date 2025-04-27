@@ -1,0 +1,9 @@
+.\objects\main.o: user\main.c
+.\objects\main.o: .\ucos\Core\ucos_ii.h
+.\objects\main.o: .\ucos\App\app_cfg.h
+.\objects\main.o: .\ucos\App\os_cfg.h
+.\objects\main.o: .\ucos\Ports\os_cpu.h
+.\objects\main.o: .\ucos\Core\os_trace.h
+.\objects\main.o: .\hardware\led.h
+.\objects\main.o: user\mytask.h
+.\objects\main.o: .\hardware\FINAL.h

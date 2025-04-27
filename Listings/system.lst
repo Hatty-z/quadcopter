@@ -1,0 +1,159 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 EXPORT           myScaterload
+    2 00000000         
+    3 00000000                 AREA             |.text|,CODE,READONLY
+    4 00000000         
+    5 00000000                 IMPORT           |Image$$RW_IRAM1$$Base| 
+                                                            ;data link addr
+    6 00000000                 IMPORT           |Image$$RW_IRAM1$$Length| 
+                                                            ;data length
+    7 00000000                 IMPORT           |Load$$RW_IRAM1$$Base| 
+                                                            ;data load addr
+    8 00000000                 IMPORT           |Image$$RW_IRAM1$$ZI$$Base| 
+                                                            ;bss
+    9 00000000                 IMPORT           |Image$$RW_IRAM1$$ZI$$Length|
+   10 00000000         
+   11 00000000         myScaterload
+                               PROC
+   12 00000000 4809            LDR              R0, = |Load$$RW_IRAM1$$Base|
+   13 00000002 490A            LDR              R1, = |Image$$RW_IRAM1$$Base|
+   14 00000004 4A0A            LDR              R2, = |Image$$RW_IRAM1$$Length|
+   15 00000006         CopyData
+   16 00000006 F1A2 0204       SUB              R2, R2, #4  ;copy 4 bytes data
+   17 0000000A 5883            LDR              R3, [R0, R2]
+   18 0000000C 508B            STR              R3, [R1, R2]
+   19 0000000E 2A00            CMP              R2, #0
+   20 00000010 D1F9            BNE              CopyData
+   21 00000012         
+   22 00000012 4808            LDR              R0, = |Image$$RW_IRAM1$$ZI$$Bas
+e|
+   23 00000014 4908            LDR              R1, = |Image$$RW_IRAM1$$ZI$$Len
+gth|
+   24 00000016         CleanBss
+   25 00000016 F1A1 0104       SUB              R1, R1, #4  ;每次清除4个�
+                                                            �节的bss段数据
+                                                            
+   26 0000001A F04F 0300       MOV              R3, #0      ;将0存入r3寄存
+                                                            器
+   27 0000001E 5043            STR              R3, [R0, R1] ;把R3寄存器存
+                                                            入到链接地址
+   28 00000020 2900            CMP              R1, #0      ;将计数和0相�
+                                                            �较
+   29 00000022 D1F8            BNE              CleanBss    ;如果不相等，
+                                                            跳转到CleanBss�
+                                                            �签处，相等则
+                                                            往下执行
+   30 00000024         
+   31 00000024 4770            BX               LR
+   32 00000026 00 00           ALIGN
+   33 00000028                 ENDP
+   34 00000028         
+   35 00000028                 END
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --apcs=interw
+ork --depend=.\objects\system.d -o.\objects\system.o -ID:\Keil_v5\ARM\Packs\Kei
+l\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_UVISION_VERSION SETA 541" --predefine="STM32F401xE SETA 1" --list=.\listings\s
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+ystem.lst system\system.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 3 in file system\system.s
+   Uses
+      None
+Comment: .text unused
+CleanBss 00000016
+
+Symbol: CleanBss
+   Definitions
+      At line 24 in file system\system.s
+   Uses
+      At line 29 in file system\system.s
+Comment: CleanBss used once
+CopyData 00000006
+
+Symbol: CopyData
+   Definitions
+      At line 15 in file system\system.s
+   Uses
+      At line 20 in file system\system.s
+Comment: CopyData used once
+myScaterload 00000000
+
+Symbol: myScaterload
+   Definitions
+      At line 11 in file system\system.s
+   Uses
+      At line 1 in file system\system.s
+Comment: myScaterload used once
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+Image$$RW_IRAM1$$Base 00000000
+
+Symbol: Image$$RW_IRAM1$$Base
+   Definitions
+      At line 5 in file system\system.s
+   Uses
+      At line 13 in file system\system.s
+Comment: Image$$RW_IRAM1$$Base used once
+Image$$RW_IRAM1$$Length 00000000
+
+Symbol: Image$$RW_IRAM1$$Length
+   Definitions
+      At line 6 in file system\system.s
+   Uses
+      At line 14 in file system\system.s
+Comment: Image$$RW_IRAM1$$Length used once
+Image$$RW_IRAM1$$ZI$$Base 00000000
+
+Symbol: Image$$RW_IRAM1$$ZI$$Base
+   Definitions
+      At line 8 in file system\system.s
+   Uses
+      At line 22 in file system\system.s
+Comment: Image$$RW_IRAM1$$ZI$$Base used once
+Image$$RW_IRAM1$$ZI$$Length 00000000
+
+Symbol: Image$$RW_IRAM1$$ZI$$Length
+   Definitions
+      At line 9 in file system\system.s
+   Uses
+      At line 23 in file system\system.s
+Comment: Image$$RW_IRAM1$$ZI$$Length used once
+Load$$RW_IRAM1$$Base 00000000
+
+Symbol: Load$$RW_IRAM1$$Base
+   Definitions
+      At line 7 in file system\system.s
+   Uses
+      At line 12 in file system\system.s
+Comment: Load$$RW_IRAM1$$Base used once
+5 symbols
+343 symbols in table
