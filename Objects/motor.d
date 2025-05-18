@@ -1,11 +1,11 @@
 .\objects\motor.o: hardware\Motor.c
 .\objects\motor.o: .\system\stm32f4xx.h
 .\objects\motor.o: .\system\core_cm4.h
-.\objects\motor.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\motor.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\motor.o: .\system\core_cmInstr.h
 .\objects\motor.o: .\system\core_cmFunc.h
 .\objects\motor.o: .\system\core_cmSimd.h
-.\objects\motor.o: D:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+.\objects\motor.o: D:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
 .\objects\motor.o: .\system\stm32f4xx_conf.h
 .\objects\motor.o: .\Libraries\inc\stm32f4xx_adc.h
 .\objects\motor.o: .\system\stm32f4xx.h

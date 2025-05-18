@@ -2,11 +2,11 @@
 .\objects\led.o: hardware\led.h
 .\objects\led.o: .\system\stm32f4xx.h
 .\objects\led.o: .\system\core_cm4.h
-.\objects\led.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\led.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\led.o: .\system\core_cmInstr.h
 .\objects\led.o: .\system\core_cmFunc.h
 .\objects\led.o: .\system\core_cmSimd.h
-.\objects\led.o: D:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+.\objects\led.o: D:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
 .\objects\led.o: .\system\stm32f4xx_conf.h
 .\objects\led.o: .\Libraries\inc\stm32f4xx_adc.h
 .\objects\led.o: .\system\stm32f4xx.h

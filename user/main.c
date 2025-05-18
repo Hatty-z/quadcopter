@@ -15,6 +15,6 @@ void  mymain(void){
 	OSTaskCreate(Task1,(void*)0,&led1stk[127],6);
 	OSTaskCreate(Task2,(void*)0,&led2stk[127],7);
 	OSTaskCreate(Task_RCControl,(void*)0,&RC_Stk[127],4);
-  OSTaskCreate(Task_Display,(void*)0,&DIP_Stk[127],5);
+    OSTaskCreate(Task_Display,(void*)0,&DIP_Stk[127],5);
 	OSStart();
 }

@@ -412,9 +412,9 @@ ARM Macro Assembler    Page 7
   137 00000000                 IMPORT           mymain
   138 00000000                 IMPORT           myScaterload
   139 00000000         
-  140 00000000 480B            LDR              R0, =mySystemInit
+  140 00000000 4808            LDR              R0, =mySystemInit
   141 00000002 4780            BLX              R0
-  142 00000004 480B            LDR              R0, =myScaterload
+  142 00000004 4808            LDR              R0, =myScaterload
   143 00000006 4780            BLX              R0
   144 00000008         
   145 00000008 F7FF FFFE       BL               mymain
@@ -768,40 +768,29 @@ ARM Macro Assembler    Page 12
   366 00000024         ;*******************************************************
                        ************************
   367 00000024                 IF               :DEF:__MICROLIB
-  374 00000024         
-  375 00000024                 IMPORT           __use_two_region_memory
-  376 00000024                 EXPORT           __user_initial_stackheap
-  377 00000024         
-  378 00000024         __user_initial_stackheap
-  379 00000024         
-  380 00000024 4804            LDR              R0, =  Heap_Mem
-  381 00000026 4905            LDR              R1, =(Stack_Mem + Stack_Size)
-  382 00000028 4A05            LDR              R2, = (Heap_Mem +  Heap_Size)
-  383 0000002A 4B06            LDR              R3, = Stack_Mem
+  368 00000024         
+  369 00000024                 EXPORT           __initial_sp
+  370 00000024                 EXPORT           __heap_base
+  371 00000024                 EXPORT           __heap_limit
+  372 00000024         
+  373 00000024                 ELSE
+  388                          ENDIF
+  389 00000024         
+  390 00000024                 END
+              00000000 
 
 
 
 ARM Macro Assembler    Page 13 
 
 
-  384 0000002C 4770            BX               LR
-  385 0000002E         
-  386 0000002E 00 00           ALIGN
-  387 00000030         
-  388 00000030                 ENDIF
-  389 00000030         
-  390 00000030                 END
-              00000000 
-              00000000 
-              00000000 
-              00000400 
-              00000200 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --apcs=interw
-ork --depend=.\objects\startup.d -o.\objects\startup.o -ID:\Keil_v5\ARM\Packs\K
-eil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine=
-"__UVISION_VERSION SETA 541" --predefine="STM32F401xE SETA 1" --list=.\listings
-\startup.lst system\startup.s
+ork --depend=.\objects\startup.d -o.\objects\startup.o -I.\RTE\_Target_1 -ID:\K
+eil5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Inclu
+de -ID:\Keil5\ARM\CMSIS\Include --predefine="__MICROLIB SETA 1" --predefine="__
+UVISION_VERSION SETA 524" --predefine="STM32F401xE SETA 1" --list=.\listings\st
+artup.lst system\startup.s
 
 
 
@@ -822,9 +811,8 @@ Symbol: Stack_Mem
    Definitions
       At line 5 in file system\startup.s
    Uses
-      At line 381 in file system\startup.s
-      At line 383 in file system\startup.s
-
+      None
+Comment: Stack_Mem unused
 __initial_sp 00000400
 
 Symbol: __initial_sp
@@ -832,7 +820,8 @@ Symbol: __initial_sp
       At line 6 in file system\startup.s
    Uses
       At line 27 in file system\startup.s
-Comment: __initial_sp used once
+      At line 369 in file system\startup.s
+
 3 symbols
 
 
@@ -854,25 +843,24 @@ Symbol: Heap_Mem
    Definitions
       At line 14 in file system\startup.s
    Uses
-      At line 380 in file system\startup.s
-      At line 382 in file system\startup.s
-
+      None
+Comment: Heap_Mem unused
 __heap_base 00000000
 
 Symbol: __heap_base
    Definitions
       At line 13 in file system\startup.s
    Uses
-      None
-Comment: __heap_base unused
+      At line 370 in file system\startup.s
+Comment: __heap_base used once
 __heap_limit 00000200
 
 Symbol: __heap_limit
    Definitions
       At line 15 in file system\startup.s
    Uses
-      None
-Comment: __heap_limit unused
+      At line 371 in file system\startup.s
+Comment: __heap_limit used once
 4 symbols
 
 
@@ -1841,15 +1829,7 @@ Symbol: WWDG_IRQHandler
       At line 44 in file system\startup.s
       At line 192 in file system\startup.s
 
-__user_initial_stackheap 00000024
-
-Symbol: __user_initial_stackheap
-   Definitions
-      At line 378 in file system\startup.s
-   Uses
-      At line 376 in file system\startup.s
-Comment: __user_initial_stackheap used once
-95 symbols
+94 symbols
 
 
 
@@ -1863,8 +1843,7 @@ Symbol: Heap_Size
       At line 10 in file system\startup.s
    Uses
       At line 14 in file system\startup.s
-      At line 382 in file system\startup.s
-
+Comment: Heap_Size used once
 Stack_Size 00000400
 
 Symbol: Stack_Size
@@ -1872,8 +1851,7 @@ Symbol: Stack_Size
       At line 2 in file system\startup.s
    Uses
       At line 5 in file system\startup.s
-      At line 381 in file system\startup.s
-
+Comment: Stack_Size used once
 __Vectors_Size 00000188
 
 Symbol: __Vectors_Size
@@ -1889,14 +1867,6 @@ Comment: __Vectors_Size used once
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 External symbols
 
-__use_two_region_memory 00000000
-
-Symbol: __use_two_region_memory
-   Definitions
-      At line 375 in file system\startup.s
-   Uses
-      None
-Comment: __use_two_region_memory unused
 myScaterload 00000000
 
 Symbol: myScaterload
@@ -1921,5 +1891,5 @@ Symbol: mymain
    Uses
       At line 145 in file system\startup.s
 Comment: mymain used once
-4 symbols
-448 symbols in table
+3 symbols
+445 symbols in table

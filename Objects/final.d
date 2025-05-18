@@ -1,11 +1,11 @@
 .\objects\final.o: hardware\Final.c
 .\objects\final.o: .\system\stm32f4xx.h
 .\objects\final.o: .\system\core_cm4.h
-.\objects\final.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\final.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\final.o: .\system\core_cmInstr.h
 .\objects\final.o: .\system\core_cmFunc.h
 .\objects\final.o: .\system\core_cmSimd.h
-.\objects\final.o: D:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+.\objects\final.o: D:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
 .\objects\final.o: .\system\stm32f4xx_conf.h
 .\objects\final.o: .\Libraries\inc\stm32f4xx_adc.h
 .\objects\final.o: .\system\stm32f4xx.h
@@ -33,5 +33,5 @@
 .\objects\final.o: hardware\OLED.h
 .\objects\final.o: hardware\PPM.h
 .\objects\final.o: .\user\Delay.h
-.\objects\final.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\final.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\final.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\final.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
