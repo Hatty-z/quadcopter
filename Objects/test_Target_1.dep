@@ -8,24 +8,42 @@ F (.\system\core_cmFunc.h)(0x66DE5298)()
 F (.\system\core_cmInstr.h)(0x66DE524E)()
 F (.\system\core_cmSimd.h)(0x66DE52DC)()
 F (.\system\stm32f4xx_conf.h)(0x66DE53A4)()
-F (.\user\main.c)(0x680B7638)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\user\main.c)(0x685F6B5F)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
 I (.\hardware\led.h)(0x68021512)
-I (user\mytask.h)(0x680A3BDB)
-I (.\hardware\FINAL.h)(0x680A3B01)
-F (.\user\mytask.c)(0x680E13F1)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\mytask.o --omf_browse .\objects\mytask.crf --depend .\objects\mytask.d)
-I (user\mytask.h)(0x680A3BDB)
+I (user\mytask.h)(0x685F6259)
+I (.\hardware\FINAL.h)(0x685F5DDA)
+F (.\user\mytask.c)(0x685F7F62)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\mytask.o --omf_browse .\objects\mytask.crf --depend .\objects\mytask.d)
+I (user\mytask.h)(0x685F6259)
 I (.\hardware\led.h)(0x68021512)
-I (.\hardware\final.h)(0x680A3B01)
+I (.\hardware\final.h)(0x685F5DDA)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BD7A4)
@@ -55,8 +73,8 @@ I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
 I (.\hardware\oled.h)(0x68085F93)
 I (.\hardware\motor.h)(0x68085F42)
-F (.\user\mytask.h)(0x680A3BDB)()
-F (.\user\Delay.c)(0x680ADD0F)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\delay.o --omf_browse .\objects\delay.crf --depend .\objects\delay.d)
+F (.\user\mytask.h)(0x685F6259)()
+F (.\user\Delay.c)(0x680ADD0F)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\delay.o --omf_browse .\objects\delay.crf --depend .\objects\delay.d)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BD7A4)
@@ -85,88 +103,212 @@ I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
 F (.\user\Delay.h)(0x680ADE28)()
-F (.\ucos\Ports\os_cpu_a.asm)(0x68089AF3)(--cpu Cortex-M4 -g --apcs=interwork -ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 541" --pd "STM32F401xE SETA 1"--list .\listings\os_cpu_a.lst --xref -o .\objects\os_cpu_a.o --depend .\objects\os_cpu_a.d)
-F (.\ucos\Ports\os_cpu_c.c)(0x6808B598)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_cpu_c.o --omf_browse .\objects\os_cpu_c.crf --depend .\objects\os_cpu_c.d)
+F (.\ucos\Ports\os_cpu_a.asm)(0x685E28C0)(--cpu Cortex-M4 -g --apcs=interwork -ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 541" --pd "STM32F401xE SETA 1"--list .\listings\os_cpu_a.lst --xref -o .\objects\os_cpu_a.o --depend .\objects\os_cpu_a.d)
+F (.\ucos\Ports\os_cpu_c.c)(0x6811EE8B)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_cpu_c.o --omf_browse .\objects\os_cpu_c.crf --depend .\objects\os_cpu_c.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
-F (.\ucos\Ports\os_cpu.h)(0x6808B6A3)()
-F (.\ucos\App\os_cfg.h)(0x67C10970)()
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\ucos\Ports\os_cpu.h)(0x685E28C7)()
+F (.\ucos\App\os_cfg.h)(0x685E08A8)()
 F (.\ucos\Core\os.h)(0x63B71466)()
-F (.\ucos\Core\os_core.c)(0x68089166)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_core.o --omf_browse .\objects\os_core.crf --depend .\objects\os_core.d)
+F (.\ucos\Core\os_core.c)(0x68089166)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_core.o --omf_browse .\objects\os_core.crf --depend .\objects\os_core.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
-F (.\ucos\Core\os_dbg_r.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_dbg_r.o --omf_browse .\objects\os_dbg_r.crf --depend .\objects\os_dbg_r.d)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\ucos\Core\os_dbg_r.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_dbg_r.o --omf_browse .\objects\os_dbg_r.crf --depend .\objects\os_dbg_r.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
-F (.\ucos\Core\os_flag.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_flag.o --omf_browse .\objects\os_flag.crf --depend .\objects\os_flag.d)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\ucos\Core\os_flag.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_flag.o --omf_browse .\objects\os_flag.crf --depend .\objects\os_flag.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
-F (.\ucos\Core\os_mbox.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_mbox.o --omf_browse .\objects\os_mbox.crf --depend .\objects\os_mbox.d)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\ucos\Core\os_mbox.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_mbox.o --omf_browse .\objects\os_mbox.crf --depend .\objects\os_mbox.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
-F (.\ucos\Core\os_mem.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_mem.o --omf_browse .\objects\os_mem.crf --depend .\objects\os_mem.d)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\ucos\Core\os_mem.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_mem.o --omf_browse .\objects\os_mem.crf --depend .\objects\os_mem.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
-F (.\ucos\Core\os_mutex.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_mutex.o --omf_browse .\objects\os_mutex.crf --depend .\objects\os_mutex.d)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\ucos\Core\os_mutex.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_mutex.o --omf_browse .\objects\os_mutex.crf --depend .\objects\os_mutex.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
-F (.\ucos\Core\os_q.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_q.o --omf_browse .\objects\os_q.crf --depend .\objects\os_q.d)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\ucos\Core\os_q.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_q.o --omf_browse .\objects\os_q.crf --depend .\objects\os_q.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
-F (.\ucos\Core\os_sem.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_sem.o --omf_browse .\objects\os_sem.crf --depend .\objects\os_sem.d)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\ucos\Core\os_sem.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_sem.o --omf_browse .\objects\os_sem.crf --depend .\objects\os_sem.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
-F (.\ucos\Core\os_task.c)(0x68076699)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_task.o --omf_browse .\objects\os_task.crf --depend .\objects\os_task.d)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\ucos\Core\os_task.c)(0x68076699)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_task.o --omf_browse .\objects\os_task.crf --depend .\objects\os_task.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
-F (.\ucos\Core\os_time.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_time.o --omf_browse .\objects\os_time.crf --depend .\objects\os_time.d)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\ucos\Core\os_time.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_time.o --omf_browse .\objects\os_time.crf --depend .\objects\os_time.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
-F (.\ucos\Core\os_tmr.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_tmr.o --omf_browse .\objects\os_tmr.crf --depend .\objects\os_tmr.d)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\ucos\Core\os_tmr.c)(0x63B71466)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\os_tmr.o --omf_browse .\objects\os_tmr.crf --depend .\objects\os_tmr.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
 F (.\ucos\Core\os_trace.h)(0x63B71466)()
 F (.\ucos\Core\ucos_ii.c)(0x67C10365)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I .\ucos\Core-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE-o .\objects\ucos_ii.o --omf_browse .\objects\ucos_ii.crf --depend .\objects\ucos_ii.d)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
 F (.\ucos\Core\ucos_ii.h)(0x67C07141)()
-F (.\ucos\App\app_cfg.h)(0x67C0664A)()
-F (.\hardware\led.c)(0x68089CCA)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\led.o --omf_browse .\objects\led.crf --depend .\objects\led.d)
+F (.\ucos\App\app_cfg.h)(0x6811E5F1)()
+F (.\ucos\App\app_hooks.c)(0x6811E8E5)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\app_hooks.o --omf_browse .\objects\app_hooks.crf --depend .\objects\app_hooks.d)
+I (.\ucos\Core\os.h)(0x63B71466)
+I (.\ucos\Core\ucos_ii.h)(0x67C07141)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
+I (.\ucos\Core\os_trace.h)(0x63B71466)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\hardware\led.c)(0x68089CCA)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\led.o --omf_browse .\objects\led.crf --depend .\objects\led.d)
 I (hardware\led.h)(0x68021512)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -196,7 +338,7 @@ I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
 F (.\hardware\led.h)(0x68021512)()
-F (.\hardware\Bluetooth.c)(0x680B01F1)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\bluetooth.o --omf_browse .\objects\bluetooth.crf --depend .\objects\bluetooth.d)
+F (.\hardware\Bluetooth.c)(0x685F6C43)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\bluetooth.o --omf_browse .\objects\bluetooth.crf --depend .\objects\bluetooth.d)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BD7A4)
@@ -226,12 +368,21 @@ I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
 I (hardware\BLUETOOTH.h)(0x680A305C)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
 F (.\hardware\Bluetooth.h)(0x680A305C)()
-F (.\hardware\Final.c)(0x680B7D0B)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\final.o --omf_browse .\objects\final.crf --depend .\objects\final.d)
+F (.\hardware\Final.c)(0x685F7A74)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\final.o --omf_browse .\objects\final.crf --depend .\objects\final.d)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BD7A4)
@@ -267,8 +418,22 @@ I (hardware\PPM.h)(0x68085FB8)
 I (.\user\Delay.h)(0x680ADE28)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588BD7A4)
 I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x588BD7A4)
-F (.\hardware\Final.h)(0x680A3B01)()
-F (.\hardware\GY86.c)(0x680A2C18)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\gy86.o --omf_browse .\objects\gy86.crf --depend .\objects\gy86.d)
+I (.\ucos\Core\ucos_ii.h)(0x67C07141)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
+I (.\ucos\Core\os_trace.h)(0x63B71466)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\hardware\Final.h)(0x685F5DDA)()
+F (.\hardware\GY86.c)(0x680A2C18)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\gy86.o --omf_browse .\objects\gy86.crf --depend .\objects\gy86.d)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BD7A4)
@@ -301,7 +466,7 @@ I (hardware\MS5611_CMD.h)(0x6773B3BB)
 I (.\user\Delay.h)(0x680ADE28)
 F (.\hardware\GY86.h)(0x68085D9C)()
 F (.\hardware\GY86_Reg.h)(0x6773B39B)()
-F (.\hardware\Motor.c)(0x680AE2A6)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\motor.o --omf_browse .\objects\motor.crf --depend .\objects\motor.d)
+F (.\hardware\Motor.c)(0x680AE2A6)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\motor.o --omf_browse .\objects\motor.crf --depend .\objects\motor.d)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BD7A4)
@@ -331,13 +496,22 @@ I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
 I (.\user\Delay.h)(0x680ADE28)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
 F (.\hardware\Motor.h)(0x68085F42)()
 F (.\hardware\MS5611_CMD.h)(0x6773B3BB)()
-F (.\hardware\oled.c)(0x6773B220)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\oled.o --omf_browse .\objects\oled.crf --depend .\objects\oled.d)
+F (.\hardware\oled.c)(0x6773B220)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\oled.o --omf_browse .\objects\oled.crf --depend .\objects\oled.d)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BD7A4)
@@ -370,7 +544,7 @@ I (hardware\OLED_Font.h)(0x6773B235)
 I (.\user\Delay.h)(0x680ADE28)
 F (.\hardware\oled.h)(0x68085F93)()
 F (.\hardware\oled_font.h)(0x6773B235)()
-F (.\hardware\ppm.c)(0x680A2D52)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\ppm.o --omf_browse .\objects\ppm.crf --depend .\objects\ppm.d)
+F (.\hardware\ppm.c)(0x685F7A72)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\ppm.o --omf_browse .\objects\ppm.crf --depend .\objects\ppm.d)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BD7A4)
@@ -401,10 +575,19 @@ I (.\Libraries\inc\misc.h)(0x66DDB491)
 I (.\user\Delay.h)(0x680ADE28)
 I (hardware\PPM.h)(0x68085FB8)
 I (.\ucos\Core\ucos_ii.h)(0x67C07141)
-I (.\ucos\App\app_cfg.h)(0x67C0664A)
-I (.\ucos\App\os_cfg.h)(0x67C10970)
-I (.\ucos\Ports\os_cpu.h)(0x6808B6A3)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
 I (.\ucos\Core\os_trace.h)(0x63B71466)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
 F (.\hardware\ppm.h)(0x68085FB8)()
 F (.\Libraries\inc\misc.h)(0x66DDB491)()
 F (.\Libraries\inc\stm32f4xx_adc.h)(0x66DDB491)()
@@ -444,7 +627,7 @@ F (.\Libraries\inc\stm32f4xx_spi.h)(0x66DDB492)()
 F (.\Libraries\inc\stm32f4xx_syscfg.h)(0x66DDB492)()
 F (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)()
 F (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)()
-F (.\Libraries\src\misc.c)(0x68075588)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\misc.o --omf_browse .\objects\misc.crf --depend .\objects\misc.d)
+F (.\Libraries\src\misc.c)(0x68075588)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\misc.o --omf_browse .\objects\misc.crf --depend .\objects\misc.d)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -472,7 +655,7 @@ I (.\Libraries\inc\stm32f4xx_syscfg.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
-F (.\Libraries\src\stm32f4xx_adc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_adc.o --omf_browse .\objects\stm32f4xx_adc.crf --depend .\objects\stm32f4xx_adc.d)
+F (.\Libraries\src\stm32f4xx_adc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_adc.o --omf_browse .\objects\stm32f4xx_adc.crf --depend .\objects\stm32f4xx_adc.d)
 I (.\Libraries\inc\stm32f4xx_adc.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -500,7 +683,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_can.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_can.o --omf_browse .\objects\stm32f4xx_can.crf --depend .\objects\stm32f4xx_can.d)
+F (.\Libraries\src\stm32f4xx_can.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_can.o --omf_browse .\objects\stm32f4xx_can.crf --depend .\objects\stm32f4xx_can.d)
 I (.\Libraries\inc\stm32f4xx_can.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -529,7 +712,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_cec.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_cec.o --omf_browse .\objects\stm32f4xx_cec.crf --depend .\objects\stm32f4xx_cec.d)
+F (.\Libraries\src\stm32f4xx_cec.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_cec.o --omf_browse .\objects\stm32f4xx_cec.crf --depend .\objects\stm32f4xx_cec.d)
 I (.\Libraries\inc\stm32f4xx_cec.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -558,7 +741,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_crc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_crc.o --omf_browse .\objects\stm32f4xx_crc.crf --depend .\objects\stm32f4xx_crc.d)
+F (.\Libraries\src\stm32f4xx_crc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_crc.o --omf_browse .\objects\stm32f4xx_crc.crf --depend .\objects\stm32f4xx_crc.d)
 I (.\Libraries\inc\stm32f4xx_crc.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -586,7 +769,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_cryp.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_cryp.o --omf_browse .\objects\stm32f4xx_cryp.crf --depend .\objects\stm32f4xx_cryp.d)
+F (.\Libraries\src\stm32f4xx_cryp.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_cryp.o --omf_browse .\objects\stm32f4xx_cryp.crf --depend .\objects\stm32f4xx_cryp.d)
 I (.\Libraries\inc\stm32f4xx_cryp.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -615,7 +798,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_cryp_aes.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_cryp_aes.o --omf_browse .\objects\stm32f4xx_cryp_aes.crf --depend .\objects\stm32f4xx_cryp_aes.d)
+F (.\Libraries\src\stm32f4xx_cryp_aes.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_cryp_aes.o --omf_browse .\objects\stm32f4xx_cryp_aes.crf --depend .\objects\stm32f4xx_cryp_aes.d)
 I (.\Libraries\inc\stm32f4xx_cryp.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -644,7 +827,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_cryp_des.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_cryp_des.o --omf_browse .\objects\stm32f4xx_cryp_des.crf --depend .\objects\stm32f4xx_cryp_des.d)
+F (.\Libraries\src\stm32f4xx_cryp_des.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_cryp_des.o --omf_browse .\objects\stm32f4xx_cryp_des.crf --depend .\objects\stm32f4xx_cryp_des.d)
 I (.\Libraries\inc\stm32f4xx_cryp.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -673,7 +856,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_cryp_tdes.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_cryp_tdes.o --omf_browse .\objects\stm32f4xx_cryp_tdes.crf --depend .\objects\stm32f4xx_cryp_tdes.d)
+F (.\Libraries\src\stm32f4xx_cryp_tdes.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_cryp_tdes.o --omf_browse .\objects\stm32f4xx_cryp_tdes.crf --depend .\objects\stm32f4xx_cryp_tdes.d)
 I (.\Libraries\inc\stm32f4xx_cryp.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -702,7 +885,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_dac.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dac.o --omf_browse .\objects\stm32f4xx_dac.crf --depend .\objects\stm32f4xx_dac.d)
+F (.\Libraries\src\stm32f4xx_dac.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dac.o --omf_browse .\objects\stm32f4xx_dac.crf --depend .\objects\stm32f4xx_dac.d)
 I (.\Libraries\inc\stm32f4xx_dac.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -731,7 +914,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_dbgmcu.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dbgmcu.o --omf_browse .\objects\stm32f4xx_dbgmcu.crf --depend .\objects\stm32f4xx_dbgmcu.d)
+F (.\Libraries\src\stm32f4xx_dbgmcu.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dbgmcu.o --omf_browse .\objects\stm32f4xx_dbgmcu.crf --depend .\objects\stm32f4xx_dbgmcu.d)
 I (.\Libraries\inc\stm32f4xx_dbgmcu.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -759,7 +942,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_dcmi.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dcmi.o --omf_browse .\objects\stm32f4xx_dcmi.crf --depend .\objects\stm32f4xx_dcmi.d)
+F (.\Libraries\src\stm32f4xx_dcmi.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dcmi.o --omf_browse .\objects\stm32f4xx_dcmi.crf --depend .\objects\stm32f4xx_dcmi.d)
 I (.\Libraries\inc\stm32f4xx_dcmi.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -788,7 +971,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_dfsdm.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dfsdm.o --omf_browse .\objects\stm32f4xx_dfsdm.crf --depend .\objects\stm32f4xx_dfsdm.d)
+F (.\Libraries\src\stm32f4xx_dfsdm.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dfsdm.o --omf_browse .\objects\stm32f4xx_dfsdm.crf --depend .\objects\stm32f4xx_dfsdm.d)
 I (.\Libraries\inc\stm32f4xx_dfsdm.h)(0x66DDB491)
 I (.\Libraries\inc\stm32f4xx_rcc.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
@@ -817,7 +1000,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_dma.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dma.o --omf_browse .\objects\stm32f4xx_dma.crf --depend .\objects\stm32f4xx_dma.d)
+F (.\Libraries\src\stm32f4xx_dma.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dma.o --omf_browse .\objects\stm32f4xx_dma.crf --depend .\objects\stm32f4xx_dma.d)
 I (.\Libraries\inc\stm32f4xx_dma.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -845,7 +1028,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_dma2d.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dma2d.o --omf_browse .\objects\stm32f4xx_dma2d.crf --depend .\objects\stm32f4xx_dma2d.d)
+F (.\Libraries\src\stm32f4xx_dma2d.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dma2d.o --omf_browse .\objects\stm32f4xx_dma2d.crf --depend .\objects\stm32f4xx_dma2d.d)
 I (.\Libraries\inc\stm32f4xx_dma2d.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -874,7 +1057,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_dsi.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dsi.o --omf_browse .\objects\stm32f4xx_dsi.crf --depend .\objects\stm32f4xx_dsi.d)
+F (.\Libraries\src\stm32f4xx_dsi.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_dsi.o --omf_browse .\objects\stm32f4xx_dsi.crf --depend .\objects\stm32f4xx_dsi.d)
 I (.\Libraries\inc\stm32f4xx_dsi.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -903,7 +1086,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_exti.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_exti.o --omf_browse .\objects\stm32f4xx_exti.crf --depend .\objects\stm32f4xx_exti.d)
+F (.\Libraries\src\stm32f4xx_exti.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_exti.o --omf_browse .\objects\stm32f4xx_exti.crf --depend .\objects\stm32f4xx_exti.d)
 I (.\Libraries\inc\stm32f4xx_exti.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -931,7 +1114,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_flash.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_flash.o --omf_browse .\objects\stm32f4xx_flash.crf --depend .\objects\stm32f4xx_flash.d)
+F (.\Libraries\src\stm32f4xx_flash.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_flash.o --omf_browse .\objects\stm32f4xx_flash.crf --depend .\objects\stm32f4xx_flash.d)
 I (.\Libraries\inc\stm32f4xx_flash.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -959,7 +1142,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_flash_ramfunc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_flash_ramfunc.o --omf_browse .\objects\stm32f4xx_flash_ramfunc.crf --depend .\objects\stm32f4xx_flash_ramfunc.d)
+F (.\Libraries\src\stm32f4xx_flash_ramfunc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_flash_ramfunc.o --omf_browse .\objects\stm32f4xx_flash_ramfunc.crf --depend .\objects\stm32f4xx_flash_ramfunc.d)
 I (.\Libraries\inc\stm32f4xx_flash_ramfunc.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -998,7 +1181,7 @@ I (.\system\core_cmFunc.h)(0x66DE5298)
 I (.\system\core_cmSimd.h)(0x66DE52DC)
 I (D:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x678C6847)
 I (.\Libraries\inc\stm32f4xx_rcc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_fmpi2c.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_fmpi2c.o --omf_browse .\objects\stm32f4xx_fmpi2c.crf --depend .\objects\stm32f4xx_fmpi2c.d)
+F (.\Libraries\src\stm32f4xx_fmpi2c.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_fmpi2c.o --omf_browse .\objects\stm32f4xx_fmpi2c.crf --depend .\objects\stm32f4xx_fmpi2c.d)
 I (.\Libraries\inc\stm32f4xx_fmpi2c.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1037,7 +1220,7 @@ I (.\system\core_cmFunc.h)(0x66DE5298)
 I (.\system\core_cmSimd.h)(0x66DE52DC)
 I (D:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x678C6847)
 I (.\Libraries\inc\stm32f4xx_rcc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_gpio.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_gpio.o --omf_browse .\objects\stm32f4xx_gpio.crf --depend .\objects\stm32f4xx_gpio.d)
+F (.\Libraries\src\stm32f4xx_gpio.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_gpio.o --omf_browse .\objects\stm32f4xx_gpio.crf --depend .\objects\stm32f4xx_gpio.d)
 I (.\Libraries\inc\stm32f4xx_gpio.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1065,7 +1248,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_hash.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_hash.o --omf_browse .\objects\stm32f4xx_hash.crf --depend .\objects\stm32f4xx_hash.d)
+F (.\Libraries\src\stm32f4xx_hash.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_hash.o --omf_browse .\objects\stm32f4xx_hash.crf --depend .\objects\stm32f4xx_hash.d)
 I (.\Libraries\inc\stm32f4xx_hash.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1094,7 +1277,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_hash_md5.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_hash_md5.o --omf_browse .\objects\stm32f4xx_hash_md5.crf --depend .\objects\stm32f4xx_hash_md5.d)
+F (.\Libraries\src\stm32f4xx_hash_md5.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_hash_md5.o --omf_browse .\objects\stm32f4xx_hash_md5.crf --depend .\objects\stm32f4xx_hash_md5.d)
 I (.\Libraries\inc\stm32f4xx_hash.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1123,7 +1306,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_hash_sha1.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_hash_sha1.o --omf_browse .\objects\stm32f4xx_hash_sha1.crf --depend .\objects\stm32f4xx_hash_sha1.d)
+F (.\Libraries\src\stm32f4xx_hash_sha1.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_hash_sha1.o --omf_browse .\objects\stm32f4xx_hash_sha1.crf --depend .\objects\stm32f4xx_hash_sha1.d)
 I (.\Libraries\inc\stm32f4xx_hash.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1152,7 +1335,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_i2c.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_i2c.o --omf_browse .\objects\stm32f4xx_i2c.crf --depend .\objects\stm32f4xx_i2c.d)
+F (.\Libraries\src\stm32f4xx_i2c.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_i2c.o --omf_browse .\objects\stm32f4xx_i2c.crf --depend .\objects\stm32f4xx_i2c.d)
 I (.\Libraries\inc\stm32f4xx_i2c.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1180,7 +1363,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_iwdg.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_iwdg.o --omf_browse .\objects\stm32f4xx_iwdg.crf --depend .\objects\stm32f4xx_iwdg.d)
+F (.\Libraries\src\stm32f4xx_iwdg.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_iwdg.o --omf_browse .\objects\stm32f4xx_iwdg.crf --depend .\objects\stm32f4xx_iwdg.d)
 I (.\Libraries\inc\stm32f4xx_iwdg.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1208,7 +1391,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_lptim.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_lptim.o --omf_browse .\objects\stm32f4xx_lptim.crf --depend .\objects\stm32f4xx_lptim.d)
+F (.\Libraries\src\stm32f4xx_lptim.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_lptim.o --omf_browse .\objects\stm32f4xx_lptim.crf --depend .\objects\stm32f4xx_lptim.d)
 I (.\Libraries\inc\stm32f4xx_lptim.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1237,7 +1420,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_ltdc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_ltdc.o --omf_browse .\objects\stm32f4xx_ltdc.crf --depend .\objects\stm32f4xx_ltdc.d)
+F (.\Libraries\src\stm32f4xx_ltdc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_ltdc.o --omf_browse .\objects\stm32f4xx_ltdc.crf --depend .\objects\stm32f4xx_ltdc.d)
 I (.\Libraries\inc\stm32f4xx_ltdc.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1266,7 +1449,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_pwr.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_pwr.o --omf_browse .\objects\stm32f4xx_pwr.crf --depend .\objects\stm32f4xx_pwr.d)
+F (.\Libraries\src\stm32f4xx_pwr.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_pwr.o --omf_browse .\objects\stm32f4xx_pwr.crf --depend .\objects\stm32f4xx_pwr.d)
 I (.\Libraries\inc\stm32f4xx_pwr.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1294,7 +1477,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_qspi.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_qspi.o --omf_browse .\objects\stm32f4xx_qspi.crf --depend .\objects\stm32f4xx_qspi.d)
+F (.\Libraries\src\stm32f4xx_qspi.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_qspi.o --omf_browse .\objects\stm32f4xx_qspi.crf --depend .\objects\stm32f4xx_qspi.d)
 I (.\Libraries\inc\stm32f4xx_qspi.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1323,7 +1506,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_rcc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_rcc.o --omf_browse .\objects\stm32f4xx_rcc.crf --depend .\objects\stm32f4xx_rcc.d)
+F (.\Libraries\src\stm32f4xx_rcc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_rcc.o --omf_browse .\objects\stm32f4xx_rcc.crf --depend .\objects\stm32f4xx_rcc.d)
 I (.\Libraries\inc\stm32f4xx_rcc.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1351,7 +1534,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_rng.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_rng.o --omf_browse .\objects\stm32f4xx_rng.crf --depend .\objects\stm32f4xx_rng.d)
+F (.\Libraries\src\stm32f4xx_rng.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_rng.o --omf_browse .\objects\stm32f4xx_rng.crf --depend .\objects\stm32f4xx_rng.d)
 I (.\Libraries\inc\stm32f4xx_rng.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1380,7 +1563,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_rtc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_rtc.o --omf_browse .\objects\stm32f4xx_rtc.crf --depend .\objects\stm32f4xx_rtc.d)
+F (.\Libraries\src\stm32f4xx_rtc.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_rtc.o --omf_browse .\objects\stm32f4xx_rtc.crf --depend .\objects\stm32f4xx_rtc.d)
 I (.\Libraries\inc\stm32f4xx_rtc.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1408,7 +1591,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_sai.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_sai.o --omf_browse .\objects\stm32f4xx_sai.crf --depend .\objects\stm32f4xx_sai.d)
+F (.\Libraries\src\stm32f4xx_sai.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_sai.o --omf_browse .\objects\stm32f4xx_sai.crf --depend .\objects\stm32f4xx_sai.d)
 I (.\Libraries\inc\stm32f4xx_sai.h)(0x66DDB491)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1437,7 +1620,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_sdio.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_sdio.o --omf_browse .\objects\stm32f4xx_sdio.crf --depend .\objects\stm32f4xx_sdio.d)
+F (.\Libraries\src\stm32f4xx_sdio.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_sdio.o --omf_browse .\objects\stm32f4xx_sdio.crf --depend .\objects\stm32f4xx_sdio.d)
 I (.\Libraries\inc\stm32f4xx_sdio.h)(0x66DDB492)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1465,7 +1648,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_spdifrx.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_spdifrx.o --omf_browse .\objects\stm32f4xx_spdifrx.crf --depend .\objects\stm32f4xx_spdifrx.d)
+F (.\Libraries\src\stm32f4xx_spdifrx.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_spdifrx.o --omf_browse .\objects\stm32f4xx_spdifrx.crf --depend .\objects\stm32f4xx_spdifrx.d)
 I (.\Libraries\inc\stm32f4xx_spdifrx.h)(0x66DDB492)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1494,7 +1677,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_spi.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_spi.o --omf_browse .\objects\stm32f4xx_spi.crf --depend .\objects\stm32f4xx_spi.d)
+F (.\Libraries\src\stm32f4xx_spi.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_spi.o --omf_browse .\objects\stm32f4xx_spi.crf --depend .\objects\stm32f4xx_spi.d)
 I (.\Libraries\inc\stm32f4xx_spi.h)(0x66DDB492)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1522,7 +1705,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_syscfg.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_syscfg.o --omf_browse .\objects\stm32f4xx_syscfg.crf --depend .\objects\stm32f4xx_syscfg.d)
+F (.\Libraries\src\stm32f4xx_syscfg.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_syscfg.o --omf_browse .\objects\stm32f4xx_syscfg.crf --depend .\objects\stm32f4xx_syscfg.d)
 I (.\Libraries\inc\stm32f4xx_syscfg.h)(0x66DDB492)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1550,7 +1733,7 @@ I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_tim.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_tim.o --omf_browse .\objects\stm32f4xx_tim.crf --depend .\objects\stm32f4xx_tim.d)
+F (.\Libraries\src\stm32f4xx_tim.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_tim.o --omf_browse .\objects\stm32f4xx_tim.crf --depend .\objects\stm32f4xx_tim.d)
 I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1578,7 +1761,7 @@ I (.\Libraries\inc\stm32f4xx_syscfg.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_usart.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_usart.o --omf_browse .\objects\stm32f4xx_usart.crf --depend .\objects\stm32f4xx_usart.d)
+F (.\Libraries\src\stm32f4xx_usart.c)(0x66DDB492)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_usart.o --omf_browse .\objects\stm32f4xx_usart.crf --depend .\objects\stm32f4xx_usart.d)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1606,7 +1789,7 @@ I (.\Libraries\inc\stm32f4xx_syscfg.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
-F (.\Libraries\src\stm32f4xx_wwdg.c)(0x66DDB493)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_wwdg.o --omf_browse .\objects\stm32f4xx_wwdg.crf --depend .\objects\stm32f4xx_wwdg.d)
+F (.\Libraries\src\stm32f4xx_wwdg.c)(0x66DDB493)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\stm32f4xx_wwdg.o --omf_browse .\objects\stm32f4xx_wwdg.crf --depend .\objects\stm32f4xx_wwdg.d)
 I (.\Libraries\inc\stm32f4xx_wwdg.h)(0x66DDB492)
 I (.\system\stm32f4xx.h)(0x67FF781B)
 I (.\system\core_cm4.h)(0x66DE469B)
@@ -1634,3 +1817,65 @@ I (.\Libraries\inc\stm32f4xx_syscfg.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_tim.h)(0x66DDB492)
 I (.\Libraries\inc\stm32f4xx_usart.h)(0x66DDB492)
 I (.\Libraries\inc\misc.h)(0x66DDB491)
+F (.\trace\SEGGER\SEGGER.h)(0x67F640BC)()
+F (.\trace\SEGGER\SEGGER_RTT.c)(0x67F640BC)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\segger_rtt.o --omf_browse .\objects\segger_rtt.crf --depend .\objects\segger_rtt.d)
+I (trace\SEGGER\SEGGER_RTT.h)(0x67F640BC)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (D:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x588BD7A4)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BD7A4)
+I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x588BD7A4)
+F (.\trace\SEGGER\SEGGER_RTT.h)(0x67F640BC)()
+F (.\trace\SEGGER\SEGGER_SYSVIEW.c)(0x67F640BC)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\segger_sysview.o --omf_browse .\objects\segger_sysview.crf --depend .\objects\segger_sysview.d)
+I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x588BD7A4)
+I (D:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x588BD7A4)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (trace\SEGGER\SEGGER_SYSVIEW_Int.h)(0x67F640BC)
+I (trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (trace\SEGGER\SEGGER_RTT.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BD7A4)
+F (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)()
+F (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)()
+F (.\trace\SEGGER\SEGGER_SYSVIEW_Int.h)(0x67F640BC)()
+F (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)()
+F (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)()
+F (.\trace\Config\Global.h)(0x67F640B8)()
+F (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)()
+F (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)()
+F (.\trace\uCOS-II\Config\Cortex-M\SEGGER_SYSVIEW_Config_uCOSII.c)(0x6811DBAF)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\segger_sysview_config_ucosii.o --omf_browse .\objects\segger_sysview_config_ucosii.crf --depend .\objects\segger_sysview_config_ucosii.d)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\ucos\Core\os.h)(0x63B71466)
+I (.\ucos\Core\ucos_ii.h)(0x67C07141)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
+I (.\ucos\Core\os_trace.h)(0x63B71466)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+F (.\trace\uCOS-II\SEGGER_SYSVIEW_uCOSII.c)(0x67F640BA)(--c99 --gnu -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I .\ucos\Core -I .\ucos\App -I .\ucos\Ports -I .\hardware -I .\system -I .\user -I .\Libraries\inc -I .\system -I .\trace\Config -I .\trace\SEGGER\Syscalls -I .\trace\SEGGER -I .\trace\uCOS-II -I .\trace\uCOS-II\Config\Cortex-M -I .\trace\uCOS-II\Config -I .\trace\uCOS-II\Config\RX-ID:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="541" -DSTM32F401xE -DUSE_STDPERIPH_DRIVER -DSTM32F401xx-o .\objects\segger_sysview_ucosii.o --omf_browse .\objects\segger_sysview_ucosii.crf --depend .\objects\segger_sysview_ucosii.d)
+I (.\trace\uCOS-II\os_trace_events.h)(0x67F640BA)
+I (.\trace\SEGGER\SEGGER_SYSVIEW.h)(0x67F640BC)
+I (.\trace\SEGGER\SEGGER.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588BD7A4)
+I (.\trace\Config\Global.h)(0x67F640B8)
+I (.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h)(0x680E38CD)
+I (.\trace\Config\SEGGER_SYSVIEW_Conf.h)(0x680E37D0)
+I (.\trace\Config\SEGGER_RTT_Conf.h)(0x680E381D)
+I (.\ucos\Core\ucos_ii.h)(0x67C07141)
+I (.\ucos\App\app_cfg.h)(0x6811E5F1)
+I (.\ucos\App\os_cfg.h)(0x685E08A8)
+I (.\ucos\Ports\os_cpu.h)(0x685E28C7)
+I (.\ucos\Core\os_trace.h)(0x63B71466)
+I (.\trace\uCOS-II\Config\os_cfg_trace.h)(0x67F640BC)
+I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x588BD7A4)

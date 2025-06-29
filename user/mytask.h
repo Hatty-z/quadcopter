@@ -4,6 +4,7 @@
 void Task1(void *p_arg);
 void Task2(void *p_arg);
 void Task_RCControl(void *p_arg);
-void Task_Display(void *p_arg);
+void Task_Attitude(void *p_arg);
+void StartTask(void *p_arg);
 
 #endif

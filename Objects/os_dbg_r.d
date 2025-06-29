@@ -4,3 +4,13 @@
 .\objects\os_dbg_r.o: .\ucos\App\os_cfg.h
 .\objects\os_dbg_r.o: .\ucos\Ports\os_cpu.h
 .\objects\os_dbg_r.o: .\ucos\Core\os_trace.h
+.\objects\os_dbg_r.o: .\trace\uCOS-II\os_trace_events.h
+.\objects\os_dbg_r.o: .\trace\SEGGER\SEGGER_SYSVIEW.h
+.\objects\os_dbg_r.o: .\trace\SEGGER\SEGGER.h
+.\objects\os_dbg_r.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\os_dbg_r.o: .\trace\Config\Global.h
+.\objects\os_dbg_r.o: .\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h
+.\objects\os_dbg_r.o: .\trace\Config\SEGGER_SYSVIEW_Conf.h
+.\objects\os_dbg_r.o: .\trace\Config\SEGGER_RTT_Conf.h
+.\objects\os_dbg_r.o: .\ucos\Core\ucos_ii.h
+.\objects\os_dbg_r.o: .\trace\uCOS-II\Config\os_cfg_trace.h

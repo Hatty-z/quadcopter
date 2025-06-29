@@ -33,3 +33,13 @@
 .\objects\motor.o: .\ucos\App\os_cfg.h
 .\objects\motor.o: .\ucos\Ports\os_cpu.h
 .\objects\motor.o: .\ucos\Core\os_trace.h
+.\objects\motor.o: .\trace\uCOS-II\os_trace_events.h
+.\objects\motor.o: .\trace\SEGGER\SEGGER_SYSVIEW.h
+.\objects\motor.o: .\trace\SEGGER\SEGGER.h
+.\objects\motor.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\motor.o: .\trace\Config\Global.h
+.\objects\motor.o: .\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h
+.\objects\motor.o: .\trace\Config\SEGGER_SYSVIEW_Conf.h
+.\objects\motor.o: .\trace\Config\SEGGER_RTT_Conf.h
+.\objects\motor.o: .\ucos\Core\ucos_ii.h
+.\objects\motor.o: .\trace\uCOS-II\Config\os_cfg_trace.h

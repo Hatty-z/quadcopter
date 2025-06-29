@@ -51,7 +51,7 @@ void USART_Config(uint16_t bps)
 	
 	SCB->AIRCR |= 5<<SCB_AIRCR_PRIGROUP_Pos;		//设置NVIC中断优先级分组
 	NVIC->ISER[1] |= 1<<5;		//使能USART1到NVIC中断
-	NVIC->IP[36] = 5;		//设置USART1中断响应优先级和抢占优先级
+	NVIC->IP[36] =  (2 << 4) | 2;		//设置USART1中断响应优先级和抢占优先级
 	
 	USART1->CR1 |= USART_CR1_UE;		//开启USART
 }

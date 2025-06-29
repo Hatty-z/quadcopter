@@ -4,6 +4,16 @@
 .\objects\main.o: .\ucos\App\os_cfg.h
 .\objects\main.o: .\ucos\Ports\os_cpu.h
 .\objects\main.o: .\ucos\Core\os_trace.h
+.\objects\main.o: .\trace\uCOS-II\os_trace_events.h
+.\objects\main.o: .\trace\SEGGER\SEGGER_SYSVIEW.h
+.\objects\main.o: .\trace\SEGGER\SEGGER.h
+.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\main.o: .\trace\Config\Global.h
+.\objects\main.o: .\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h
+.\objects\main.o: .\trace\Config\SEGGER_SYSVIEW_Conf.h
+.\objects\main.o: .\trace\Config\SEGGER_RTT_Conf.h
+.\objects\main.o: .\ucos\Core\ucos_ii.h
+.\objects\main.o: .\trace\uCOS-II\Config\os_cfg_trace.h
 .\objects\main.o: .\hardware\led.h
 .\objects\main.o: user\mytask.h
 .\objects\main.o: .\hardware\FINAL.h

@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F401xx</Define>
               <Undefine></Undefine>
-              <IncludePath>.\ucos\Core;.\ucos\App;.\ucos\Ports;.\hardware;.\system;.\user;.\Libraries\inc;.\system</IncludePath>
+              <IncludePath>.\ucos\Core;.\ucos\App;.\ucos\Ports;.\hardware;.\system;.\user;.\Libraries\inc;.\system;.\trace\Config;.\trace\SEGGER\Syscalls;.\trace\SEGGER;.\trace\uCOS-II;.\trace\uCOS-II\Config\Cortex-M;.\trace\uCOS-II\Config;.\trace\uCOS-II\Config\RX</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -457,7 +457,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ports</GroupName>
+          <GroupName>ucos_ports</GroupName>
           <Files>
             <File>
               <FileName>os_cpu_a.asm</FileName>
@@ -482,7 +482,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>core</GroupName>
+          <GroupName>ucos_core</GroupName>
           <Files>
             <File>
               <FileName>os.h</FileName>
@@ -613,12 +613,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>app</GroupName>
+          <GroupName>ucos_app</GroupName>
           <Files>
             <File>
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ucos\App\app_cfg.h</FilePath>
+            </File>
+            <File>
+              <FileName>app_hooks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ucos\App\app_hooks.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1272,6 +1277,91 @@
               <FileName>stm32f4xx_wwdg.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Libraries\src\stm32f4xx_wwdg.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>trace_segger</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\trace\SEGGER\SEGGER.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\trace\SEGGER\SEGGER_RTT.c</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\trace\SEGGER\SEGGER_RTT.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_SYSVIEW.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\trace\SEGGER\SEGGER_SYSVIEW.c</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_SYSVIEW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\trace\SEGGER\SEGGER_SYSVIEW.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_SYSVIEW_ConfDefaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_SYSVIEW_Int.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\trace\SEGGER\SEGGER_SYSVIEW_Int.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>trace_config</GroupName>
+          <Files>
+            <File>
+              <FileName>SEGGER_SYSVIEW_Conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\trace\Config\SEGGER_SYSVIEW_Conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_RTT_Conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\trace\Config\SEGGER_RTT_Conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>Global.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\trace\Config\Global.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>trace_ucos</GroupName>
+          <Files>
+            <File>
+              <FileName>os_cfg_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\trace\uCOS-II\Config\os_cfg_trace.h</FilePath>
+            </File>
+            <File>
+              <FileName>os_trace_events.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\trace\uCOS-II\os_trace_events.h</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_SYSVIEW_Config_uCOSII.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\trace\uCOS-II\Config\Cortex-M\SEGGER_SYSVIEW_Config_uCOSII.c</FilePath>
+            </File>
+            <File>
+              <FileName>SEGGER_SYSVIEW_uCOSII.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\trace\uCOS-II\SEGGER_SYSVIEW_uCOSII.c</FilePath>
             </File>
           </Files>
         </Group>

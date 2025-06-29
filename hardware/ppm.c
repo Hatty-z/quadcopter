@@ -10,6 +10,8 @@
 uint16_t PPM_Time = 0;
 uint8_t PPM_CNT = 0;
 
+extern OS_EVENT *PPMSem;
+
 void PPM_Init(void)
 {
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
@@ -49,29 +51,58 @@ void PPM_Init(void)
 	NVIC_InitTypeDef NVIC_InitStrcuture;
 	NVIC_InitStrcuture.NVIC_IRQChannel = TIM3_IRQn;
 	NVIC_InitStrcuture.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_InitStrcuture.NVIC_IRQChannelPreemptionPriority = 2;
-	NVIC_InitStrcuture.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStrcuture.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStrcuture.NVIC_IRQChannelSubPriority = 1;
 	NVIC_Init(&NVIC_InitStrcuture);
 	
 	TIM_Cmd(TIM3, ENABLE);		//¿ªÆô¶¨Ê±Æ÷
 }
 
+//void TIM3_IRQHandler(void)
+//{
+//	OSIntEnter();
+//	if(TIM_GetITStatus(TIM3, TIM_IT_CC1) != RESET)
+//	{
+//		PPM_Time = TIM3->CCR1;
+//		if(PPM_Time <= 2100)
+//		{
+//			PPM[PPM_CNT++] = PPM_Time;
+//			if (PPM_CNT >= 8) PPM_CNT = 0;
+//		}
+//		else 
+//		{
+//			PPM_CNT = 0;
+//		}			
+//		TIM_ClearITPendingBit(TIM3, TIM_IT_CC1);
+//	}
+//	OSIntExit();
+//}
+
 void TIM3_IRQHandler(void)
 {
-	OSIntEnter();
-	if(TIM_GetITStatus(TIM3, TIM_IT_CC1) != RESET)
-	{
-		PPM_Time = TIM3->CCR1;
-		if(PPM_Time <= 2100)
-		{
-			PPM[PPM_CNT++] = PPM_Time;
-			if (PPM_CNT >= 8) PPM_CNT = 0;
-		}
-		else 
-		{
-			PPM_CNT = 0;
-		}			
-		TIM_ClearITPendingBit(TIM3, TIM_IT_CC1);
-	}
-	OSIntExit();
+    OSIntEnter();
+    
+    if(TIM_GetITStatus(TIM3, TIM_IT_CC1) != RESET)
+    {
+        PPM_Time = TIM3->CCR1;
+        
+        if(PPM_Time >= 1000 && PPM_Time <= 2100)  
+        {
+            PPM[PPM_CNT++] = PPM_Time;
+            if (PPM_CNT >= 8) {
+                PPM_CNT = 0;
+                if (PPMSem != (OS_EVENT *)0) {
+                    OSSemPost(PPMSem);
+                }
+            }
+        }
+        else if (PPM_Time > 2100)  
+        {
+            PPM_CNT = 0;
+        }
+        
+        TIM_ClearITPendingBit(TIM3, TIM_IT_CC1);
+    }
+    
+    OSIntExit();
 }

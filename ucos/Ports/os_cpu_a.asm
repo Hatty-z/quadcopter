@@ -14,6 +14,7 @@
 
 
 	AREA |.text|,CODE,READONLY
+	PRESERVE8
 OS_CPU_SR_Save
     CPSID   I         
     PUSH   {R1}        ; 保存 R1（后面使用到）
@@ -84,7 +85,7 @@ OSStartHighRdy
 	MSR XPSR,R2
 	CPSIE    I
     BX       R1
-	
+
 
 
 SCB_ICSR 	  EQU 0XE000ED04
@@ -104,10 +105,12 @@ OSIntCtxSw
 	STR R1,[R0]
 	BX LR
 
+	EXTERN OSTaskSwHook
 PendSV_Handler
 	;SAVE R4-R11,LR
 	MRS R0,psp
 	STMFD R0!,{R4-R11,LR}
+	
 	;SAVE SP
 	LDR R1,=OSTCBCur
 	LDR R2,[R1]
@@ -121,11 +124,16 @@ PendSV_Handler
 	LDR R0,=OSPrioCur
 	LDR R1,=OSPrioHighRdy
 	LDRB R2,[R1]				
-	STRB R2,[R0]				
+	STRB R2,[R0]	
+
+	BL      OSTaskSwHook 
+
 	;NEW R4-R11,LR
 	LDR R1,=OSTCBCur
 	LDR R2,[R1]
 	LDR R2,[R2]
+	
+	
 	LDMFD R2!,{R4-R11,LR}	
 	MSR psp,R2
 	BX LR

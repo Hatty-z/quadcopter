@@ -1,6 +1,32 @@
 #ifndef  OS_CPU_H
 #define  OS_CPU_H
 
+#ifndef  OS_CPU_EXCEPT_STK_SIZE
+#define  OS_CPU_EXCEPT_STK_SIZE      256u        /* Default exception stack size is 256 OS_STK entries */
+#endif
+
+//#ifndef  __TARGET_FPU_SOFTVFP
+//#define  OS_CPU_ARM_FP_EN              1u
+//#else
+//#define  OS_CPU_ARM_FP_EN              0u
+//#endif
+
+
+#ifndef CPU_CFG_KA_IPL_BOUNDARY
+#error  "CPU_CFG_KA_IPL_BOUNDARY        not #define'd in 'app_cfg.h'    "   /* See Note # 1 & 2        */
+#else
+#if (CPU_CFG_KA_IPL_BOUNDARY == 0u)
+#error  "CPU_CFG_KA_IPL_BOUNDARY        should be > 0 "
+#endif
+#endif
+
+#ifndef CPU_CFG_NVIC_PRIO_BITS
+#error  "CPU_CFG_NVIC_PRIO_BITS         not #define'd in 'app_cfg.h'    "   /* See Note # 3            */
+#else
+#if (CPU_CFG_KA_IPL_BOUNDARY >= (1u << CPU_CFG_NVIC_PRIO_BITS))
+#error  "CPU_CFG_KA_IPL_BOUNDARY        should not be set to higher than max programable priority level "
+#endif
+#endif
 
 typedef unsigned char  BOOLEAN;
 typedef unsigned char  INT8U;                    /* Unsigned  8 bit quantity                           */

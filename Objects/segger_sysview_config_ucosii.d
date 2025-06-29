@@ -1,0 +1,17 @@
+.\objects\segger_sysview_config_ucosii.o: trace\uCOS-II\Config\Cortex-M\SEGGER_SYSVIEW_Config_uCOSII.c
+.\objects\segger_sysview_config_ucosii.o: .\trace\SEGGER\SEGGER_SYSVIEW.h
+.\objects\segger_sysview_config_ucosii.o: .\trace\SEGGER\SEGGER.h
+.\objects\segger_sysview_config_ucosii.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\segger_sysview_config_ucosii.o: .\trace\Config\Global.h
+.\objects\segger_sysview_config_ucosii.o: .\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h
+.\objects\segger_sysview_config_ucosii.o: .\trace\Config\SEGGER_SYSVIEW_Conf.h
+.\objects\segger_sysview_config_ucosii.o: .\trace\Config\SEGGER_RTT_Conf.h
+.\objects\segger_sysview_config_ucosii.o: .\ucos\Core\os.h
+.\objects\segger_sysview_config_ucosii.o: .\ucos\Core\ucos_ii.h
+.\objects\segger_sysview_config_ucosii.o: .\ucos\App\app_cfg.h
+.\objects\segger_sysview_config_ucosii.o: .\ucos\App\os_cfg.h
+.\objects\segger_sysview_config_ucosii.o: .\ucos\Ports\os_cpu.h
+.\objects\segger_sysview_config_ucosii.o: .\ucos\Core\os_trace.h
+.\objects\segger_sysview_config_ucosii.o: .\trace\uCOS-II\os_trace_events.h
+.\objects\segger_sysview_config_ucosii.o: .\ucos\Core\ucos_ii.h
+.\objects\segger_sysview_config_ucosii.o: .\trace\uCOS-II\Config\os_cfg_trace.h

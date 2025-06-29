@@ -33,3 +33,13 @@
 .\objects\bluetooth.o: .\ucos\App\os_cfg.h
 .\objects\bluetooth.o: .\ucos\Ports\os_cpu.h
 .\objects\bluetooth.o: .\ucos\Core\os_trace.h
+.\objects\bluetooth.o: .\trace\uCOS-II\os_trace_events.h
+.\objects\bluetooth.o: .\trace\SEGGER\SEGGER_SYSVIEW.h
+.\objects\bluetooth.o: .\trace\SEGGER\SEGGER.h
+.\objects\bluetooth.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\bluetooth.o: .\trace\Config\Global.h
+.\objects\bluetooth.o: .\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h
+.\objects\bluetooth.o: .\trace\Config\SEGGER_SYSVIEW_Conf.h
+.\objects\bluetooth.o: .\trace\Config\SEGGER_RTT_Conf.h
+.\objects\bluetooth.o: .\ucos\Core\ucos_ii.h
+.\objects\bluetooth.o: .\trace\uCOS-II\Config\os_cfg_trace.h

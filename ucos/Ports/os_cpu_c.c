@@ -1,5 +1,4 @@
 #include  <ucos_ii.h>
-
 void OSInitHookBegin (void){
 }
 void OSInitHookEnd (void){
@@ -12,8 +11,46 @@ void OSTaskStatHook (void){
 }
 void OSTCBInitHook (OS_TCB *ptcb){
 }
-void OSTaskCreateHook (OS_TCB *ptcb){
+
+#if OS_CPU_HOOKS_EN > 0u
+void  OSTaskCreateHook (OS_TCB *ptcb)
+{
+#if OS_APP_HOOKS_EN > 0u
+    App_TaskCreateHook(ptcb);
+#else
+    (void)ptcb;                                                 /* Prevent compiler warning                             */
+#endif
+	SEGGER_SYSVIEW_OnTaskCreate((U32)ptcb);
+	SEGGER_SYSVIEW_NameResource((U32)ptcb, (const char*)ptcb->OSTCBTaskName);
 }
+#endif
+
+void OSTaskDelHook (OS_TCB *ptcb){
+}
+void OSTaskReturnHook (OS_TCB *ptcb){
+}
+
+#if (OS_CPU_HOOKS_EN > 0u) && (OS_TASK_SW_HOOK_EN > 0u)
+void  OSTaskSwHook (void)
+{
+
+#if (OS_CPU_ARM_FP_EN > 0u)
+    OS_CPU_FP_Reg_Push(OSTCBCur->OSTCBStkPtr);                  /* Push the FP registers of the current task.           */
+#endif
+
+#if OS_APP_HOOKS_EN > 0u
+    App_TaskSwHook();
+#endif
+
+	//    OS_TRACE_TASK_SWITCHED_IN(OSTCBHighRdy);
+	SEGGER_SYSVIEW_OnTaskStartExec((U32)OSTCBHighRdy);
+
+#if (OS_CPU_ARM_FP_EN > 0u)
+    OS_CPU_FP_Reg_Pop(OSTCBHighRdy->OSTCBStkPtr);               /* Pop the FP registers of the highest ready task.      */
+#endif
+}
+#endif
+
 OS_STK  *OSTaskStkInit (void    (*task)(void *p_arg),
                         void     *p_arg,
                         OS_STK   *ptos,
@@ -95,10 +132,6 @@ OS_STK  *OSTaskStkInit (void    (*task)(void *p_arg),
     return (p_stk);
 }
 
-void OSTaskDelHook (OS_TCB *ptcb){
-}
-void OSTaskReturnHook (OS_TCB *ptcb){
-}
 
 void SysTick_Handler(void)
 {
@@ -111,3 +144,4 @@ void SysTick_Handler(void)
 		OSTimeTick();
 		OSIntExit();
 }
+

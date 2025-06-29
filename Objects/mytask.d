@@ -7,6 +7,16 @@
 .\objects\mytask.o: .\ucos\App\os_cfg.h
 .\objects\mytask.o: .\ucos\Ports\os_cpu.h
 .\objects\mytask.o: .\ucos\Core\os_trace.h
+.\objects\mytask.o: .\trace\uCOS-II\os_trace_events.h
+.\objects\mytask.o: .\trace\SEGGER\SEGGER_SYSVIEW.h
+.\objects\mytask.o: .\trace\SEGGER\SEGGER.h
+.\objects\mytask.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\mytask.o: .\trace\Config\Global.h
+.\objects\mytask.o: .\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h
+.\objects\mytask.o: .\trace\Config\SEGGER_SYSVIEW_Conf.h
+.\objects\mytask.o: .\trace\Config\SEGGER_RTT_Conf.h
+.\objects\mytask.o: .\ucos\Core\ucos_ii.h
+.\objects\mytask.o: .\trace\uCOS-II\Config\os_cfg_trace.h
 .\objects\mytask.o: .\system\stm32f4xx.h
 .\objects\mytask.o: .\system\core_cm4.h
 .\objects\mytask.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h

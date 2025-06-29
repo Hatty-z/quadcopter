@@ -1,0 +1,17 @@
+.\objects\app_hooks.o: ucos\App\app_hooks.c
+.\objects\app_hooks.o: .\ucos\Core\os.h
+.\objects\app_hooks.o: .\ucos\Core\ucos_ii.h
+.\objects\app_hooks.o: .\ucos\App\app_cfg.h
+.\objects\app_hooks.o: .\ucos\App\os_cfg.h
+.\objects\app_hooks.o: .\ucos\Ports\os_cpu.h
+.\objects\app_hooks.o: .\ucos\Core\os_trace.h
+.\objects\app_hooks.o: .\trace\uCOS-II\os_trace_events.h
+.\objects\app_hooks.o: .\trace\SEGGER\SEGGER_SYSVIEW.h
+.\objects\app_hooks.o: .\trace\SEGGER\SEGGER.h
+.\objects\app_hooks.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\app_hooks.o: .\trace\Config\Global.h
+.\objects\app_hooks.o: .\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h
+.\objects\app_hooks.o: .\trace\Config\SEGGER_SYSVIEW_Conf.h
+.\objects\app_hooks.o: .\trace\Config\SEGGER_RTT_Conf.h
+.\objects\app_hooks.o: .\ucos\Core\ucos_ii.h
+.\objects\app_hooks.o: .\trace\uCOS-II\Config\os_cfg_trace.h

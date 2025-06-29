@@ -34,3 +34,13 @@
 .\objects\ppm.o: .\ucos\App\os_cfg.h
 .\objects\ppm.o: .\ucos\Ports\os_cpu.h
 .\objects\ppm.o: .\ucos\Core\os_trace.h
+.\objects\ppm.o: .\trace\uCOS-II\os_trace_events.h
+.\objects\ppm.o: .\trace\SEGGER\SEGGER_SYSVIEW.h
+.\objects\ppm.o: .\trace\SEGGER\SEGGER.h
+.\objects\ppm.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\ppm.o: .\trace\Config\Global.h
+.\objects\ppm.o: .\trace\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h
+.\objects\ppm.o: .\trace\Config\SEGGER_SYSVIEW_Conf.h
+.\objects\ppm.o: .\trace\Config\SEGGER_RTT_Conf.h
+.\objects\ppm.o: .\ucos\Core\ucos_ii.h
+.\objects\ppm.o: .\trace\uCOS-II\Config\os_cfg_trace.h
