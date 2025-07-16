@@ -1,0 +1,620 @@
+ARM GAS  /tmp/ccXDsCrt.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"os_cpu_c.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./ucos/Ports/os_cpu_c.c"
+  20              		.section	.text.OSInitHookBegin,"ax",%progbits
+  21              		.align	1
+  22              		.global	OSInitHookBegin
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	OSInitHookBegin:
+  28              	.LFB0:
+   1:./ucos/Ports/os_cpu_c.c **** #include  <ucos_ii.h>
+   2:./ucos/Ports/os_cpu_c.c **** void OSInitHookBegin (void){
+  29              		.loc 1 2 28 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+   3:./ucos/Ports/os_cpu_c.c **** }
+  34              		.loc 1 3 1 view .LVU1
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE0:
+  39              		.section	.text.OSInitHookEnd,"ax",%progbits
+  40              		.align	1
+  41              		.global	OSInitHookEnd
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  46              	OSInitHookEnd:
+  47              	.LFB1:
+   4:./ucos/Ports/os_cpu_c.c **** void OSInitHookEnd (void){
+  48              		.loc 1 4 26 view -0
+  49              		.cfi_startproc
+  50              		@ args = 0, pretend = 0, frame = 0
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52              		@ link register save eliminated.
+   5:./ucos/Ports/os_cpu_c.c **** }
+  53              		.loc 1 5 1 view .LVU3
+  54 0000 7047     		bx	lr
+  55              		.cfi_endproc
+ARM GAS  /tmp/ccXDsCrt.s 			page 2
+
+
+  56              	.LFE1:
+  58              		.section	.text.OSTimeTickHook,"ax",%progbits
+  59              		.align	1
+  60              		.global	OSTimeTickHook
+  61              		.syntax unified
+  62              		.thumb
+  63              		.thumb_func
+  65              	OSTimeTickHook:
+  66              	.LFB2:
+   6:./ucos/Ports/os_cpu_c.c **** void OSTimeTickHook (void){
+  67              		.loc 1 6 27 view -0
+  68              		.cfi_startproc
+  69              		@ args = 0, pretend = 0, frame = 0
+  70              		@ frame_needed = 0, uses_anonymous_args = 0
+  71              		@ link register save eliminated.
+   7:./ucos/Ports/os_cpu_c.c **** }
+  72              		.loc 1 7 1 view .LVU5
+  73 0000 7047     		bx	lr
+  74              		.cfi_endproc
+  75              	.LFE2:
+  77              		.section	.text.OSTaskIdleHook,"ax",%progbits
+  78              		.align	1
+  79              		.global	OSTaskIdleHook
+  80              		.syntax unified
+  81              		.thumb
+  82              		.thumb_func
+  84              	OSTaskIdleHook:
+  85              	.LFB3:
+   8:./ucos/Ports/os_cpu_c.c **** void OSTaskIdleHook (void){
+  86              		.loc 1 8 27 view -0
+  87              		.cfi_startproc
+  88              		@ args = 0, pretend = 0, frame = 0
+  89              		@ frame_needed = 0, uses_anonymous_args = 0
+  90              		@ link register save eliminated.
+   9:./ucos/Ports/os_cpu_c.c **** }
+  91              		.loc 1 9 1 view .LVU7
+  92 0000 7047     		bx	lr
+  93              		.cfi_endproc
+  94              	.LFE3:
+  96              		.section	.text.OSTaskStatHook,"ax",%progbits
+  97              		.align	1
+  98              		.global	OSTaskStatHook
+  99              		.syntax unified
+ 100              		.thumb
+ 101              		.thumb_func
+ 103              	OSTaskStatHook:
+ 104              	.LFB4:
+  10:./ucos/Ports/os_cpu_c.c **** void OSTaskStatHook (void){
+ 105              		.loc 1 10 27 view -0
+ 106              		.cfi_startproc
+ 107              		@ args = 0, pretend = 0, frame = 0
+ 108              		@ frame_needed = 0, uses_anonymous_args = 0
+ 109              		@ link register save eliminated.
+  11:./ucos/Ports/os_cpu_c.c **** }
+ 110              		.loc 1 11 1 view .LVU9
+ 111 0000 7047     		bx	lr
+ 112              		.cfi_endproc
+ARM GAS  /tmp/ccXDsCrt.s 			page 3
+
+
+ 113              	.LFE4:
+ 115              		.section	.text.OSTCBInitHook,"ax",%progbits
+ 116              		.align	1
+ 117              		.global	OSTCBInitHook
+ 118              		.syntax unified
+ 119              		.thumb
+ 120              		.thumb_func
+ 122              	OSTCBInitHook:
+ 123              	.LVL0:
+ 124              	.LFB5:
+  12:./ucos/Ports/os_cpu_c.c **** void OSTCBInitHook (OS_TCB *ptcb){
+ 125              		.loc 1 12 34 view -0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 0
+ 128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 129              		@ link register save eliminated.
+  13:./ucos/Ports/os_cpu_c.c **** }
+ 130              		.loc 1 13 1 view .LVU11
+ 131 0000 7047     		bx	lr
+ 132              		.cfi_endproc
+ 133              	.LFE5:
+ 135              		.section	.text.OSTaskCreateHook,"ax",%progbits
+ 136              		.align	1
+ 137              		.global	OSTaskCreateHook
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	OSTaskCreateHook:
+ 143              	.LVL1:
+ 144              	.LFB6:
+  14:./ucos/Ports/os_cpu_c.c **** 
+  15:./ucos/Ports/os_cpu_c.c **** #if OS_CPU_HOOKS_EN > 0u
+  16:./ucos/Ports/os_cpu_c.c **** void  OSTaskCreateHook (OS_TCB *ptcb)
+  17:./ucos/Ports/os_cpu_c.c **** {
+ 145              		.loc 1 17 1 view -0
+ 146              		.cfi_startproc
+ 147              		@ args = 0, pretend = 0, frame = 0
+ 148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149              		.loc 1 17 1 is_stmt 0 view .LVU13
+ 150 0000 10B5     		push	{r4, lr}
+ 151              	.LCFI0:
+ 152              		.cfi_def_cfa_offset 8
+ 153              		.cfi_offset 4, -8
+ 154              		.cfi_offset 14, -4
+ 155 0002 0446     		mov	r4, r0
+  18:./ucos/Ports/os_cpu_c.c **** #if OS_APP_HOOKS_EN > 0u
+  19:./ucos/Ports/os_cpu_c.c ****     App_TaskCreateHook(ptcb);
+ 156              		.loc 1 19 5 is_stmt 1 view .LVU14
+ 157 0004 FFF7FEFF 		bl	App_TaskCreateHook
+ 158              	.LVL2:
+  20:./ucos/Ports/os_cpu_c.c **** #else
+  21:./ucos/Ports/os_cpu_c.c ****     (void)ptcb;                                                 /* Prevent compiler warning        
+  22:./ucos/Ports/os_cpu_c.c **** #endif
+  23:./ucos/Ports/os_cpu_c.c **** 	SEGGER_SYSVIEW_OnTaskCreate((U32)ptcb);
+ 159              		.loc 1 23 2 view .LVU15
+ 160 0008 2046     		mov	r0, r4
+ 161 000a FFF7FEFF 		bl	SEGGER_SYSVIEW_OnTaskCreate
+ARM GAS  /tmp/ccXDsCrt.s 			page 4
+
+
+ 162              	.LVL3:
+  24:./ucos/Ports/os_cpu_c.c **** 	SEGGER_SYSVIEW_NameResource((U32)ptcb, (const char*)ptcb->OSTCBTaskName);
+ 163              		.loc 1 24 2 view .LVU16
+ 164 000e 616D     		ldr	r1, [r4, #84]
+ 165 0010 2046     		mov	r0, r4
+ 166 0012 FFF7FEFF 		bl	SEGGER_SYSVIEW_NameResource
+ 167              	.LVL4:
+  25:./ucos/Ports/os_cpu_c.c **** }
+ 168              		.loc 1 25 1 is_stmt 0 view .LVU17
+ 169 0016 10BD     		pop	{r4, pc}
+ 170              		.loc 1 25 1 view .LVU18
+ 171              		.cfi_endproc
+ 172              	.LFE6:
+ 174              		.section	.text.OSTaskDelHook,"ax",%progbits
+ 175              		.align	1
+ 176              		.global	OSTaskDelHook
+ 177              		.syntax unified
+ 178              		.thumb
+ 179              		.thumb_func
+ 181              	OSTaskDelHook:
+ 182              	.LVL5:
+ 183              	.LFB7:
+  26:./ucos/Ports/os_cpu_c.c **** #endif
+  27:./ucos/Ports/os_cpu_c.c **** 
+  28:./ucos/Ports/os_cpu_c.c **** void OSTaskDelHook (OS_TCB *ptcb){
+ 184              		.loc 1 28 34 is_stmt 1 view -0
+ 185              		.cfi_startproc
+ 186              		@ args = 0, pretend = 0, frame = 0
+ 187              		@ frame_needed = 0, uses_anonymous_args = 0
+ 188              		@ link register save eliminated.
+  29:./ucos/Ports/os_cpu_c.c **** }
+ 189              		.loc 1 29 1 view .LVU20
+ 190 0000 7047     		bx	lr
+ 191              		.cfi_endproc
+ 192              	.LFE7:
+ 194              		.section	.text.OSTaskReturnHook,"ax",%progbits
+ 195              		.align	1
+ 196              		.global	OSTaskReturnHook
+ 197              		.syntax unified
+ 198              		.thumb
+ 199              		.thumb_func
+ 201              	OSTaskReturnHook:
+ 202              	.LVL6:
+ 203              	.LFB8:
+  30:./ucos/Ports/os_cpu_c.c **** void OSTaskReturnHook (OS_TCB *ptcb){
+ 204              		.loc 1 30 37 view -0
+ 205              		.cfi_startproc
+ 206              		@ args = 0, pretend = 0, frame = 0
+ 207              		@ frame_needed = 0, uses_anonymous_args = 0
+ 208              		@ link register save eliminated.
+  31:./ucos/Ports/os_cpu_c.c **** }
+ 209              		.loc 1 31 1 view .LVU22
+ 210 0000 7047     		bx	lr
+ 211              		.cfi_endproc
+ 212              	.LFE8:
+ 214              		.section	.text.OSTaskSwHook,"ax",%progbits
+ 215              		.align	1
+ARM GAS  /tmp/ccXDsCrt.s 			page 5
+
+
+ 216              		.global	OSTaskSwHook
+ 217              		.syntax unified
+ 218              		.thumb
+ 219              		.thumb_func
+ 221              	OSTaskSwHook:
+ 222              	.LFB9:
+  32:./ucos/Ports/os_cpu_c.c **** 
+  33:./ucos/Ports/os_cpu_c.c **** #if (OS_CPU_HOOKS_EN > 0u) && (OS_TASK_SW_HOOK_EN > 0u)
+  34:./ucos/Ports/os_cpu_c.c **** void  OSTaskSwHook (void)
+  35:./ucos/Ports/os_cpu_c.c **** {
+ 223              		.loc 1 35 1 view -0
+ 224              		.cfi_startproc
+ 225              		@ args = 0, pretend = 0, frame = 0
+ 226              		@ frame_needed = 0, uses_anonymous_args = 0
+ 227 0000 08B5     		push	{r3, lr}
+ 228              	.LCFI1:
+ 229              		.cfi_def_cfa_offset 8
+ 230              		.cfi_offset 3, -8
+ 231              		.cfi_offset 14, -4
+  36:./ucos/Ports/os_cpu_c.c **** 
+  37:./ucos/Ports/os_cpu_c.c **** #if (OS_CPU_ARM_FP_EN > 0u)
+  38:./ucos/Ports/os_cpu_c.c ****     OS_CPU_FP_Reg_Push(OSTCBCur->OSTCBStkPtr);                  /* Push the FP registers of the cur
+  39:./ucos/Ports/os_cpu_c.c **** #endif
+  40:./ucos/Ports/os_cpu_c.c **** 
+  41:./ucos/Ports/os_cpu_c.c **** #if OS_APP_HOOKS_EN > 0u
+  42:./ucos/Ports/os_cpu_c.c ****     App_TaskSwHook();
+ 232              		.loc 1 42 5 view .LVU24
+ 233 0002 FFF7FEFF 		bl	App_TaskSwHook
+ 234              	.LVL7:
+  43:./ucos/Ports/os_cpu_c.c **** #endif
+  44:./ucos/Ports/os_cpu_c.c **** 
+  45:./ucos/Ports/os_cpu_c.c **** 	//    OS_TRACE_TASK_SWITCHED_IN(OSTCBHighRdy);
+  46:./ucos/Ports/os_cpu_c.c **** 	SEGGER_SYSVIEW_OnTaskStartExec((U32)OSTCBHighRdy);
+ 235              		.loc 1 46 2 view .LVU25
+ 236 0006 024B     		ldr	r3, .L13
+ 237 0008 1868     		ldr	r0, [r3]
+ 238 000a FFF7FEFF 		bl	SEGGER_SYSVIEW_OnTaskStartExec
+ 239              	.LVL8:
+  47:./ucos/Ports/os_cpu_c.c **** 
+  48:./ucos/Ports/os_cpu_c.c **** #if (OS_CPU_ARM_FP_EN > 0u)
+  49:./ucos/Ports/os_cpu_c.c ****     OS_CPU_FP_Reg_Pop(OSTCBHighRdy->OSTCBStkPtr);               /* Pop the FP registers of the high
+  50:./ucos/Ports/os_cpu_c.c **** #endif
+  51:./ucos/Ports/os_cpu_c.c **** }
+ 240              		.loc 1 51 1 is_stmt 0 view .LVU26
+ 241 000e 08BD     		pop	{r3, pc}
+ 242              	.L14:
+ 243              		.align	2
+ 244              	.L13:
+ 245 0010 00000000 		.word	OSTCBHighRdy
+ 246              		.cfi_endproc
+ 247              	.LFE9:
+ 249              		.section	.text.OSTaskStkInit,"ax",%progbits
+ 250              		.align	1
+ 251              		.global	OSTaskStkInit
+ 252              		.syntax unified
+ 253              		.thumb
+ 254              		.thumb_func
+ARM GAS  /tmp/ccXDsCrt.s 			page 6
+
+
+ 256              	OSTaskStkInit:
+ 257              	.LVL9:
+ 258              	.LFB10:
+  52:./ucos/Ports/os_cpu_c.c **** #endif
+  53:./ucos/Ports/os_cpu_c.c **** 
+  54:./ucos/Ports/os_cpu_c.c **** OS_STK  *OSTaskStkInit (void    (*task)(void *p_arg),
+  55:./ucos/Ports/os_cpu_c.c ****                         void     *p_arg,
+  56:./ucos/Ports/os_cpu_c.c ****                         OS_STK   *ptos,
+  57:./ucos/Ports/os_cpu_c.c ****                         INT16U    opt)
+  58:./ucos/Ports/os_cpu_c.c **** {
+ 259              		.loc 1 58 1 is_stmt 1 view -0
+ 260              		.cfi_startproc
+ 261              		@ args = 0, pretend = 0, frame = 0
+ 262              		@ frame_needed = 0, uses_anonymous_args = 0
+ 263              		@ link register save eliminated.
+  59:./ucos/Ports/os_cpu_c.c ****     OS_STK  *p_stk;
+ 264              		.loc 1 59 5 view .LVU28
+  60:./ucos/Ports/os_cpu_c.c **** 
+  61:./ucos/Ports/os_cpu_c.c **** 
+  62:./ucos/Ports/os_cpu_c.c ****     (void)opt;                                                  /* 'opt' is not used, prevent warni
+ 265              		.loc 1 62 5 view .LVU29
+  63:./ucos/Ports/os_cpu_c.c ****     p_stk      = ptos +1u ;                                     /* Load stack pointer              
+ 266              		.loc 1 63 5 view .LVU30
+ 267              		.loc 1 63 16 is_stmt 0 view .LVU31
+ 268 0000 131D     		adds	r3, r2, #4
+ 269              	.LVL10:
+  64:./ucos/Ports/os_cpu_c.c ****                                                                 /* Align the stack to 8-bytes.     
+  65:./ucos/Ports/os_cpu_c.c ****     p_stk      = (OS_STK *)((OS_STK)(p_stk) & 0xFFFFFFF8u);
+ 270              		.loc 1 65 5 is_stmt 1 view .LVU32
+ 271              		.loc 1 65 45 is_stmt 0 view .LVU33
+ 272 0002 23F00703 		bic	r3, r3, #7
+ 273              	.LVL11:
+  66:./ucos/Ports/os_cpu_c.c ****                                                                 /* Registers stacked as if auto-sav
+  67:./ucos/Ports/os_cpu_c.c **** #if (OS_CPU_ARM_FP_EN > 0u)                                     /* FPU auto-saved registers.       
+  68:./ucos/Ports/os_cpu_c.c ****      --p_stk;
+  69:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x02000000u;                           /* FPSCR                           
+  70:./ucos/Ports/os_cpu_c.c ****                                                                 /* Initialize S0-S15 floating point
+  71:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41700000u;                           /* S15                             
+  72:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41600000u;                           /* S14                             
+  73:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41500000u;                           /* S13                             
+  74:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41400000u;                           /* S12                             
+  75:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41300000u;                           /* S11                             
+  76:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41200000u;                           /* S10                             
+  77:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41100000u;                           /* S9                              
+  78:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41000000u;                           /* S8                              
+  79:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x40E00000u;                           /* S7                              
+  80:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x40C00000u;                           /* S6                              
+  81:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x40A00000u;                           /* S5                              
+  82:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x40800000u;                           /* S4                              
+  83:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x40400000u;                           /* S3                              
+  84:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x40000000u;                           /* S2                              
+  85:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x3F800000u;                           /* S1                              
+  86:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x00000000u;                           /* S0                              
+  87:./ucos/Ports/os_cpu_c.c **** #endif
+  88:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x01000000uL;                          /* xPSR                            
+ 274              		.loc 1 88 5 is_stmt 1 view .LVU34
+ 275              		.loc 1 88 16 is_stmt 0 view .LVU35
+ARM GAS  /tmp/ccXDsCrt.s 			page 7
+
+
+ 276 0006 4FF08072 		mov	r2, #16777216
+ 277              	.LVL12:
+ 278              		.loc 1 88 16 view .LVU36
+ 279 000a 43F8042C 		str	r2, [r3, #-4]
+  89:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)task;                                  /* Entry Point                     
+ 280              		.loc 1 89 5 is_stmt 1 view .LVU37
+ 281              	.LVL13:
+ 282              		.loc 1 89 16 is_stmt 0 view .LVU38
+ 283 000e 43F8080C 		str	r0, [r3, #-8]
+  90:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)OS_TaskReturn;                         /* R14 (LR)                        
+ 284              		.loc 1 90 5 is_stmt 1 view .LVU39
+ 285              	.LVL14:
+ 286              		.loc 1 90 18 is_stmt 0 view .LVU40
+ 287 0012 1E4A     		ldr	r2, .L16
+ 288              		.loc 1 90 16 view .LVU41
+ 289 0014 43F80C2C 		str	r2, [r3, #-12]
+  91:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x12121212uL;                          /* R12                             
+ 290              		.loc 1 91 5 is_stmt 1 view .LVU42
+ 291              	.LVL15:
+ 292              		.loc 1 91 16 is_stmt 0 view .LVU43
+ 293 0018 4FF01232 		mov	r2, #303174162
+ 294 001c 43F8102C 		str	r2, [r3, #-16]
+  92:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x03030303uL;                          /* R3                              
+ 295              		.loc 1 92 5 is_stmt 1 view .LVU44
+ 296              	.LVL16:
+ 297              		.loc 1 92 16 is_stmt 0 view .LVU45
+ 298 0020 4FF00332 		mov	r2, #50529027
+ 299 0024 43F8142C 		str	r2, [r3, #-20]
+  93:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x02020202uL;                          /* R2                              
+ 300              		.loc 1 93 5 is_stmt 1 view .LVU46
+ 301              	.LVL17:
+ 302              		.loc 1 93 16 is_stmt 0 view .LVU47
+ 303 0028 4FF00232 		mov	r2, #33686018
+ 304 002c 43F8182C 		str	r2, [r3, #-24]
+  94:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x01010101uL;                          /* R1                              
+ 305              		.loc 1 94 5 is_stmt 1 view .LVU48
+ 306              	.LVL18:
+ 307              		.loc 1 94 16 is_stmt 0 view .LVU49
+ 308 0030 4FF00132 		mov	r2, #16843009
+ 309 0034 43F81C2C 		str	r2, [r3, #-28]
+  95:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)p_arg;                                 /* R0 : argument                   
+ 310              		.loc 1 95 5 is_stmt 1 view .LVU50
+ 311              	.LVL19:
+ 312              		.loc 1 95 16 is_stmt 0 view .LVU51
+ 313 0038 43F8201C 		str	r1, [r3, #-32]
+  96:./ucos/Ports/os_cpu_c.c **** 
+  97:./ucos/Ports/os_cpu_c.c **** #if (OS_CPU_ARM_FP_EN > 0u)
+  98:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0xFFFFFFEDuL;                          /* R14: EXEC_RETURN; See Note 5    
+  99:./ucos/Ports/os_cpu_c.c **** #else
+ 100:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0xFFFFFFFDuL;                          /* R14: EXEC_RETURN; See Note 5    
+ 314              		.loc 1 100 5 is_stmt 1 view .LVU52
+ 315              	.LVL20:
+ 316              		.loc 1 100 16 is_stmt 0 view .LVU53
+ 317 003c 6FF00202 		mvn	r2, #2
+ 318 0040 43F8242C 		str	r2, [r3, #-36]
+ 101:./ucos/Ports/os_cpu_c.c **** #endif
+ 102:./ucos/Ports/os_cpu_c.c ****                                                                 /* Remaining registers saved on pro
+ARM GAS  /tmp/ccXDsCrt.s 			page 8
+
+
+ 103:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x11111111uL;                          /* R11                             
+ 319              		.loc 1 103 5 is_stmt 1 view .LVU54
+ 320              	.LVL21:
+ 321              		.loc 1 103 16 is_stmt 0 view .LVU55
+ 322 0044 4FF01132 		mov	r2, #286331153
+ 323 0048 43F8282C 		str	r2, [r3, #-40]
+ 104:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x10101010uL;                          /* R10                             
+ 324              		.loc 1 104 5 is_stmt 1 view .LVU56
+ 325              	.LVL22:
+ 326              		.loc 1 104 16 is_stmt 0 view .LVU57
+ 327 004c 4FF01032 		mov	r2, #269488144
+ 328 0050 43F82C2C 		str	r2, [r3, #-44]
+ 105:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x09090909uL;                          /* R9                              
+ 329              		.loc 1 105 5 is_stmt 1 view .LVU58
+ 330              	.LVL23:
+ 331              		.loc 1 105 16 is_stmt 0 view .LVU59
+ 332 0054 4FF00932 		mov	r2, #151587081
+ 333 0058 43F8302C 		str	r2, [r3, #-48]
+ 106:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x08080808uL;                          /* R8                              
+ 334              		.loc 1 106 5 is_stmt 1 view .LVU60
+ 335              	.LVL24:
+ 336              		.loc 1 106 16 is_stmt 0 view .LVU61
+ 337 005c 4FF00832 		mov	r2, #134744072
+ 338 0060 43F8342C 		str	r2, [r3, #-52]
+ 107:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x07070707uL;                          /* R7                              
+ 339              		.loc 1 107 5 is_stmt 1 view .LVU62
+ 340              	.LVL25:
+ 341              		.loc 1 107 16 is_stmt 0 view .LVU63
+ 342 0064 4FF00732 		mov	r2, #117901063
+ 343 0068 43F8382C 		str	r2, [r3, #-56]
+ 108:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x06060606uL;                          /* R6                              
+ 344              		.loc 1 108 5 is_stmt 1 view .LVU64
+ 345              	.LVL26:
+ 346              		.loc 1 108 16 is_stmt 0 view .LVU65
+ 347 006c 4FF00632 		mov	r2, #101058054
+ 348 0070 43F83C2C 		str	r2, [r3, #-60]
+ 109:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x05050505uL;                          /* R5                              
+ 349              		.loc 1 109 5 is_stmt 1 view .LVU66
+ 350              	.LVL27:
+ 351              		.loc 1 109 16 is_stmt 0 view .LVU67
+ 352 0074 4FF00532 		mov	r2, #84215045
+ 353 0078 43F8402C 		str	r2, [r3, #-64]
+ 110:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x04040404uL;                          /* R4                              
+ 354              		.loc 1 110 5 is_stmt 1 view .LVU68
+ 355              	.LVL28:
+ 356              		.loc 1 110 16 is_stmt 0 view .LVU69
+ 357 007c 4FF00432 		mov	r2, #67372036
+ 358 0080 43F8442C 		str	r2, [r3, #-68]
+ 111:./ucos/Ports/os_cpu_c.c **** 
+ 112:./ucos/Ports/os_cpu_c.c **** #if (OS_CPU_ARM_FP_EN > 0u)
+ 113:./ucos/Ports/os_cpu_c.c ****                                                                 /* Initialize S16-S31 floating poin
+ 114:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41F80000u;                           /* S31                             
+ 115:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41F00000u;                           /* S30                             
+ 116:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41E80000u;                           /* S29                             
+ 117:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41E00000u;                           /* S28                             
+ 118:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41D80000u;                           /* S27                             
+ 119:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41D00000u;                           /* S26                             
+ARM GAS  /tmp/ccXDsCrt.s 			page 9
+
+
+ 120:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41C80000u;                           /* S25                             
+ 121:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41C00000u;                           /* S24                             
+ 122:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41B80000u;                           /* S23                             
+ 123:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41B00000u;                           /* S22                             
+ 124:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41A80000u;                           /* S21                             
+ 125:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41A00000u;                           /* S20                             
+ 126:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41980000u;                           /* S19                             
+ 127:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41900000u;                           /* S18                             
+ 128:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41880000u;                           /* S17                             
+ 129:./ucos/Ports/os_cpu_c.c ****     *(--p_stk) = (OS_STK)0x41800000u;                           /* S16                             
+ 130:./ucos/Ports/os_cpu_c.c **** #endif
+ 131:./ucos/Ports/os_cpu_c.c **** 
+ 132:./ucos/Ports/os_cpu_c.c ****     return (p_stk);
+ 359              		.loc 1 132 5 is_stmt 1 view .LVU70
+ 133:./ucos/Ports/os_cpu_c.c **** }
+ 360              		.loc 1 133 1 is_stmt 0 view .LVU71
+ 361 0084 A3F14400 		sub	r0, r3, #68
+ 362              	.LVL29:
+ 363              		.loc 1 133 1 view .LVU72
+ 364 0088 7047     		bx	lr
+ 365              	.L17:
+ 366 008a 00BF     		.align	2
+ 367              	.L16:
+ 368 008c 00000000 		.word	OS_TaskReturn
+ 369              		.cfi_endproc
+ 370              	.LFE10:
+ 372              		.section	.text.SysTick_Handler,"ax",%progbits
+ 373              		.align	1
+ 374              		.global	SysTick_Handler
+ 375              		.syntax unified
+ 376              		.thumb
+ 377              		.thumb_func
+ 379              	SysTick_Handler:
+ 380              	.LFB11:
+ 134:./ucos/Ports/os_cpu_c.c **** 
+ 135:./ucos/Ports/os_cpu_c.c **** 
+ 136:./ucos/Ports/os_cpu_c.c **** void SysTick_Handler(void)
+ 137:./ucos/Ports/os_cpu_c.c **** {
+ 381              		.loc 1 137 1 is_stmt 1 view -0
+ 382              		.cfi_startproc
+ 383              		@ args = 0, pretend = 0, frame = 0
+ 384              		@ frame_needed = 0, uses_anonymous_args = 0
+ 385 0000 10B5     		push	{r4, lr}
+ 386              	.LCFI2:
+ 387              		.cfi_def_cfa_offset 8
+ 388              		.cfi_offset 4, -8
+ 389              		.cfi_offset 14, -4
+ 138:./ucos/Ports/os_cpu_c.c **** 		#if OS_CRITICAL_METHOD == 3u 
+ 139:./ucos/Ports/os_cpu_c.c **** 			OS_CPU_SR cpu_sr;
+ 390              		.loc 1 139 4 view .LVU74
+ 140:./ucos/Ports/os_cpu_c.c **** 		#endif
+ 141:./ucos/Ports/os_cpu_c.c **** 		OS_ENTER_CRITICAL();
+ 391              		.loc 1 141 3 view .LVU75
+ 392              		.loc 1 141 3 view .LVU76
+ 393 0002 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 394              	.LVL30:
+ 395 0006 0446     		mov	r4, r0
+ARM GAS  /tmp/ccXDsCrt.s 			page 10
+
+
+ 396              	.LVL31:
+ 397              		.loc 1 141 3 discriminator 1 view .LVU77
+ 142:./ucos/Ports/os_cpu_c.c **** 		OSIntEnter(); 
+ 398              		.loc 1 142 3 view .LVU78
+ 399 0008 FFF7FEFF 		bl	OSIntEnter
+ 400              	.LVL32:
+ 143:./ucos/Ports/os_cpu_c.c **** 		OS_EXIT_CRITICAL();
+ 401              		.loc 1 143 3 view .LVU79
+ 402              		.loc 1 143 3 view .LVU80
+ 403 000c 2046     		mov	r0, r4
+ 404 000e FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 405              	.LVL33:
+ 406              		.loc 1 143 3 discriminator 1 view .LVU81
+ 144:./ucos/Ports/os_cpu_c.c **** 		OSTimeTick();
+ 407              		.loc 1 144 3 view .LVU82
+ 408 0012 FFF7FEFF 		bl	OSTimeTick
+ 409              	.LVL34:
+ 145:./ucos/Ports/os_cpu_c.c **** 		OSIntExit();
+ 410              		.loc 1 145 3 view .LVU83
+ 411 0016 FFF7FEFF 		bl	OSIntExit
+ 412              	.LVL35:
+ 146:./ucos/Ports/os_cpu_c.c **** }
+ 413              		.loc 1 146 1 is_stmt 0 view .LVU84
+ 414 001a 10BD     		pop	{r4, pc}
+ 415              		.loc 1 146 1 view .LVU85
+ 416              		.cfi_endproc
+ 417              	.LFE11:
+ 419              		.text
+ 420              	.Letext0:
+ 421              		.file 2 "./ucos/Ports/os_cpu.h"
+ 422              		.file 3 "./ucos/Core/ucos_ii.h"
+ 423              		.file 4 "./trace/SEGGER/SEGGER_SYSVIEW.h"
+ARM GAS  /tmp/ccXDsCrt.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 os_cpu_c.c
+     /tmp/ccXDsCrt.s:21     .text.OSInitHookBegin:00000000 $t
+     /tmp/ccXDsCrt.s:27     .text.OSInitHookBegin:00000000 OSInitHookBegin
+     /tmp/ccXDsCrt.s:40     .text.OSInitHookEnd:00000000 $t
+     /tmp/ccXDsCrt.s:46     .text.OSInitHookEnd:00000000 OSInitHookEnd
+     /tmp/ccXDsCrt.s:59     .text.OSTimeTickHook:00000000 $t
+     /tmp/ccXDsCrt.s:65     .text.OSTimeTickHook:00000000 OSTimeTickHook
+     /tmp/ccXDsCrt.s:78     .text.OSTaskIdleHook:00000000 $t
+     /tmp/ccXDsCrt.s:84     .text.OSTaskIdleHook:00000000 OSTaskIdleHook
+     /tmp/ccXDsCrt.s:97     .text.OSTaskStatHook:00000000 $t
+     /tmp/ccXDsCrt.s:103    .text.OSTaskStatHook:00000000 OSTaskStatHook
+     /tmp/ccXDsCrt.s:116    .text.OSTCBInitHook:00000000 $t
+     /tmp/ccXDsCrt.s:122    .text.OSTCBInitHook:00000000 OSTCBInitHook
+     /tmp/ccXDsCrt.s:136    .text.OSTaskCreateHook:00000000 $t
+     /tmp/ccXDsCrt.s:142    .text.OSTaskCreateHook:00000000 OSTaskCreateHook
+     /tmp/ccXDsCrt.s:175    .text.OSTaskDelHook:00000000 $t
+     /tmp/ccXDsCrt.s:181    .text.OSTaskDelHook:00000000 OSTaskDelHook
+     /tmp/ccXDsCrt.s:195    .text.OSTaskReturnHook:00000000 $t
+     /tmp/ccXDsCrt.s:201    .text.OSTaskReturnHook:00000000 OSTaskReturnHook
+     /tmp/ccXDsCrt.s:215    .text.OSTaskSwHook:00000000 $t
+     /tmp/ccXDsCrt.s:221    .text.OSTaskSwHook:00000000 OSTaskSwHook
+     /tmp/ccXDsCrt.s:245    .text.OSTaskSwHook:00000010 $d
+     /tmp/ccXDsCrt.s:250    .text.OSTaskStkInit:00000000 $t
+     /tmp/ccXDsCrt.s:256    .text.OSTaskStkInit:00000000 OSTaskStkInit
+     /tmp/ccXDsCrt.s:368    .text.OSTaskStkInit:0000008c $d
+     /tmp/ccXDsCrt.s:373    .text.SysTick_Handler:00000000 $t
+     /tmp/ccXDsCrt.s:379    .text.SysTick_Handler:00000000 SysTick_Handler
+
+UNDEFINED SYMBOLS
+App_TaskCreateHook
+SEGGER_SYSVIEW_OnTaskCreate
+SEGGER_SYSVIEW_NameResource
+App_TaskSwHook
+SEGGER_SYSVIEW_OnTaskStartExec
+OSTCBHighRdy
+OS_TaskReturn
+OS_CPU_SR_Save
+OSIntEnter
+OS_CPU_SR_Restore
+OSTimeTick
+OSIntExit

@@ -1,0 +1,174 @@
+ARM GAS  /tmp/ccew7MBj.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"led.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./Hardware/led.c"
+  20              		.section	.text.led_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	led_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	led_init:
+  28              	.LFB123:
+   1:./Hardware/led.c **** #include "led.h"
+   2:./Hardware/led.c **** #include "stm32f4xx.h"
+   3:./Hardware/led.c **** 
+   4:./Hardware/led.c **** void led_init(void){
+  29              		.loc 1 4 20 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+   5:./Hardware/led.c **** 	RCC->AHB1ENR |=1;
+  34              		.loc 1 5 2 view .LVU1
+  35              		.loc 1 5 5 is_stmt 0 view .LVU2
+  36 0000 094A     		ldr	r2, .L2
+  37 0002 136B     		ldr	r3, [r2, #48]
+  38              		.loc 1 5 15 view .LVU3
+  39 0004 43F00103 		orr	r3, r3, #1
+  40 0008 1363     		str	r3, [r2, #48]
+   6:./Hardware/led.c **** 	
+   7:./Hardware/led.c **** 	GPIOA->MODER|=1<<10; //MODER5:01 OUTPUT
+  41              		.loc 1 7 2 is_stmt 1 view .LVU4
+  42              		.loc 1 7 7 is_stmt 0 view .LVU5
+  43 000a 084B     		ldr	r3, .L2+4
+  44 000c 1A68     		ldr	r2, [r3]
+  45              		.loc 1 7 14 view .LVU6
+  46 000e 42F48062 		orr	r2, r2, #1024
+  47 0012 1A60     		str	r2, [r3]
+   8:./Hardware/led.c **** 	GPIOA->OTYPER &=~(1<<5); //OUTPUT TYPE:PP
+  48              		.loc 1 8 2 is_stmt 1 view .LVU7
+  49              		.loc 1 8 7 is_stmt 0 view .LVU8
+  50 0014 5A68     		ldr	r2, [r3, #4]
+ARM GAS  /tmp/ccew7MBj.s 			page 2
+
+
+  51              		.loc 1 8 16 view .LVU9
+  52 0016 22F02002 		bic	r2, r2, #32
+  53 001a 5A60     		str	r2, [r3, #4]
+   9:./Hardware/led.c **** 	GPIOA->OSPEEDR |=3<<10;		//Very high speed
+  54              		.loc 1 9 2 is_stmt 1 view .LVU10
+  55              		.loc 1 9 7 is_stmt 0 view .LVU11
+  56 001c 9A68     		ldr	r2, [r3, #8]
+  57              		.loc 1 9 17 view .LVU12
+  58 001e 42F44062 		orr	r2, r2, #3072
+  59 0022 9A60     		str	r2, [r3, #8]
+  10:./Hardware/led.c **** 	
+  11:./Hardware/led.c **** }
+  60              		.loc 1 11 1 view .LVU13
+  61 0024 7047     		bx	lr
+  62              	.L3:
+  63 0026 00BF     		.align	2
+  64              	.L2:
+  65 0028 00380240 		.word	1073887232
+  66 002c 00000240 		.word	1073872896
+  67              		.cfi_endproc
+  68              	.LFE123:
+  70              		.section	.text.led_on,"ax",%progbits
+  71              		.align	1
+  72              		.global	led_on
+  73              		.syntax unified
+  74              		.thumb
+  75              		.thumb_func
+  77              	led_on:
+  78              	.LFB124:
+  12:./Hardware/led.c **** 
+  13:./Hardware/led.c **** void led_on(void){
+  79              		.loc 1 13 18 is_stmt 1 view -0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83              		@ link register save eliminated.
+  14:./Hardware/led.c **** 	GPIOA->BSRRL |=1<<5;
+  84              		.loc 1 14 2 view .LVU15
+  85              		.loc 1 14 7 is_stmt 0 view .LVU16
+  86 0000 034A     		ldr	r2, .L5
+  87 0002 138B     		ldrh	r3, [r2, #24]
+  88 0004 9BB2     		uxth	r3, r3
+  89              		.loc 1 14 15 view .LVU17
+  90 0006 43F02003 		orr	r3, r3, #32
+  91 000a 1383     		strh	r3, [r2, #24]	@ movhi
+  15:./Hardware/led.c **** }
+  92              		.loc 1 15 1 view .LVU18
+  93 000c 7047     		bx	lr
+  94              	.L6:
+  95 000e 00BF     		.align	2
+  96              	.L5:
+  97 0010 00000240 		.word	1073872896
+  98              		.cfi_endproc
+  99              	.LFE124:
+ 101              		.section	.text.led_off,"ax",%progbits
+ 102              		.align	1
+ 103              		.global	led_off
+ARM GAS  /tmp/ccew7MBj.s 			page 3
+
+
+ 104              		.syntax unified
+ 105              		.thumb
+ 106              		.thumb_func
+ 108              	led_off:
+ 109              	.LFB125:
+  16:./Hardware/led.c **** 
+  17:./Hardware/led.c **** void led_off(void){
+ 110              		.loc 1 17 19 is_stmt 1 view -0
+ 111              		.cfi_startproc
+ 112              		@ args = 0, pretend = 0, frame = 0
+ 113              		@ frame_needed = 0, uses_anonymous_args = 0
+ 114              		@ link register save eliminated.
+  18:./Hardware/led.c **** 	GPIOA->BSRRH |=1<<5;
+ 115              		.loc 1 18 2 view .LVU20
+ 116              		.loc 1 18 7 is_stmt 0 view .LVU21
+ 117 0000 034A     		ldr	r2, .L8
+ 118 0002 538B     		ldrh	r3, [r2, #26]
+ 119 0004 9BB2     		uxth	r3, r3
+ 120              		.loc 1 18 15 view .LVU22
+ 121 0006 43F02003 		orr	r3, r3, #32
+ 122 000a 5383     		strh	r3, [r2, #26]	@ movhi
+  19:./Hardware/led.c **** }
+ 123              		.loc 1 19 1 view .LVU23
+ 124 000c 7047     		bx	lr
+ 125              	.L9:
+ 126 000e 00BF     		.align	2
+ 127              	.L8:
+ 128 0010 00000240 		.word	1073872896
+ 129              		.cfi_endproc
+ 130              	.LFE125:
+ 132              		.text
+ 133              	.Letext0:
+ 134              		.file 2 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 135              		.file 3 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 136              		.file 4 "./system/stm32f4xx.h"
+ARM GAS  /tmp/ccew7MBj.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 led.c
+     /tmp/ccew7MBj.s:21     .text.led_init:00000000 $t
+     /tmp/ccew7MBj.s:27     .text.led_init:00000000 led_init
+     /tmp/ccew7MBj.s:65     .text.led_init:00000028 $d
+     /tmp/ccew7MBj.s:71     .text.led_on:00000000 $t
+     /tmp/ccew7MBj.s:77     .text.led_on:00000000 led_on
+     /tmp/ccew7MBj.s:97     .text.led_on:00000010 $d
+     /tmp/ccew7MBj.s:102    .text.led_off:00000000 $t
+     /tmp/ccew7MBj.s:108    .text.led_off:00000000 led_off
+     /tmp/ccew7MBj.s:128    .text.led_off:00000010 $d
+
+NO UNDEFINED SYMBOLS

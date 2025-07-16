@@ -1,0 +1,218 @@
+ARM GAS  /tmp/ccQCIXY6.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./User/main.c"
+  20              		.section	.rodata.mymain.str1.4,"aMS",%progbits,1
+  21              		.align	2
+  22              	.LC0:
+  23 0000 6C65646F 		.ascii	"ledon\000"
+  23      6E00
+  24 0006 0000     		.align	2
+  25              	.LC1:
+  26 0008 6C65646F 		.ascii	"ledoff\000"
+  26      666600
+  27              		.section	.text.mymain,"ax",%progbits
+  28              		.align	1
+  29              		.global	mymain
+  30              		.syntax unified
+  31              		.thumb
+  32              		.thumb_func
+  34              	mymain:
+  35              	.LFB0:
+   1:./User/main.c **** #include "ucos_ii.h"
+   2:./User/main.c **** #include "led.h"
+   3:./User/main.c **** #include "mytask.h"
+   4:./User/main.c **** #include "FINAL.h"
+   5:./User/main.c **** 
+   6:./User/main.c **** OS_STK led1stk[128];
+   7:./User/main.c **** OS_STK led2stk[128];
+   8:./User/main.c **** OS_STK RC_Stk[128];
+   9:./User/main.c **** OS_STK DIP_Stk[128];
+  10:./User/main.c **** 
+  11:./User/main.c **** void  mymain(void){
+  36              		.loc 1 11 19 view -0
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 8
+  39              		@ frame_needed = 0, uses_anonymous_args = 0
+  40 0000 00B5     		push	{lr}
+  41              	.LCFI0:
+  42              		.cfi_def_cfa_offset 4
+  43              		.cfi_offset 14, -4
+  44 0002 83B0     		sub	sp, sp, #12
+  45              	.LCFI1:
+ARM GAS  /tmp/ccQCIXY6.s 			page 2
+
+
+  46              		.cfi_def_cfa_offset 16
+  12:./User/main.c **** 	led_init();
+  47              		.loc 1 12 2 view .LVU1
+  48 0004 FFF7FEFF 		bl	led_init
+  49              	.LVL0:
+  13:./User/main.c **** //	ALL_Init();
+  14:./User/main.c **** 	OS_TRACE_INIT();
+  50              		.loc 1 14 2 view .LVU2
+  51 0008 FFF7FEFF 		bl	SEGGER_SYSVIEW_Conf
+  52              	.LVL1:
+  15:./User/main.c **** 	OS_TRACE_START();
+  53              		.loc 1 15 2 view .LVU3
+  54 000c FFF7FEFF 		bl	SEGGER_SYSVIEW_Start
+  55              	.LVL2:
+  16:./User/main.c **** //	SEGGER_SYSVIEW_Print("SystemView Initialized OK!");
+  17:./User/main.c **** 	OSInit();
+  56              		.loc 1 17 2 view .LVU4
+  57 0010 FFF7FEFF 		bl	OSInit
+  58              	.LVL3:
+  18:./User/main.c **** //	OSTaskCreate(Task_RCControl,(void*)0,&RC_Stk[127],4);
+  19:./User/main.c **** //  OSTaskCreate(Task_Attitude,(void*)0,&DIP_Stk[127],5);
+  20:./User/main.c **** 	OSTaskCreate(Task1,(void*)0,&led1stk[127],4);
+  59              		.loc 1 20 2 view .LVU5
+  60 0014 0423     		movs	r3, #4
+  61 0016 0E4A     		ldr	r2, .L3
+  62 0018 0021     		movs	r1, #0
+  63 001a 0E48     		ldr	r0, .L3+4
+  64 001c FFF7FEFF 		bl	OSTaskCreate
+  65              	.LVL4:
+  21:./User/main.c **** 	OSTaskCreate(Task2,(void*)0,&led2stk[127],5);
+  66              		.loc 1 21 2 view .LVU6
+  67 0020 0523     		movs	r3, #5
+  68 0022 0D4A     		ldr	r2, .L3+8
+  69 0024 0021     		movs	r1, #0
+  70 0026 0D48     		ldr	r0, .L3+12
+  71 0028 FFF7FEFF 		bl	OSTaskCreate
+  72              	.LVL5:
+  22:./User/main.c **** //	INT8U RCControl_err,Attitude_err;
+  23:./User/main.c **** 	INT8U ledon_err,ledoff_err;
+  73              		.loc 1 23 2 view .LVU7
+  24:./User/main.c **** //	OSTaskNameSet(4,(INT8U*)(void*)"RCControl",&RCControl_err);
+  25:./User/main.c **** //	OSTaskNameSet(5,(INT8U*)(void*)"Attitude",&Attitude_err);
+  26:./User/main.c **** 	OSTaskNameSet(4,(INT8U*)(void*)"ledon",&ledon_err);
+  74              		.loc 1 26 2 view .LVU8
+  75 002c 0DF10702 		add	r2, sp, #7
+  76 0030 0B49     		ldr	r1, .L3+16
+  77 0032 0420     		movs	r0, #4
+  78 0034 FFF7FEFF 		bl	OSTaskNameSet
+  79              	.LVL6:
+  27:./User/main.c **** 	OSTaskNameSet(5,(INT8U*)(void*)"ledoff",&ledoff_err);
+  80              		.loc 1 27 2 view .LVU9
+  81 0038 0DF10602 		add	r2, sp, #6
+  82 003c 0949     		ldr	r1, .L3+20
+  83 003e 0520     		movs	r0, #5
+  84 0040 FFF7FEFF 		bl	OSTaskNameSet
+  85              	.LVL7:
+  28:./User/main.c **** 	OSStart();
+ARM GAS  /tmp/ccQCIXY6.s 			page 3
+
+
+  86              		.loc 1 28 2 view .LVU10
+  87 0044 FFF7FEFF 		bl	OSStart
+  88              	.LVL8:
+  29:./User/main.c **** }
+  89              		.loc 1 29 1 is_stmt 0 view .LVU11
+  90 0048 03B0     		add	sp, sp, #12
+  91              	.LCFI2:
+  92              		.cfi_def_cfa_offset 4
+  93              		@ sp needed
+  94 004a 5DF804FB 		ldr	pc, [sp], #4
+  95              	.L4:
+  96 004e 00BF     		.align	2
+  97              	.L3:
+  98 0050 FC010000 		.word	led1stk+508
+  99 0054 00000000 		.word	Task1
+ 100 0058 FC010000 		.word	led2stk+508
+ 101 005c 00000000 		.word	Task2
+ 102 0060 00000000 		.word	.LC0
+ 103 0064 08000000 		.word	.LC1
+ 104              		.cfi_endproc
+ 105              	.LFE0:
+ 107              		.global	DIP_Stk
+ 108              		.section	.bss.DIP_Stk,"aw",%nobits
+ 109              		.align	2
+ 112              	DIP_Stk:
+ 113 0000 00000000 		.space	512
+ 113      00000000 
+ 113      00000000 
+ 113      00000000 
+ 113      00000000 
+ 114              		.global	RC_Stk
+ 115              		.section	.bss.RC_Stk,"aw",%nobits
+ 116              		.align	2
+ 119              	RC_Stk:
+ 120 0000 00000000 		.space	512
+ 120      00000000 
+ 120      00000000 
+ 120      00000000 
+ 120      00000000 
+ 121              		.global	led2stk
+ 122              		.section	.bss.led2stk,"aw",%nobits
+ 123              		.align	2
+ 126              	led2stk:
+ 127 0000 00000000 		.space	512
+ 127      00000000 
+ 127      00000000 
+ 127      00000000 
+ 127      00000000 
+ 128              		.global	led1stk
+ 129              		.section	.bss.led1stk,"aw",%nobits
+ 130              		.align	2
+ 133              	led1stk:
+ 134 0000 00000000 		.space	512
+ 134      00000000 
+ 134      00000000 
+ 134      00000000 
+ 134      00000000 
+ARM GAS  /tmp/ccQCIXY6.s 			page 4
+
+
+ 135              		.text
+ 136              	.Letext0:
+ 137              		.file 2 "./ucos/Ports/os_cpu.h"
+ 138              		.file 3 "./ucos/Core/ucos_ii.h"
+ 139              		.file 4 "./User/mytask.h"
+ 140              		.file 5 "./trace/SEGGER/SEGGER_SYSVIEW.h"
+ 141              		.file 6 "./Hardware/led.h"
+ARM GAS  /tmp/ccQCIXY6.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+     /tmp/ccQCIXY6.s:21     .rodata.mymain.str1.4:00000000 $d
+     /tmp/ccQCIXY6.s:28     .text.mymain:00000000 $t
+     /tmp/ccQCIXY6.s:34     .text.mymain:00000000 mymain
+     /tmp/ccQCIXY6.s:98     .text.mymain:00000050 $d
+     /tmp/ccQCIXY6.s:133    .bss.led1stk:00000000 led1stk
+     /tmp/ccQCIXY6.s:126    .bss.led2stk:00000000 led2stk
+     /tmp/ccQCIXY6.s:112    .bss.DIP_Stk:00000000 DIP_Stk
+     /tmp/ccQCIXY6.s:109    .bss.DIP_Stk:00000000 $d
+     /tmp/ccQCIXY6.s:119    .bss.RC_Stk:00000000 RC_Stk
+     /tmp/ccQCIXY6.s:116    .bss.RC_Stk:00000000 $d
+     /tmp/ccQCIXY6.s:123    .bss.led2stk:00000000 $d
+     /tmp/ccQCIXY6.s:130    .bss.led1stk:00000000 $d
+
+UNDEFINED SYMBOLS
+led_init
+SEGGER_SYSVIEW_Conf
+SEGGER_SYSVIEW_Start
+OSInit
+OSTaskCreate
+OSTaskNameSet
+OSStart
+Task1
+Task2

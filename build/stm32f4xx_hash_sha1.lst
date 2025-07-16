@@ -1,0 +1,1701 @@
+ARM GAS  /tmp/ccoQDDT2.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"stm32f4xx_hash_sha1.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./Libraries/src/stm32f4xx_hash_sha1.c"
+  20              		.section	.text.HASH_SHA1,"ax",%progbits
+  21              		.align	1
+  22              		.global	HASH_SHA1
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	HASH_SHA1:
+  28              	.LVL0:
+  29              	.LFB123:
+   1:./Libraries/src/stm32f4xx_hash_sha1.c **** /**
+   2:./Libraries/src/stm32f4xx_hash_sha1.c ****   ******************************************************************************
+   3:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @file    stm32f4xx_hash_sha1.c
+   4:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @author  MCD Application Team
+   5:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @version V1.8.0
+   6:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @date    04-November-2016
+   7:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @brief   This file provides high level functions to compute the HASH SHA1 and
+   8:./Libraries/src/stm32f4xx_hash_sha1.c ****   *          HMAC SHA1 Digest of an input message.
+   9:./Libraries/src/stm32f4xx_hash_sha1.c ****   *          It uses the stm32f4xx_hash.c/.h drivers to access the STM32F4xx HASH
+  10:./Libraries/src/stm32f4xx_hash_sha1.c ****   *          peripheral.
+  11:./Libraries/src/stm32f4xx_hash_sha1.c ****   *
+  12:./Libraries/src/stm32f4xx_hash_sha1.c **** @verbatim
+  13:./Libraries/src/stm32f4xx_hash_sha1.c ****  ===================================================================
+  14:./Libraries/src/stm32f4xx_hash_sha1.c ****                  ##### How to use this driver #####
+  15:./Libraries/src/stm32f4xx_hash_sha1.c ****  ===================================================================
+  16:./Libraries/src/stm32f4xx_hash_sha1.c ****  [..]
+  17:./Libraries/src/stm32f4xx_hash_sha1.c ****    (#) Enable The HASH controller clock using 
+  18:./Libraries/src/stm32f4xx_hash_sha1.c ****        RCC_AHB2PeriphClockCmd(RCC_AHB2Periph_HASH, ENABLE); function.
+  19:./Libraries/src/stm32f4xx_hash_sha1.c ****   
+  20:./Libraries/src/stm32f4xx_hash_sha1.c ****    (#) Calculate the HASH SHA1 Digest using HASH_SHA1() function.
+  21:./Libraries/src/stm32f4xx_hash_sha1.c ****   
+  22:./Libraries/src/stm32f4xx_hash_sha1.c ****    (#) Calculate the HMAC SHA1 Digest using HMAC_SHA1() function.
+  23:./Libraries/src/stm32f4xx_hash_sha1.c ****   
+  24:./Libraries/src/stm32f4xx_hash_sha1.c **** @endverbatim
+  25:./Libraries/src/stm32f4xx_hash_sha1.c ****   *
+  26:./Libraries/src/stm32f4xx_hash_sha1.c ****   ******************************************************************************
+  27:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @attention
+  28:./Libraries/src/stm32f4xx_hash_sha1.c ****   *
+  29:./Libraries/src/stm32f4xx_hash_sha1.c ****   * <h2><center>&copy; COPYRIGHT 2016 STMicroelectronics</center></h2>
+ARM GAS  /tmp/ccoQDDT2.s 			page 2
+
+
+  30:./Libraries/src/stm32f4xx_hash_sha1.c ****   *
+  31:./Libraries/src/stm32f4xx_hash_sha1.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  32:./Libraries/src/stm32f4xx_hash_sha1.c ****   * You may not use this file except in compliance with the License.
+  33:./Libraries/src/stm32f4xx_hash_sha1.c ****   * You may obtain a copy of the License at:
+  34:./Libraries/src/stm32f4xx_hash_sha1.c ****   *
+  35:./Libraries/src/stm32f4xx_hash_sha1.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  36:./Libraries/src/stm32f4xx_hash_sha1.c ****   *
+  37:./Libraries/src/stm32f4xx_hash_sha1.c ****   * Unless required by applicable law or agreed to in writing, software 
+  38:./Libraries/src/stm32f4xx_hash_sha1.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  39:./Libraries/src/stm32f4xx_hash_sha1.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  40:./Libraries/src/stm32f4xx_hash_sha1.c ****   * See the License for the specific language governing permissions and
+  41:./Libraries/src/stm32f4xx_hash_sha1.c ****   * limitations under the License.
+  42:./Libraries/src/stm32f4xx_hash_sha1.c ****   *
+  43:./Libraries/src/stm32f4xx_hash_sha1.c ****   ******************************************************************************
+  44:./Libraries/src/stm32f4xx_hash_sha1.c ****   */
+  45:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+  46:./Libraries/src/stm32f4xx_hash_sha1.c **** /* Includes ------------------------------------------------------------------*/
+  47:./Libraries/src/stm32f4xx_hash_sha1.c **** #include "stm32f4xx_hash.h"
+  48:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+  49:./Libraries/src/stm32f4xx_hash_sha1.c **** /** @addtogroup STM32F4xx_StdPeriph_Driver
+  50:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @{
+  51:./Libraries/src/stm32f4xx_hash_sha1.c ****   */
+  52:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+  53:./Libraries/src/stm32f4xx_hash_sha1.c **** /** @defgroup HASH 
+  54:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @brief HASH driver modules
+  55:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @{
+  56:./Libraries/src/stm32f4xx_hash_sha1.c ****   */
+  57:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+  58:./Libraries/src/stm32f4xx_hash_sha1.c **** /* Private typedef -----------------------------------------------------------*/
+  59:./Libraries/src/stm32f4xx_hash_sha1.c **** /* Private define ------------------------------------------------------------*/
+  60:./Libraries/src/stm32f4xx_hash_sha1.c **** #define SHA1BUSY_TIMEOUT    ((uint32_t) 0x00010000)
+  61:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+  62:./Libraries/src/stm32f4xx_hash_sha1.c **** /* Private macro -------------------------------------------------------------*/
+  63:./Libraries/src/stm32f4xx_hash_sha1.c **** /* Private variables ---------------------------------------------------------*/
+  64:./Libraries/src/stm32f4xx_hash_sha1.c **** /* Private function prototypes -----------------------------------------------*/
+  65:./Libraries/src/stm32f4xx_hash_sha1.c **** /* Private functions ---------------------------------------------------------*/
+  66:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+  67:./Libraries/src/stm32f4xx_hash_sha1.c **** /** @defgroup HASH_Private_Functions
+  68:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @{
+  69:./Libraries/src/stm32f4xx_hash_sha1.c ****   */ 
+  70:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+  71:./Libraries/src/stm32f4xx_hash_sha1.c **** /** @defgroup HASH_Group6 High Level SHA1 functions
+  72:./Libraries/src/stm32f4xx_hash_sha1.c ****  *  @brief   High Level SHA1 Hash and HMAC functions 
+  73:./Libraries/src/stm32f4xx_hash_sha1.c ****  *
+  74:./Libraries/src/stm32f4xx_hash_sha1.c **** @verbatim   
+  75:./Libraries/src/stm32f4xx_hash_sha1.c ****  ===============================================================================
+  76:./Libraries/src/stm32f4xx_hash_sha1.c ****                ##### High Level SHA1 Hash and HMAC functions #####
+  77:./Libraries/src/stm32f4xx_hash_sha1.c ****  ===============================================================================
+  78:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+  79:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+  80:./Libraries/src/stm32f4xx_hash_sha1.c **** @endverbatim
+  81:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @{
+  82:./Libraries/src/stm32f4xx_hash_sha1.c ****   */
+  83:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+  84:./Libraries/src/stm32f4xx_hash_sha1.c **** /**
+  85:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @brief  Compute the HASH SHA1 digest.
+  86:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @param  Input: pointer to the Input buffer to be treated.
+ARM GAS  /tmp/ccoQDDT2.s 			page 3
+
+
+  87:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @param  Ilen: length of the Input buffer.
+  88:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @param  Output: the returned digest
+  89:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @retval An ErrorStatus enumeration value:
+  90:./Libraries/src/stm32f4xx_hash_sha1.c ****   *          - SUCCESS: digest computation done
+  91:./Libraries/src/stm32f4xx_hash_sha1.c ****   *          - ERROR: digest computation failed
+  92:./Libraries/src/stm32f4xx_hash_sha1.c ****   */
+  93:./Libraries/src/stm32f4xx_hash_sha1.c **** ErrorStatus HASH_SHA1(uint8_t *Input, uint32_t Ilen, uint8_t Output[20])
+  94:./Libraries/src/stm32f4xx_hash_sha1.c **** {
+  30              		.loc 1 94 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 56
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 94 1 is_stmt 0 view .LVU1
+  35 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 20
+  38              		.cfi_offset 4, -20
+  39              		.cfi_offset 5, -16
+  40              		.cfi_offset 6, -12
+  41              		.cfi_offset 7, -8
+  42              		.cfi_offset 14, -4
+  43 0002 8FB0     		sub	sp, sp, #60
+  44              	.LCFI1:
+  45              		.cfi_def_cfa_offset 80
+  46 0004 0F46     		mov	r7, r1
+  47 0006 1646     		mov	r6, r2
+  95:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_InitTypeDef SHA1_HASH_InitStructure;
+  48              		.loc 1 95 3 is_stmt 1 view .LVU2
+  96:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_MsgDigest SHA1_MessageDigest;
+  49              		.loc 1 96 3 view .LVU3
+  97:./Libraries/src/stm32f4xx_hash_sha1.c ****   __IO uint16_t nbvalidbitsdata = 0;
+  50              		.loc 1 97 3 view .LVU4
+  51              		.loc 1 97 17 is_stmt 0 view .LVU5
+  52 0008 0024     		movs	r4, #0
+  53 000a ADF80640 		strh	r4, [sp, #6]	@ movhi
+  98:./Libraries/src/stm32f4xx_hash_sha1.c ****   uint32_t i = 0;
+  54              		.loc 1 98 3 is_stmt 1 view .LVU6
+  55              	.LVL1:
+  99:./Libraries/src/stm32f4xx_hash_sha1.c ****   __IO uint32_t counter = 0;
+  56              		.loc 1 99 3 view .LVU7
+  57              		.loc 1 99 17 is_stmt 0 view .LVU8
+  58 000e 0094     		str	r4, [sp]
+ 100:./Libraries/src/stm32f4xx_hash_sha1.c ****   uint32_t busystatus = 0;
+  59              		.loc 1 100 3 is_stmt 1 view .LVU9
+  60              	.LVL2:
+ 101:./Libraries/src/stm32f4xx_hash_sha1.c ****   ErrorStatus status = SUCCESS;
+  61              		.loc 1 101 3 view .LVU10
+ 102:./Libraries/src/stm32f4xx_hash_sha1.c ****   uint32_t inputaddr  = (uint32_t)Input;
+  62              		.loc 1 102 3 view .LVU11
+  63              		.loc 1 102 12 is_stmt 0 view .LVU12
+  64 0010 0546     		mov	r5, r0
+  65              	.LVL3:
+ 103:./Libraries/src/stm32f4xx_hash_sha1.c ****   uint32_t outputaddr = (uint32_t)Output;
+  66              		.loc 1 103 3 is_stmt 1 view .LVU13
+ 104:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 105:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* Number of valid bits in last word of the Input data */
+ 106:./Libraries/src/stm32f4xx_hash_sha1.c ****   nbvalidbitsdata = 8 * (Ilen % 4);
+ARM GAS  /tmp/ccoQDDT2.s 			page 4
+
+
+  67              		.loc 1 106 3 view .LVU14
+  68              		.loc 1 106 19 is_stmt 0 view .LVU15
+  69 0012 01F00303 		and	r3, r1, #3
+  70 0016 DB00     		lsls	r3, r3, #3
+  71 0018 ADF80630 		strh	r3, [sp, #6]	@ movhi
+ 107:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 108:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* HASH peripheral initialization */
+ 109:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_DeInit();
+  72              		.loc 1 109 3 is_stmt 1 view .LVU16
+  73 001c FFF7FEFF 		bl	HASH_DeInit
+  74              	.LVL4:
+ 110:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 111:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* HASH Configuration */
+ 112:./Libraries/src/stm32f4xx_hash_sha1.c ****   SHA1_HASH_InitStructure.HASH_AlgoSelection = HASH_AlgoSelection_SHA1;
+  75              		.loc 1 112 3 view .LVU17
+  76              		.loc 1 112 46 is_stmt 0 view .LVU18
+  77 0020 0A94     		str	r4, [sp, #40]
+ 113:./Libraries/src/stm32f4xx_hash_sha1.c ****   SHA1_HASH_InitStructure.HASH_AlgoMode = HASH_AlgoMode_HASH;
+  78              		.loc 1 113 3 is_stmt 1 view .LVU19
+  79              		.loc 1 113 41 is_stmt 0 view .LVU20
+  80 0022 0B94     		str	r4, [sp, #44]
+ 114:./Libraries/src/stm32f4xx_hash_sha1.c ****   SHA1_HASH_InitStructure.HASH_DataType = HASH_DataType_8b;
+  81              		.loc 1 114 3 is_stmt 1 view .LVU21
+  82              		.loc 1 114 41 is_stmt 0 view .LVU22
+  83 0024 2023     		movs	r3, #32
+  84 0026 0C93     		str	r3, [sp, #48]
+ 115:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_Init(&SHA1_HASH_InitStructure);
+  85              		.loc 1 115 3 is_stmt 1 view .LVU23
+  86 0028 0AA8     		add	r0, sp, #40
+  87 002a FFF7FEFF 		bl	HASH_Init
+  88              	.LVL5:
+ 116:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 117:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* Configure the number of valid bits in last word of the data */
+ 118:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_SetLastWordValidBitsNbr(nbvalidbitsdata);
+  89              		.loc 1 118 3 view .LVU24
+  90 002e BDF80600 		ldrh	r0, [sp, #6]
+  91 0032 80B2     		uxth	r0, r0
+  92 0034 FFF7FEFF 		bl	HASH_SetLastWordValidBitsNbr
+  93              	.LVL6:
+ 119:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 120:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* Write the Input block in the IN FIFO */
+ 121:./Libraries/src/stm32f4xx_hash_sha1.c ****   for(i=0; i<Ilen; i+=4)
+  94              		.loc 1 121 3 view .LVU25
+  95              		.loc 1 121 3 is_stmt 0 view .LVU26
+  96 0038 04E0     		b	.L2
+  97              	.LVL7:
+  98              	.L3:
+ 122:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 123:./Libraries/src/stm32f4xx_hash_sha1.c ****     HASH_DataIn(*(uint32_t*)inputaddr);
+  99              		.loc 1 123 5 is_stmt 1 view .LVU27
+ 100 003a 55F8040B 		ldr	r0, [r5], #4
+ 101              	.LVL8:
+ 102              		.loc 1 123 5 is_stmt 0 view .LVU28
+ 103 003e FFF7FEFF 		bl	HASH_DataIn
+ 104              	.LVL9:
+ 124:./Libraries/src/stm32f4xx_hash_sha1.c ****     inputaddr+=4;
+ 105              		.loc 1 124 5 is_stmt 1 view .LVU29
+ARM GAS  /tmp/ccoQDDT2.s 			page 5
+
+
+ 121:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 106              		.loc 1 121 21 discriminator 3 view .LVU30
+ 107 0042 0434     		adds	r4, r4, #4
+ 108              	.LVL10:
+ 109              	.L2:
+ 121:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 110              		.loc 1 121 13 discriminator 1 view .LVU31
+ 111 0044 BC42     		cmp	r4, r7
+ 112 0046 F8D3     		bcc	.L3
+ 125:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ 126:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 127:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* Start the HASH processor */
+ 128:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_StartDigest();
+ 113              		.loc 1 128 3 view .LVU32
+ 114 0048 FFF7FEFF 		bl	HASH_StartDigest
+ 115              	.LVL11:
+ 116              	.L5:
+ 129:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 130:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* wait until the Busy flag is RESET */
+ 131:./Libraries/src/stm32f4xx_hash_sha1.c ****   do
+ 117              		.loc 1 131 3 view .LVU33
+ 132:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 133:./Libraries/src/stm32f4xx_hash_sha1.c ****     busystatus = HASH_GetFlagStatus(HASH_FLAG_BUSY);
+ 118              		.loc 1 133 5 view .LVU34
+ 119              		.loc 1 133 18 is_stmt 0 view .LVU35
+ 120 004c 0820     		movs	r0, #8
+ 121 004e FFF7FEFF 		bl	HASH_GetFlagStatus
+ 122              	.LVL12:
+ 134:./Libraries/src/stm32f4xx_hash_sha1.c ****     counter++;
+ 123              		.loc 1 134 5 is_stmt 1 view .LVU36
+ 124              		.loc 1 134 12 is_stmt 0 view .LVU37
+ 125 0052 009B     		ldr	r3, [sp]
+ 126 0054 0133     		adds	r3, r3, #1
+ 127 0056 0093     		str	r3, [sp]
+ 135:./Libraries/src/stm32f4xx_hash_sha1.c ****   }while ((counter != SHA1BUSY_TIMEOUT) && (busystatus != RESET));
+ 128              		.loc 1 135 41 is_stmt 1 discriminator 2 view .LVU38
+ 129              		.loc 1 135 20 is_stmt 0 discriminator 2 view .LVU39
+ 130 0058 009B     		ldr	r3, [sp]
+ 131              		.loc 1 135 41 discriminator 2 view .LVU40
+ 132 005a B3F5803F 		cmp	r3, #65536
+ 133 005e 01D0     		beq	.L4
+ 134              		.loc 1 135 41 discriminator 1 view .LVU41
+ 135 0060 0028     		cmp	r0, #0
+ 136 0062 F3D1     		bne	.L5
+ 137              	.L4:
+ 136:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 137:./Libraries/src/stm32f4xx_hash_sha1.c ****   if (busystatus != RESET)
+ 138              		.loc 1 137 3 is_stmt 1 view .LVU42
+ 139              		.loc 1 137 6 is_stmt 0 view .LVU43
+ 140 0064 10B1     		cbz	r0, .L9
+ 138:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 139:./Libraries/src/stm32f4xx_hash_sha1.c ****      status = ERROR;
+ 141              		.loc 1 139 13 view .LVU44
+ 142 0066 0020     		movs	r0, #0
+ 143              	.LVL13:
+ 144              	.L6:
+ 140:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ARM GAS  /tmp/ccoQDDT2.s 			page 6
+
+
+ 141:./Libraries/src/stm32f4xx_hash_sha1.c ****   else
+ 142:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 143:./Libraries/src/stm32f4xx_hash_sha1.c ****     /* Read the message digest */
+ 144:./Libraries/src/stm32f4xx_hash_sha1.c ****     HASH_GetDigest(&SHA1_MessageDigest);
+ 145:./Libraries/src/stm32f4xx_hash_sha1.c ****     *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[0]);
+ 146:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 147:./Libraries/src/stm32f4xx_hash_sha1.c ****     *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[1]);
+ 148:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 149:./Libraries/src/stm32f4xx_hash_sha1.c ****     *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[2]);
+ 150:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 151:./Libraries/src/stm32f4xx_hash_sha1.c ****     *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[3]);
+ 152:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 153:./Libraries/src/stm32f4xx_hash_sha1.c ****     *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[4]);
+ 154:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ 155:./Libraries/src/stm32f4xx_hash_sha1.c ****   return status;
+ 145              		.loc 1 155 3 is_stmt 1 view .LVU45
+ 156:./Libraries/src/stm32f4xx_hash_sha1.c **** }
+ 146              		.loc 1 156 1 is_stmt 0 view .LVU46
+ 147 0068 0FB0     		add	sp, sp, #60
+ 148              	.LCFI2:
+ 149              		.cfi_remember_state
+ 150              		.cfi_def_cfa_offset 20
+ 151              		@ sp needed
+ 152 006a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 153              	.LVL14:
+ 154              	.L9:
+ 155              	.LCFI3:
+ 156              		.cfi_restore_state
+ 144:./Libraries/src/stm32f4xx_hash_sha1.c ****     *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[0]);
+ 157              		.loc 1 144 5 is_stmt 1 view .LVU47
+ 158 006c 02A8     		add	r0, sp, #8
+ 159              	.LVL15:
+ 144:./Libraries/src/stm32f4xx_hash_sha1.c ****     *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[0]);
+ 160              		.loc 1 144 5 is_stmt 0 view .LVU48
+ 161 006e FFF7FEFF 		bl	HASH_GetDigest
+ 162              	.LVL16:
+ 145:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 163              		.loc 1 145 5 is_stmt 1 view .LVU49
+ 145:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 164              		.loc 1 145 33 is_stmt 0 view .LVU50
+ 165 0072 029B     		ldr	r3, [sp, #8]
+ 166              	.LVL17:
+ 167              	.LBB22:
+ 168              	.LBI22:
+ 169              		.file 2 "./system/core_cmInstr.h"
+   1:./system/core_cmInstr.h **** /**************************************************************************//**
+   2:./system/core_cmInstr.h ****  * @file     core_cmInstr.h
+   3:./system/core_cmInstr.h ****  * @brief    CMSIS Cortex-M Core Instruction Access Header File
+   4:./system/core_cmInstr.h ****  * @version  V4.10
+   5:./system/core_cmInstr.h ****  * @date     18. March 2015
+   6:./system/core_cmInstr.h ****  *
+   7:./system/core_cmInstr.h ****  * @note
+   8:./system/core_cmInstr.h ****  *
+   9:./system/core_cmInstr.h ****  ******************************************************************************/
+  10:./system/core_cmInstr.h **** /* Copyright (c) 2009 - 2014 ARM LIMITED
+  11:./system/core_cmInstr.h **** 
+  12:./system/core_cmInstr.h ****    All rights reserved.
+ARM GAS  /tmp/ccoQDDT2.s 			page 7
+
+
+  13:./system/core_cmInstr.h ****    Redistribution and use in source and binary forms, with or without
+  14:./system/core_cmInstr.h ****    modification, are permitted provided that the following conditions are met:
+  15:./system/core_cmInstr.h ****    - Redistributions of source code must retain the above copyright
+  16:./system/core_cmInstr.h ****      notice, this list of conditions and the following disclaimer.
+  17:./system/core_cmInstr.h ****    - Redistributions in binary form must reproduce the above copyright
+  18:./system/core_cmInstr.h ****      notice, this list of conditions and the following disclaimer in the
+  19:./system/core_cmInstr.h ****      documentation and/or other materials provided with the distribution.
+  20:./system/core_cmInstr.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  21:./system/core_cmInstr.h ****      to endorse or promote products derived from this software without
+  22:./system/core_cmInstr.h ****      specific prior written permission.
+  23:./system/core_cmInstr.h ****    *
+  24:./system/core_cmInstr.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  25:./system/core_cmInstr.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  26:./system/core_cmInstr.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  27:./system/core_cmInstr.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  28:./system/core_cmInstr.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  29:./system/core_cmInstr.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  30:./system/core_cmInstr.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  31:./system/core_cmInstr.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  32:./system/core_cmInstr.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  33:./system/core_cmInstr.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  34:./system/core_cmInstr.h ****    POSSIBILITY OF SUCH DAMAGE.
+  35:./system/core_cmInstr.h ****    ---------------------------------------------------------------------------*/
+  36:./system/core_cmInstr.h **** 
+  37:./system/core_cmInstr.h **** 
+  38:./system/core_cmInstr.h **** #ifndef __CORE_CMINSTR_H
+  39:./system/core_cmInstr.h **** #define __CORE_CMINSTR_H
+  40:./system/core_cmInstr.h **** 
+  41:./system/core_cmInstr.h **** 
+  42:./system/core_cmInstr.h **** /* ##########################  Core Instruction Access  ######################### */
+  43:./system/core_cmInstr.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+  44:./system/core_cmInstr.h ****   Access to dedicated instructions
+  45:./system/core_cmInstr.h ****   @{
+  46:./system/core_cmInstr.h **** */
+  47:./system/core_cmInstr.h **** 
+  48:./system/core_cmInstr.h **** #if   defined ( __CC_ARM ) /*------------------RealView Compiler -----------------*/
+  49:./system/core_cmInstr.h **** /* ARM armcc specific functions */
+  50:./system/core_cmInstr.h **** 
+  51:./system/core_cmInstr.h **** #if (__ARMCC_VERSION < 400677)
+  52:./system/core_cmInstr.h ****   #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
+  53:./system/core_cmInstr.h **** #endif
+  54:./system/core_cmInstr.h **** 
+  55:./system/core_cmInstr.h **** 
+  56:./system/core_cmInstr.h **** /** \brief  No Operation
+  57:./system/core_cmInstr.h **** 
+  58:./system/core_cmInstr.h ****     No Operation does nothing. This instruction can be used for code alignment purposes.
+  59:./system/core_cmInstr.h ****  */
+  60:./system/core_cmInstr.h **** #define __NOP                             __nop
+  61:./system/core_cmInstr.h **** 
+  62:./system/core_cmInstr.h **** 
+  63:./system/core_cmInstr.h **** /** \brief  Wait For Interrupt
+  64:./system/core_cmInstr.h **** 
+  65:./system/core_cmInstr.h ****     Wait For Interrupt is a hint instruction that suspends execution
+  66:./system/core_cmInstr.h ****     until one of a number of events occurs.
+  67:./system/core_cmInstr.h ****  */
+  68:./system/core_cmInstr.h **** #define __WFI                             __wfi
+  69:./system/core_cmInstr.h **** 
+ARM GAS  /tmp/ccoQDDT2.s 			page 8
+
+
+  70:./system/core_cmInstr.h **** 
+  71:./system/core_cmInstr.h **** /** \brief  Wait For Event
+  72:./system/core_cmInstr.h **** 
+  73:./system/core_cmInstr.h ****     Wait For Event is a hint instruction that permits the processor to enter
+  74:./system/core_cmInstr.h ****     a low-power state until one of a number of events occurs.
+  75:./system/core_cmInstr.h ****  */
+  76:./system/core_cmInstr.h **** #define __WFE                             __wfe
+  77:./system/core_cmInstr.h **** 
+  78:./system/core_cmInstr.h **** 
+  79:./system/core_cmInstr.h **** /** \brief  Send Event
+  80:./system/core_cmInstr.h **** 
+  81:./system/core_cmInstr.h ****     Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+  82:./system/core_cmInstr.h ****  */
+  83:./system/core_cmInstr.h **** #define __SEV                             __sev
+  84:./system/core_cmInstr.h **** 
+  85:./system/core_cmInstr.h **** 
+  86:./system/core_cmInstr.h **** /** \brief  Instruction Synchronization Barrier
+  87:./system/core_cmInstr.h **** 
+  88:./system/core_cmInstr.h ****     Instruction Synchronization Barrier flushes the pipeline in the processor,
+  89:./system/core_cmInstr.h ****     so that all instructions following the ISB are fetched from cache or
+  90:./system/core_cmInstr.h ****     memory, after the instruction has been completed.
+  91:./system/core_cmInstr.h ****  */
+  92:./system/core_cmInstr.h **** #define __ISB() do {\
+  93:./system/core_cmInstr.h ****                    __schedule_barrier();\
+  94:./system/core_cmInstr.h ****                    __isb(0xF);\
+  95:./system/core_cmInstr.h ****                    __schedule_barrier();\
+  96:./system/core_cmInstr.h ****                 } while (0)
+  97:./system/core_cmInstr.h **** 
+  98:./system/core_cmInstr.h **** /** \brief  Data Synchronization Barrier
+  99:./system/core_cmInstr.h **** 
+ 100:./system/core_cmInstr.h ****     This function acts as a special kind of Data Memory Barrier.
+ 101:./system/core_cmInstr.h ****     It completes when all explicit memory accesses before this instruction complete.
+ 102:./system/core_cmInstr.h ****  */
+ 103:./system/core_cmInstr.h **** #define __DSB() do {\
+ 104:./system/core_cmInstr.h ****                    __schedule_barrier();\
+ 105:./system/core_cmInstr.h ****                    __dsb(0xF);\
+ 106:./system/core_cmInstr.h ****                    __schedule_barrier();\
+ 107:./system/core_cmInstr.h ****                 } while (0)
+ 108:./system/core_cmInstr.h **** 
+ 109:./system/core_cmInstr.h **** /** \brief  Data Memory Barrier
+ 110:./system/core_cmInstr.h **** 
+ 111:./system/core_cmInstr.h ****     This function ensures the apparent order of the explicit memory operations before
+ 112:./system/core_cmInstr.h ****     and after the instruction, without ensuring their completion.
+ 113:./system/core_cmInstr.h ****  */
+ 114:./system/core_cmInstr.h **** #define __DMB() do {\
+ 115:./system/core_cmInstr.h ****                    __schedule_barrier();\
+ 116:./system/core_cmInstr.h ****                    __dmb(0xF);\
+ 117:./system/core_cmInstr.h ****                    __schedule_barrier();\
+ 118:./system/core_cmInstr.h ****                 } while (0)
+ 119:./system/core_cmInstr.h **** 
+ 120:./system/core_cmInstr.h **** /** \brief  Reverse byte order (32 bit)
+ 121:./system/core_cmInstr.h **** 
+ 122:./system/core_cmInstr.h ****     This function reverses the byte order in integer value.
+ 123:./system/core_cmInstr.h **** 
+ 124:./system/core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 125:./system/core_cmInstr.h ****     \return               Reversed value
+ 126:./system/core_cmInstr.h ****  */
+ARM GAS  /tmp/ccoQDDT2.s 			page 9
+
+
+ 127:./system/core_cmInstr.h **** #define __REV                             __rev
+ 128:./system/core_cmInstr.h **** 
+ 129:./system/core_cmInstr.h **** 
+ 130:./system/core_cmInstr.h **** /** \brief  Reverse byte order (16 bit)
+ 131:./system/core_cmInstr.h **** 
+ 132:./system/core_cmInstr.h ****     This function reverses the byte order in two unsigned short values.
+ 133:./system/core_cmInstr.h **** 
+ 134:./system/core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 135:./system/core_cmInstr.h ****     \return               Reversed value
+ 136:./system/core_cmInstr.h ****  */
+ 137:./system/core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 138:./system/core_cmInstr.h **** __attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
+ 139:./system/core_cmInstr.h **** {
+ 140:./system/core_cmInstr.h ****   rev16 r0, r0
+ 141:./system/core_cmInstr.h ****   bx lr
+ 142:./system/core_cmInstr.h **** }
+ 143:./system/core_cmInstr.h **** #endif
+ 144:./system/core_cmInstr.h **** 
+ 145:./system/core_cmInstr.h **** /** \brief  Reverse byte order in signed short value
+ 146:./system/core_cmInstr.h **** 
+ 147:./system/core_cmInstr.h ****     This function reverses the byte order in a signed short value with sign extension to integer.
+ 148:./system/core_cmInstr.h **** 
+ 149:./system/core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 150:./system/core_cmInstr.h ****     \return               Reversed value
+ 151:./system/core_cmInstr.h ****  */
+ 152:./system/core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 153:./system/core_cmInstr.h **** __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
+ 154:./system/core_cmInstr.h **** {
+ 155:./system/core_cmInstr.h ****   revsh r0, r0
+ 156:./system/core_cmInstr.h ****   bx lr
+ 157:./system/core_cmInstr.h **** }
+ 158:./system/core_cmInstr.h **** #endif
+ 159:./system/core_cmInstr.h **** 
+ 160:./system/core_cmInstr.h **** 
+ 161:./system/core_cmInstr.h **** /** \brief  Rotate Right in unsigned value (32 bit)
+ 162:./system/core_cmInstr.h **** 
+ 163:./system/core_cmInstr.h ****     This function Rotate Right (immediate) provides the value of the contents of a register rotated
+ 164:./system/core_cmInstr.h **** 
+ 165:./system/core_cmInstr.h ****     \param [in]    value  Value to rotate
+ 166:./system/core_cmInstr.h ****     \param [in]    value  Number of Bits to rotate
+ 167:./system/core_cmInstr.h ****     \return               Rotated value
+ 168:./system/core_cmInstr.h ****  */
+ 169:./system/core_cmInstr.h **** #define __ROR                             __ror
+ 170:./system/core_cmInstr.h **** 
+ 171:./system/core_cmInstr.h **** 
+ 172:./system/core_cmInstr.h **** /** \brief  Breakpoint
+ 173:./system/core_cmInstr.h **** 
+ 174:./system/core_cmInstr.h ****     This function causes the processor to enter Debug state.
+ 175:./system/core_cmInstr.h ****     Debug tools can use this to investigate system state when the instruction at a particular addre
+ 176:./system/core_cmInstr.h **** 
+ 177:./system/core_cmInstr.h ****     \param [in]    value  is ignored by the processor.
+ 178:./system/core_cmInstr.h ****                    If required, a debugger can use it to store additional information about the bre
+ 179:./system/core_cmInstr.h ****  */
+ 180:./system/core_cmInstr.h **** #define __BKPT(value)                       __breakpoint(value)
+ 181:./system/core_cmInstr.h **** 
+ 182:./system/core_cmInstr.h **** 
+ 183:./system/core_cmInstr.h **** /** \brief  Reverse bit order of value
+ARM GAS  /tmp/ccoQDDT2.s 			page 10
+
+
+ 184:./system/core_cmInstr.h **** 
+ 185:./system/core_cmInstr.h ****     This function reverses the bit order of the given value.
+ 186:./system/core_cmInstr.h **** 
+ 187:./system/core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 188:./system/core_cmInstr.h ****     \return               Reversed value
+ 189:./system/core_cmInstr.h ****  */
+ 190:./system/core_cmInstr.h **** #if       (__CORTEX_M >= 0x03) || (__CORTEX_SC >= 300)
+ 191:./system/core_cmInstr.h ****   #define __RBIT                          __rbit
+ 192:./system/core_cmInstr.h **** #else
+ 193:./system/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
+ 194:./system/core_cmInstr.h **** {
+ 195:./system/core_cmInstr.h ****   uint32_t result;
+ 196:./system/core_cmInstr.h ****   int32_t s = 4 /*sizeof(v)*/ * 8 - 1; // extra shift needed at end
+ 197:./system/core_cmInstr.h **** 
+ 198:./system/core_cmInstr.h ****   result = value;                      // r will be reversed bits of v; first get LSB of v
+ 199:./system/core_cmInstr.h ****   for (value >>= 1; value; value >>= 1)
+ 200:./system/core_cmInstr.h ****   {
+ 201:./system/core_cmInstr.h ****     result <<= 1;
+ 202:./system/core_cmInstr.h ****     result |= value & 1;
+ 203:./system/core_cmInstr.h ****     s--;
+ 204:./system/core_cmInstr.h ****   }
+ 205:./system/core_cmInstr.h ****   result <<= s;                       // shift when v's highest bits are zero
+ 206:./system/core_cmInstr.h ****   return(result);
+ 207:./system/core_cmInstr.h **** }
+ 208:./system/core_cmInstr.h **** #endif
+ 209:./system/core_cmInstr.h **** 
+ 210:./system/core_cmInstr.h **** 
+ 211:./system/core_cmInstr.h **** /** \brief  Count leading zeros
+ 212:./system/core_cmInstr.h **** 
+ 213:./system/core_cmInstr.h ****     This function counts the number of leading zeros of a data value.
+ 214:./system/core_cmInstr.h **** 
+ 215:./system/core_cmInstr.h ****     \param [in]  value  Value to count the leading zeros
+ 216:./system/core_cmInstr.h ****     \return             number of leading zeros in value
+ 217:./system/core_cmInstr.h ****  */
+ 218:./system/core_cmInstr.h **** #define __CLZ                             __clz
+ 219:./system/core_cmInstr.h **** 
+ 220:./system/core_cmInstr.h **** 
+ 221:./system/core_cmInstr.h **** #if       (__CORTEX_M >= 0x03) || (__CORTEX_SC >= 300)
+ 222:./system/core_cmInstr.h **** 
+ 223:./system/core_cmInstr.h **** /** \brief  LDR Exclusive (8 bit)
+ 224:./system/core_cmInstr.h **** 
+ 225:./system/core_cmInstr.h ****     This function executes a exclusive LDR instruction for 8 bit value.
+ 226:./system/core_cmInstr.h **** 
+ 227:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 228:./system/core_cmInstr.h ****     \return             value of type uint8_t at (*ptr)
+ 229:./system/core_cmInstr.h ****  */
+ 230:./system/core_cmInstr.h **** #define __LDREXB(ptr)                     ((uint8_t ) __ldrex(ptr))
+ 231:./system/core_cmInstr.h **** 
+ 232:./system/core_cmInstr.h **** 
+ 233:./system/core_cmInstr.h **** /** \brief  LDR Exclusive (16 bit)
+ 234:./system/core_cmInstr.h **** 
+ 235:./system/core_cmInstr.h ****     This function executes a exclusive LDR instruction for 16 bit values.
+ 236:./system/core_cmInstr.h **** 
+ 237:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 238:./system/core_cmInstr.h ****     \return        value of type uint16_t at (*ptr)
+ 239:./system/core_cmInstr.h ****  */
+ 240:./system/core_cmInstr.h **** #define __LDREXH(ptr)                     ((uint16_t) __ldrex(ptr))
+ARM GAS  /tmp/ccoQDDT2.s 			page 11
+
+
+ 241:./system/core_cmInstr.h **** 
+ 242:./system/core_cmInstr.h **** 
+ 243:./system/core_cmInstr.h **** /** \brief  LDR Exclusive (32 bit)
+ 244:./system/core_cmInstr.h **** 
+ 245:./system/core_cmInstr.h ****     This function executes a exclusive LDR instruction for 32 bit values.
+ 246:./system/core_cmInstr.h **** 
+ 247:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 248:./system/core_cmInstr.h ****     \return        value of type uint32_t at (*ptr)
+ 249:./system/core_cmInstr.h ****  */
+ 250:./system/core_cmInstr.h **** #define __LDREXW(ptr)                     ((uint32_t ) __ldrex(ptr))
+ 251:./system/core_cmInstr.h **** 
+ 252:./system/core_cmInstr.h **** 
+ 253:./system/core_cmInstr.h **** /** \brief  STR Exclusive (8 bit)
+ 254:./system/core_cmInstr.h **** 
+ 255:./system/core_cmInstr.h ****     This function executes a exclusive STR instruction for 8 bit values.
+ 256:./system/core_cmInstr.h **** 
+ 257:./system/core_cmInstr.h ****     \param [in]  value  Value to store
+ 258:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 259:./system/core_cmInstr.h ****     \return          0  Function succeeded
+ 260:./system/core_cmInstr.h ****     \return          1  Function failed
+ 261:./system/core_cmInstr.h ****  */
+ 262:./system/core_cmInstr.h **** #define __STREXB(value, ptr)              __strex(value, ptr)
+ 263:./system/core_cmInstr.h **** 
+ 264:./system/core_cmInstr.h **** 
+ 265:./system/core_cmInstr.h **** /** \brief  STR Exclusive (16 bit)
+ 266:./system/core_cmInstr.h **** 
+ 267:./system/core_cmInstr.h ****     This function executes a exclusive STR instruction for 16 bit values.
+ 268:./system/core_cmInstr.h **** 
+ 269:./system/core_cmInstr.h ****     \param [in]  value  Value to store
+ 270:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 271:./system/core_cmInstr.h ****     \return          0  Function succeeded
+ 272:./system/core_cmInstr.h ****     \return          1  Function failed
+ 273:./system/core_cmInstr.h ****  */
+ 274:./system/core_cmInstr.h **** #define __STREXH(value, ptr)              __strex(value, ptr)
+ 275:./system/core_cmInstr.h **** 
+ 276:./system/core_cmInstr.h **** 
+ 277:./system/core_cmInstr.h **** /** \brief  STR Exclusive (32 bit)
+ 278:./system/core_cmInstr.h **** 
+ 279:./system/core_cmInstr.h ****     This function executes a exclusive STR instruction for 32 bit values.
+ 280:./system/core_cmInstr.h **** 
+ 281:./system/core_cmInstr.h ****     \param [in]  value  Value to store
+ 282:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 283:./system/core_cmInstr.h ****     \return          0  Function succeeded
+ 284:./system/core_cmInstr.h ****     \return          1  Function failed
+ 285:./system/core_cmInstr.h ****  */
+ 286:./system/core_cmInstr.h **** #define __STREXW(value, ptr)              __strex(value, ptr)
+ 287:./system/core_cmInstr.h **** 
+ 288:./system/core_cmInstr.h **** 
+ 289:./system/core_cmInstr.h **** /** \brief  Remove the exclusive lock
+ 290:./system/core_cmInstr.h **** 
+ 291:./system/core_cmInstr.h ****     This function removes the exclusive lock which is created by LDREX.
+ 292:./system/core_cmInstr.h **** 
+ 293:./system/core_cmInstr.h ****  */
+ 294:./system/core_cmInstr.h **** #define __CLREX                           __clrex
+ 295:./system/core_cmInstr.h **** 
+ 296:./system/core_cmInstr.h **** 
+ 297:./system/core_cmInstr.h **** /** \brief  Signed Saturate
+ARM GAS  /tmp/ccoQDDT2.s 			page 12
+
+
+ 298:./system/core_cmInstr.h **** 
+ 299:./system/core_cmInstr.h ****     This function saturates a signed value.
+ 300:./system/core_cmInstr.h **** 
+ 301:./system/core_cmInstr.h ****     \param [in]  value  Value to be saturated
+ 302:./system/core_cmInstr.h ****     \param [in]    sat  Bit position to saturate to (1..32)
+ 303:./system/core_cmInstr.h ****     \return             Saturated value
+ 304:./system/core_cmInstr.h ****  */
+ 305:./system/core_cmInstr.h **** #define __SSAT                            __ssat
+ 306:./system/core_cmInstr.h **** 
+ 307:./system/core_cmInstr.h **** 
+ 308:./system/core_cmInstr.h **** /** \brief  Unsigned Saturate
+ 309:./system/core_cmInstr.h **** 
+ 310:./system/core_cmInstr.h ****     This function saturates an unsigned value.
+ 311:./system/core_cmInstr.h **** 
+ 312:./system/core_cmInstr.h ****     \param [in]  value  Value to be saturated
+ 313:./system/core_cmInstr.h ****     \param [in]    sat  Bit position to saturate to (0..31)
+ 314:./system/core_cmInstr.h ****     \return             Saturated value
+ 315:./system/core_cmInstr.h ****  */
+ 316:./system/core_cmInstr.h **** #define __USAT                            __usat
+ 317:./system/core_cmInstr.h **** 
+ 318:./system/core_cmInstr.h **** 
+ 319:./system/core_cmInstr.h **** /** \brief  Rotate Right with Extend (32 bit)
+ 320:./system/core_cmInstr.h **** 
+ 321:./system/core_cmInstr.h ****     This function moves each bit of a bitstring right by one bit.
+ 322:./system/core_cmInstr.h ****     The carry input is shifted in at the left end of the bitstring.
+ 323:./system/core_cmInstr.h **** 
+ 324:./system/core_cmInstr.h ****     \param [in]    value  Value to rotate
+ 325:./system/core_cmInstr.h ****     \return               Rotated value
+ 326:./system/core_cmInstr.h ****  */
+ 327:./system/core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 328:./system/core_cmInstr.h **** __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint32_t value)
+ 329:./system/core_cmInstr.h **** {
+ 330:./system/core_cmInstr.h ****   rrx r0, r0
+ 331:./system/core_cmInstr.h ****   bx lr
+ 332:./system/core_cmInstr.h **** }
+ 333:./system/core_cmInstr.h **** #endif
+ 334:./system/core_cmInstr.h **** 
+ 335:./system/core_cmInstr.h **** 
+ 336:./system/core_cmInstr.h **** /** \brief  LDRT Unprivileged (8 bit)
+ 337:./system/core_cmInstr.h **** 
+ 338:./system/core_cmInstr.h ****     This function executes a Unprivileged LDRT instruction for 8 bit value.
+ 339:./system/core_cmInstr.h **** 
+ 340:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 341:./system/core_cmInstr.h ****     \return             value of type uint8_t at (*ptr)
+ 342:./system/core_cmInstr.h ****  */
+ 343:./system/core_cmInstr.h **** #define __LDRBT(ptr)                      ((uint8_t )  __ldrt(ptr))
+ 344:./system/core_cmInstr.h **** 
+ 345:./system/core_cmInstr.h **** 
+ 346:./system/core_cmInstr.h **** /** \brief  LDRT Unprivileged (16 bit)
+ 347:./system/core_cmInstr.h **** 
+ 348:./system/core_cmInstr.h ****     This function executes a Unprivileged LDRT instruction for 16 bit values.
+ 349:./system/core_cmInstr.h **** 
+ 350:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 351:./system/core_cmInstr.h ****     \return        value of type uint16_t at (*ptr)
+ 352:./system/core_cmInstr.h ****  */
+ 353:./system/core_cmInstr.h **** #define __LDRHT(ptr)                      ((uint16_t)  __ldrt(ptr))
+ 354:./system/core_cmInstr.h **** 
+ARM GAS  /tmp/ccoQDDT2.s 			page 13
+
+
+ 355:./system/core_cmInstr.h **** 
+ 356:./system/core_cmInstr.h **** /** \brief  LDRT Unprivileged (32 bit)
+ 357:./system/core_cmInstr.h **** 
+ 358:./system/core_cmInstr.h ****     This function executes a Unprivileged LDRT instruction for 32 bit values.
+ 359:./system/core_cmInstr.h **** 
+ 360:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 361:./system/core_cmInstr.h ****     \return        value of type uint32_t at (*ptr)
+ 362:./system/core_cmInstr.h ****  */
+ 363:./system/core_cmInstr.h **** #define __LDRT(ptr)                       ((uint32_t ) __ldrt(ptr))
+ 364:./system/core_cmInstr.h **** 
+ 365:./system/core_cmInstr.h **** 
+ 366:./system/core_cmInstr.h **** /** \brief  STRT Unprivileged (8 bit)
+ 367:./system/core_cmInstr.h **** 
+ 368:./system/core_cmInstr.h ****     This function executes a Unprivileged STRT instruction for 8 bit values.
+ 369:./system/core_cmInstr.h **** 
+ 370:./system/core_cmInstr.h ****     \param [in]  value  Value to store
+ 371:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 372:./system/core_cmInstr.h ****  */
+ 373:./system/core_cmInstr.h **** #define __STRBT(value, ptr)               __strt(value, ptr)
+ 374:./system/core_cmInstr.h **** 
+ 375:./system/core_cmInstr.h **** 
+ 376:./system/core_cmInstr.h **** /** \brief  STRT Unprivileged (16 bit)
+ 377:./system/core_cmInstr.h **** 
+ 378:./system/core_cmInstr.h ****     This function executes a Unprivileged STRT instruction for 16 bit values.
+ 379:./system/core_cmInstr.h **** 
+ 380:./system/core_cmInstr.h ****     \param [in]  value  Value to store
+ 381:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 382:./system/core_cmInstr.h ****  */
+ 383:./system/core_cmInstr.h **** #define __STRHT(value, ptr)               __strt(value, ptr)
+ 384:./system/core_cmInstr.h **** 
+ 385:./system/core_cmInstr.h **** 
+ 386:./system/core_cmInstr.h **** /** \brief  STRT Unprivileged (32 bit)
+ 387:./system/core_cmInstr.h **** 
+ 388:./system/core_cmInstr.h ****     This function executes a Unprivileged STRT instruction for 32 bit values.
+ 389:./system/core_cmInstr.h **** 
+ 390:./system/core_cmInstr.h ****     \param [in]  value  Value to store
+ 391:./system/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 392:./system/core_cmInstr.h ****  */
+ 393:./system/core_cmInstr.h **** #define __STRT(value, ptr)                __strt(value, ptr)
+ 394:./system/core_cmInstr.h **** 
+ 395:./system/core_cmInstr.h **** #endif /* (__CORTEX_M >= 0x03) || (__CORTEX_SC >= 300) */
+ 396:./system/core_cmInstr.h **** 
+ 397:./system/core_cmInstr.h **** 
+ 398:./system/core_cmInstr.h **** #elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+ 399:./system/core_cmInstr.h **** /* GNU gcc specific functions */
+ 400:./system/core_cmInstr.h **** 
+ 401:./system/core_cmInstr.h **** /* Define macros for porting to both thumb1 and thumb2.
+ 402:./system/core_cmInstr.h ****  * For thumb1, use low register (r0-r7), specified by constrant "l"
+ 403:./system/core_cmInstr.h ****  * Otherwise, use general registers, specified by constrant "r" */
+ 404:./system/core_cmInstr.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 405:./system/core_cmInstr.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 406:./system/core_cmInstr.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 407:./system/core_cmInstr.h **** #else
+ 408:./system/core_cmInstr.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 409:./system/core_cmInstr.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 410:./system/core_cmInstr.h **** #endif
+ 411:./system/core_cmInstr.h **** 
+ARM GAS  /tmp/ccoQDDT2.s 			page 14
+
+
+ 412:./system/core_cmInstr.h **** /** \brief  No Operation
+ 413:./system/core_cmInstr.h **** 
+ 414:./system/core_cmInstr.h ****     No Operation does nothing. This instruction can be used for code alignment purposes.
+ 415:./system/core_cmInstr.h ****  */
+ 416:./system/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __NOP(void)
+ 417:./system/core_cmInstr.h **** {
+ 418:./system/core_cmInstr.h ****   __ASM volatile ("nop");
+ 419:./system/core_cmInstr.h **** }
+ 420:./system/core_cmInstr.h **** 
+ 421:./system/core_cmInstr.h **** 
+ 422:./system/core_cmInstr.h **** /** \brief  Wait For Interrupt
+ 423:./system/core_cmInstr.h **** 
+ 424:./system/core_cmInstr.h ****     Wait For Interrupt is a hint instruction that suspends execution
+ 425:./system/core_cmInstr.h ****     until one of a number of events occurs.
+ 426:./system/core_cmInstr.h ****  */
+ 427:./system/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __WFI(void)
+ 428:./system/core_cmInstr.h **** {
+ 429:./system/core_cmInstr.h ****   __ASM volatile ("wfi");
+ 430:./system/core_cmInstr.h **** }
+ 431:./system/core_cmInstr.h **** 
+ 432:./system/core_cmInstr.h **** 
+ 433:./system/core_cmInstr.h **** /** \brief  Wait For Event
+ 434:./system/core_cmInstr.h **** 
+ 435:./system/core_cmInstr.h ****     Wait For Event is a hint instruction that permits the processor to enter
+ 436:./system/core_cmInstr.h ****     a low-power state until one of a number of events occurs.
+ 437:./system/core_cmInstr.h ****  */
+ 438:./system/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __WFE(void)
+ 439:./system/core_cmInstr.h **** {
+ 440:./system/core_cmInstr.h ****   __ASM volatile ("wfe");
+ 441:./system/core_cmInstr.h **** }
+ 442:./system/core_cmInstr.h **** 
+ 443:./system/core_cmInstr.h **** 
+ 444:./system/core_cmInstr.h **** /** \brief  Send Event
+ 445:./system/core_cmInstr.h **** 
+ 446:./system/core_cmInstr.h ****     Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+ 447:./system/core_cmInstr.h ****  */
+ 448:./system/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __SEV(void)
+ 449:./system/core_cmInstr.h **** {
+ 450:./system/core_cmInstr.h ****   __ASM volatile ("sev");
+ 451:./system/core_cmInstr.h **** }
+ 452:./system/core_cmInstr.h **** 
+ 453:./system/core_cmInstr.h **** 
+ 454:./system/core_cmInstr.h **** /** \brief  Instruction Synchronization Barrier
+ 455:./system/core_cmInstr.h **** 
+ 456:./system/core_cmInstr.h ****     Instruction Synchronization Barrier flushes the pipeline in the processor,
+ 457:./system/core_cmInstr.h ****     so that all instructions following the ISB are fetched from cache or
+ 458:./system/core_cmInstr.h ****     memory, after the instruction has been completed.
+ 459:./system/core_cmInstr.h ****  */
+ 460:./system/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __ISB(void)
+ 461:./system/core_cmInstr.h **** {
+ 462:./system/core_cmInstr.h ****   __ASM volatile ("isb 0xF":::"memory");
+ 463:./system/core_cmInstr.h **** }
+ 464:./system/core_cmInstr.h **** 
+ 465:./system/core_cmInstr.h **** 
+ 466:./system/core_cmInstr.h **** /** \brief  Data Synchronization Barrier
+ 467:./system/core_cmInstr.h **** 
+ 468:./system/core_cmInstr.h ****     This function acts as a special kind of Data Memory Barrier.
+ARM GAS  /tmp/ccoQDDT2.s 			page 15
+
+
+ 469:./system/core_cmInstr.h ****     It completes when all explicit memory accesses before this instruction complete.
+ 470:./system/core_cmInstr.h ****  */
+ 471:./system/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __DSB(void)
+ 472:./system/core_cmInstr.h **** {
+ 473:./system/core_cmInstr.h ****   __ASM volatile ("dsb 0xF":::"memory");
+ 474:./system/core_cmInstr.h **** }
+ 475:./system/core_cmInstr.h **** 
+ 476:./system/core_cmInstr.h **** 
+ 477:./system/core_cmInstr.h **** /** \brief  Data Memory Barrier
+ 478:./system/core_cmInstr.h **** 
+ 479:./system/core_cmInstr.h ****     This function ensures the apparent order of the explicit memory operations before
+ 480:./system/core_cmInstr.h ****     and after the instruction, without ensuring their completion.
+ 481:./system/core_cmInstr.h ****  */
+ 482:./system/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __DMB(void)
+ 483:./system/core_cmInstr.h **** {
+ 484:./system/core_cmInstr.h ****   __ASM volatile ("dmb 0xF":::"memory");
+ 485:./system/core_cmInstr.h **** }
+ 486:./system/core_cmInstr.h **** 
+ 487:./system/core_cmInstr.h **** 
+ 488:./system/core_cmInstr.h **** /** \brief  Reverse byte order (32 bit)
+ 489:./system/core_cmInstr.h **** 
+ 490:./system/core_cmInstr.h ****     This function reverses the byte order in integer value.
+ 491:./system/core_cmInstr.h **** 
+ 492:./system/core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 493:./system/core_cmInstr.h ****     \return               Reversed value
+ 494:./system/core_cmInstr.h ****  */
+ 495:./system/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV(uint32_t value)
+ 170              		.loc 2 495 57 is_stmt 1 view .LVU51
+ 171              	.LBB23:
+ 496:./system/core_cmInstr.h **** {
+ 497:./system/core_cmInstr.h **** #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+ 498:./system/core_cmInstr.h ****   return __builtin_bswap32(value);
+ 172              		.loc 2 498 3 view .LVU52
+ 173              		.loc 2 498 10 is_stmt 0 view .LVU53
+ 174 0074 1BBA     		rev	r3, r3
+ 175              	.LVL18:
+ 176              		.loc 2 498 10 view .LVU54
+ 177              	.LBE23:
+ 178              	.LBE22:
+ 145:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 179              		.loc 1 145 31 discriminator 1 view .LVU55
+ 180 0076 3360     		str	r3, [r6]
+ 146:./Libraries/src/stm32f4xx_hash_sha1.c ****     *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[1]);
+ 181              		.loc 1 146 5 is_stmt 1 view .LVU56
+ 182              	.LVL19:
+ 147:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 183              		.loc 1 147 5 view .LVU57
+ 147:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 184              		.loc 1 147 33 is_stmt 0 view .LVU58
+ 185 0078 039B     		ldr	r3, [sp, #12]
+ 186              	.LVL20:
+ 187              	.LBB24:
+ 188              	.LBI24:
+ 495:./system/core_cmInstr.h **** {
+ 189              		.loc 2 495 57 is_stmt 1 view .LVU59
+ 190              	.LBB25:
+ 191              		.loc 2 498 3 view .LVU60
+ARM GAS  /tmp/ccoQDDT2.s 			page 16
+
+
+ 192              		.loc 2 498 10 is_stmt 0 view .LVU61
+ 193 007a 1BBA     		rev	r3, r3
+ 194              	.LVL21:
+ 195              		.loc 2 498 10 view .LVU62
+ 196              	.LBE25:
+ 197              	.LBE24:
+ 147:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 198              		.loc 1 147 31 discriminator 1 view .LVU63
+ 199 007c 7360     		str	r3, [r6, #4]
+ 148:./Libraries/src/stm32f4xx_hash_sha1.c ****     *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[2]);
+ 200              		.loc 1 148 5 is_stmt 1 view .LVU64
+ 201              	.LVL22:
+ 149:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 202              		.loc 1 149 5 view .LVU65
+ 149:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 203              		.loc 1 149 33 is_stmt 0 view .LVU66
+ 204 007e 049B     		ldr	r3, [sp, #16]
+ 205              	.LVL23:
+ 206              	.LBB26:
+ 207              	.LBI26:
+ 495:./system/core_cmInstr.h **** {
+ 208              		.loc 2 495 57 is_stmt 1 view .LVU67
+ 209              	.LBB27:
+ 210              		.loc 2 498 3 view .LVU68
+ 211              		.loc 2 498 10 is_stmt 0 view .LVU69
+ 212 0080 1BBA     		rev	r3, r3
+ 213              	.LVL24:
+ 214              		.loc 2 498 10 view .LVU70
+ 215              	.LBE27:
+ 216              	.LBE26:
+ 149:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 217              		.loc 1 149 31 discriminator 1 view .LVU71
+ 218 0082 B360     		str	r3, [r6, #8]
+ 150:./Libraries/src/stm32f4xx_hash_sha1.c ****     *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[3]);
+ 219              		.loc 1 150 5 is_stmt 1 view .LVU72
+ 220              	.LVL25:
+ 151:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 221              		.loc 1 151 5 view .LVU73
+ 151:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 222              		.loc 1 151 33 is_stmt 0 view .LVU74
+ 223 0084 059B     		ldr	r3, [sp, #20]
+ 224              	.LVL26:
+ 225              	.LBB28:
+ 226              	.LBI28:
+ 495:./system/core_cmInstr.h **** {
+ 227              		.loc 2 495 57 is_stmt 1 view .LVU75
+ 228              	.LBB29:
+ 229              		.loc 2 498 3 view .LVU76
+ 230              		.loc 2 498 10 is_stmt 0 view .LVU77
+ 231 0086 1BBA     		rev	r3, r3
+ 232              	.LVL27:
+ 233              		.loc 2 498 10 view .LVU78
+ 234              	.LBE29:
+ 235              	.LBE28:
+ 151:./Libraries/src/stm32f4xx_hash_sha1.c ****     outputaddr+=4;
+ 236              		.loc 1 151 31 discriminator 1 view .LVU79
+ 237 0088 F360     		str	r3, [r6, #12]
+ARM GAS  /tmp/ccoQDDT2.s 			page 17
+
+
+ 152:./Libraries/src/stm32f4xx_hash_sha1.c ****     *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[4]);
+ 238              		.loc 1 152 5 is_stmt 1 view .LVU80
+ 239              	.LVL28:
+ 153:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ 240              		.loc 1 153 5 view .LVU81
+ 153:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ 241              		.loc 1 153 33 is_stmt 0 view .LVU82
+ 242 008a 069B     		ldr	r3, [sp, #24]
+ 243              	.LVL29:
+ 244              	.LBB30:
+ 245              	.LBI30:
+ 495:./system/core_cmInstr.h **** {
+ 246              		.loc 2 495 57 is_stmt 1 view .LVU83
+ 247              	.LBB31:
+ 248              		.loc 2 498 3 view .LVU84
+ 249              		.loc 2 498 10 is_stmt 0 view .LVU85
+ 250 008c 1BBA     		rev	r3, r3
+ 251              	.LVL30:
+ 252              		.loc 2 498 10 view .LVU86
+ 253              	.LBE31:
+ 254              	.LBE30:
+ 153:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ 255              		.loc 1 153 31 discriminator 1 view .LVU87
+ 256 008e 3361     		str	r3, [r6, #16]
+ 101:./Libraries/src/stm32f4xx_hash_sha1.c ****   uint32_t inputaddr  = (uint32_t)Input;
+ 257              		.loc 1 101 15 view .LVU88
+ 258 0090 0120     		movs	r0, #1
+ 259 0092 E9E7     		b	.L6
+ 260              		.cfi_endproc
+ 261              	.LFE123:
+ 263              		.section	.text.HMAC_SHA1,"ax",%progbits
+ 264              		.align	1
+ 265              		.global	HMAC_SHA1
+ 266              		.syntax unified
+ 267              		.thumb
+ 268              		.thumb_func
+ 270              	HMAC_SHA1:
+ 271              	.LVL31:
+ 272              	.LFB124:
+ 157:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 158:./Libraries/src/stm32f4xx_hash_sha1.c **** /**
+ 159:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @brief  Compute the HMAC SHA1 digest.
+ 160:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @param  Key: pointer to the Key used for HMAC.
+ 161:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @param  Keylen: length of the Key used for HMAC.  
+ 162:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @param  Input: pointer to the Input buffer to be treated.
+ 163:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @param  Ilen: length of the Input buffer.
+ 164:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @param  Output: the returned digest
+ 165:./Libraries/src/stm32f4xx_hash_sha1.c ****   * @retval An ErrorStatus enumeration value:
+ 166:./Libraries/src/stm32f4xx_hash_sha1.c ****   *          - SUCCESS: digest computation done
+ 167:./Libraries/src/stm32f4xx_hash_sha1.c ****   *          - ERROR: digest computation failed
+ 168:./Libraries/src/stm32f4xx_hash_sha1.c ****   */
+ 169:./Libraries/src/stm32f4xx_hash_sha1.c **** ErrorStatus HMAC_SHA1(uint8_t *Key, uint32_t Keylen, uint8_t *Input,
+ 170:./Libraries/src/stm32f4xx_hash_sha1.c ****                       uint32_t Ilen, uint8_t Output[20])
+ 171:./Libraries/src/stm32f4xx_hash_sha1.c **** {
+ 273              		.loc 1 171 1 is_stmt 1 view -0
+ 274              		.cfi_startproc
+ 275              		@ args = 4, pretend = 0, frame = 56
+ARM GAS  /tmp/ccoQDDT2.s 			page 18
+
+
+ 276              		@ frame_needed = 0, uses_anonymous_args = 0
+ 277              		.loc 1 171 1 is_stmt 0 view .LVU90
+ 278 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 279              	.LCFI4:
+ 280              		.cfi_def_cfa_offset 28
+ 281              		.cfi_offset 4, -28
+ 282              		.cfi_offset 5, -24
+ 283              		.cfi_offset 6, -20
+ 284              		.cfi_offset 7, -16
+ 285              		.cfi_offset 8, -12
+ 286              		.cfi_offset 9, -8
+ 287              		.cfi_offset 14, -4
+ 288 0004 8FB0     		sub	sp, sp, #60
+ 289              	.LCFI5:
+ 290              		.cfi_def_cfa_offset 88
+ 291 0006 8146     		mov	r9, r0
+ 292 0008 0D46     		mov	r5, r1
+ 293 000a 1F46     		mov	r7, r3
+ 172:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_InitTypeDef SHA1_HASH_InitStructure;
+ 294              		.loc 1 172 3 is_stmt 1 view .LVU91
+ 173:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_MsgDigest SHA1_MessageDigest;
+ 295              		.loc 1 173 3 view .LVU92
+ 174:./Libraries/src/stm32f4xx_hash_sha1.c ****   __IO uint16_t nbvalidbitsdata = 0;
+ 296              		.loc 1 174 3 view .LVU93
+ 297              		.loc 1 174 17 is_stmt 0 view .LVU94
+ 298 000c 0024     		movs	r4, #0
+ 299 000e ADF80640 		strh	r4, [sp, #6]	@ movhi
+ 175:./Libraries/src/stm32f4xx_hash_sha1.c ****   __IO uint16_t nbvalidbitskey = 0;
+ 300              		.loc 1 175 3 is_stmt 1 view .LVU95
+ 301              		.loc 1 175 17 is_stmt 0 view .LVU96
+ 302 0012 ADF80440 		strh	r4, [sp, #4]	@ movhi
+ 176:./Libraries/src/stm32f4xx_hash_sha1.c ****   uint32_t i = 0;
+ 303              		.loc 1 176 3 is_stmt 1 view .LVU97
+ 304              	.LVL32:
+ 177:./Libraries/src/stm32f4xx_hash_sha1.c ****   __IO uint32_t counter = 0;
+ 305              		.loc 1 177 3 view .LVU98
+ 306              		.loc 1 177 17 is_stmt 0 view .LVU99
+ 307 0016 0094     		str	r4, [sp]
+ 178:./Libraries/src/stm32f4xx_hash_sha1.c ****   uint32_t busystatus = 0;
+ 308              		.loc 1 178 3 is_stmt 1 view .LVU100
+ 309              	.LVL33:
+ 179:./Libraries/src/stm32f4xx_hash_sha1.c ****   ErrorStatus status = SUCCESS;
+ 310              		.loc 1 179 3 view .LVU101
+ 180:./Libraries/src/stm32f4xx_hash_sha1.c ****   uint32_t keyaddr    = (uint32_t)Key;
+ 311              		.loc 1 180 3 view .LVU102
+ 312              		.loc 1 180 12 is_stmt 0 view .LVU103
+ 313 0018 8046     		mov	r8, r0
+ 314              	.LVL34:
+ 181:./Libraries/src/stm32f4xx_hash_sha1.c ****   uint32_t inputaddr  = (uint32_t)Input;
+ 315              		.loc 1 181 3 is_stmt 1 view .LVU104
+ 316              		.loc 1 181 12 is_stmt 0 view .LVU105
+ 317 001a 1646     		mov	r6, r2
+ 318              	.LVL35:
+ 182:./Libraries/src/stm32f4xx_hash_sha1.c ****   uint32_t outputaddr = (uint32_t)Output;
+ 319              		.loc 1 182 3 is_stmt 1 view .LVU106
+ 183:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 184:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* Number of valid bits in last word of the Input data */
+ARM GAS  /tmp/ccoQDDT2.s 			page 19
+
+
+ 185:./Libraries/src/stm32f4xx_hash_sha1.c ****   nbvalidbitsdata = 8 * (Ilen % 4);
+ 320              		.loc 1 185 3 view .LVU107
+ 321              		.loc 1 185 19 is_stmt 0 view .LVU108
+ 322 001c 03F00303 		and	r3, r3, #3
+ 323              	.LVL36:
+ 324              		.loc 1 185 19 view .LVU109
+ 325 0020 DB00     		lsls	r3, r3, #3
+ 326 0022 ADF80630 		strh	r3, [sp, #6]	@ movhi
+ 186:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 187:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* Number of valid bits in last word of the Key */
+ 188:./Libraries/src/stm32f4xx_hash_sha1.c ****   nbvalidbitskey = 8 * (Keylen % 4);
+ 327              		.loc 1 188 3 is_stmt 1 view .LVU110
+ 328              		.loc 1 188 18 is_stmt 0 view .LVU111
+ 329 0026 01F00303 		and	r3, r1, #3
+ 330 002a DB00     		lsls	r3, r3, #3
+ 331 002c ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 189:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 190:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* HASH peripheral initialization */
+ 191:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_DeInit();
+ 332              		.loc 1 191 3 is_stmt 1 view .LVU112
+ 333 0030 FFF7FEFF 		bl	HASH_DeInit
+ 334              	.LVL37:
+ 192:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 193:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* HASH Configuration */
+ 194:./Libraries/src/stm32f4xx_hash_sha1.c ****   SHA1_HASH_InitStructure.HASH_AlgoSelection = HASH_AlgoSelection_SHA1;
+ 335              		.loc 1 194 3 view .LVU113
+ 336              		.loc 1 194 46 is_stmt 0 view .LVU114
+ 337 0034 0A94     		str	r4, [sp, #40]
+ 195:./Libraries/src/stm32f4xx_hash_sha1.c ****   SHA1_HASH_InitStructure.HASH_AlgoMode = HASH_AlgoMode_HMAC;
+ 338              		.loc 1 195 3 is_stmt 1 view .LVU115
+ 339              		.loc 1 195 41 is_stmt 0 view .LVU116
+ 340 0036 4023     		movs	r3, #64
+ 341 0038 0B93     		str	r3, [sp, #44]
+ 196:./Libraries/src/stm32f4xx_hash_sha1.c ****   SHA1_HASH_InitStructure.HASH_DataType = HASH_DataType_8b;
+ 342              		.loc 1 196 3 is_stmt 1 view .LVU117
+ 343              		.loc 1 196 41 is_stmt 0 view .LVU118
+ 344 003a 2023     		movs	r3, #32
+ 345 003c 0C93     		str	r3, [sp, #48]
+ 197:./Libraries/src/stm32f4xx_hash_sha1.c ****   if(Keylen > 64)
+ 346              		.loc 1 197 3 is_stmt 1 view .LVU119
+ 347              		.loc 1 197 5 is_stmt 0 view .LVU120
+ 348 003e 402D     		cmp	r5, #64
+ 349 0040 0CD9     		bls	.L11
+ 198:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 199:./Libraries/src/stm32f4xx_hash_sha1.c ****     /* HMAC long Key */
+ 200:./Libraries/src/stm32f4xx_hash_sha1.c ****     SHA1_HASH_InitStructure.HASH_HMACKeyType = HASH_HMACKeyType_LongKey;
+ 350              		.loc 1 200 5 is_stmt 1 view .LVU121
+ 351              		.loc 1 200 46 is_stmt 0 view .LVU122
+ 352 0042 4FF48033 		mov	r3, #65536
+ 353 0046 0D93     		str	r3, [sp, #52]
+ 354              	.L12:
+ 201:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ 202:./Libraries/src/stm32f4xx_hash_sha1.c ****   else
+ 203:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 204:./Libraries/src/stm32f4xx_hash_sha1.c ****     /* HMAC short Key */
+ 205:./Libraries/src/stm32f4xx_hash_sha1.c ****     SHA1_HASH_InitStructure.HASH_HMACKeyType = HASH_HMACKeyType_ShortKey;
+ 206:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ARM GAS  /tmp/ccoQDDT2.s 			page 20
+
+
+ 207:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_Init(&SHA1_HASH_InitStructure);
+ 355              		.loc 1 207 3 is_stmt 1 view .LVU123
+ 356 0048 0AA8     		add	r0, sp, #40
+ 357 004a FFF7FEFF 		bl	HASH_Init
+ 358              	.LVL38:
+ 208:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 209:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* Configure the number of valid bits in last word of the Key */
+ 210:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_SetLastWordValidBitsNbr(nbvalidbitskey);
+ 359              		.loc 1 210 3 view .LVU124
+ 360 004e BDF80400 		ldrh	r0, [sp, #4]
+ 361 0052 80B2     		uxth	r0, r0
+ 362 0054 FFF7FEFF 		bl	HASH_SetLastWordValidBitsNbr
+ 363              	.LVL39:
+ 211:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 212:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* Write the Key */
+ 213:./Libraries/src/stm32f4xx_hash_sha1.c ****   for(i=0; i<Keylen; i+=4)
+ 364              		.loc 1 213 3 view .LVU125
+ 365              		.loc 1 213 8 is_stmt 0 view .LVU126
+ 366 0058 0024     		movs	r4, #0
+ 367              		.loc 1 213 3 view .LVU127
+ 368 005a 07E0     		b	.L13
+ 369              	.L11:
+ 205:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ 370              		.loc 1 205 5 is_stmt 1 view .LVU128
+ 205:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ 371              		.loc 1 205 46 is_stmt 0 view .LVU129
+ 372 005c 0023     		movs	r3, #0
+ 373 005e 0D93     		str	r3, [sp, #52]
+ 374 0060 F2E7     		b	.L12
+ 375              	.LVL40:
+ 376              	.L14:
+ 214:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 215:./Libraries/src/stm32f4xx_hash_sha1.c ****     HASH_DataIn(*(uint32_t*)keyaddr);
+ 377              		.loc 1 215 5 is_stmt 1 view .LVU130
+ 378 0062 59F8040B 		ldr	r0, [r9], #4
+ 379              	.LVL41:
+ 380              		.loc 1 215 5 is_stmt 0 view .LVU131
+ 381 0066 FFF7FEFF 		bl	HASH_DataIn
+ 382              	.LVL42:
+ 216:./Libraries/src/stm32f4xx_hash_sha1.c ****     keyaddr+=4;
+ 383              		.loc 1 216 5 is_stmt 1 view .LVU132
+ 213:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 384              		.loc 1 213 23 discriminator 3 view .LVU133
+ 385 006a 0434     		adds	r4, r4, #4
+ 386              	.LVL43:
+ 387              	.L13:
+ 213:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 388              		.loc 1 213 13 discriminator 1 view .LVU134
+ 389 006c AC42     		cmp	r4, r5
+ 390 006e F8D3     		bcc	.L14
+ 217:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ 218:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 219:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* Start the HASH processor */
+ 220:./Libraries/src/stm32f4xx_hash_sha1.c ****   HASH_StartDigest();
+ 391              		.loc 1 220 3 view .LVU135
+ 392 0070 FFF7FEFF 		bl	HASH_StartDigest
+ 393              	.LVL44:
+ARM GAS  /tmp/ccoQDDT2.s 			page 21
+
+
+ 394              	.L16:
+ 221:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 222:./Libraries/src/stm32f4xx_hash_sha1.c ****   /* wait until the Busy flag is RESET */
+ 223:./Libraries/src/stm32f4xx_hash_sha1.c ****   do
+ 395              		.loc 1 223 3 view .LVU136
+ 224:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 225:./Libraries/src/stm32f4xx_hash_sha1.c ****     busystatus = HASH_GetFlagStatus(HASH_FLAG_BUSY);
+ 396              		.loc 1 225 5 view .LVU137
+ 397              		.loc 1 225 18 is_stmt 0 view .LVU138
+ 398 0074 0820     		movs	r0, #8
+ 399 0076 FFF7FEFF 		bl	HASH_GetFlagStatus
+ 400              	.LVL45:
+ 401              		.loc 1 225 16 discriminator 1 view .LVU139
+ 402 007a 8146     		mov	r9, r0
+ 403              	.LVL46:
+ 226:./Libraries/src/stm32f4xx_hash_sha1.c ****     counter++;
+ 404              		.loc 1 226 5 is_stmt 1 view .LVU140
+ 405              		.loc 1 226 12 is_stmt 0 view .LVU141
+ 406 007c 009C     		ldr	r4, [sp]
+ 407 007e 0134     		adds	r4, r4, #1
+ 408 0080 0094     		str	r4, [sp]
+ 227:./Libraries/src/stm32f4xx_hash_sha1.c ****   }while ((counter != SHA1BUSY_TIMEOUT) && (busystatus != RESET));
+ 409              		.loc 1 227 41 is_stmt 1 discriminator 2 view .LVU142
+ 410              		.loc 1 227 20 is_stmt 0 discriminator 2 view .LVU143
+ 411 0082 009B     		ldr	r3, [sp]
+ 412              		.loc 1 227 41 discriminator 2 view .LVU144
+ 413 0084 B3F5803F 		cmp	r3, #65536
+ 414 0088 01D0     		beq	.L15
+ 415              		.loc 1 227 41 discriminator 1 view .LVU145
+ 416 008a 0028     		cmp	r0, #0
+ 417 008c F2D1     		bne	.L16
+ 418              	.L15:
+ 228:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 229:./Libraries/src/stm32f4xx_hash_sha1.c ****   if (busystatus != RESET)
+ 419              		.loc 1 229 3 is_stmt 1 view .LVU146
+ 420              		.loc 1 229 6 is_stmt 0 view .LVU147
+ 421 008e 18B1     		cbz	r0, .L30
+ 230:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 231:./Libraries/src/stm32f4xx_hash_sha1.c ****      status = ERROR;
+ 422              		.loc 1 231 13 view .LVU148
+ 423 0090 0020     		movs	r0, #0
+ 424              	.LVL47:
+ 425              	.L17:
+ 232:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ 233:./Libraries/src/stm32f4xx_hash_sha1.c ****   else
+ 234:./Libraries/src/stm32f4xx_hash_sha1.c ****   {
+ 235:./Libraries/src/stm32f4xx_hash_sha1.c ****     /* Configure the number of valid bits in last word of the Input data */
+ 236:./Libraries/src/stm32f4xx_hash_sha1.c ****     HASH_SetLastWordValidBitsNbr(nbvalidbitsdata);
+ 237:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 238:./Libraries/src/stm32f4xx_hash_sha1.c ****     /* Write the Input block in the IN FIFO */
+ 239:./Libraries/src/stm32f4xx_hash_sha1.c ****     for(i=0; i<Ilen; i+=4)
+ 240:./Libraries/src/stm32f4xx_hash_sha1.c ****     {
+ 241:./Libraries/src/stm32f4xx_hash_sha1.c ****       HASH_DataIn(*(uint32_t*)inputaddr);
+ 242:./Libraries/src/stm32f4xx_hash_sha1.c ****       inputaddr+=4;
+ 243:./Libraries/src/stm32f4xx_hash_sha1.c ****     }
+ 244:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 245:./Libraries/src/stm32f4xx_hash_sha1.c ****     /* Start the HASH processor */
+ARM GAS  /tmp/ccoQDDT2.s 			page 22
+
+
+ 246:./Libraries/src/stm32f4xx_hash_sha1.c ****     HASH_StartDigest();
+ 247:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 248:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 249:./Libraries/src/stm32f4xx_hash_sha1.c ****     /* wait until the Busy flag is RESET */
+ 250:./Libraries/src/stm32f4xx_hash_sha1.c ****     counter =0;
+ 251:./Libraries/src/stm32f4xx_hash_sha1.c ****     do
+ 252:./Libraries/src/stm32f4xx_hash_sha1.c ****     {
+ 253:./Libraries/src/stm32f4xx_hash_sha1.c ****       busystatus = HASH_GetFlagStatus(HASH_FLAG_BUSY);
+ 254:./Libraries/src/stm32f4xx_hash_sha1.c ****       counter++;
+ 255:./Libraries/src/stm32f4xx_hash_sha1.c ****     }while ((counter != SHA1BUSY_TIMEOUT) && (busystatus != RESET));
+ 256:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 257:./Libraries/src/stm32f4xx_hash_sha1.c ****     if (busystatus != RESET)
+ 258:./Libraries/src/stm32f4xx_hash_sha1.c ****     {
+ 259:./Libraries/src/stm32f4xx_hash_sha1.c ****       status = ERROR;
+ 260:./Libraries/src/stm32f4xx_hash_sha1.c ****     }
+ 261:./Libraries/src/stm32f4xx_hash_sha1.c ****     else
+ 262:./Libraries/src/stm32f4xx_hash_sha1.c ****     {  
+ 263:./Libraries/src/stm32f4xx_hash_sha1.c ****       /* Configure the number of valid bits in last word of the Key */
+ 264:./Libraries/src/stm32f4xx_hash_sha1.c ****       HASH_SetLastWordValidBitsNbr(nbvalidbitskey);
+ 265:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 266:./Libraries/src/stm32f4xx_hash_sha1.c ****       /* Write the Key */
+ 267:./Libraries/src/stm32f4xx_hash_sha1.c ****       keyaddr = (uint32_t)Key;
+ 268:./Libraries/src/stm32f4xx_hash_sha1.c ****       for(i=0; i<Keylen; i+=4)
+ 269:./Libraries/src/stm32f4xx_hash_sha1.c ****       {
+ 270:./Libraries/src/stm32f4xx_hash_sha1.c ****         HASH_DataIn(*(uint32_t*)keyaddr);
+ 271:./Libraries/src/stm32f4xx_hash_sha1.c ****         keyaddr+=4;
+ 272:./Libraries/src/stm32f4xx_hash_sha1.c ****       }
+ 273:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 274:./Libraries/src/stm32f4xx_hash_sha1.c ****       /* Start the HASH processor */
+ 275:./Libraries/src/stm32f4xx_hash_sha1.c ****       HASH_StartDigest();
+ 276:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 277:./Libraries/src/stm32f4xx_hash_sha1.c ****       /* wait until the Busy flag is RESET */
+ 278:./Libraries/src/stm32f4xx_hash_sha1.c ****       counter =0;
+ 279:./Libraries/src/stm32f4xx_hash_sha1.c ****       do
+ 280:./Libraries/src/stm32f4xx_hash_sha1.c ****       {
+ 281:./Libraries/src/stm32f4xx_hash_sha1.c ****         busystatus = HASH_GetFlagStatus(HASH_FLAG_BUSY);
+ 282:./Libraries/src/stm32f4xx_hash_sha1.c ****         counter++;
+ 283:./Libraries/src/stm32f4xx_hash_sha1.c ****       }while ((counter != SHA1BUSY_TIMEOUT) && (busystatus != RESET));
+ 284:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 285:./Libraries/src/stm32f4xx_hash_sha1.c ****       if (busystatus != RESET)
+ 286:./Libraries/src/stm32f4xx_hash_sha1.c ****       {
+ 287:./Libraries/src/stm32f4xx_hash_sha1.c ****         status = ERROR;
+ 288:./Libraries/src/stm32f4xx_hash_sha1.c ****       }
+ 289:./Libraries/src/stm32f4xx_hash_sha1.c ****       else
+ 290:./Libraries/src/stm32f4xx_hash_sha1.c ****       {
+ 291:./Libraries/src/stm32f4xx_hash_sha1.c ****         /* Read the message digest */
+ 292:./Libraries/src/stm32f4xx_hash_sha1.c ****         HASH_GetDigest(&SHA1_MessageDigest);
+ 293:./Libraries/src/stm32f4xx_hash_sha1.c ****         *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[0]);
+ 294:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 295:./Libraries/src/stm32f4xx_hash_sha1.c ****         *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[1]);
+ 296:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 297:./Libraries/src/stm32f4xx_hash_sha1.c ****         *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[2]);
+ 298:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 299:./Libraries/src/stm32f4xx_hash_sha1.c ****         *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[3]);
+ 300:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 301:./Libraries/src/stm32f4xx_hash_sha1.c ****         *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[4]);
+ 302:./Libraries/src/stm32f4xx_hash_sha1.c ****       }
+ARM GAS  /tmp/ccoQDDT2.s 			page 23
+
+
+ 303:./Libraries/src/stm32f4xx_hash_sha1.c ****     }  
+ 304:./Libraries/src/stm32f4xx_hash_sha1.c ****   }
+ 305:./Libraries/src/stm32f4xx_hash_sha1.c ****   return status;  
+ 426              		.loc 1 305 3 is_stmt 1 view .LVU149
+ 306:./Libraries/src/stm32f4xx_hash_sha1.c **** }
+ 427              		.loc 1 306 1 is_stmt 0 view .LVU150
+ 428 0092 0FB0     		add	sp, sp, #60
+ 429              	.LCFI6:
+ 430              		.cfi_remember_state
+ 431              		.cfi_def_cfa_offset 28
+ 432              		@ sp needed
+ 433 0094 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 434              	.LVL48:
+ 435              	.L30:
+ 436              	.LCFI7:
+ 437              		.cfi_restore_state
+ 236:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 438              		.loc 1 236 5 is_stmt 1 view .LVU151
+ 439 0098 BDF80600 		ldrh	r0, [sp, #6]
+ 440              	.LVL49:
+ 236:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 441              		.loc 1 236 5 is_stmt 0 view .LVU152
+ 442 009c 80B2     		uxth	r0, r0
+ 443 009e FFF7FEFF 		bl	HASH_SetLastWordValidBitsNbr
+ 444              	.LVL50:
+ 239:./Libraries/src/stm32f4xx_hash_sha1.c ****     {
+ 445              		.loc 1 239 5 is_stmt 1 view .LVU153
+ 239:./Libraries/src/stm32f4xx_hash_sha1.c ****     {
+ 446              		.loc 1 239 5 is_stmt 0 view .LVU154
+ 447 00a2 05E0     		b	.L18
+ 448              	.LVL51:
+ 449              	.L19:
+ 241:./Libraries/src/stm32f4xx_hash_sha1.c ****       inputaddr+=4;
+ 450              		.loc 1 241 7 is_stmt 1 view .LVU155
+ 451 00a4 56F8040B 		ldr	r0, [r6], #4
+ 452              	.LVL52:
+ 241:./Libraries/src/stm32f4xx_hash_sha1.c ****       inputaddr+=4;
+ 453              		.loc 1 241 7 is_stmt 0 view .LVU156
+ 454 00a8 FFF7FEFF 		bl	HASH_DataIn
+ 455              	.LVL53:
+ 242:./Libraries/src/stm32f4xx_hash_sha1.c ****     }
+ 456              		.loc 1 242 7 is_stmt 1 view .LVU157
+ 239:./Libraries/src/stm32f4xx_hash_sha1.c ****     {
+ 457              		.loc 1 239 23 discriminator 3 view .LVU158
+ 458 00ac 09F10409 		add	r9, r9, #4
+ 459              	.LVL54:
+ 460              	.L18:
+ 239:./Libraries/src/stm32f4xx_hash_sha1.c ****     {
+ 461              		.loc 1 239 15 discriminator 1 view .LVU159
+ 462 00b0 B945     		cmp	r9, r7
+ 463 00b2 F7D3     		bcc	.L19
+ 246:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 464              		.loc 1 246 5 view .LVU160
+ 465 00b4 FFF7FEFF 		bl	HASH_StartDigest
+ 466              	.LVL55:
+ 250:./Libraries/src/stm32f4xx_hash_sha1.c ****     do
+ 467              		.loc 1 250 5 view .LVU161
+ARM GAS  /tmp/ccoQDDT2.s 			page 24
+
+
+ 250:./Libraries/src/stm32f4xx_hash_sha1.c ****     do
+ 468              		.loc 1 250 13 is_stmt 0 view .LVU162
+ 469 00b8 0023     		movs	r3, #0
+ 470 00ba 0093     		str	r3, [sp]
+ 471              	.LVL56:
+ 472              	.L21:
+ 251:./Libraries/src/stm32f4xx_hash_sha1.c ****     {
+ 473              		.loc 1 251 5 is_stmt 1 view .LVU163
+ 253:./Libraries/src/stm32f4xx_hash_sha1.c ****       counter++;
+ 474              		.loc 1 253 7 view .LVU164
+ 253:./Libraries/src/stm32f4xx_hash_sha1.c ****       counter++;
+ 475              		.loc 1 253 20 is_stmt 0 view .LVU165
+ 476 00bc 0820     		movs	r0, #8
+ 477 00be FFF7FEFF 		bl	HASH_GetFlagStatus
+ 478              	.LVL57:
+ 253:./Libraries/src/stm32f4xx_hash_sha1.c ****       counter++;
+ 479              		.loc 1 253 18 discriminator 1 view .LVU166
+ 480 00c2 0446     		mov	r4, r0
+ 481              	.LVL58:
+ 254:./Libraries/src/stm32f4xx_hash_sha1.c ****     }while ((counter != SHA1BUSY_TIMEOUT) && (busystatus != RESET));
+ 482              		.loc 1 254 7 is_stmt 1 view .LVU167
+ 254:./Libraries/src/stm32f4xx_hash_sha1.c ****     }while ((counter != SHA1BUSY_TIMEOUT) && (busystatus != RESET));
+ 483              		.loc 1 254 14 is_stmt 0 view .LVU168
+ 484 00c4 009B     		ldr	r3, [sp]
+ 485 00c6 0133     		adds	r3, r3, #1
+ 486 00c8 0093     		str	r3, [sp]
+ 255:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 487              		.loc 1 255 43 is_stmt 1 discriminator 2 view .LVU169
+ 255:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 488              		.loc 1 255 22 is_stmt 0 discriminator 2 view .LVU170
+ 489 00ca 009B     		ldr	r3, [sp]
+ 255:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 490              		.loc 1 255 43 discriminator 2 view .LVU171
+ 491 00cc B3F5803F 		cmp	r3, #65536
+ 492 00d0 01D0     		beq	.L20
+ 255:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 493              		.loc 1 255 43 discriminator 1 view .LVU172
+ 494 00d2 0028     		cmp	r0, #0
+ 495 00d4 F2D1     		bne	.L21
+ 496              	.L20:
+ 257:./Libraries/src/stm32f4xx_hash_sha1.c ****     {
+ 497              		.loc 1 257 5 is_stmt 1 view .LVU173
+ 257:./Libraries/src/stm32f4xx_hash_sha1.c ****     {
+ 498              		.loc 1 257 8 is_stmt 0 view .LVU174
+ 499 00d6 08B1     		cbz	r0, .L31
+ 259:./Libraries/src/stm32f4xx_hash_sha1.c ****     }
+ 500              		.loc 1 259 14 view .LVU175
+ 501 00d8 0020     		movs	r0, #0
+ 502              	.LVL59:
+ 259:./Libraries/src/stm32f4xx_hash_sha1.c ****     }
+ 503              		.loc 1 259 14 view .LVU176
+ 504 00da DAE7     		b	.L17
+ 505              	.LVL60:
+ 506              	.L31:
+ 264:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 507              		.loc 1 264 7 is_stmt 1 view .LVU177
+ 508 00dc BDF80400 		ldrh	r0, [sp, #4]
+ARM GAS  /tmp/ccoQDDT2.s 			page 25
+
+
+ 509              	.LVL61:
+ 264:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 510              		.loc 1 264 7 is_stmt 0 view .LVU178
+ 511 00e0 80B2     		uxth	r0, r0
+ 512 00e2 FFF7FEFF 		bl	HASH_SetLastWordValidBitsNbr
+ 513              	.LVL62:
+ 267:./Libraries/src/stm32f4xx_hash_sha1.c ****       for(i=0; i<Keylen; i+=4)
+ 514              		.loc 1 267 7 is_stmt 1 view .LVU179
+ 268:./Libraries/src/stm32f4xx_hash_sha1.c ****       {
+ 515              		.loc 1 268 7 view .LVU180
+ 268:./Libraries/src/stm32f4xx_hash_sha1.c ****       {
+ 516              		.loc 1 268 7 is_stmt 0 view .LVU181
+ 517 00e6 04E0     		b	.L22
+ 518              	.LVL63:
+ 519              	.L23:
+ 270:./Libraries/src/stm32f4xx_hash_sha1.c ****         keyaddr+=4;
+ 520              		.loc 1 270 9 is_stmt 1 view .LVU182
+ 521 00e8 58F8040B 		ldr	r0, [r8], #4
+ 522              	.LVL64:
+ 270:./Libraries/src/stm32f4xx_hash_sha1.c ****         keyaddr+=4;
+ 523              		.loc 1 270 9 is_stmt 0 view .LVU183
+ 524 00ec FFF7FEFF 		bl	HASH_DataIn
+ 525              	.LVL65:
+ 271:./Libraries/src/stm32f4xx_hash_sha1.c ****       }
+ 526              		.loc 1 271 9 is_stmt 1 view .LVU184
+ 268:./Libraries/src/stm32f4xx_hash_sha1.c ****       {
+ 527              		.loc 1 268 27 discriminator 3 view .LVU185
+ 528 00f0 0434     		adds	r4, r4, #4
+ 529              	.LVL66:
+ 530              	.L22:
+ 268:./Libraries/src/stm32f4xx_hash_sha1.c ****       {
+ 531              		.loc 1 268 17 discriminator 1 view .LVU186
+ 532 00f2 AC42     		cmp	r4, r5
+ 533 00f4 F8D3     		bcc	.L23
+ 275:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 534              		.loc 1 275 7 view .LVU187
+ 535 00f6 FFF7FEFF 		bl	HASH_StartDigest
+ 536              	.LVL67:
+ 278:./Libraries/src/stm32f4xx_hash_sha1.c ****       do
+ 537              		.loc 1 278 7 view .LVU188
+ 278:./Libraries/src/stm32f4xx_hash_sha1.c ****       do
+ 538              		.loc 1 278 15 is_stmt 0 view .LVU189
+ 539 00fa 0023     		movs	r3, #0
+ 540 00fc 0093     		str	r3, [sp]
+ 541              	.LVL68:
+ 542              	.L25:
+ 279:./Libraries/src/stm32f4xx_hash_sha1.c ****       {
+ 543              		.loc 1 279 7 is_stmt 1 view .LVU190
+ 281:./Libraries/src/stm32f4xx_hash_sha1.c ****         counter++;
+ 544              		.loc 1 281 9 view .LVU191
+ 281:./Libraries/src/stm32f4xx_hash_sha1.c ****         counter++;
+ 545              		.loc 1 281 22 is_stmt 0 view .LVU192
+ 546 00fe 0820     		movs	r0, #8
+ 547 0100 FFF7FEFF 		bl	HASH_GetFlagStatus
+ 548              	.LVL69:
+ 282:./Libraries/src/stm32f4xx_hash_sha1.c ****       }while ((counter != SHA1BUSY_TIMEOUT) && (busystatus != RESET));
+ 549              		.loc 1 282 9 is_stmt 1 view .LVU193
+ARM GAS  /tmp/ccoQDDT2.s 			page 26
+
+
+ 282:./Libraries/src/stm32f4xx_hash_sha1.c ****       }while ((counter != SHA1BUSY_TIMEOUT) && (busystatus != RESET));
+ 550              		.loc 1 282 16 is_stmt 0 view .LVU194
+ 551 0104 009B     		ldr	r3, [sp]
+ 552 0106 0133     		adds	r3, r3, #1
+ 553 0108 0093     		str	r3, [sp]
+ 283:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 554              		.loc 1 283 45 is_stmt 1 discriminator 2 view .LVU195
+ 283:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 555              		.loc 1 283 24 is_stmt 0 discriminator 2 view .LVU196
+ 556 010a 009B     		ldr	r3, [sp]
+ 283:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 557              		.loc 1 283 45 discriminator 2 view .LVU197
+ 558 010c B3F5803F 		cmp	r3, #65536
+ 559 0110 01D0     		beq	.L24
+ 283:./Libraries/src/stm32f4xx_hash_sha1.c **** 
+ 560              		.loc 1 283 45 discriminator 1 view .LVU198
+ 561 0112 0028     		cmp	r0, #0
+ 562 0114 F3D1     		bne	.L25
+ 563              	.L24:
+ 285:./Libraries/src/stm32f4xx_hash_sha1.c ****       {
+ 564              		.loc 1 285 7 is_stmt 1 view .LVU199
+ 285:./Libraries/src/stm32f4xx_hash_sha1.c ****       {
+ 565              		.loc 1 285 10 is_stmt 0 view .LVU200
+ 566 0116 08B1     		cbz	r0, .L32
+ 287:./Libraries/src/stm32f4xx_hash_sha1.c ****       }
+ 567              		.loc 1 287 16 view .LVU201
+ 568 0118 0020     		movs	r0, #0
+ 569              	.LVL70:
+ 287:./Libraries/src/stm32f4xx_hash_sha1.c ****       }
+ 570              		.loc 1 287 16 view .LVU202
+ 571 011a BAE7     		b	.L17
+ 572              	.LVL71:
+ 573              	.L32:
+ 292:./Libraries/src/stm32f4xx_hash_sha1.c ****         *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[0]);
+ 574              		.loc 1 292 9 is_stmt 1 view .LVU203
+ 575 011c 02A8     		add	r0, sp, #8
+ 576              	.LVL72:
+ 292:./Libraries/src/stm32f4xx_hash_sha1.c ****         *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[0]);
+ 577              		.loc 1 292 9 is_stmt 0 view .LVU204
+ 578 011e FFF7FEFF 		bl	HASH_GetDigest
+ 579              	.LVL73:
+ 293:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 580              		.loc 1 293 9 is_stmt 1 view .LVU205
+ 293:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 581              		.loc 1 293 37 is_stmt 0 view .LVU206
+ 582 0122 029B     		ldr	r3, [sp, #8]
+ 583              	.LVL74:
+ 584              	.LBB32:
+ 585              	.LBI32:
+ 495:./system/core_cmInstr.h **** {
+ 586              		.loc 2 495 57 is_stmt 1 view .LVU207
+ 587              	.LBB33:
+ 588              		.loc 2 498 3 view .LVU208
+ 589              		.loc 2 498 10 is_stmt 0 view .LVU209
+ 590 0124 1BBA     		rev	r3, r3
+ 591              	.LVL75:
+ 592              		.loc 2 498 10 view .LVU210
+ARM GAS  /tmp/ccoQDDT2.s 			page 27
+
+
+ 593              	.LBE33:
+ 594              	.LBE32:
+ 293:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 595              		.loc 1 293 35 discriminator 1 view .LVU211
+ 596 0126 169A     		ldr	r2, [sp, #88]
+ 597 0128 1360     		str	r3, [r2]
+ 294:./Libraries/src/stm32f4xx_hash_sha1.c ****         *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[1]);
+ 598              		.loc 1 294 9 is_stmt 1 view .LVU212
+ 599              	.LVL76:
+ 295:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 600              		.loc 1 295 9 view .LVU213
+ 295:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 601              		.loc 1 295 37 is_stmt 0 view .LVU214
+ 602 012a 039B     		ldr	r3, [sp, #12]
+ 603              	.LVL77:
+ 604              	.LBB34:
+ 605              	.LBI34:
+ 495:./system/core_cmInstr.h **** {
+ 606              		.loc 2 495 57 is_stmt 1 view .LVU215
+ 607              	.LBB35:
+ 608              		.loc 2 498 3 view .LVU216
+ 609              		.loc 2 498 10 is_stmt 0 view .LVU217
+ 610 012c 1BBA     		rev	r3, r3
+ 611              	.LVL78:
+ 612              		.loc 2 498 10 view .LVU218
+ 613              	.LBE35:
+ 614              	.LBE34:
+ 295:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 615              		.loc 1 295 35 discriminator 1 view .LVU219
+ 616 012e 5360     		str	r3, [r2, #4]
+ 296:./Libraries/src/stm32f4xx_hash_sha1.c ****         *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[2]);
+ 617              		.loc 1 296 9 is_stmt 1 view .LVU220
+ 618              	.LVL79:
+ 297:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 619              		.loc 1 297 9 view .LVU221
+ 297:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 620              		.loc 1 297 37 is_stmt 0 view .LVU222
+ 621 0130 049B     		ldr	r3, [sp, #16]
+ 622              	.LVL80:
+ 623              	.LBB36:
+ 624              	.LBI36:
+ 495:./system/core_cmInstr.h **** {
+ 625              		.loc 2 495 57 is_stmt 1 view .LVU223
+ 626              	.LBB37:
+ 627              		.loc 2 498 3 view .LVU224
+ 628              		.loc 2 498 10 is_stmt 0 view .LVU225
+ 629 0132 1BBA     		rev	r3, r3
+ 630              	.LVL81:
+ 631              		.loc 2 498 10 view .LVU226
+ 632              	.LBE37:
+ 633              	.LBE36:
+ 297:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 634              		.loc 1 297 35 discriminator 1 view .LVU227
+ 635 0134 9360     		str	r3, [r2, #8]
+ 298:./Libraries/src/stm32f4xx_hash_sha1.c ****         *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[3]);
+ 636              		.loc 1 298 9 is_stmt 1 view .LVU228
+ 637              	.LVL82:
+ARM GAS  /tmp/ccoQDDT2.s 			page 28
+
+
+ 299:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 638              		.loc 1 299 9 view .LVU229
+ 299:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 639              		.loc 1 299 37 is_stmt 0 view .LVU230
+ 640 0136 059B     		ldr	r3, [sp, #20]
+ 641              	.LVL83:
+ 642              	.LBB38:
+ 643              	.LBI38:
+ 495:./system/core_cmInstr.h **** {
+ 644              		.loc 2 495 57 is_stmt 1 view .LVU231
+ 645              	.LBB39:
+ 646              		.loc 2 498 3 view .LVU232
+ 647              		.loc 2 498 10 is_stmt 0 view .LVU233
+ 648 0138 1BBA     		rev	r3, r3
+ 649              	.LVL84:
+ 650              		.loc 2 498 10 view .LVU234
+ 651              	.LBE39:
+ 652              	.LBE38:
+ 299:./Libraries/src/stm32f4xx_hash_sha1.c ****         outputaddr+=4;
+ 653              		.loc 1 299 35 discriminator 1 view .LVU235
+ 654 013a D360     		str	r3, [r2, #12]
+ 300:./Libraries/src/stm32f4xx_hash_sha1.c ****         *(uint32_t*)(outputaddr)  = __REV(SHA1_MessageDigest.Data[4]);
+ 655              		.loc 1 300 9 is_stmt 1 view .LVU236
+ 656              	.LVL85:
+ 301:./Libraries/src/stm32f4xx_hash_sha1.c ****       }
+ 657              		.loc 1 301 9 view .LVU237
+ 301:./Libraries/src/stm32f4xx_hash_sha1.c ****       }
+ 658              		.loc 1 301 37 is_stmt 0 view .LVU238
+ 659 013c 069B     		ldr	r3, [sp, #24]
+ 660              	.LVL86:
+ 661              	.LBB40:
+ 662              	.LBI40:
+ 495:./system/core_cmInstr.h **** {
+ 663              		.loc 2 495 57 is_stmt 1 view .LVU239
+ 664              	.LBB41:
+ 665              		.loc 2 498 3 view .LVU240
+ 666              		.loc 2 498 10 is_stmt 0 view .LVU241
+ 667 013e 1BBA     		rev	r3, r3
+ 668              	.LVL87:
+ 669              		.loc 2 498 10 view .LVU242
+ 670              	.LBE41:
+ 671              	.LBE40:
+ 301:./Libraries/src/stm32f4xx_hash_sha1.c ****       }
+ 672              		.loc 1 301 35 discriminator 1 view .LVU243
+ 673 0140 1361     		str	r3, [r2, #16]
+ 179:./Libraries/src/stm32f4xx_hash_sha1.c ****   uint32_t keyaddr    = (uint32_t)Key;
+ 674              		.loc 1 179 15 view .LVU244
+ 675 0142 0120     		movs	r0, #1
+ 676 0144 A5E7     		b	.L17
+ 677              		.cfi_endproc
+ 678              	.LFE124:
+ 680              		.text
+ 681              	.Letext0:
+ 682              		.file 3 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 683              		.file 4 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 684              		.file 5 "./system/stm32f4xx.h"
+ 685              		.file 6 "./Libraries/inc/stm32f4xx_hash.h"
+ARM GAS  /tmp/ccoQDDT2.s 			page 29
+
+
+ARM GAS  /tmp/ccoQDDT2.s 			page 30
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f4xx_hash_sha1.c
+     /tmp/ccoQDDT2.s:21     .text.HASH_SHA1:00000000 $t
+     /tmp/ccoQDDT2.s:27     .text.HASH_SHA1:00000000 HASH_SHA1
+     /tmp/ccoQDDT2.s:264    .text.HMAC_SHA1:00000000 $t
+     /tmp/ccoQDDT2.s:270    .text.HMAC_SHA1:00000000 HMAC_SHA1
+
+UNDEFINED SYMBOLS
+HASH_DeInit
+HASH_Init
+HASH_SetLastWordValidBitsNbr
+HASH_DataIn
+HASH_StartDigest
+HASH_GetFlagStatus
+HASH_GetDigest

@@ -1,0 +1,424 @@
+ARM GAS  /tmp/cc6cWkYv.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"ppm.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./Hardware/ppm.c"
+  20              		.section	.text.PPM_Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	PPM_Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	PPM_Init:
+  28              	.LFB123:
+   1:./Hardware/ppm.c **** #include "stm32f4xx.h"                  // Device header
+   2:./Hardware/ppm.c **** #include "stm32f4xx_rcc.h"
+   3:./Hardware/ppm.c **** #include "stm32f4xx_gpio.h"
+   4:./Hardware/ppm.c **** #include "stm32f4xx_tim.h"
+   5:./Hardware/ppm.c **** #include "misc.h"
+   6:./Hardware/ppm.c **** #include "Delay.h"
+   7:./Hardware/ppm.c **** #include "PPM.h"
+   8:./Hardware/ppm.c **** #include "ucos_ii.h"
+   9:./Hardware/ppm.c **** 
+  10:./Hardware/ppm.c **** uint16_t PPM_Time = 0;
+  11:./Hardware/ppm.c **** uint8_t PPM_CNT = 0;
+  12:./Hardware/ppm.c **** 
+  13:./Hardware/ppm.c **** void PPM_Init(void)
+  14:./Hardware/ppm.c **** {
+  29              		.loc 1 14 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 40
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40 0002 8AB0     		sub	sp, sp, #40
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 56
+  15:./Hardware/ppm.c **** 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+  43              		.loc 1 15 2 view .LVU1
+ARM GAS  /tmp/cc6cWkYv.s 			page 2
+
+
+  44 0004 0121     		movs	r1, #1
+  45 0006 0846     		mov	r0, r1
+  46 0008 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+  47              	.LVL0:
+  16:./Hardware/ppm.c **** 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+  48              		.loc 1 16 2 view .LVU2
+  49 000c 0121     		movs	r1, #1
+  50 000e 0220     		movs	r0, #2
+  51 0010 FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
+  52              	.LVL1:
+  17:./Hardware/ppm.c **** 	
+  18:./Hardware/ppm.c **** 	GPIO_InitTypeDef GPIO_InitStructure;
+  53              		.loc 1 18 2 view .LVU3
+  19:./Hardware/ppm.c **** 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_TIM3);
+  54              		.loc 1 19 2 view .LVU4
+  55 0014 2C4C     		ldr	r4, .L3
+  56 0016 0222     		movs	r2, #2
+  57 0018 0621     		movs	r1, #6
+  58 001a 2046     		mov	r0, r4
+  59 001c FFF7FEFF 		bl	GPIO_PinAFConfig
+  60              	.LVL2:
+  20:./Hardware/ppm.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  61              		.loc 1 20 2 view .LVU5
+  62              		.loc 1 20 31 is_stmt 0 view .LVU6
+  63 0020 0226     		movs	r6, #2
+  64 0022 8DF82460 		strb	r6, [sp, #36]
+  21:./Hardware/ppm.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+  65              		.loc 1 21 2 is_stmt 1 view .LVU7
+  66              		.loc 1 21 30 is_stmt 0 view .LVU8
+  67 0026 4023     		movs	r3, #64
+  68 0028 0893     		str	r3, [sp, #32]
+  22:./Hardware/ppm.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
+  69              		.loc 1 22 2 is_stmt 1 view .LVU9
+  70              		.loc 1 22 31 is_stmt 0 view .LVU10
+  71 002a 8DF82760 		strb	r6, [sp, #39]
+  23:./Hardware/ppm.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_High_Speed;
+  72              		.loc 1 23 2 is_stmt 1 view .LVU11
+  73              		.loc 1 23 32 is_stmt 0 view .LVU12
+  74 002e 0323     		movs	r3, #3
+  75 0030 8DF82530 		strb	r3, [sp, #37]
+  24:./Hardware/ppm.c **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+  76              		.loc 1 24 2 is_stmt 1 view .LVU13
+  77 0034 08A9     		add	r1, sp, #32
+  78 0036 2046     		mov	r0, r4
+  79 0038 FFF7FEFF 		bl	GPIO_Init
+  80              	.LVL3:
+  25:./Hardware/ppm.c **** 	
+  26:./Hardware/ppm.c **** 	TIM_TimeBaseInitTypeDef TimeBase_InitStructure;
+  81              		.loc 1 26 2 view .LVU14
+  27:./Hardware/ppm.c **** 	TimeBase_InitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+  82              		.loc 1 27 2 view .LVU15
+  83              		.loc 1 27 43 is_stmt 0 view .LVU16
+  84 003c 0025     		movs	r5, #0
+  85 003e ADF81C50 		strh	r5, [sp, #28]	@ movhi
+  28:./Hardware/ppm.c **** 	TimeBase_InitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+  86              		.loc 1 28 2 is_stmt 1 view .LVU17
+  87              		.loc 1 28 41 is_stmt 0 view .LVU18
+ARM GAS  /tmp/cc6cWkYv.s 			page 3
+
+
+  88 0042 ADF81650 		strh	r5, [sp, #22]	@ movhi
+  29:./Hardware/ppm.c **** 	TimeBase_InitStructure.TIM_Prescaler = 84 - 1;		//PSC
+  89              		.loc 1 29 2 is_stmt 1 view .LVU19
+  90              		.loc 1 29 39 is_stmt 0 view .LVU20
+  91 0046 5323     		movs	r3, #83
+  92 0048 ADF81430 		strh	r3, [sp, #20]	@ movhi
+  30:./Hardware/ppm.c **** 	TimeBase_InitStructure.TIM_Period = 65535;		//ARR
+  93              		.loc 1 30 2 is_stmt 1 view .LVU21
+  94              		.loc 1 30 36 is_stmt 0 view .LVU22
+  95 004c 4FF6FF73 		movw	r3, #65535
+  96 0050 0693     		str	r3, [sp, #24]
+  31:./Hardware/ppm.c **** 	TimeBase_InitStructure.TIM_RepetitionCounter = 0;
+  97              		.loc 1 31 2 is_stmt 1 view .LVU23
+  98              		.loc 1 31 47 is_stmt 0 view .LVU24
+  99 0052 8DF81E50 		strb	r5, [sp, #30]
+  32:./Hardware/ppm.c **** 	TIM_TimeBaseInit(TIM3, &TimeBase_InitStructure);
+ 100              		.loc 1 32 2 is_stmt 1 view .LVU25
+ 101 0056 A4F5FE34 		sub	r4, r4, #130048
+ 102 005a 05A9     		add	r1, sp, #20
+ 103 005c 2046     		mov	r0, r4
+ 104 005e FFF7FEFF 		bl	TIM_TimeBaseInit
+ 105              	.LVL4:
+  33:./Hardware/ppm.c **** 	
+  34:./Hardware/ppm.c **** 	TIM_ICInitTypeDef IC_InitStructure;
+ 106              		.loc 1 34 2 view .LVU26
+  35:./Hardware/ppm.c **** 	IC_InitStructure.TIM_Channel = TIM_Channel_1;	//选择CH1
+ 107              		.loc 1 35 2 view .LVU27
+ 108              		.loc 1 35 31 is_stmt 0 view .LVU28
+ 109 0062 ADF80850 		strh	r5, [sp, #8]	@ movhi
+  36:./Hardware/ppm.c **** 	IC_InitStructure.TIM_ICFilter = 0xF;	//滤波
+ 110              		.loc 1 36 2 is_stmt 1 view .LVU29
+ 111              		.loc 1 36 32 is_stmt 0 view .LVU30
+ 112 0066 0F23     		movs	r3, #15
+ 113 0068 ADF81030 		strh	r3, [sp, #16]	@ movhi
+  37:./Hardware/ppm.c **** 	IC_InitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;		//上升沿触发
+ 114              		.loc 1 37 2 is_stmt 1 view .LVU31
+ 115              		.loc 1 37 34 is_stmt 0 view .LVU32
+ 116 006c ADF80A50 		strh	r5, [sp, #10]	@ movhi
+  38:./Hardware/ppm.c **** 	IC_InitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;		//捕获单元预分频
+ 117              		.loc 1 38 2 is_stmt 1 view .LVU33
+ 118              		.loc 1 38 35 is_stmt 0 view .LVU34
+ 119 0070 ADF80E50 		strh	r5, [sp, #14]	@ movhi
+  39:./Hardware/ppm.c **** 	IC_InitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;	//直连
+ 120              		.loc 1 39 2 is_stmt 1 view .LVU35
+ 121              		.loc 1 39 35 is_stmt 0 view .LVU36
+ 122 0074 0125     		movs	r5, #1
+ 123 0076 ADF80C50 		strh	r5, [sp, #12]	@ movhi
+  40:./Hardware/ppm.c **** 	TIM_ICInit(TIM3, &IC_InitStructure);
+ 124              		.loc 1 40 2 is_stmt 1 view .LVU37
+ 125 007a 02A9     		add	r1, sp, #8
+ 126 007c 2046     		mov	r0, r4
+ 127 007e FFF7FEFF 		bl	TIM_ICInit
+ 128              	.LVL5:
+  41:./Hardware/ppm.c **** 	
+  42:./Hardware/ppm.c **** 	TIM_SelectInputTrigger(TIM3, TIM_TS_TI1FP1);	//触发源选择TI1FP1
+ 129              		.loc 1 42 2 view .LVU38
+ 130 0082 5021     		movs	r1, #80
+ARM GAS  /tmp/cc6cWkYv.s 			page 4
+
+
+ 131 0084 2046     		mov	r0, r4
+ 132 0086 FFF7FEFF 		bl	TIM_SelectInputTrigger
+ 133              	.LVL6:
+  43:./Hardware/ppm.c **** 	TIM_SelectSlaveMode(TIM3, TIM_SlaveMode_Reset);		//从模式选择复位计数器
+ 134              		.loc 1 43 2 view .LVU39
+ 135 008a 0421     		movs	r1, #4
+ 136 008c 2046     		mov	r0, r4
+ 137 008e FFF7FEFF 		bl	TIM_SelectSlaveMode
+ 138              	.LVL7:
+  44:./Hardware/ppm.c **** 	
+  45:./Hardware/ppm.c **** 	TIM_ITConfig(TIM3, TIM_IT_CC1, ENABLE);		//开启TIM3输入捕获中断
+ 139              		.loc 1 45 2 view .LVU40
+ 140 0092 2A46     		mov	r2, r5
+ 141 0094 3146     		mov	r1, r6
+ 142 0096 2046     		mov	r0, r4
+ 143 0098 FFF7FEFF 		bl	TIM_ITConfig
+ 144              	.LVL8:
+  46:./Hardware/ppm.c **** 	
+  47:./Hardware/ppm.c **** 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+ 145              		.loc 1 47 2 view .LVU41
+ 146 009c 4FF4A060 		mov	r0, #1280
+ 147 00a0 FFF7FEFF 		bl	NVIC_PriorityGroupConfig
+ 148              	.LVL9:
+  48:./Hardware/ppm.c **** 	
+  49:./Hardware/ppm.c **** 	NVIC_InitTypeDef NVIC_InitStrcuture;
+ 149              		.loc 1 49 2 view .LVU42
+  50:./Hardware/ppm.c **** 	NVIC_InitStrcuture.NVIC_IRQChannel = TIM3_IRQn;
+ 150              		.loc 1 50 2 view .LVU43
+ 151              		.loc 1 50 37 is_stmt 0 view .LVU44
+ 152 00a4 1D23     		movs	r3, #29
+ 153 00a6 8DF80430 		strb	r3, [sp, #4]
+  51:./Hardware/ppm.c **** 	NVIC_InitStrcuture.NVIC_IRQChannelCmd = ENABLE;
+ 154              		.loc 1 51 2 is_stmt 1 view .LVU45
+ 155              		.loc 1 51 40 is_stmt 0 view .LVU46
+ 156 00aa 8DF80750 		strb	r5, [sp, #7]
+  52:./Hardware/ppm.c **** 	NVIC_InitStrcuture.NVIC_IRQChannelPreemptionPriority = 2;
+ 157              		.loc 1 52 2 is_stmt 1 view .LVU47
+ 158              		.loc 1 52 55 is_stmt 0 view .LVU48
+ 159 00ae 8DF80560 		strb	r6, [sp, #5]
+  53:./Hardware/ppm.c **** 	NVIC_InitStrcuture.NVIC_IRQChannelSubPriority = 2;
+ 160              		.loc 1 53 2 is_stmt 1 view .LVU49
+ 161              		.loc 1 53 48 is_stmt 0 view .LVU50
+ 162 00b2 8DF80660 		strb	r6, [sp, #6]
+  54:./Hardware/ppm.c **** 	NVIC_Init(&NVIC_InitStrcuture);
+ 163              		.loc 1 54 2 is_stmt 1 view .LVU51
+ 164 00b6 01A8     		add	r0, sp, #4
+ 165 00b8 FFF7FEFF 		bl	NVIC_Init
+ 166              	.LVL10:
+  55:./Hardware/ppm.c **** 	
+  56:./Hardware/ppm.c **** 	TIM_Cmd(TIM3, ENABLE);		//开启定时器
+ 167              		.loc 1 56 2 view .LVU52
+ 168 00bc 2946     		mov	r1, r5
+ 169 00be 2046     		mov	r0, r4
+ 170 00c0 FFF7FEFF 		bl	TIM_Cmd
+ 171              	.LVL11:
+  57:./Hardware/ppm.c **** }
+ 172              		.loc 1 57 1 is_stmt 0 view .LVU53
+ARM GAS  /tmp/cc6cWkYv.s 			page 5
+
+
+ 173 00c4 0AB0     		add	sp, sp, #40
+ 174              	.LCFI2:
+ 175              		.cfi_def_cfa_offset 16
+ 176              		@ sp needed
+ 177 00c6 70BD     		pop	{r4, r5, r6, pc}
+ 178              	.L4:
+ 179              		.align	2
+ 180              	.L3:
+ 181 00c8 00000240 		.word	1073872896
+ 182              		.cfi_endproc
+ 183              	.LFE123:
+ 185              		.section	.text.TIM3_IRQHandler,"ax",%progbits
+ 186              		.align	1
+ 187              		.global	TIM3_IRQHandler
+ 188              		.syntax unified
+ 189              		.thumb
+ 190              		.thumb_func
+ 192              	TIM3_IRQHandler:
+ 193              	.LFB124:
+  58:./Hardware/ppm.c **** 
+  59:./Hardware/ppm.c **** void TIM3_IRQHandler(void)
+  60:./Hardware/ppm.c **** {
+ 194              		.loc 1 60 1 is_stmt 1 view -0
+ 195              		.cfi_startproc
+ 196              		@ args = 0, pretend = 0, frame = 0
+ 197              		@ frame_needed = 0, uses_anonymous_args = 0
+ 198 0000 08B5     		push	{r3, lr}
+ 199              	.LCFI3:
+ 200              		.cfi_def_cfa_offset 8
+ 201              		.cfi_offset 3, -8
+ 202              		.cfi_offset 14, -4
+  61:./Hardware/ppm.c **** //	SEGGER_SYSVIEW_RecordEnterISR();
+  62:./Hardware/ppm.c **** 	OSIntEnter();
+ 203              		.loc 1 62 2 view .LVU55
+ 204 0002 FFF7FEFF 		bl	OSIntEnter
+ 205              	.LVL12:
+  63:./Hardware/ppm.c **** 	if(TIM_GetITStatus(TIM3, TIM_IT_CC1) != RESET)
+ 206              		.loc 1 63 2 view .LVU56
+ 207              		.loc 1 63 5 is_stmt 0 view .LVU57
+ 208 0006 0221     		movs	r1, #2
+ 209 0008 1248     		ldr	r0, .L10
+ 210 000a FFF7FEFF 		bl	TIM_GetITStatus
+ 211              	.LVL13:
+ 212              		.loc 1 63 4 discriminator 1 view .LVU58
+ 213 000e E8B1     		cbz	r0, .L6
+  64:./Hardware/ppm.c **** 	{
+  65:./Hardware/ppm.c **** 		PPM_Time = TIM3->CCR1;
+ 214              		.loc 1 65 3 is_stmt 1 view .LVU59
+ 215              		.loc 1 65 18 is_stmt 0 view .LVU60
+ 216 0010 104B     		ldr	r3, .L10
+ 217 0012 5B6B     		ldr	r3, [r3, #52]
+ 218              		.loc 1 65 12 view .LVU61
+ 219 0014 9BB2     		uxth	r3, r3
+ 220 0016 104A     		ldr	r2, .L10+4
+ 221 0018 1380     		strh	r3, [r2]	@ movhi
+  66:./Hardware/ppm.c **** 		if(PPM_Time <= 2100)
+ 222              		.loc 1 66 3 is_stmt 1 view .LVU62
+ARM GAS  /tmp/cc6cWkYv.s 			page 6
+
+
+ 223              		.loc 1 66 5 is_stmt 0 view .LVU63
+ 224 001a 40F63402 		movw	r2, #2100
+ 225 001e 9342     		cmp	r3, r2
+ 226 0020 0DD8     		bhi	.L7
+  67:./Hardware/ppm.c **** 		{
+  68:./Hardware/ppm.c **** 			PPM[PPM_CNT++] = PPM_Time;
+ 227              		.loc 1 68 4 is_stmt 1 view .LVU64
+ 228              		.loc 1 68 15 is_stmt 0 view .LVU65
+ 229 0022 0E48     		ldr	r0, .L10+8
+ 230 0024 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 231 0026 4A1C     		adds	r2, r1, #1
+ 232 0028 D2B2     		uxtb	r2, r2
+ 233 002a 0270     		strb	r2, [r0]
+ 234              		.loc 1 68 19 view .LVU66
+ 235 002c 0C48     		ldr	r0, .L10+12
+ 236 002e 20F81130 		strh	r3, [r0, r1, lsl #1]	@ movhi
+  69:./Hardware/ppm.c **** 			if (PPM_CNT >= 8) PPM_CNT = 0;
+ 237              		.loc 1 69 4 is_stmt 1 view .LVU67
+ 238              		.loc 1 69 7 is_stmt 0 view .LVU68
+ 239 0032 072A     		cmp	r2, #7
+ 240 0034 06D9     		bls	.L8
+ 241              		.loc 1 69 22 is_stmt 1 discriminator 1 view .LVU69
+ 242              		.loc 1 69 30 is_stmt 0 discriminator 1 view .LVU70
+ 243 0036 094B     		ldr	r3, .L10+8
+ 244 0038 0022     		movs	r2, #0
+ 245 003a 1A70     		strb	r2, [r3]
+ 246 003c 02E0     		b	.L8
+ 247              	.L7:
+  70:./Hardware/ppm.c **** 		}
+  71:./Hardware/ppm.c **** 		else 
+  72:./Hardware/ppm.c **** 		{
+  73:./Hardware/ppm.c **** 			PPM_CNT = 0;
+ 248              		.loc 1 73 4 is_stmt 1 view .LVU71
+ 249              		.loc 1 73 12 is_stmt 0 view .LVU72
+ 250 003e 074B     		ldr	r3, .L10+8
+ 251 0040 0022     		movs	r2, #0
+ 252 0042 1A70     		strb	r2, [r3]
+ 253              	.L8:
+  74:./Hardware/ppm.c **** 		}			
+  75:./Hardware/ppm.c **** 		TIM_ClearITPendingBit(TIM3, TIM_IT_CC1);
+ 254              		.loc 1 75 3 is_stmt 1 view .LVU73
+ 255 0044 0221     		movs	r1, #2
+ 256 0046 0348     		ldr	r0, .L10
+ 257 0048 FFF7FEFF 		bl	TIM_ClearITPendingBit
+ 258              	.LVL14:
+ 259              	.L6:
+  76:./Hardware/ppm.c **** 	}
+  77:./Hardware/ppm.c **** 	OSIntExit();
+ 260              		.loc 1 77 2 view .LVU74
+ 261 004c FFF7FEFF 		bl	OSIntExit
+ 262              	.LVL15:
+  78:./Hardware/ppm.c **** //	SEGGER_SYSVIEW_RecordExitISR();
+  79:./Hardware/ppm.c **** }
+ 263              		.loc 1 79 1 is_stmt 0 view .LVU75
+ 264 0050 08BD     		pop	{r3, pc}
+ 265              	.L11:
+ 266 0052 00BF     		.align	2
+ARM GAS  /tmp/cc6cWkYv.s 			page 7
+
+
+ 267              	.L10:
+ 268 0054 00040040 		.word	1073742848
+ 269 0058 00000000 		.word	PPM_Time
+ 270 005c 00000000 		.word	PPM_CNT
+ 271 0060 00000000 		.word	PPM
+ 272              		.cfi_endproc
+ 273              	.LFE124:
+ 275              		.global	PPM_CNT
+ 276              		.section	.bss.PPM_CNT,"aw",%nobits
+ 279              	PPM_CNT:
+ 280 0000 00       		.space	1
+ 281              		.global	PPM_Time
+ 282              		.section	.bss.PPM_Time,"aw",%nobits
+ 283              		.align	1
+ 286              	PPM_Time:
+ 287 0000 0000     		.space	2
+ 288              		.text
+ 289              	.Letext0:
+ 290              		.file 2 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 291              		.file 3 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 292              		.file 4 "./system/stm32f4xx.h"
+ 293              		.file 5 "./Libraries/inc/stm32f4xx_gpio.h"
+ 294              		.file 6 "./Libraries/inc/stm32f4xx_tim.h"
+ 295              		.file 7 "./Libraries/inc/misc.h"
+ 296              		.file 8 "./ucos/Core/ucos_ii.h"
+ 297              		.file 9 "./Libraries/inc/stm32f4xx_rcc.h"
+ 298              		.file 10 "./Hardware/PPM.h"
+ARM GAS  /tmp/cc6cWkYv.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ppm.c
+     /tmp/cc6cWkYv.s:21     .text.PPM_Init:00000000 $t
+     /tmp/cc6cWkYv.s:27     .text.PPM_Init:00000000 PPM_Init
+     /tmp/cc6cWkYv.s:181    .text.PPM_Init:000000c8 $d
+     /tmp/cc6cWkYv.s:186    .text.TIM3_IRQHandler:00000000 $t
+     /tmp/cc6cWkYv.s:192    .text.TIM3_IRQHandler:00000000 TIM3_IRQHandler
+     /tmp/cc6cWkYv.s:268    .text.TIM3_IRQHandler:00000054 $d
+     /tmp/cc6cWkYv.s:286    .bss.PPM_Time:00000000 PPM_Time
+     /tmp/cc6cWkYv.s:279    .bss.PPM_CNT:00000000 PPM_CNT
+     /tmp/cc6cWkYv.s:280    .bss.PPM_CNT:00000000 $d
+     /tmp/cc6cWkYv.s:283    .bss.PPM_Time:00000000 $d
+
+UNDEFINED SYMBOLS
+RCC_AHB1PeriphClockCmd
+RCC_APB1PeriphClockCmd
+GPIO_PinAFConfig
+GPIO_Init
+TIM_TimeBaseInit
+TIM_ICInit
+TIM_SelectInputTrigger
+TIM_SelectSlaveMode
+TIM_ITConfig
+NVIC_PriorityGroupConfig
+NVIC_Init
+TIM_Cmd
+OSIntEnter
+TIM_GetITStatus
+TIM_ClearITPendingBit
+OSIntExit
+PPM

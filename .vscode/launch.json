@@ -1,0 +1,41 @@
+{
+  /*
+    "configurations": [
+      {
+        "name": "ST-Link Cortex-M4 Debug",
+        "type": "cortex-debug",
+        "request": "launch",
+        "servertype": "openocd",  
+        "cwd": "${workspaceFolder}",
+        "executable": "${workspaceFolder}/build/quadcopter.elf",
+        "device": "STM32F401RE",  
+        "configFiles": [
+          "interface/stlink.cfg",
+          "target/stm32f4x.cfg"
+        ],
+        "svdFile": "${workspaceFolder}/Script/stm32f401.svd", 
+        "runToEntryPoint": "main",
+        "gdbPath": "/opt/gcc-arm-none-eabi/bin/arm-none-eabi-gdb" 
+      }
+    ]
+      */
+
+    "configurations": [
+      {
+          "name": "J-Link Cortex-M4 Debug",
+          "type": "cortex-debug",
+          "request": "launch",
+          "servertype": "jlink",
+          "cwd": "${workspaceRoot}",
+          "executable": "${workspaceRoot}/build/quadcopter.elf",
+          "device": "STM32F401RE",
+          "interface": "swd",
+          "svdFile": "${workspaceRoot}/Script/STM32F401.svd",
+          "runToEntryPoint": "main",
+          "serverpath": "/mnt/d/SEGGER/JLink_V828/JLinkGDBServer.exe",
+          "gdbPath": "/opt/gcc-arm-none-eabi/bin/arm-none-eabi-gdb" 
+      }
+    ]
+
+  }
+  

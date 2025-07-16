@@ -1,0 +1,964 @@
+ARM GAS  /tmp/ccJHJwMP.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"os_time.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./ucos/Core/os_time.c"
+  20              		.section	.text.OSTimeDly,"ax",%progbits
+  21              		.align	1
+  22              		.global	OSTimeDly
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	OSTimeDly:
+  28              	.LVL0:
+  29              	.LFB0:
+   1:./ucos/Core/os_time.c **** /*
+   2:./ucos/Core/os_time.c **** ***************************************************************************************************
+   3:./ucos/Core/os_time.c **** *                                              uC/OS-II
+   4:./ucos/Core/os_time.c **** *                                        The Real-Time Kernel
+   5:./ucos/Core/os_time.c **** *
+   6:./ucos/Core/os_time.c **** *                    Copyright 1992-2021 Silicon Laboratories Inc. www.silabs.com
+   7:./ucos/Core/os_time.c **** *
+   8:./ucos/Core/os_time.c **** *                                 SPDX-License-Identifier: APACHE-2.0
+   9:./ucos/Core/os_time.c **** *
+  10:./ucos/Core/os_time.c **** *               This software is subject to an open source license and is distributed by
+  11:./ucos/Core/os_time.c **** *                Silicon Laboratories Inc. pursuant to the terms of the Apache License,
+  12:./ucos/Core/os_time.c **** *                    Version 2.0 available at www.apache.org/licenses/LICENSE-2.0.
+  13:./ucos/Core/os_time.c **** *
+  14:./ucos/Core/os_time.c **** ***************************************************************************************************
+  15:./ucos/Core/os_time.c **** */
+  16:./ucos/Core/os_time.c **** 
+  17:./ucos/Core/os_time.c **** 
+  18:./ucos/Core/os_time.c **** /*
+  19:./ucos/Core/os_time.c **** ***************************************************************************************************
+  20:./ucos/Core/os_time.c **** *
+  21:./ucos/Core/os_time.c **** *                                            TIME MANAGEMENT
+  22:./ucos/Core/os_time.c **** *
+  23:./ucos/Core/os_time.c **** * Filename : os_time.c
+  24:./ucos/Core/os_time.c **** * Version  : V2.93.01
+  25:./ucos/Core/os_time.c **** ***************************************************************************************************
+  26:./ucos/Core/os_time.c **** */
+  27:./ucos/Core/os_time.c **** 
+  28:./ucos/Core/os_time.c **** #ifndef  OS_TIME_C
+  29:./ucos/Core/os_time.c **** #define  OS_TIME_C
+ARM GAS  /tmp/ccJHJwMP.s 			page 2
+
+
+  30:./ucos/Core/os_time.c **** 
+  31:./ucos/Core/os_time.c **** #define  MICRIUM_SOURCE
+  32:./ucos/Core/os_time.c **** 
+  33:./ucos/Core/os_time.c **** #ifndef  OS_MASTER_FILE
+  34:./ucos/Core/os_time.c **** #include <ucos_ii.h>
+  35:./ucos/Core/os_time.c **** #endif
+  36:./ucos/Core/os_time.c **** 
+  37:./ucos/Core/os_time.c **** /*
+  38:./ucos/Core/os_time.c **** ***************************************************************************************************
+  39:./ucos/Core/os_time.c **** *                                        DELAY TASK 'n' TICKS
+  40:./ucos/Core/os_time.c **** *
+  41:./ucos/Core/os_time.c **** * Description: This function is called to delay execution of the currently running task until the
+  42:./ucos/Core/os_time.c **** *              specified number of system ticks expires.  This, of course, directly equates to dela
+  43:./ucos/Core/os_time.c **** *              the current task for some time to expire.  No delay will result If the specified del
+  44:./ucos/Core/os_time.c **** *              0.  If the specified delay is greater than 0 then, a context switch will result.
+  45:./ucos/Core/os_time.c **** *
+  46:./ucos/Core/os_time.c **** * Arguments  : ticks     is the time delay that the task will be suspended in number of clock 'tick
+  47:./ucos/Core/os_time.c **** *                        Note that by specifying 0, the task will not be delayed.
+  48:./ucos/Core/os_time.c **** *
+  49:./ucos/Core/os_time.c **** * Returns    : none
+  50:./ucos/Core/os_time.c **** ***************************************************************************************************
+  51:./ucos/Core/os_time.c **** */
+  52:./ucos/Core/os_time.c **** 
+  53:./ucos/Core/os_time.c **** void  OSTimeDly (INT32U ticks)
+  54:./ucos/Core/os_time.c **** {
+  30              		.loc 1 54 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 54 1 is_stmt 0 view .LVU1
+  35 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 24
+  38              		.cfi_offset 3, -24
+  39              		.cfi_offset 4, -20
+  40              		.cfi_offset 5, -16
+  41              		.cfi_offset 6, -12
+  42              		.cfi_offset 7, -8
+  43              		.cfi_offset 14, -4
+  55:./ucos/Core/os_time.c ****     INT8U      y;
+  44              		.loc 1 55 5 is_stmt 1 view .LVU2
+  56:./ucos/Core/os_time.c **** #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register       
+  57:./ucos/Core/os_time.c ****     OS_CPU_SR  cpu_sr = 0u;
+  45              		.loc 1 57 5 view .LVU3
+  46              	.LVL1:
+  58:./ucos/Core/os_time.c **** #endif
+  59:./ucos/Core/os_time.c **** 
+  60:./ucos/Core/os_time.c **** 
+  61:./ucos/Core/os_time.c **** 
+  62:./ucos/Core/os_time.c ****     if (OSIntNesting > 0u) {                     /* See if trying to call from an ISR              
+  47              		.loc 1 62 5 view .LVU4
+  48              		.loc 1 62 22 is_stmt 0 view .LVU5
+  49 0002 164B     		ldr	r3, .L6
+  50 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  51              		.loc 1 62 8 view .LVU6
+  52 0006 23B9     		cbnz	r3, .L1
+  53 0008 0446     		mov	r4, r0
+ARM GAS  /tmp/ccJHJwMP.s 			page 3
+
+
+  63:./ucos/Core/os_time.c ****         return;
+  64:./ucos/Core/os_time.c ****     }
+  65:./ucos/Core/os_time.c ****     if (OSLockNesting > 0u) {                    /* See if called with scheduler locked            
+  54              		.loc 1 65 5 is_stmt 1 view .LVU7
+  55              		.loc 1 65 23 is_stmt 0 view .LVU8
+  56 000a 154B     		ldr	r3, .L6+4
+  57 000c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  58              		.loc 1 65 8 view .LVU9
+  59 000e 03B9     		cbnz	r3, .L1
+  66:./ucos/Core/os_time.c ****         return;
+  67:./ucos/Core/os_time.c ****     }
+  68:./ucos/Core/os_time.c ****     if (ticks > 0u) {                            /* 0 means no delay!                              
+  60              		.loc 1 68 5 is_stmt 1 view .LVU10
+  61              		.loc 1 68 8 is_stmt 0 view .LVU11
+  62 0010 00B9     		cbnz	r0, .L5
+  63              	.LVL2:
+  64              	.L1:
+  69:./ucos/Core/os_time.c ****         OS_ENTER_CRITICAL();
+  70:./ucos/Core/os_time.c ****         y            =  OSTCBCur->OSTCBY;        /* Delay current task                             
+  71:./ucos/Core/os_time.c ****         OSRdyTbl[y] &= (OS_PRIO)~OSTCBCur->OSTCBBitX;
+  72:./ucos/Core/os_time.c ****         OS_TRACE_TASK_SUSPENDED(OSTCBCur);
+  73:./ucos/Core/os_time.c ****         if (OSRdyTbl[y] == 0u) {
+  74:./ucos/Core/os_time.c ****             OSRdyGrp &= (OS_PRIO)~OSTCBCur->OSTCBBitY;
+  75:./ucos/Core/os_time.c ****         }
+  76:./ucos/Core/os_time.c ****         OSTCBCur->OSTCBDly = ticks;              /* Load ticks in TCB                              
+  77:./ucos/Core/os_time.c ****         OS_TRACE_TASK_DLY(ticks);
+  78:./ucos/Core/os_time.c ****         OS_EXIT_CRITICAL();
+  79:./ucos/Core/os_time.c ****         OS_Sched();                              /* Find next task to run!                         
+  80:./ucos/Core/os_time.c ****     }
+  81:./ucos/Core/os_time.c **** }
+  65              		.loc 1 81 1 view .LVU12
+  66 0012 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+  67              	.LVL3:
+  68              	.L5:
+  69:./ucos/Core/os_time.c ****         OS_ENTER_CRITICAL();
+  69              		.loc 1 69 9 is_stmt 1 view .LVU13
+  69:./ucos/Core/os_time.c ****         OS_ENTER_CRITICAL();
+  70              		.loc 1 69 9 view .LVU14
+  71 0014 FFF7FEFF 		bl	OS_CPU_SR_Save
+  72              	.LVL4:
+  69:./ucos/Core/os_time.c ****         OS_ENTER_CRITICAL();
+  73              		.loc 1 69 9 is_stmt 0 view .LVU15
+  74 0018 0546     		mov	r5, r0
+  75              	.LVL5:
+  69:./ucos/Core/os_time.c ****         OS_ENTER_CRITICAL();
+  76              		.loc 1 69 9 is_stmt 1 discriminator 1 view .LVU16
+  70:./ucos/Core/os_time.c ****         OSRdyTbl[y] &= (OS_PRIO)~OSTCBCur->OSTCBBitX;
+  77              		.loc 1 70 9 view .LVU17
+  70:./ucos/Core/os_time.c ****         OSRdyTbl[y] &= (OS_PRIO)~OSTCBCur->OSTCBBitX;
+  78              		.loc 1 70 33 is_stmt 0 view .LVU18
+  79 001a 124B     		ldr	r3, .L6+8
+  80 001c 1868     		ldr	r0, [r3]
+  81              	.LVL6:
+  70:./ucos/Core/os_time.c ****         OSRdyTbl[y] &= (OS_PRIO)~OSTCBCur->OSTCBBitX;
+  82              		.loc 1 70 22 view .LVU19
+  83 001e 90F83C60 		ldrb	r6, [r0, #60]	@ zero_extendqisi2
+  84              	.LVL7:
+ARM GAS  /tmp/ccJHJwMP.s 			page 4
+
+
+  71:./ucos/Core/os_time.c ****         OS_TRACE_TASK_SUSPENDED(OSTCBCur);
+  85              		.loc 1 71 9 is_stmt 1 view .LVU20
+  71:./ucos/Core/os_time.c ****         OS_TRACE_TASK_SUSPENDED(OSTCBCur);
+  86              		.loc 1 71 17 is_stmt 0 view .LVU21
+  87 0022 114F     		ldr	r7, .L6+12
+  88 0024 BB5D     		ldrb	r3, [r7, r6]	@ zero_extendqisi2
+  71:./ucos/Core/os_time.c ****         OS_TRACE_TASK_SUSPENDED(OSTCBCur);
+  89              		.loc 1 71 42 view .LVU22
+  90 0026 90F83D20 		ldrb	r2, [r0, #61]	@ zero_extendqisi2
+  71:./ucos/Core/os_time.c ****         OS_TRACE_TASK_SUSPENDED(OSTCBCur);
+  91              		.loc 1 71 21 view .LVU23
+  92 002a 23EA0203 		bic	r3, r3, r2
+  93 002e BB55     		strb	r3, [r7, r6]
+  72:./ucos/Core/os_time.c ****         if (OSRdyTbl[y] == 0u) {
+  94              		.loc 1 72 9 is_stmt 1 view .LVU24
+  95 0030 FFF7FEFF 		bl	SYSVIEW_TaskSuspend
+  96              	.LVL8:
+  73:./ucos/Core/os_time.c ****             OSRdyGrp &= (OS_PRIO)~OSTCBCur->OSTCBBitY;
+  97              		.loc 1 73 9 view .LVU25
+  73:./ucos/Core/os_time.c ****             OSRdyGrp &= (OS_PRIO)~OSTCBCur->OSTCBBitY;
+  98              		.loc 1 73 21 is_stmt 0 view .LVU26
+  99 0034 BB5D     		ldrb	r3, [r7, r6]	@ zero_extendqisi2
+  73:./ucos/Core/os_time.c ****             OSRdyGrp &= (OS_PRIO)~OSTCBCur->OSTCBBitY;
+ 100              		.loc 1 73 12 view .LVU27
+ 101 0036 43B9     		cbnz	r3, .L3
+  74:./ucos/Core/os_time.c ****         }
+ 102              		.loc 1 74 13 is_stmt 1 view .LVU28
+  74:./ucos/Core/os_time.c ****         }
+ 103              		.loc 1 74 43 is_stmt 0 view .LVU29
+ 104 0038 0A4B     		ldr	r3, .L6+8
+ 105 003a 1B68     		ldr	r3, [r3]
+ 106 003c 93F83E10 		ldrb	r1, [r3, #62]	@ zero_extendqisi2
+  74:./ucos/Core/os_time.c ****         }
+ 107              		.loc 1 74 22 view .LVU30
+ 108 0040 0A4A     		ldr	r2, .L6+16
+ 109 0042 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 110 0044 23EA0103 		bic	r3, r3, r1
+ 111 0048 1370     		strb	r3, [r2]
+ 112              	.L3:
+  76:./ucos/Core/os_time.c ****         OS_TRACE_TASK_DLY(ticks);
+ 113              		.loc 1 76 9 is_stmt 1 view .LVU31
+  76:./ucos/Core/os_time.c ****         OS_TRACE_TASK_DLY(ticks);
+ 114              		.loc 1 76 17 is_stmt 0 view .LVU32
+ 115 004a 064B     		ldr	r3, .L6+8
+ 116 004c 1B68     		ldr	r3, [r3]
+  76:./ucos/Core/os_time.c ****         OS_TRACE_TASK_DLY(ticks);
+ 117              		.loc 1 76 28 view .LVU33
+ 118 004e 5C63     		str	r4, [r3, #52]
+  77:./ucos/Core/os_time.c ****         OS_EXIT_CRITICAL();
+ 119              		.loc 1 77 33 is_stmt 1 view .LVU34
+  78:./ucos/Core/os_time.c ****         OS_Sched();                              /* Find next task to run!                         
+ 120              		.loc 1 78 9 view .LVU35
+  78:./ucos/Core/os_time.c ****         OS_Sched();                              /* Find next task to run!                         
+ 121              		.loc 1 78 9 view .LVU36
+ 122 0050 2846     		mov	r0, r5
+ 123 0052 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 124              	.LVL9:
+ARM GAS  /tmp/ccJHJwMP.s 			page 5
+
+
+  78:./ucos/Core/os_time.c ****         OS_Sched();                              /* Find next task to run!                         
+ 125              		.loc 1 78 9 discriminator 1 view .LVU37
+  79:./ucos/Core/os_time.c ****     }
+ 126              		.loc 1 79 9 view .LVU38
+ 127 0056 FFF7FEFF 		bl	OS_Sched
+ 128              	.LVL10:
+ 129 005a DAE7     		b	.L1
+ 130              	.L7:
+ 131              		.align	2
+ 132              	.L6:
+ 133 005c 00000000 		.word	OSIntNesting
+ 134 0060 00000000 		.word	OSLockNesting
+ 135 0064 00000000 		.word	OSTCBCur
+ 136 0068 00000000 		.word	OSRdyTbl
+ 137 006c 00000000 		.word	OSRdyGrp
+ 138              		.cfi_endproc
+ 139              	.LFE0:
+ 141              		.section	.text.OSTimeDlyHMSM,"ax",%progbits
+ 142              		.align	1
+ 143              		.global	OSTimeDlyHMSM
+ 144              		.syntax unified
+ 145              		.thumb
+ 146              		.thumb_func
+ 148              	OSTimeDlyHMSM:
+ 149              	.LVL11:
+ 150              	.LFB1:
+  82:./ucos/Core/os_time.c **** 
+  83:./ucos/Core/os_time.c **** 
+  84:./ucos/Core/os_time.c **** /*
+  85:./ucos/Core/os_time.c **** ***************************************************************************************************
+  86:./ucos/Core/os_time.c **** *                                    DELAY TASK FOR SPECIFIED TIME
+  87:./ucos/Core/os_time.c **** *
+  88:./ucos/Core/os_time.c **** * Description: This function is called to delay execution of the currently running task until some 
+  89:./ucos/Core/os_time.c **** *              expires.  This call allows you to specify the delay time in HOURS, MINUTES, SECONDS 
+  90:./ucos/Core/os_time.c **** *              MILLISECONDS instead of ticks.
+  91:./ucos/Core/os_time.c **** *
+  92:./ucos/Core/os_time.c **** * Arguments  : hours     specifies the number of hours that the task will be delayed (max. is 255)
+  93:./ucos/Core/os_time.c **** *              minutes   specifies the number of minutes (max. 59)
+  94:./ucos/Core/os_time.c **** *              seconds   specifies the number of seconds (max. 59)
+  95:./ucos/Core/os_time.c **** *              ms        specifies the number of milliseconds (max. 999)
+  96:./ucos/Core/os_time.c **** *
+  97:./ucos/Core/os_time.c **** * Returns    : OS_ERR_NONE
+  98:./ucos/Core/os_time.c **** *              OS_ERR_TIME_INVALID_MINUTES
+  99:./ucos/Core/os_time.c **** *              OS_ERR_TIME_INVALID_SECONDS
+ 100:./ucos/Core/os_time.c **** *              OS_ERR_TIME_INVALID_MS
+ 101:./ucos/Core/os_time.c **** *              OS_ERR_TIME_ZERO_DLY
+ 102:./ucos/Core/os_time.c **** *              OS_ERR_TIME_DLY_ISR
+ 103:./ucos/Core/os_time.c **** *
+ 104:./ucos/Core/os_time.c **** * Note(s)    : The resolution on the milliseconds depends on the tick rate.  For example, you can't
+ 105:./ucos/Core/os_time.c **** *              a 10 mS delay if the ticker interrupts every 100 mS.  In this case, the delay would 
+ 106:./ucos/Core/os_time.c **** *              set to 0.  The actual delay is rounded to the nearest tick.
+ 107:./ucos/Core/os_time.c **** ***************************************************************************************************
+ 108:./ucos/Core/os_time.c **** */
+ 109:./ucos/Core/os_time.c **** 
+ 110:./ucos/Core/os_time.c **** #if OS_TIME_DLY_HMSM_EN > 0u
+ 111:./ucos/Core/os_time.c **** INT8U  OSTimeDlyHMSM (INT8U   hours,
+ 112:./ucos/Core/os_time.c ****                       INT8U   minutes,
+ARM GAS  /tmp/ccJHJwMP.s 			page 6
+
+
+ 113:./ucos/Core/os_time.c ****                       INT8U   seconds,
+ 114:./ucos/Core/os_time.c ****                       INT16U  ms)
+ 115:./ucos/Core/os_time.c **** {
+ 151              		.loc 1 115 1 view -0
+ 152              		.cfi_startproc
+ 153              		@ args = 0, pretend = 0, frame = 0
+ 154              		@ frame_needed = 0, uses_anonymous_args = 0
+ 155              		.loc 1 115 1 is_stmt 0 view .LVU40
+ 156 0000 10B5     		push	{r4, lr}
+ 157              	.LCFI1:
+ 158              		.cfi_def_cfa_offset 8
+ 159              		.cfi_offset 4, -8
+ 160              		.cfi_offset 14, -4
+ 116:./ucos/Core/os_time.c ****     INT32U ticks;
+ 161              		.loc 1 116 5 is_stmt 1 view .LVU41
+ 117:./ucos/Core/os_time.c **** 
+ 118:./ucos/Core/os_time.c **** 
+ 119:./ucos/Core/os_time.c ****     if (OSIntNesting > 0u) {                     /* See if trying to call from an ISR              
+ 162              		.loc 1 119 5 view .LVU42
+ 163              		.loc 1 119 22 is_stmt 0 view .LVU43
+ 164 0002 1A4C     		ldr	r4, .L18
+ 165 0004 2478     		ldrb	r4, [r4]	@ zero_extendqisi2
+ 166              		.loc 1 119 8 view .LVU44
+ 167 0006 24BB     		cbnz	r4, .L11
+ 120:./ucos/Core/os_time.c ****         return (OS_ERR_TIME_DLY_ISR);
+ 121:./ucos/Core/os_time.c ****     }
+ 122:./ucos/Core/os_time.c ****     if (OSLockNesting > 0u) {                    /* See if called with scheduler locked            
+ 168              		.loc 1 122 5 is_stmt 1 view .LVU45
+ 169              		.loc 1 122 23 is_stmt 0 view .LVU46
+ 170 0008 194C     		ldr	r4, .L18+4
+ 171 000a 2478     		ldrb	r4, [r4]	@ zero_extendqisi2
+ 172              		.loc 1 122 8 view .LVU47
+ 173 000c 1CBB     		cbnz	r4, .L12
+ 123:./ucos/Core/os_time.c ****         return (OS_ERR_SCHED_LOCKED);
+ 124:./ucos/Core/os_time.c ****     }
+ 125:./ucos/Core/os_time.c **** #if OS_ARG_CHK_EN > 0u
+ 126:./ucos/Core/os_time.c ****     if (hours == 0u) {
+ 174              		.loc 1 126 5 is_stmt 1 view .LVU48
+ 175              		.loc 1 126 8 is_stmt 0 view .LVU49
+ 176 000e 10B9     		cbnz	r0, .L10
+ 127:./ucos/Core/os_time.c ****         if (minutes == 0u) {
+ 177              		.loc 1 127 9 is_stmt 1 view .LVU50
+ 178              		.loc 1 127 12 is_stmt 0 view .LVU51
+ 179 0010 09B9     		cbnz	r1, .L10
+ 128:./ucos/Core/os_time.c ****             if (seconds == 0u) {
+ 180              		.loc 1 128 13 is_stmt 1 view .LVU52
+ 181              		.loc 1 128 16 is_stmt 0 view .LVU53
+ 182 0012 02B9     		cbnz	r2, .L10
+ 129:./ucos/Core/os_time.c ****                 if (ms == 0u) {
+ 183              		.loc 1 129 17 is_stmt 1 view .LVU54
+ 184              		.loc 1 129 20 is_stmt 0 view .LVU55
+ 185 0014 0BB3     		cbz	r3, .L13
+ 186              	.L10:
+ 130:./ucos/Core/os_time.c ****                     return (OS_ERR_TIME_ZERO_DLY);
+ 131:./ucos/Core/os_time.c ****                 }
+ 132:./ucos/Core/os_time.c ****             }
+ 133:./ucos/Core/os_time.c ****         }
+ARM GAS  /tmp/ccJHJwMP.s 			page 7
+
+
+ 134:./ucos/Core/os_time.c ****     }
+ 135:./ucos/Core/os_time.c ****     if (minutes > 59u) {
+ 187              		.loc 1 135 5 is_stmt 1 view .LVU56
+ 188              		.loc 1 135 8 is_stmt 0 view .LVU57
+ 189 0016 3B29     		cmp	r1, #59
+ 190 0018 21D8     		bhi	.L14
+ 136:./ucos/Core/os_time.c ****         return (OS_ERR_TIME_INVALID_MINUTES);    /* Validate arguments to be within range          
+ 137:./ucos/Core/os_time.c ****     }
+ 138:./ucos/Core/os_time.c ****     if (seconds > 59u) {
+ 191              		.loc 1 138 5 is_stmt 1 view .LVU58
+ 192              		.loc 1 138 8 is_stmt 0 view .LVU59
+ 193 001a 3B2A     		cmp	r2, #59
+ 194 001c 21D8     		bhi	.L15
+ 139:./ucos/Core/os_time.c ****         return (OS_ERR_TIME_INVALID_SECONDS);
+ 140:./ucos/Core/os_time.c ****     }
+ 141:./ucos/Core/os_time.c ****     if (ms > 999u) {
+ 195              		.loc 1 141 5 is_stmt 1 view .LVU60
+ 196              		.loc 1 141 8 is_stmt 0 view .LVU61
+ 197 001e B3F57A7F 		cmp	r3, #1000
+ 198 0022 20D2     		bcs	.L16
+ 142:./ucos/Core/os_time.c ****         return (OS_ERR_TIME_INVALID_MS);
+ 143:./ucos/Core/os_time.c ****     }
+ 144:./ucos/Core/os_time.c **** #endif
+ 145:./ucos/Core/os_time.c ****                                                  /* Compute the total number of clock ticks require
+ 146:./ucos/Core/os_time.c ****                                                  /* .. (rounded to the nearest tick)               
+ 147:./ucos/Core/os_time.c ****     ticks = ((INT32U)hours * 3600uL + (INT32U)minutes * 60uL + (INT32U)seconds) * OS_TICKS_PER_SEC
+ 199              		.loc 1 147 5 is_stmt 1 view .LVU62
+ 200              		.loc 1 147 55 is_stmt 0 view .LVU63
+ 201 0024 C1EB0111 		rsb	r1, r1, r1, lsl #4
+ 202              	.LVL12:
+ 203              		.loc 1 147 55 view .LVU64
+ 204 0028 8900     		lsls	r1, r1, #2
+ 205              		.loc 1 147 37 view .LVU65
+ 206 002a 4FF4616C 		mov	ip, #3600
+ 207 002e 0CFB0010 		mla	r0, ip, r0, r1
+ 208              	.LVL13:
+ 209              		.loc 1 147 62 view .LVU66
+ 210 0032 0244     		add	r2, r2, r0
+ 211              	.LVL14:
+ 212              		.loc 1 147 81 view .LVU67
+ 213 0034 6420     		movs	r0, #100
+ 148:./ucos/Core/os_time.c ****           + OS_TICKS_PER_SEC * ((INT32U)ms + 500uL / OS_TICKS_PER_SEC) / 1000uL;
+ 214              		.loc 1 148 30 view .LVU68
+ 215 0036 00FB03F3 		mul	r3, r0, r3
+ 216              	.LVL15:
+ 217              		.loc 1 148 30 view .LVU69
+ 218 003a 03F5FA73 		add	r3, r3, #500
+ 219              		.loc 1 148 72 view .LVU70
+ 220 003e 0D49     		ldr	r1, .L18+8
+ 221 0040 A1FB0313 		umull	r1, r3, r1, r3
+ 222 0044 9B09     		lsrs	r3, r3, #6
+ 223              	.LVL16:
+ 149:./ucos/Core/os_time.c ****     OSTimeDly(ticks);
+ 224              		.loc 1 149 5 is_stmt 1 view .LVU71
+ 225 0046 00FB0230 		mla	r0, r0, r2, r3
+ 226              	.LVL17:
+ 227              		.loc 1 149 5 is_stmt 0 view .LVU72
+ARM GAS  /tmp/ccJHJwMP.s 			page 8
+
+
+ 228 004a FFF7FEFF 		bl	OSTimeDly
+ 229              	.LVL18:
+ 150:./ucos/Core/os_time.c ****     return (OS_ERR_NONE);
+ 230              		.loc 1 150 5 is_stmt 1 view .LVU73
+ 231              	.L9:
+ 151:./ucos/Core/os_time.c **** }
+ 232              		.loc 1 151 1 is_stmt 0 view .LVU74
+ 233 004e 2046     		mov	r0, r4
+ 234 0050 10BD     		pop	{r4, pc}
+ 235              	.LVL19:
+ 236              	.L11:
+ 120:./ucos/Core/os_time.c ****     }
+ 237              		.loc 1 120 16 view .LVU75
+ 238 0052 5524     		movs	r4, #85
+ 239 0054 FBE7     		b	.L9
+ 240              	.L12:
+ 123:./ucos/Core/os_time.c ****     }
+ 241              		.loc 1 123 16 view .LVU76
+ 242 0056 3224     		movs	r4, #50
+ 243 0058 F9E7     		b	.L9
+ 244              	.L13:
+ 130:./ucos/Core/os_time.c ****                 }
+ 245              		.loc 1 130 28 view .LVU77
+ 246 005a 5424     		movs	r4, #84
+ 247 005c F7E7     		b	.L9
+ 248              	.L14:
+ 136:./ucos/Core/os_time.c ****     }
+ 249              		.loc 1 136 16 view .LVU78
+ 250 005e 5124     		movs	r4, #81
+ 251 0060 F5E7     		b	.L9
+ 252              	.L15:
+ 139:./ucos/Core/os_time.c ****     }
+ 253              		.loc 1 139 16 view .LVU79
+ 254 0062 5224     		movs	r4, #82
+ 255 0064 F3E7     		b	.L9
+ 256              	.L16:
+ 142:./ucos/Core/os_time.c ****     }
+ 257              		.loc 1 142 16 view .LVU80
+ 258 0066 5324     		movs	r4, #83
+ 259 0068 F1E7     		b	.L9
+ 260              	.L19:
+ 261 006a 00BF     		.align	2
+ 262              	.L18:
+ 263 006c 00000000 		.word	OSIntNesting
+ 264 0070 00000000 		.word	OSLockNesting
+ 265 0074 D34D6210 		.word	274877907
+ 266              		.cfi_endproc
+ 267              	.LFE1:
+ 269              		.section	.text.OSTimeDlyResume,"ax",%progbits
+ 270              		.align	1
+ 271              		.global	OSTimeDlyResume
+ 272              		.syntax unified
+ 273              		.thumb
+ 274              		.thumb_func
+ 276              	OSTimeDlyResume:
+ 277              	.LVL20:
+ 278              	.LFB2:
+ARM GAS  /tmp/ccJHJwMP.s 			page 9
+
+
+ 152:./ucos/Core/os_time.c **** #endif
+ 153:./ucos/Core/os_time.c **** 
+ 154:./ucos/Core/os_time.c **** 
+ 155:./ucos/Core/os_time.c **** /*
+ 156:./ucos/Core/os_time.c **** ***************************************************************************************************
+ 157:./ucos/Core/os_time.c **** *                                        RESUME A DELAYED TASK
+ 158:./ucos/Core/os_time.c **** *
+ 159:./ucos/Core/os_time.c **** * Description: This function is used resume a task that has been delayed through a call to either
+ 160:./ucos/Core/os_time.c **** *              OSTimeDly() or OSTimeDlyHMSM().  Note that you can call this function to resume a
+ 161:./ucos/Core/os_time.c **** *              task that is waiting for an event with timeout.  This would make the task look
+ 162:./ucos/Core/os_time.c **** *              like a timeout occurred.
+ 163:./ucos/Core/os_time.c **** *
+ 164:./ucos/Core/os_time.c **** * Arguments  : prio                      specifies the priority of the task to resume
+ 165:./ucos/Core/os_time.c **** *
+ 166:./ucos/Core/os_time.c **** * Returns    : OS_ERR_NONE               Task has been resumed
+ 167:./ucos/Core/os_time.c **** *              OS_ERR_PRIO_INVALID       if the priority you specify is higher that the maximum all
+ 168:./ucos/Core/os_time.c **** *                                        (i.e. >= OS_LOWEST_PRIO)
+ 169:./ucos/Core/os_time.c **** *              OS_ERR_TIME_NOT_DLY       Task is not waiting for time to expire
+ 170:./ucos/Core/os_time.c **** *              OS_ERR_TASK_NOT_EXIST     The desired task has not been created or has been assigned
+ 171:./ucos/Core/os_time.c **** ***************************************************************************************************
+ 172:./ucos/Core/os_time.c **** */
+ 173:./ucos/Core/os_time.c **** 
+ 174:./ucos/Core/os_time.c **** #if OS_TIME_DLY_RESUME_EN > 0u
+ 175:./ucos/Core/os_time.c **** INT8U  OSTimeDlyResume (INT8U prio)
+ 176:./ucos/Core/os_time.c **** {
+ 279              		.loc 1 176 1 is_stmt 1 view -0
+ 280              		.cfi_startproc
+ 281              		@ args = 0, pretend = 0, frame = 0
+ 282              		@ frame_needed = 0, uses_anonymous_args = 0
+ 283              		.loc 1 176 1 is_stmt 0 view .LVU82
+ 284 0000 38B5     		push	{r3, r4, r5, lr}
+ 285              	.LCFI2:
+ 286              		.cfi_def_cfa_offset 16
+ 287              		.cfi_offset 3, -16
+ 288              		.cfi_offset 4, -12
+ 289              		.cfi_offset 5, -8
+ 290              		.cfi_offset 14, -4
+ 177:./ucos/Core/os_time.c ****     OS_TCB    *ptcb;
+ 291              		.loc 1 177 5 is_stmt 1 view .LVU83
+ 178:./ucos/Core/os_time.c **** #if OS_CRITICAL_METHOD == 3u                                   /* Storage for CPU status register  
+ 179:./ucos/Core/os_time.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 292              		.loc 1 179 5 view .LVU84
+ 293              	.LVL21:
+ 180:./ucos/Core/os_time.c **** #endif
+ 181:./ucos/Core/os_time.c **** 
+ 182:./ucos/Core/os_time.c **** 
+ 183:./ucos/Core/os_time.c **** 
+ 184:./ucos/Core/os_time.c ****     if (prio >= OS_LOWEST_PRIO) {
+ 294              		.loc 1 184 5 view .LVU85
+ 295              		.loc 1 184 8 is_stmt 0 view .LVU86
+ 296 0002 3E28     		cmp	r0, #62
+ 297 0004 4DD8     		bhi	.L28
+ 298 0006 0446     		mov	r4, r0
+ 185:./ucos/Core/os_time.c ****         return (OS_ERR_PRIO_INVALID);
+ 186:./ucos/Core/os_time.c ****     }
+ 187:./ucos/Core/os_time.c ****     OS_ENTER_CRITICAL();
+ 299              		.loc 1 187 5 is_stmt 1 view .LVU87
+ARM GAS  /tmp/ccJHJwMP.s 			page 10
+
+
+ 300              		.loc 1 187 5 view .LVU88
+ 301 0008 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 302              	.LVL22:
+ 303              		.loc 1 187 5 is_stmt 0 view .LVU89
+ 304 000c 0546     		mov	r5, r0
+ 305              	.LVL23:
+ 306              		.loc 1 187 5 is_stmt 1 discriminator 1 view .LVU90
+ 188:./ucos/Core/os_time.c ****     ptcb = OSTCBPrioTbl[prio];                                 /* Make sure that task exist        
+ 307              		.loc 1 188 5 view .LVU91
+ 308              		.loc 1 188 10 is_stmt 0 view .LVU92
+ 309 000e 264B     		ldr	r3, .L33
+ 310 0010 53F82400 		ldr	r0, [r3, r4, lsl #2]
+ 311              	.LVL24:
+ 189:./ucos/Core/os_time.c ****     if (ptcb == (OS_TCB *)0) {
+ 312              		.loc 1 189 5 is_stmt 1 view .LVU93
+ 313              		.loc 1 189 8 is_stmt 0 view .LVU94
+ 314 0014 68B3     		cbz	r0, .L30
+ 190:./ucos/Core/os_time.c ****         OS_EXIT_CRITICAL();
+ 191:./ucos/Core/os_time.c ****         return (OS_ERR_TASK_NOT_EXIST);                        /* The task does not exist          
+ 192:./ucos/Core/os_time.c ****     }
+ 193:./ucos/Core/os_time.c ****     if (ptcb == OS_TCB_RESERVED) {
+ 315              		.loc 1 193 5 is_stmt 1 view .LVU95
+ 316              		.loc 1 193 8 is_stmt 0 view .LVU96
+ 317 0016 0128     		cmp	r0, #1
+ 318 0018 30D0     		beq	.L31
+ 194:./ucos/Core/os_time.c ****         OS_EXIT_CRITICAL();
+ 195:./ucos/Core/os_time.c ****         return (OS_ERR_TASK_NOT_EXIST);                        /* The task does not exist          
+ 196:./ucos/Core/os_time.c ****     }
+ 197:./ucos/Core/os_time.c ****     if (ptcb->OSTCBDly == 0u) {                                /* See if task is delayed           
+ 319              		.loc 1 197 5 is_stmt 1 view .LVU97
+ 320              		.loc 1 197 13 is_stmt 0 view .LVU98
+ 321 001a 436B     		ldr	r3, [r0, #52]
+ 322              		.loc 1 197 8 view .LVU99
+ 323 001c 9BB3     		cbz	r3, .L32
+ 198:./ucos/Core/os_time.c ****         OS_EXIT_CRITICAL();
+ 199:./ucos/Core/os_time.c ****         return (OS_ERR_TIME_NOT_DLY);                          /* Indicate that task was not delaye
+ 200:./ucos/Core/os_time.c ****     }
+ 201:./ucos/Core/os_time.c **** 
+ 202:./ucos/Core/os_time.c ****     ptcb->OSTCBDly = 0u;                                       /* Clear the time delay             
+ 324              		.loc 1 202 5 is_stmt 1 view .LVU100
+ 325              		.loc 1 202 20 is_stmt 0 view .LVU101
+ 326 001e 0023     		movs	r3, #0
+ 327 0020 4363     		str	r3, [r0, #52]
+ 203:./ucos/Core/os_time.c ****     if ((ptcb->OSTCBStat & OS_STAT_PEND_ANY) != OS_STAT_RDY) {
+ 328              		.loc 1 203 5 is_stmt 1 view .LVU102
+ 329              		.loc 1 203 14 is_stmt 0 view .LVU103
+ 330 0022 90F83830 		ldrb	r3, [r0, #56]	@ zero_extendqisi2
+ 331              		.loc 1 203 8 view .LVU104
+ 332 0026 13F0370F 		tst	r3, #55
+ 333 002a 31D0     		beq	.L25
+ 204:./ucos/Core/os_time.c ****         ptcb->OSTCBStat     &= ~OS_STAT_PEND_ANY;              /* Yes, Clear status flag           
+ 334              		.loc 1 204 9 is_stmt 1 view .LVU105
+ 335              		.loc 1 204 29 is_stmt 0 view .LVU106
+ 336 002c 23F03703 		bic	r3, r3, #55
+ 337 0030 80F83830 		strb	r3, [r0, #56]
+ 205:./ucos/Core/os_time.c ****         ptcb->OSTCBStatPend  =  OS_STAT_PEND_TO;               /* Indicate PEND timeout            
+ 338              		.loc 1 205 9 is_stmt 1 view .LVU107
+ARM GAS  /tmp/ccJHJwMP.s 			page 11
+
+
+ 339              		.loc 1 205 30 is_stmt 0 view .LVU108
+ 340 0034 0123     		movs	r3, #1
+ 341 0036 80F83930 		strb	r3, [r0, #57]
+ 342              	.L26:
+ 206:./ucos/Core/os_time.c ****     } else {
+ 207:./ucos/Core/os_time.c ****         ptcb->OSTCBStatPend  =  OS_STAT_PEND_OK;
+ 208:./ucos/Core/os_time.c ****     }
+ 209:./ucos/Core/os_time.c ****     if ((ptcb->OSTCBStat & OS_STAT_SUSPEND) == OS_STAT_RDY) {  /* Is task suspended?               
+ 343              		.loc 1 209 5 is_stmt 1 view .LVU109
+ 344              		.loc 1 209 14 is_stmt 0 view .LVU110
+ 345 003a 90F83840 		ldrb	r4, [r0, #56]	@ zero_extendqisi2
+ 346              	.LVL25:
+ 347              		.loc 1 209 8 view .LVU111
+ 348 003e 14F00804 		ands	r4, r4, #8
+ 349 0042 29D1     		bne	.L27
+ 210:./ucos/Core/os_time.c ****         OSRdyGrp               |= ptcb->OSTCBBitY;             /* No,  Make ready                  
+ 350              		.loc 1 210 9 is_stmt 1 view .LVU112
+ 351              		.loc 1 210 39 is_stmt 0 view .LVU113
+ 352 0044 90F83E30 		ldrb	r3, [r0, #62]	@ zero_extendqisi2
+ 353              		.loc 1 210 32 view .LVU114
+ 354 0048 184A     		ldr	r2, .L33+4
+ 355 004a 1178     		ldrb	r1, [r2]	@ zero_extendqisi2
+ 356 004c 0B43     		orrs	r3, r3, r1
+ 357 004e 1370     		strb	r3, [r2]
+ 211:./ucos/Core/os_time.c ****         OSRdyTbl[ptcb->OSTCBY] |= ptcb->OSTCBBitX;
+ 358              		.loc 1 211 9 is_stmt 1 view .LVU115
+ 359              		.loc 1 211 22 is_stmt 0 view .LVU116
+ 360 0050 90F83C20 		ldrb	r2, [r0, #60]	@ zero_extendqisi2
+ 361              		.loc 1 211 17 view .LVU117
+ 362 0054 1649     		ldr	r1, .L33+8
+ 363 0056 8B5C     		ldrb	r3, [r1, r2]	@ zero_extendqisi2
+ 364              		.loc 1 211 39 view .LVU118
+ 365 0058 90F83DC0 		ldrb	ip, [r0, #61]	@ zero_extendqisi2
+ 366              		.loc 1 211 32 view .LVU119
+ 367 005c 43EA0C03 		orr	r3, r3, ip
+ 368 0060 8B54     		strb	r3, [r1, r2]
+ 212:./ucos/Core/os_time.c ****         OS_TRACE_TASK_READY(ptcb);
+ 369              		.loc 1 212 9 is_stmt 1 view .LVU120
+ 370 0062 FFF7FEFF 		bl	SYSVIEW_TaskReady
+ 371              	.LVL26:
+ 213:./ucos/Core/os_time.c ****         OS_EXIT_CRITICAL();
+ 372              		.loc 1 213 9 view .LVU121
+ 373              		.loc 1 213 9 view .LVU122
+ 374 0066 2846     		mov	r0, r5
+ 375 0068 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 376              	.LVL27:
+ 377              		.loc 1 213 9 discriminator 1 view .LVU123
+ 214:./ucos/Core/os_time.c ****         OS_Sched();                                            /* See if this is new highest priori
+ 378              		.loc 1 214 9 view .LVU124
+ 379 006c FFF7FEFF 		bl	OS_Sched
+ 380              	.LVL28:
+ 381 0070 18E0     		b	.L21
+ 382              	.LVL29:
+ 383              	.L30:
+ 190:./ucos/Core/os_time.c ****         return (OS_ERR_TASK_NOT_EXIST);                        /* The task does not exist          
+ 384              		.loc 1 190 9 view .LVU125
+ 190:./ucos/Core/os_time.c ****         return (OS_ERR_TASK_NOT_EXIST);                        /* The task does not exist          
+ARM GAS  /tmp/ccJHJwMP.s 			page 12
+
+
+ 385              		.loc 1 190 9 view .LVU126
+ 386 0072 2846     		mov	r0, r5
+ 387              	.LVL30:
+ 190:./ucos/Core/os_time.c ****         return (OS_ERR_TASK_NOT_EXIST);                        /* The task does not exist          
+ 388              		.loc 1 190 9 is_stmt 0 view .LVU127
+ 389 0074 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 390              	.LVL31:
+ 190:./ucos/Core/os_time.c ****         return (OS_ERR_TASK_NOT_EXIST);                        /* The task does not exist          
+ 391              		.loc 1 190 9 is_stmt 1 discriminator 1 view .LVU128
+ 191:./ucos/Core/os_time.c ****     }
+ 392              		.loc 1 191 9 view .LVU129
+ 191:./ucos/Core/os_time.c ****     }
+ 393              		.loc 1 191 16 is_stmt 0 view .LVU130
+ 394 0078 4324     		movs	r4, #67
+ 395 007a 13E0     		b	.L21
+ 396              	.LVL32:
+ 397              	.L31:
+ 194:./ucos/Core/os_time.c ****         return (OS_ERR_TASK_NOT_EXIST);                        /* The task does not exist          
+ 398              		.loc 1 194 9 is_stmt 1 view .LVU131
+ 194:./ucos/Core/os_time.c ****         return (OS_ERR_TASK_NOT_EXIST);                        /* The task does not exist          
+ 399              		.loc 1 194 9 view .LVU132
+ 400 007c 2846     		mov	r0, r5
+ 401              	.LVL33:
+ 194:./ucos/Core/os_time.c ****         return (OS_ERR_TASK_NOT_EXIST);                        /* The task does not exist          
+ 402              		.loc 1 194 9 is_stmt 0 view .LVU133
+ 403 007e FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 404              	.LVL34:
+ 194:./ucos/Core/os_time.c ****         return (OS_ERR_TASK_NOT_EXIST);                        /* The task does not exist          
+ 405              		.loc 1 194 9 is_stmt 1 discriminator 1 view .LVU134
+ 195:./ucos/Core/os_time.c ****     }
+ 406              		.loc 1 195 9 view .LVU135
+ 195:./ucos/Core/os_time.c ****     }
+ 407              		.loc 1 195 16 is_stmt 0 view .LVU136
+ 408 0082 4324     		movs	r4, #67
+ 409 0084 0EE0     		b	.L21
+ 410              	.LVL35:
+ 411              	.L32:
+ 198:./ucos/Core/os_time.c ****         return (OS_ERR_TIME_NOT_DLY);                          /* Indicate that task was not delaye
+ 412              		.loc 1 198 9 is_stmt 1 view .LVU137
+ 198:./ucos/Core/os_time.c ****         return (OS_ERR_TIME_NOT_DLY);                          /* Indicate that task was not delaye
+ 413              		.loc 1 198 9 view .LVU138
+ 414 0086 2846     		mov	r0, r5
+ 415              	.LVL36:
+ 198:./ucos/Core/os_time.c ****         return (OS_ERR_TIME_NOT_DLY);                          /* Indicate that task was not delaye
+ 416              		.loc 1 198 9 is_stmt 0 view .LVU139
+ 417 0088 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 418              	.LVL37:
+ 198:./ucos/Core/os_time.c ****         return (OS_ERR_TIME_NOT_DLY);                          /* Indicate that task was not delaye
+ 419              		.loc 1 198 9 is_stmt 1 discriminator 1 view .LVU140
+ 199:./ucos/Core/os_time.c ****     }
+ 420              		.loc 1 199 9 view .LVU141
+ 199:./ucos/Core/os_time.c ****     }
+ 421              		.loc 1 199 16 is_stmt 0 view .LVU142
+ 422 008c 5024     		movs	r4, #80
+ 423 008e 09E0     		b	.L21
+ 424              	.LVL38:
+ 425              	.L25:
+ARM GAS  /tmp/ccJHJwMP.s 			page 13
+
+
+ 207:./ucos/Core/os_time.c ****     }
+ 426              		.loc 1 207 9 is_stmt 1 view .LVU143
+ 207:./ucos/Core/os_time.c ****     }
+ 427              		.loc 1 207 30 is_stmt 0 view .LVU144
+ 428 0090 0023     		movs	r3, #0
+ 429 0092 80F83930 		strb	r3, [r0, #57]
+ 430 0096 D0E7     		b	.L26
+ 431              	.L27:
+ 215:./ucos/Core/os_time.c ****     } else {
+ 216:./ucos/Core/os_time.c ****         OS_EXIT_CRITICAL();                                    /* Task may be suspended            
+ 432              		.loc 1 216 9 is_stmt 1 view .LVU145
+ 433              		.loc 1 216 9 view .LVU146
+ 434 0098 2846     		mov	r0, r5
+ 435              	.LVL39:
+ 436              		.loc 1 216 9 is_stmt 0 view .LVU147
+ 437 009a FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 438              	.LVL40:
+ 217:./ucos/Core/os_time.c ****     }
+ 218:./ucos/Core/os_time.c ****     return (OS_ERR_NONE);
+ 439              		.loc 1 218 12 view .LVU148
+ 440 009e 0024     		movs	r4, #0
+ 441 00a0 00E0     		b	.L21
+ 442              	.LVL41:
+ 443              	.L28:
+ 185:./ucos/Core/os_time.c ****     }
+ 444              		.loc 1 185 16 view .LVU149
+ 445 00a2 2A24     		movs	r4, #42
+ 446              	.LVL42:
+ 447              	.L21:
+ 219:./ucos/Core/os_time.c **** }
+ 448              		.loc 1 219 1 view .LVU150
+ 449 00a4 2046     		mov	r0, r4
+ 450 00a6 38BD     		pop	{r3, r4, r5, pc}
+ 451              	.L34:
+ 452              		.align	2
+ 453              	.L33:
+ 454 00a8 00000000 		.word	OSTCBPrioTbl
+ 455 00ac 00000000 		.word	OSRdyGrp
+ 456 00b0 00000000 		.word	OSRdyTbl
+ 457              		.cfi_endproc
+ 458              	.LFE2:
+ 460              		.section	.text.OSTimeGet,"ax",%progbits
+ 461              		.align	1
+ 462              		.global	OSTimeGet
+ 463              		.syntax unified
+ 464              		.thumb
+ 465              		.thumb_func
+ 467              	OSTimeGet:
+ 468              	.LFB3:
+ 220:./ucos/Core/os_time.c **** #endif
+ 221:./ucos/Core/os_time.c **** 
+ 222:./ucos/Core/os_time.c **** 
+ 223:./ucos/Core/os_time.c **** /*
+ 224:./ucos/Core/os_time.c **** ***************************************************************************************************
+ 225:./ucos/Core/os_time.c **** *                                       GET CURRENT SYSTEM TIME
+ 226:./ucos/Core/os_time.c **** *
+ 227:./ucos/Core/os_time.c **** * Description: This function is used by your application to obtain the current value of the 32-bit
+ARM GAS  /tmp/ccJHJwMP.s 			page 14
+
+
+ 228:./ucos/Core/os_time.c **** *              counter which keeps track of the number of clock ticks.
+ 229:./ucos/Core/os_time.c **** *
+ 230:./ucos/Core/os_time.c **** * Arguments  : none
+ 231:./ucos/Core/os_time.c **** *
+ 232:./ucos/Core/os_time.c **** * Returns    : The current value of OSTime
+ 233:./ucos/Core/os_time.c **** ***************************************************************************************************
+ 234:./ucos/Core/os_time.c **** */
+ 235:./ucos/Core/os_time.c **** 
+ 236:./ucos/Core/os_time.c **** #if OS_TIME_GET_SET_EN > 0u
+ 237:./ucos/Core/os_time.c **** INT32U  OSTimeGet (void)
+ 238:./ucos/Core/os_time.c **** {
+ 469              		.loc 1 238 1 is_stmt 1 view -0
+ 470              		.cfi_startproc
+ 471              		@ args = 0, pretend = 0, frame = 0
+ 472              		@ frame_needed = 0, uses_anonymous_args = 0
+ 473 0000 10B5     		push	{r4, lr}
+ 474              	.LCFI3:
+ 475              		.cfi_def_cfa_offset 8
+ 476              		.cfi_offset 4, -8
+ 477              		.cfi_offset 14, -4
+ 239:./ucos/Core/os_time.c ****     INT32U     ticks;
+ 478              		.loc 1 239 5 view .LVU152
+ 240:./ucos/Core/os_time.c **** #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register       
+ 241:./ucos/Core/os_time.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 479              		.loc 1 241 5 view .LVU153
+ 480              	.LVL43:
+ 242:./ucos/Core/os_time.c **** #endif
+ 243:./ucos/Core/os_time.c **** 
+ 244:./ucos/Core/os_time.c **** 
+ 245:./ucos/Core/os_time.c **** 
+ 246:./ucos/Core/os_time.c ****     OS_ENTER_CRITICAL();
+ 481              		.loc 1 246 5 view .LVU154
+ 482              		.loc 1 246 5 view .LVU155
+ 483 0002 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 484              	.LVL44:
+ 485              		.loc 1 246 5 discriminator 1 view .LVU156
+ 247:./ucos/Core/os_time.c ****     ticks = OSTime;
+ 486              		.loc 1 247 5 view .LVU157
+ 487              		.loc 1 247 11 is_stmt 0 view .LVU158
+ 488 0006 034B     		ldr	r3, .L37
+ 489 0008 1C68     		ldr	r4, [r3]
+ 490              	.LVL45:
+ 248:./ucos/Core/os_time.c ****     OS_EXIT_CRITICAL();
+ 491              		.loc 1 248 5 is_stmt 1 view .LVU159
+ 492              		.loc 1 248 5 view .LVU160
+ 493 000a FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 494              	.LVL46:
+ 495              		.loc 1 248 5 discriminator 1 view .LVU161
+ 249:./ucos/Core/os_time.c ****     return (ticks);
+ 496              		.loc 1 249 5 view .LVU162
+ 250:./ucos/Core/os_time.c **** }
+ 497              		.loc 1 250 1 is_stmt 0 view .LVU163
+ 498 000e 2046     		mov	r0, r4
+ 499 0010 10BD     		pop	{r4, pc}
+ 500              	.LVL47:
+ 501              	.L38:
+ 502              		.loc 1 250 1 view .LVU164
+ARM GAS  /tmp/ccJHJwMP.s 			page 15
+
+
+ 503 0012 00BF     		.align	2
+ 504              	.L37:
+ 505 0014 00000000 		.word	OSTime
+ 506              		.cfi_endproc
+ 507              	.LFE3:
+ 509              		.section	.text.OSTimeSet,"ax",%progbits
+ 510              		.align	1
+ 511              		.global	OSTimeSet
+ 512              		.syntax unified
+ 513              		.thumb
+ 514              		.thumb_func
+ 516              	OSTimeSet:
+ 517              	.LVL48:
+ 518              	.LFB4:
+ 251:./ucos/Core/os_time.c **** #endif
+ 252:./ucos/Core/os_time.c **** 
+ 253:./ucos/Core/os_time.c **** 
+ 254:./ucos/Core/os_time.c **** /*
+ 255:./ucos/Core/os_time.c **** ***************************************************************************************************
+ 256:./ucos/Core/os_time.c **** *                                          SET SYSTEM CLOCK
+ 257:./ucos/Core/os_time.c **** *
+ 258:./ucos/Core/os_time.c **** * Description: This function sets the 32-bit counter which keeps track of the number of clock ticks
+ 259:./ucos/Core/os_time.c **** *
+ 260:./ucos/Core/os_time.c **** * Arguments  : ticks      specifies the new value that OSTime needs to take.
+ 261:./ucos/Core/os_time.c **** *
+ 262:./ucos/Core/os_time.c **** * Returns    : none
+ 263:./ucos/Core/os_time.c **** ***************************************************************************************************
+ 264:./ucos/Core/os_time.c **** */
+ 265:./ucos/Core/os_time.c **** 
+ 266:./ucos/Core/os_time.c **** #if OS_TIME_GET_SET_EN > 0u
+ 267:./ucos/Core/os_time.c **** void  OSTimeSet (INT32U ticks)
+ 268:./ucos/Core/os_time.c **** {
+ 519              		.loc 1 268 1 is_stmt 1 view -0
+ 520              		.cfi_startproc
+ 521              		@ args = 0, pretend = 0, frame = 0
+ 522              		@ frame_needed = 0, uses_anonymous_args = 0
+ 523              		.loc 1 268 1 is_stmt 0 view .LVU166
+ 524 0000 10B5     		push	{r4, lr}
+ 525              	.LCFI4:
+ 526              		.cfi_def_cfa_offset 8
+ 527              		.cfi_offset 4, -8
+ 528              		.cfi_offset 14, -4
+ 529 0002 0446     		mov	r4, r0
+ 269:./ucos/Core/os_time.c **** #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register       
+ 270:./ucos/Core/os_time.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 530              		.loc 1 270 5 is_stmt 1 view .LVU167
+ 531              	.LVL49:
+ 271:./ucos/Core/os_time.c **** #endif
+ 272:./ucos/Core/os_time.c **** 
+ 273:./ucos/Core/os_time.c **** 
+ 274:./ucos/Core/os_time.c **** 
+ 275:./ucos/Core/os_time.c ****     OS_ENTER_CRITICAL();
+ 532              		.loc 1 275 5 view .LVU168
+ 533              		.loc 1 275 5 view .LVU169
+ 534 0004 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 535              	.LVL50:
+ 536              		.loc 1 275 5 discriminator 1 view .LVU170
+ARM GAS  /tmp/ccJHJwMP.s 			page 16
+
+
+ 276:./ucos/Core/os_time.c ****     OSTime = ticks;
+ 537              		.loc 1 276 5 view .LVU171
+ 538              		.loc 1 276 12 is_stmt 0 view .LVU172
+ 539 0008 024B     		ldr	r3, .L41
+ 540 000a 1C60     		str	r4, [r3]
+ 277:./ucos/Core/os_time.c ****     OS_EXIT_CRITICAL();
+ 541              		.loc 1 277 5 is_stmt 1 view .LVU173
+ 542              		.loc 1 277 5 view .LVU174
+ 543 000c FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 544              	.LVL51:
+ 545              		.loc 1 277 5 discriminator 1 view .LVU175
+ 278:./ucos/Core/os_time.c **** }
+ 546              		.loc 1 278 1 is_stmt 0 view .LVU176
+ 547 0010 10BD     		pop	{r4, pc}
+ 548              	.LVL52:
+ 549              	.L42:
+ 550              		.loc 1 278 1 view .LVU177
+ 551 0012 00BF     		.align	2
+ 552              	.L41:
+ 553 0014 00000000 		.word	OSTime
+ 554              		.cfi_endproc
+ 555              	.LFE4:
+ 557              		.text
+ 558              	.Letext0:
+ 559              		.file 2 "./ucos/Ports/os_cpu.h"
+ 560              		.file 3 "./ucos/Core/ucos_ii.h"
+ 561              		.file 4 "./trace/uCOS-II/os_trace_events.h"
+ARM GAS  /tmp/ccJHJwMP.s 			page 17
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 os_time.c
+     /tmp/ccJHJwMP.s:21     .text.OSTimeDly:00000000 $t
+     /tmp/ccJHJwMP.s:27     .text.OSTimeDly:00000000 OSTimeDly
+     /tmp/ccJHJwMP.s:133    .text.OSTimeDly:0000005c $d
+     /tmp/ccJHJwMP.s:142    .text.OSTimeDlyHMSM:00000000 $t
+     /tmp/ccJHJwMP.s:148    .text.OSTimeDlyHMSM:00000000 OSTimeDlyHMSM
+     /tmp/ccJHJwMP.s:263    .text.OSTimeDlyHMSM:0000006c $d
+     /tmp/ccJHJwMP.s:270    .text.OSTimeDlyResume:00000000 $t
+     /tmp/ccJHJwMP.s:276    .text.OSTimeDlyResume:00000000 OSTimeDlyResume
+     /tmp/ccJHJwMP.s:454    .text.OSTimeDlyResume:000000a8 $d
+     /tmp/ccJHJwMP.s:461    .text.OSTimeGet:00000000 $t
+     /tmp/ccJHJwMP.s:467    .text.OSTimeGet:00000000 OSTimeGet
+     /tmp/ccJHJwMP.s:505    .text.OSTimeGet:00000014 $d
+     /tmp/ccJHJwMP.s:510    .text.OSTimeSet:00000000 $t
+     /tmp/ccJHJwMP.s:516    .text.OSTimeSet:00000000 OSTimeSet
+     /tmp/ccJHJwMP.s:553    .text.OSTimeSet:00000014 $d
+
+UNDEFINED SYMBOLS
+OS_CPU_SR_Save
+SYSVIEW_TaskSuspend
+OS_CPU_SR_Restore
+OS_Sched
+OSIntNesting
+OSLockNesting
+OSTCBCur
+OSRdyTbl
+OSRdyGrp
+SYSVIEW_TaskReady
+OSTCBPrioTbl
+OSTime

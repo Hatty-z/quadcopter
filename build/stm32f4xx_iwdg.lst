@@ -1,0 +1,496 @@
+ARM GAS  /tmp/ccLGfcVC.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"stm32f4xx_iwdg.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./Libraries/src/stm32f4xx_iwdg.c"
+  20              		.section	.text.IWDG_WriteAccessCmd,"ax",%progbits
+  21              		.align	1
+  22              		.global	IWDG_WriteAccessCmd
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	IWDG_WriteAccessCmd:
+  28              	.LVL0:
+  29              	.LFB123:
+   1:./Libraries/src/stm32f4xx_iwdg.c **** /**
+   2:./Libraries/src/stm32f4xx_iwdg.c ****   ******************************************************************************
+   3:./Libraries/src/stm32f4xx_iwdg.c ****   * @file    stm32f4xx_iwdg.c
+   4:./Libraries/src/stm32f4xx_iwdg.c ****   * @author  MCD Application Team
+   5:./Libraries/src/stm32f4xx_iwdg.c ****   * @version V1.8.0
+   6:./Libraries/src/stm32f4xx_iwdg.c ****   * @date    04-November-2016
+   7:./Libraries/src/stm32f4xx_iwdg.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:./Libraries/src/stm32f4xx_iwdg.c ****   *          functionalities of the Independent watchdog (IWDG) peripheral:           
+   9:./Libraries/src/stm32f4xx_iwdg.c ****   *           + Prescaler and Counter configuration
+  10:./Libraries/src/stm32f4xx_iwdg.c ****   *           + IWDG activation
+  11:./Libraries/src/stm32f4xx_iwdg.c ****   *           + Flag management
+  12:./Libraries/src/stm32f4xx_iwdg.c ****   *
+  13:./Libraries/src/stm32f4xx_iwdg.c ****     @verbatim    
+  14:./Libraries/src/stm32f4xx_iwdg.c ****  ===============================================================================
+  15:./Libraries/src/stm32f4xx_iwdg.c ****                           ##### IWDG features #####
+  16:./Libraries/src/stm32f4xx_iwdg.c ****  ===============================================================================
+  17:./Libraries/src/stm32f4xx_iwdg.c ****     [..]  
+  18:./Libraries/src/stm32f4xx_iwdg.c ****       The IWDG can be started by either software or hardware (configurable
+  19:./Libraries/src/stm32f4xx_iwdg.c ****       through option byte).
+  20:./Libraries/src/stm32f4xx_iwdg.c ****               
+  21:./Libraries/src/stm32f4xx_iwdg.c ****       The IWDG is clocked by its own dedicated low-speed clock (LSI) and
+  22:./Libraries/src/stm32f4xx_iwdg.c ****       thus stays active even if the main clock fails.
+  23:./Libraries/src/stm32f4xx_iwdg.c ****       Once the IWDG is started, the LSI is forced ON and cannot be disabled
+  24:./Libraries/src/stm32f4xx_iwdg.c ****       (LSI cannot be disabled too), and the counter starts counting down from 
+  25:./Libraries/src/stm32f4xx_iwdg.c ****       the reset value of 0xFFF. When it reaches the end of count value (0x000)
+  26:./Libraries/src/stm32f4xx_iwdg.c ****       a system reset is generated.
+  27:./Libraries/src/stm32f4xx_iwdg.c ****       The IWDG counter should be reloaded at regular intervals to prevent
+  28:./Libraries/src/stm32f4xx_iwdg.c ****       an MCU reset.
+  29:./Libraries/src/stm32f4xx_iwdg.c ****                              
+ARM GAS  /tmp/ccLGfcVC.s 			page 2
+
+
+  30:./Libraries/src/stm32f4xx_iwdg.c ****       The IWDG is implemented in the VDD voltage domain that is still functional
+  31:./Libraries/src/stm32f4xx_iwdg.c ****       in STOP and STANDBY mode (IWDG reset can wake-up from STANDBY).          
+  32:./Libraries/src/stm32f4xx_iwdg.c ****               
+  33:./Libraries/src/stm32f4xx_iwdg.c ****       IWDGRST flag in RCC_CSR register can be used to inform when a IWDG
+  34:./Libraries/src/stm32f4xx_iwdg.c ****       reset occurs.
+  35:./Libraries/src/stm32f4xx_iwdg.c ****               
+  36:./Libraries/src/stm32f4xx_iwdg.c ****       Min-max timeout value @32KHz (LSI): ~125us / ~32.7s
+  37:./Libraries/src/stm32f4xx_iwdg.c ****       The IWDG timeout may vary due to LSI frequency dispersion. STM32F4xx
+  38:./Libraries/src/stm32f4xx_iwdg.c ****       devices provide the capability to measure the LSI frequency (LSI clock
+  39:./Libraries/src/stm32f4xx_iwdg.c ****       connected internally to TIM5 CH4 input capture). The measured value
+  40:./Libraries/src/stm32f4xx_iwdg.c ****       can be used to have an IWDG timeout with an acceptable accuracy. 
+  41:./Libraries/src/stm32f4xx_iwdg.c ****       For more information, please refer to the STM32F4xx Reference manual
+  42:./Libraries/src/stm32f4xx_iwdg.c ****             
+  43:./Libraries/src/stm32f4xx_iwdg.c ****                      ##### How to use this driver #####
+  44:./Libraries/src/stm32f4xx_iwdg.c ****  ===============================================================================
+  45:./Libraries/src/stm32f4xx_iwdg.c ****     [..]
+  46:./Libraries/src/stm32f4xx_iwdg.c ****       (#) Enable write access to IWDG_PR and IWDG_RLR registers using
+  47:./Libraries/src/stm32f4xx_iwdg.c ****           IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable) function
+  48:./Libraries/src/stm32f4xx_iwdg.c ****                  
+  49:./Libraries/src/stm32f4xx_iwdg.c ****       (#) Configure the IWDG prescaler using IWDG_SetPrescaler() function
+  50:./Libraries/src/stm32f4xx_iwdg.c ****               
+  51:./Libraries/src/stm32f4xx_iwdg.c ****       (#) Configure the IWDG counter value using IWDG_SetReload() function.
+  52:./Libraries/src/stm32f4xx_iwdg.c ****           This value will be loaded in the IWDG counter each time the counter
+  53:./Libraries/src/stm32f4xx_iwdg.c ****           is reloaded, then the IWDG will start counting down from this value.
+  54:./Libraries/src/stm32f4xx_iwdg.c ****               
+  55:./Libraries/src/stm32f4xx_iwdg.c ****       (#) Start the IWDG using IWDG_Enable() function, when the IWDG is used
+  56:./Libraries/src/stm32f4xx_iwdg.c ****           in software mode (no need to enable the LSI, it will be enabled
+  57:./Libraries/src/stm32f4xx_iwdg.c ****           by hardware)
+  58:./Libraries/src/stm32f4xx_iwdg.c ****                
+  59:./Libraries/src/stm32f4xx_iwdg.c ****       (#) Then the application program must reload the IWDG counter at regular
+  60:./Libraries/src/stm32f4xx_iwdg.c ****           intervals during normal operation to prevent an MCU reset, using
+  61:./Libraries/src/stm32f4xx_iwdg.c ****           IWDG_ReloadCounter() function.      
+  62:./Libraries/src/stm32f4xx_iwdg.c ****             
+  63:./Libraries/src/stm32f4xx_iwdg.c ****     @endverbatim    
+  64:./Libraries/src/stm32f4xx_iwdg.c ****   ******************************************************************************
+  65:./Libraries/src/stm32f4xx_iwdg.c ****   * @attention
+  66:./Libraries/src/stm32f4xx_iwdg.c ****   *
+  67:./Libraries/src/stm32f4xx_iwdg.c ****   * <h2><center>&copy; COPYRIGHT 2016 STMicroelectronics</center></h2>
+  68:./Libraries/src/stm32f4xx_iwdg.c ****   *
+  69:./Libraries/src/stm32f4xx_iwdg.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  70:./Libraries/src/stm32f4xx_iwdg.c ****   * You may not use this file except in compliance with the License.
+  71:./Libraries/src/stm32f4xx_iwdg.c ****   * You may obtain a copy of the License at:
+  72:./Libraries/src/stm32f4xx_iwdg.c ****   *
+  73:./Libraries/src/stm32f4xx_iwdg.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  74:./Libraries/src/stm32f4xx_iwdg.c ****   *
+  75:./Libraries/src/stm32f4xx_iwdg.c ****   * Unless required by applicable law or agreed to in writing, software 
+  76:./Libraries/src/stm32f4xx_iwdg.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  77:./Libraries/src/stm32f4xx_iwdg.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  78:./Libraries/src/stm32f4xx_iwdg.c ****   * See the License for the specific language governing permissions and
+  79:./Libraries/src/stm32f4xx_iwdg.c ****   * limitations under the License.
+  80:./Libraries/src/stm32f4xx_iwdg.c ****   *
+  81:./Libraries/src/stm32f4xx_iwdg.c ****   ******************************************************************************
+  82:./Libraries/src/stm32f4xx_iwdg.c ****   */
+  83:./Libraries/src/stm32f4xx_iwdg.c **** 
+  84:./Libraries/src/stm32f4xx_iwdg.c **** /* Includes ------------------------------------------------------------------*/
+  85:./Libraries/src/stm32f4xx_iwdg.c **** #include "stm32f4xx_iwdg.h"
+  86:./Libraries/src/stm32f4xx_iwdg.c **** 
+ARM GAS  /tmp/ccLGfcVC.s 			page 3
+
+
+  87:./Libraries/src/stm32f4xx_iwdg.c **** /** @addtogroup STM32F4xx_StdPeriph_Driver
+  88:./Libraries/src/stm32f4xx_iwdg.c ****   * @{
+  89:./Libraries/src/stm32f4xx_iwdg.c ****   */
+  90:./Libraries/src/stm32f4xx_iwdg.c **** 
+  91:./Libraries/src/stm32f4xx_iwdg.c **** /** @defgroup IWDG 
+  92:./Libraries/src/stm32f4xx_iwdg.c ****   * @brief IWDG driver modules
+  93:./Libraries/src/stm32f4xx_iwdg.c ****   * @{
+  94:./Libraries/src/stm32f4xx_iwdg.c ****   */ 
+  95:./Libraries/src/stm32f4xx_iwdg.c **** 
+  96:./Libraries/src/stm32f4xx_iwdg.c **** /* Private typedef -----------------------------------------------------------*/
+  97:./Libraries/src/stm32f4xx_iwdg.c **** /* Private define ------------------------------------------------------------*/
+  98:./Libraries/src/stm32f4xx_iwdg.c **** 
+  99:./Libraries/src/stm32f4xx_iwdg.c **** /* KR register bit mask */
+ 100:./Libraries/src/stm32f4xx_iwdg.c **** #define KR_KEY_RELOAD    ((uint16_t)0xAAAA)
+ 101:./Libraries/src/stm32f4xx_iwdg.c **** #define KR_KEY_ENABLE    ((uint16_t)0xCCCC)
+ 102:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 103:./Libraries/src/stm32f4xx_iwdg.c **** /* Private macro -------------------------------------------------------------*/
+ 104:./Libraries/src/stm32f4xx_iwdg.c **** /* Private variables ---------------------------------------------------------*/
+ 105:./Libraries/src/stm32f4xx_iwdg.c **** /* Private function prototypes -----------------------------------------------*/
+ 106:./Libraries/src/stm32f4xx_iwdg.c **** /* Private functions ---------------------------------------------------------*/
+ 107:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 108:./Libraries/src/stm32f4xx_iwdg.c **** /** @defgroup IWDG_Private_Functions
+ 109:./Libraries/src/stm32f4xx_iwdg.c ****   * @{
+ 110:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ 111:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 112:./Libraries/src/stm32f4xx_iwdg.c **** /** @defgroup IWDG_Group1 Prescaler and Counter configuration functions
+ 113:./Libraries/src/stm32f4xx_iwdg.c ****  *  @brief   Prescaler and Counter configuration functions
+ 114:./Libraries/src/stm32f4xx_iwdg.c ****  *
+ 115:./Libraries/src/stm32f4xx_iwdg.c **** @verbatim   
+ 116:./Libraries/src/stm32f4xx_iwdg.c ****  ===============================================================================
+ 117:./Libraries/src/stm32f4xx_iwdg.c ****               ##### Prescaler and Counter configuration functions #####
+ 118:./Libraries/src/stm32f4xx_iwdg.c ****  ===============================================================================  
+ 119:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 120:./Libraries/src/stm32f4xx_iwdg.c **** @endverbatim
+ 121:./Libraries/src/stm32f4xx_iwdg.c ****   * @{
+ 122:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ 123:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 124:./Libraries/src/stm32f4xx_iwdg.c **** /**
+ 125:./Libraries/src/stm32f4xx_iwdg.c ****   * @brief  Enables or disables write access to IWDG_PR and IWDG_RLR registers.
+ 126:./Libraries/src/stm32f4xx_iwdg.c ****   * @param  IWDG_WriteAccess: new state of write access to IWDG_PR and IWDG_RLR registers.
+ 127:./Libraries/src/stm32f4xx_iwdg.c ****   *          This parameter can be one of the following values:
+ 128:./Libraries/src/stm32f4xx_iwdg.c ****   *            @arg IWDG_WriteAccess_Enable: Enable write access to IWDG_PR and IWDG_RLR registers
+ 129:./Libraries/src/stm32f4xx_iwdg.c ****   *            @arg IWDG_WriteAccess_Disable: Disable write access to IWDG_PR and IWDG_RLR register
+ 130:./Libraries/src/stm32f4xx_iwdg.c ****   * @retval None
+ 131:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ 132:./Libraries/src/stm32f4xx_iwdg.c **** void IWDG_WriteAccessCmd(uint16_t IWDG_WriteAccess)
+ 133:./Libraries/src/stm32f4xx_iwdg.c **** {
+  30              		.loc 1 133 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+ 134:./Libraries/src/stm32f4xx_iwdg.c ****   /* Check the parameters */
+ 135:./Libraries/src/stm32f4xx_iwdg.c ****   assert_param(IS_IWDG_WRITE_ACCESS(IWDG_WriteAccess));
+  35              		.loc 1 135 3 view .LVU1
+ 136:./Libraries/src/stm32f4xx_iwdg.c ****   IWDG->KR = IWDG_WriteAccess;
+  36              		.loc 1 136 3 view .LVU2
+ARM GAS  /tmp/ccLGfcVC.s 			page 4
+
+
+  37              		.loc 1 136 12 is_stmt 0 view .LVU3
+  38 0000 014B     		ldr	r3, .L2
+  39 0002 1860     		str	r0, [r3]
+ 137:./Libraries/src/stm32f4xx_iwdg.c **** }
+  40              		.loc 1 137 1 view .LVU4
+  41 0004 7047     		bx	lr
+  42              	.L3:
+  43 0006 00BF     		.align	2
+  44              	.L2:
+  45 0008 00300040 		.word	1073754112
+  46              		.cfi_endproc
+  47              	.LFE123:
+  49              		.section	.text.IWDG_SetPrescaler,"ax",%progbits
+  50              		.align	1
+  51              		.global	IWDG_SetPrescaler
+  52              		.syntax unified
+  53              		.thumb
+  54              		.thumb_func
+  56              	IWDG_SetPrescaler:
+  57              	.LVL1:
+  58              	.LFB124:
+ 138:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 139:./Libraries/src/stm32f4xx_iwdg.c **** /**
+ 140:./Libraries/src/stm32f4xx_iwdg.c ****   * @brief  Sets IWDG Prescaler value.
+ 141:./Libraries/src/stm32f4xx_iwdg.c ****   * @param  IWDG_Prescaler: specifies the IWDG Prescaler value.
+ 142:./Libraries/src/stm32f4xx_iwdg.c ****   *          This parameter can be one of the following values:
+ 143:./Libraries/src/stm32f4xx_iwdg.c ****   *            @arg IWDG_Prescaler_4: IWDG prescaler set to 4
+ 144:./Libraries/src/stm32f4xx_iwdg.c ****   *            @arg IWDG_Prescaler_8: IWDG prescaler set to 8
+ 145:./Libraries/src/stm32f4xx_iwdg.c ****   *            @arg IWDG_Prescaler_16: IWDG prescaler set to 16
+ 146:./Libraries/src/stm32f4xx_iwdg.c ****   *            @arg IWDG_Prescaler_32: IWDG prescaler set to 32
+ 147:./Libraries/src/stm32f4xx_iwdg.c ****   *            @arg IWDG_Prescaler_64: IWDG prescaler set to 64
+ 148:./Libraries/src/stm32f4xx_iwdg.c ****   *            @arg IWDG_Prescaler_128: IWDG prescaler set to 128
+ 149:./Libraries/src/stm32f4xx_iwdg.c ****   *            @arg IWDG_Prescaler_256: IWDG prescaler set to 256
+ 150:./Libraries/src/stm32f4xx_iwdg.c ****   * @retval None
+ 151:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ 152:./Libraries/src/stm32f4xx_iwdg.c **** void IWDG_SetPrescaler(uint8_t IWDG_Prescaler)
+ 153:./Libraries/src/stm32f4xx_iwdg.c **** {
+  59              		.loc 1 153 1 is_stmt 1 view -0
+  60              		.cfi_startproc
+  61              		@ args = 0, pretend = 0, frame = 0
+  62              		@ frame_needed = 0, uses_anonymous_args = 0
+  63              		@ link register save eliminated.
+ 154:./Libraries/src/stm32f4xx_iwdg.c ****   /* Check the parameters */
+ 155:./Libraries/src/stm32f4xx_iwdg.c ****   assert_param(IS_IWDG_PRESCALER(IWDG_Prescaler));
+  64              		.loc 1 155 3 view .LVU6
+ 156:./Libraries/src/stm32f4xx_iwdg.c ****   IWDG->PR = IWDG_Prescaler;
+  65              		.loc 1 156 3 view .LVU7
+  66              		.loc 1 156 12 is_stmt 0 view .LVU8
+  67 0000 014B     		ldr	r3, .L5
+  68 0002 5860     		str	r0, [r3, #4]
+ 157:./Libraries/src/stm32f4xx_iwdg.c **** }
+  69              		.loc 1 157 1 view .LVU9
+  70 0004 7047     		bx	lr
+  71              	.L6:
+  72 0006 00BF     		.align	2
+  73              	.L5:
+  74 0008 00300040 		.word	1073754112
+ARM GAS  /tmp/ccLGfcVC.s 			page 5
+
+
+  75              		.cfi_endproc
+  76              	.LFE124:
+  78              		.section	.text.IWDG_SetReload,"ax",%progbits
+  79              		.align	1
+  80              		.global	IWDG_SetReload
+  81              		.syntax unified
+  82              		.thumb
+  83              		.thumb_func
+  85              	IWDG_SetReload:
+  86              	.LVL2:
+  87              	.LFB125:
+ 158:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 159:./Libraries/src/stm32f4xx_iwdg.c **** /**
+ 160:./Libraries/src/stm32f4xx_iwdg.c ****   * @brief  Sets IWDG Reload value.
+ 161:./Libraries/src/stm32f4xx_iwdg.c ****   * @param  Reload: specifies the IWDG Reload value.
+ 162:./Libraries/src/stm32f4xx_iwdg.c ****   *          This parameter must be a number between 0 and 0x0FFF.
+ 163:./Libraries/src/stm32f4xx_iwdg.c ****   * @retval None
+ 164:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ 165:./Libraries/src/stm32f4xx_iwdg.c **** void IWDG_SetReload(uint16_t Reload)
+ 166:./Libraries/src/stm32f4xx_iwdg.c **** {
+  88              		.loc 1 166 1 is_stmt 1 view -0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92              		@ link register save eliminated.
+ 167:./Libraries/src/stm32f4xx_iwdg.c ****   /* Check the parameters */
+ 168:./Libraries/src/stm32f4xx_iwdg.c ****   assert_param(IS_IWDG_RELOAD(Reload));
+  93              		.loc 1 168 3 view .LVU11
+ 169:./Libraries/src/stm32f4xx_iwdg.c ****   IWDG->RLR = Reload;
+  94              		.loc 1 169 3 view .LVU12
+  95              		.loc 1 169 13 is_stmt 0 view .LVU13
+  96 0000 014B     		ldr	r3, .L8
+  97 0002 9860     		str	r0, [r3, #8]
+ 170:./Libraries/src/stm32f4xx_iwdg.c **** }
+  98              		.loc 1 170 1 view .LVU14
+  99 0004 7047     		bx	lr
+ 100              	.L9:
+ 101 0006 00BF     		.align	2
+ 102              	.L8:
+ 103 0008 00300040 		.word	1073754112
+ 104              		.cfi_endproc
+ 105              	.LFE125:
+ 107              		.section	.text.IWDG_ReloadCounter,"ax",%progbits
+ 108              		.align	1
+ 109              		.global	IWDG_ReloadCounter
+ 110              		.syntax unified
+ 111              		.thumb
+ 112              		.thumb_func
+ 114              	IWDG_ReloadCounter:
+ 115              	.LFB126:
+ 171:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 172:./Libraries/src/stm32f4xx_iwdg.c **** /**
+ 173:./Libraries/src/stm32f4xx_iwdg.c ****   * @brief  Reloads IWDG counter with value defined in the reload register
+ 174:./Libraries/src/stm32f4xx_iwdg.c ****   *         (write access to IWDG_PR and IWDG_RLR registers disabled).
+ 175:./Libraries/src/stm32f4xx_iwdg.c ****   * @param  None
+ 176:./Libraries/src/stm32f4xx_iwdg.c ****   * @retval None
+ 177:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ARM GAS  /tmp/ccLGfcVC.s 			page 6
+
+
+ 178:./Libraries/src/stm32f4xx_iwdg.c **** void IWDG_ReloadCounter(void)
+ 179:./Libraries/src/stm32f4xx_iwdg.c **** {
+ 116              		.loc 1 179 1 is_stmt 1 view -0
+ 117              		.cfi_startproc
+ 118              		@ args = 0, pretend = 0, frame = 0
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120              		@ link register save eliminated.
+ 180:./Libraries/src/stm32f4xx_iwdg.c ****   IWDG->KR = KR_KEY_RELOAD;
+ 121              		.loc 1 180 3 view .LVU16
+ 122              		.loc 1 180 12 is_stmt 0 view .LVU17
+ 123 0000 024B     		ldr	r3, .L11
+ 124 0002 4AF6AA22 		movw	r2, #43690
+ 125 0006 1A60     		str	r2, [r3]
+ 181:./Libraries/src/stm32f4xx_iwdg.c **** }
+ 126              		.loc 1 181 1 view .LVU18
+ 127 0008 7047     		bx	lr
+ 128              	.L12:
+ 129 000a 00BF     		.align	2
+ 130              	.L11:
+ 131 000c 00300040 		.word	1073754112
+ 132              		.cfi_endproc
+ 133              	.LFE126:
+ 135              		.section	.text.IWDG_Enable,"ax",%progbits
+ 136              		.align	1
+ 137              		.global	IWDG_Enable
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	IWDG_Enable:
+ 143              	.LFB127:
+ 182:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 183:./Libraries/src/stm32f4xx_iwdg.c **** /**
+ 184:./Libraries/src/stm32f4xx_iwdg.c ****   * @}
+ 185:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ 186:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 187:./Libraries/src/stm32f4xx_iwdg.c **** /** @defgroup IWDG_Group2 IWDG activation function
+ 188:./Libraries/src/stm32f4xx_iwdg.c ****  *  @brief   IWDG activation function 
+ 189:./Libraries/src/stm32f4xx_iwdg.c ****  *
+ 190:./Libraries/src/stm32f4xx_iwdg.c **** @verbatim   
+ 191:./Libraries/src/stm32f4xx_iwdg.c ****  ===============================================================================
+ 192:./Libraries/src/stm32f4xx_iwdg.c ****                     ##### IWDG activation function #####
+ 193:./Libraries/src/stm32f4xx_iwdg.c ****  ===============================================================================  
+ 194:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 195:./Libraries/src/stm32f4xx_iwdg.c **** @endverbatim
+ 196:./Libraries/src/stm32f4xx_iwdg.c ****   * @{
+ 197:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ 198:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 199:./Libraries/src/stm32f4xx_iwdg.c **** /**
+ 200:./Libraries/src/stm32f4xx_iwdg.c ****   * @brief  Enables IWDG (write access to IWDG_PR and IWDG_RLR registers disabled).
+ 201:./Libraries/src/stm32f4xx_iwdg.c ****   * @param  None
+ 202:./Libraries/src/stm32f4xx_iwdg.c ****   * @retval None
+ 203:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ 204:./Libraries/src/stm32f4xx_iwdg.c **** void IWDG_Enable(void)
+ 205:./Libraries/src/stm32f4xx_iwdg.c **** {
+ 144              		.loc 1 205 1 is_stmt 1 view -0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccLGfcVC.s 			page 7
+
+
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              		@ link register save eliminated.
+ 206:./Libraries/src/stm32f4xx_iwdg.c ****   IWDG->KR = KR_KEY_ENABLE;
+ 149              		.loc 1 206 3 view .LVU20
+ 150              		.loc 1 206 12 is_stmt 0 view .LVU21
+ 151 0000 024B     		ldr	r3, .L14
+ 152 0002 4CF6CC42 		movw	r2, #52428
+ 153 0006 1A60     		str	r2, [r3]
+ 207:./Libraries/src/stm32f4xx_iwdg.c **** }
+ 154              		.loc 1 207 1 view .LVU22
+ 155 0008 7047     		bx	lr
+ 156              	.L15:
+ 157 000a 00BF     		.align	2
+ 158              	.L14:
+ 159 000c 00300040 		.word	1073754112
+ 160              		.cfi_endproc
+ 161              	.LFE127:
+ 163              		.section	.text.IWDG_GetFlagStatus,"ax",%progbits
+ 164              		.align	1
+ 165              		.global	IWDG_GetFlagStatus
+ 166              		.syntax unified
+ 167              		.thumb
+ 168              		.thumb_func
+ 170              	IWDG_GetFlagStatus:
+ 171              	.LVL3:
+ 172              	.LFB128:
+ 208:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 209:./Libraries/src/stm32f4xx_iwdg.c **** /**
+ 210:./Libraries/src/stm32f4xx_iwdg.c ****   * @}
+ 211:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ 212:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 213:./Libraries/src/stm32f4xx_iwdg.c **** /** @defgroup IWDG_Group3 Flag management function 
+ 214:./Libraries/src/stm32f4xx_iwdg.c ****  *  @brief  Flag management function  
+ 215:./Libraries/src/stm32f4xx_iwdg.c ****  *
+ 216:./Libraries/src/stm32f4xx_iwdg.c **** @verbatim   
+ 217:./Libraries/src/stm32f4xx_iwdg.c ****  ===============================================================================
+ 218:./Libraries/src/stm32f4xx_iwdg.c ****                     ##### Flag management function #####
+ 219:./Libraries/src/stm32f4xx_iwdg.c ****  ===============================================================================  
+ 220:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 221:./Libraries/src/stm32f4xx_iwdg.c **** @endverbatim
+ 222:./Libraries/src/stm32f4xx_iwdg.c ****   * @{
+ 223:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ 224:./Libraries/src/stm32f4xx_iwdg.c **** 
+ 225:./Libraries/src/stm32f4xx_iwdg.c **** /**
+ 226:./Libraries/src/stm32f4xx_iwdg.c ****   * @brief  Checks whether the specified IWDG flag is set or not.
+ 227:./Libraries/src/stm32f4xx_iwdg.c ****   * @param  IWDG_FLAG: specifies the flag to check.
+ 228:./Libraries/src/stm32f4xx_iwdg.c ****   *          This parameter can be one of the following values:
+ 229:./Libraries/src/stm32f4xx_iwdg.c ****   *            @arg IWDG_FLAG_PVU: Prescaler Value Update on going
+ 230:./Libraries/src/stm32f4xx_iwdg.c ****   *            @arg IWDG_FLAG_RVU: Reload Value Update on going
+ 231:./Libraries/src/stm32f4xx_iwdg.c ****   * @retval The new state of IWDG_FLAG (SET or RESET).
+ 232:./Libraries/src/stm32f4xx_iwdg.c ****   */
+ 233:./Libraries/src/stm32f4xx_iwdg.c **** FlagStatus IWDG_GetFlagStatus(uint16_t IWDG_FLAG)
+ 234:./Libraries/src/stm32f4xx_iwdg.c **** {
+ 173              		.loc 1 234 1 is_stmt 1 view -0
+ 174              		.cfi_startproc
+ 175              		@ args = 0, pretend = 0, frame = 0
+ 176              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccLGfcVC.s 			page 8
+
+
+ 177              		@ link register save eliminated.
+ 235:./Libraries/src/stm32f4xx_iwdg.c ****   FlagStatus bitstatus = RESET;
+ 178              		.loc 1 235 3 view .LVU24
+ 236:./Libraries/src/stm32f4xx_iwdg.c ****   /* Check the parameters */
+ 237:./Libraries/src/stm32f4xx_iwdg.c ****   assert_param(IS_IWDG_FLAG(IWDG_FLAG));
+ 179              		.loc 1 237 3 view .LVU25
+ 238:./Libraries/src/stm32f4xx_iwdg.c ****   if ((IWDG->SR & IWDG_FLAG) != (uint32_t)RESET)
+ 180              		.loc 1 238 3 view .LVU26
+ 181              		.loc 1 238 12 is_stmt 0 view .LVU27
+ 182 0000 034B     		ldr	r3, .L19
+ 183 0002 DB68     		ldr	r3, [r3, #12]
+ 184              		.loc 1 238 6 view .LVU28
+ 185 0004 1842     		tst	r0, r3
+ 186 0006 01D0     		beq	.L18
+ 239:./Libraries/src/stm32f4xx_iwdg.c ****   {
+ 240:./Libraries/src/stm32f4xx_iwdg.c ****     bitstatus = SET;
+ 187              		.loc 1 240 15 view .LVU29
+ 188 0008 0120     		movs	r0, #1
+ 189              	.LVL4:
+ 190              		.loc 1 240 15 view .LVU30
+ 191 000a 7047     		bx	lr
+ 192              	.LVL5:
+ 193              	.L18:
+ 241:./Libraries/src/stm32f4xx_iwdg.c ****   }
+ 242:./Libraries/src/stm32f4xx_iwdg.c ****   else
+ 243:./Libraries/src/stm32f4xx_iwdg.c ****   {
+ 244:./Libraries/src/stm32f4xx_iwdg.c ****     bitstatus = RESET;
+ 194              		.loc 1 244 15 view .LVU31
+ 195 000c 0020     		movs	r0, #0
+ 196              	.LVL6:
+ 245:./Libraries/src/stm32f4xx_iwdg.c ****   }
+ 246:./Libraries/src/stm32f4xx_iwdg.c ****   /* Return the flag status */
+ 247:./Libraries/src/stm32f4xx_iwdg.c ****   return bitstatus;
+ 197              		.loc 1 247 3 is_stmt 1 view .LVU32
+ 248:./Libraries/src/stm32f4xx_iwdg.c **** }
+ 198              		.loc 1 248 1 is_stmt 0 view .LVU33
+ 199 000e 7047     		bx	lr
+ 200              	.L20:
+ 201              		.align	2
+ 202              	.L19:
+ 203 0010 00300040 		.word	1073754112
+ 204              		.cfi_endproc
+ 205              	.LFE128:
+ 207              		.text
+ 208              	.Letext0:
+ 209              		.file 2 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 210              		.file 3 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 211              		.file 4 "./system/stm32f4xx.h"
+ARM GAS  /tmp/ccLGfcVC.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f4xx_iwdg.c
+     /tmp/ccLGfcVC.s:21     .text.IWDG_WriteAccessCmd:00000000 $t
+     /tmp/ccLGfcVC.s:27     .text.IWDG_WriteAccessCmd:00000000 IWDG_WriteAccessCmd
+     /tmp/ccLGfcVC.s:45     .text.IWDG_WriteAccessCmd:00000008 $d
+     /tmp/ccLGfcVC.s:50     .text.IWDG_SetPrescaler:00000000 $t
+     /tmp/ccLGfcVC.s:56     .text.IWDG_SetPrescaler:00000000 IWDG_SetPrescaler
+     /tmp/ccLGfcVC.s:74     .text.IWDG_SetPrescaler:00000008 $d
+     /tmp/ccLGfcVC.s:79     .text.IWDG_SetReload:00000000 $t
+     /tmp/ccLGfcVC.s:85     .text.IWDG_SetReload:00000000 IWDG_SetReload
+     /tmp/ccLGfcVC.s:103    .text.IWDG_SetReload:00000008 $d
+     /tmp/ccLGfcVC.s:108    .text.IWDG_ReloadCounter:00000000 $t
+     /tmp/ccLGfcVC.s:114    .text.IWDG_ReloadCounter:00000000 IWDG_ReloadCounter
+     /tmp/ccLGfcVC.s:131    .text.IWDG_ReloadCounter:0000000c $d
+     /tmp/ccLGfcVC.s:136    .text.IWDG_Enable:00000000 $t
+     /tmp/ccLGfcVC.s:142    .text.IWDG_Enable:00000000 IWDG_Enable
+     /tmp/ccLGfcVC.s:159    .text.IWDG_Enable:0000000c $d
+     /tmp/ccLGfcVC.s:164    .text.IWDG_GetFlagStatus:00000000 $t
+     /tmp/ccLGfcVC.s:170    .text.IWDG_GetFlagStatus:00000000 IWDG_GetFlagStatus
+     /tmp/ccLGfcVC.s:203    .text.IWDG_GetFlagStatus:00000010 $d
+
+NO UNDEFINED SYMBOLS

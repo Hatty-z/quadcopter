@@ -1,0 +1,396 @@
+ARM GAS  /tmp/ccUxAlEO.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"stm32f4xx_crc.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./Libraries/src/stm32f4xx_crc.c"
+  20              		.section	.text.CRC_ResetDR,"ax",%progbits
+  21              		.align	1
+  22              		.global	CRC_ResetDR
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	CRC_ResetDR:
+  28              	.LFB123:
+   1:./Libraries/src/stm32f4xx_crc.c **** /**
+   2:./Libraries/src/stm32f4xx_crc.c ****   ******************************************************************************
+   3:./Libraries/src/stm32f4xx_crc.c ****   * @file    stm32f4xx_crc.c
+   4:./Libraries/src/stm32f4xx_crc.c ****   * @author  MCD Application Team
+   5:./Libraries/src/stm32f4xx_crc.c ****   * @version V1.8.0
+   6:./Libraries/src/stm32f4xx_crc.c ****   * @date    04-November-2016
+   7:./Libraries/src/stm32f4xx_crc.c ****   * @brief   This file provides all the CRC firmware functions.
+   8:./Libraries/src/stm32f4xx_crc.c ****   ******************************************************************************
+   9:./Libraries/src/stm32f4xx_crc.c ****   * @attention
+  10:./Libraries/src/stm32f4xx_crc.c ****   *
+  11:./Libraries/src/stm32f4xx_crc.c ****   * <h2><center>&copy; COPYRIGHT 2016 STMicroelectronics</center></h2>
+  12:./Libraries/src/stm32f4xx_crc.c ****   *
+  13:./Libraries/src/stm32f4xx_crc.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  14:./Libraries/src/stm32f4xx_crc.c ****   * You may not use this file except in compliance with the License.
+  15:./Libraries/src/stm32f4xx_crc.c ****   * You may obtain a copy of the License at:
+  16:./Libraries/src/stm32f4xx_crc.c ****   *
+  17:./Libraries/src/stm32f4xx_crc.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  18:./Libraries/src/stm32f4xx_crc.c ****   *
+  19:./Libraries/src/stm32f4xx_crc.c ****   * Unless required by applicable law or agreed to in writing, software 
+  20:./Libraries/src/stm32f4xx_crc.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  21:./Libraries/src/stm32f4xx_crc.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  22:./Libraries/src/stm32f4xx_crc.c ****   * See the License for the specific language governing permissions and
+  23:./Libraries/src/stm32f4xx_crc.c ****   * limitations under the License.
+  24:./Libraries/src/stm32f4xx_crc.c ****   *
+  25:./Libraries/src/stm32f4xx_crc.c ****   ******************************************************************************
+  26:./Libraries/src/stm32f4xx_crc.c ****   */
+  27:./Libraries/src/stm32f4xx_crc.c **** 
+  28:./Libraries/src/stm32f4xx_crc.c **** /* Includes ------------------------------------------------------------------*/
+  29:./Libraries/src/stm32f4xx_crc.c **** #include "stm32f4xx_crc.h"
+  30:./Libraries/src/stm32f4xx_crc.c **** 
+ARM GAS  /tmp/ccUxAlEO.s 			page 2
+
+
+  31:./Libraries/src/stm32f4xx_crc.c **** /** @addtogroup STM32F4xx_StdPeriph_Driver
+  32:./Libraries/src/stm32f4xx_crc.c ****   * @{
+  33:./Libraries/src/stm32f4xx_crc.c ****   */
+  34:./Libraries/src/stm32f4xx_crc.c **** 
+  35:./Libraries/src/stm32f4xx_crc.c **** /** @defgroup CRC 
+  36:./Libraries/src/stm32f4xx_crc.c ****   * @brief CRC driver modules
+  37:./Libraries/src/stm32f4xx_crc.c ****   * @{
+  38:./Libraries/src/stm32f4xx_crc.c ****   */
+  39:./Libraries/src/stm32f4xx_crc.c **** 
+  40:./Libraries/src/stm32f4xx_crc.c **** /* Private typedef -----------------------------------------------------------*/
+  41:./Libraries/src/stm32f4xx_crc.c **** /* Private define ------------------------------------------------------------*/
+  42:./Libraries/src/stm32f4xx_crc.c **** /* Private macro -------------------------------------------------------------*/
+  43:./Libraries/src/stm32f4xx_crc.c **** /* Private variables ---------------------------------------------------------*/
+  44:./Libraries/src/stm32f4xx_crc.c **** /* Private function prototypes -----------------------------------------------*/
+  45:./Libraries/src/stm32f4xx_crc.c **** /* Private functions ---------------------------------------------------------*/
+  46:./Libraries/src/stm32f4xx_crc.c **** 
+  47:./Libraries/src/stm32f4xx_crc.c **** /** @defgroup CRC_Private_Functions
+  48:./Libraries/src/stm32f4xx_crc.c ****   * @{
+  49:./Libraries/src/stm32f4xx_crc.c ****   */
+  50:./Libraries/src/stm32f4xx_crc.c **** 
+  51:./Libraries/src/stm32f4xx_crc.c **** /**
+  52:./Libraries/src/stm32f4xx_crc.c ****   * @brief  Resets the CRC Data register (DR).
+  53:./Libraries/src/stm32f4xx_crc.c ****   * @param  None
+  54:./Libraries/src/stm32f4xx_crc.c ****   * @retval None
+  55:./Libraries/src/stm32f4xx_crc.c ****   */
+  56:./Libraries/src/stm32f4xx_crc.c **** void CRC_ResetDR(void)
+  57:./Libraries/src/stm32f4xx_crc.c **** {
+  29              		.loc 1 57 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  58:./Libraries/src/stm32f4xx_crc.c ****   /* Reset CRC generator */
+  59:./Libraries/src/stm32f4xx_crc.c ****   CRC->CR = CRC_CR_RESET;
+  34              		.loc 1 59 3 view .LVU1
+  35              		.loc 1 59 11 is_stmt 0 view .LVU2
+  36 0000 014B     		ldr	r3, .L2
+  37 0002 0122     		movs	r2, #1
+  38 0004 9A60     		str	r2, [r3, #8]
+  60:./Libraries/src/stm32f4xx_crc.c **** }
+  39              		.loc 1 60 1 view .LVU3
+  40 0006 7047     		bx	lr
+  41              	.L3:
+  42              		.align	2
+  43              	.L2:
+  44 0008 00300240 		.word	1073885184
+  45              		.cfi_endproc
+  46              	.LFE123:
+  48              		.section	.text.CRC_CalcCRC,"ax",%progbits
+  49              		.align	1
+  50              		.global	CRC_CalcCRC
+  51              		.syntax unified
+  52              		.thumb
+  53              		.thumb_func
+  55              	CRC_CalcCRC:
+  56              	.LVL0:
+  57              	.LFB124:
+ARM GAS  /tmp/ccUxAlEO.s 			page 3
+
+
+  61:./Libraries/src/stm32f4xx_crc.c **** 
+  62:./Libraries/src/stm32f4xx_crc.c **** /**
+  63:./Libraries/src/stm32f4xx_crc.c ****   * @brief  Computes the 32-bit CRC of a given data word(32-bit).
+  64:./Libraries/src/stm32f4xx_crc.c ****   * @param  Data: data word(32-bit) to compute its CRC
+  65:./Libraries/src/stm32f4xx_crc.c ****   * @retval 32-bit CRC
+  66:./Libraries/src/stm32f4xx_crc.c ****   */
+  67:./Libraries/src/stm32f4xx_crc.c **** uint32_t CRC_CalcCRC(uint32_t Data)
+  68:./Libraries/src/stm32f4xx_crc.c **** {
+  58              		.loc 1 68 1 is_stmt 1 view -0
+  59              		.cfi_startproc
+  60              		@ args = 0, pretend = 0, frame = 0
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62              		@ link register save eliminated.
+  69:./Libraries/src/stm32f4xx_crc.c ****   CRC->DR = Data;
+  63              		.loc 1 69 3 view .LVU5
+  64              		.loc 1 69 11 is_stmt 0 view .LVU6
+  65 0000 014B     		ldr	r3, .L5
+  66 0002 1860     		str	r0, [r3]
+  70:./Libraries/src/stm32f4xx_crc.c ****   
+  71:./Libraries/src/stm32f4xx_crc.c ****   return (CRC->DR);
+  67              		.loc 1 71 3 is_stmt 1 view .LVU7
+  68              		.loc 1 71 14 is_stmt 0 view .LVU8
+  69 0004 1868     		ldr	r0, [r3]
+  70              	.LVL1:
+  72:./Libraries/src/stm32f4xx_crc.c **** }
+  71              		.loc 1 72 1 view .LVU9
+  72 0006 7047     		bx	lr
+  73              	.L6:
+  74              		.align	2
+  75              	.L5:
+  76 0008 00300240 		.word	1073885184
+  77              		.cfi_endproc
+  78              	.LFE124:
+  80              		.section	.text.CRC_CalcBlockCRC,"ax",%progbits
+  81              		.align	1
+  82              		.global	CRC_CalcBlockCRC
+  83              		.syntax unified
+  84              		.thumb
+  85              		.thumb_func
+  87              	CRC_CalcBlockCRC:
+  88              	.LVL2:
+  89              	.LFB125:
+  73:./Libraries/src/stm32f4xx_crc.c **** 
+  74:./Libraries/src/stm32f4xx_crc.c **** /**
+  75:./Libraries/src/stm32f4xx_crc.c ****   * @brief  Computes the 32-bit CRC of a given buffer of data word(32-bit).
+  76:./Libraries/src/stm32f4xx_crc.c ****   * @param  pBuffer: pointer to the buffer containing the data to be computed
+  77:./Libraries/src/stm32f4xx_crc.c ****   * @param  BufferLength: length of the buffer to be computed					
+  78:./Libraries/src/stm32f4xx_crc.c ****   * @retval 32-bit CRC
+  79:./Libraries/src/stm32f4xx_crc.c ****   */
+  80:./Libraries/src/stm32f4xx_crc.c **** uint32_t CRC_CalcBlockCRC(uint32_t pBuffer[], uint32_t BufferLength)
+  81:./Libraries/src/stm32f4xx_crc.c **** {
+  90              		.loc 1 81 1 is_stmt 1 view -0
+  91              		.cfi_startproc
+  92              		@ args = 0, pretend = 0, frame = 0
+  93              		@ frame_needed = 0, uses_anonymous_args = 0
+  94              		@ link register save eliminated.
+  82:./Libraries/src/stm32f4xx_crc.c ****   uint32_t index = 0;
+ARM GAS  /tmp/ccUxAlEO.s 			page 4
+
+
+  95              		.loc 1 82 3 view .LVU11
+  83:./Libraries/src/stm32f4xx_crc.c ****   
+  84:./Libraries/src/stm32f4xx_crc.c ****   for(index = 0; index < BufferLength; index++)
+  96              		.loc 1 84 3 view .LVU12
+  97              		.loc 1 84 13 is_stmt 0 view .LVU13
+  98 0000 0023     		movs	r3, #0
+  99              	.LVL3:
+ 100              		.loc 1 84 24 is_stmt 1 discriminator 1 view .LVU14
+ 101 0002 8B42     		cmp	r3, r1
+ 102 0004 0CD2     		bcs	.L14
+  81:./Libraries/src/stm32f4xx_crc.c ****   uint32_t index = 0;
+ 103              		.loc 1 81 1 is_stmt 0 view .LVU15
+ 104 0006 10B4     		push	{r4}
+ 105              	.LCFI0:
+ 106              		.cfi_def_cfa_offset 4
+ 107              		.cfi_offset 4, -4
+ 108              	.L9:
+  85:./Libraries/src/stm32f4xx_crc.c ****   {
+  86:./Libraries/src/stm32f4xx_crc.c ****     CRC->DR = pBuffer[index];
+ 109              		.loc 1 86 5 is_stmt 1 view .LVU16
+ 110              		.loc 1 86 13 is_stmt 0 view .LVU17
+ 111 0008 074A     		ldr	r2, .L15
+ 112 000a 50F82340 		ldr	r4, [r0, r3, lsl #2]
+ 113 000e 1460     		str	r4, [r2]
+  84:./Libraries/src/stm32f4xx_crc.c ****   {
+ 114              		.loc 1 84 45 is_stmt 1 discriminator 3 view .LVU18
+ 115 0010 0133     		adds	r3, r3, #1
+ 116              	.LVL4:
+  84:./Libraries/src/stm32f4xx_crc.c ****   {
+ 117              		.loc 1 84 24 discriminator 1 view .LVU19
+ 118 0012 8B42     		cmp	r3, r1
+ 119 0014 F8D3     		bcc	.L9
+  87:./Libraries/src/stm32f4xx_crc.c ****   }
+  88:./Libraries/src/stm32f4xx_crc.c ****   return (CRC->DR);
+ 120              		.loc 1 88 3 view .LVU20
+ 121              		.loc 1 88 14 is_stmt 0 view .LVU21
+ 122 0016 044B     		ldr	r3, .L15
+ 123              	.LVL5:
+ 124              		.loc 1 88 14 view .LVU22
+ 125 0018 1868     		ldr	r0, [r3]
+ 126              	.LVL6:
+  89:./Libraries/src/stm32f4xx_crc.c **** }
+ 127              		.loc 1 89 1 view .LVU23
+ 128 001a 5DF8044B 		ldr	r4, [sp], #4
+ 129              	.LCFI1:
+ 130              		.cfi_restore 4
+ 131              		.cfi_def_cfa_offset 0
+ 132 001e 7047     		bx	lr
+ 133              	.LVL7:
+ 134              	.L14:
+  88:./Libraries/src/stm32f4xx_crc.c **** }
+ 135              		.loc 1 88 3 is_stmt 1 view .LVU24
+  88:./Libraries/src/stm32f4xx_crc.c **** }
+ 136              		.loc 1 88 14 is_stmt 0 view .LVU25
+ 137 0020 014B     		ldr	r3, .L15
+ 138              	.LVL8:
+  88:./Libraries/src/stm32f4xx_crc.c **** }
+ARM GAS  /tmp/ccUxAlEO.s 			page 5
+
+
+ 139              		.loc 1 88 14 view .LVU26
+ 140 0022 1868     		ldr	r0, [r3]
+ 141              	.LVL9:
+ 142              		.loc 1 89 1 view .LVU27
+ 143 0024 7047     		bx	lr
+ 144              	.L16:
+ 145 0026 00BF     		.align	2
+ 146              	.L15:
+ 147 0028 00300240 		.word	1073885184
+ 148              		.cfi_endproc
+ 149              	.LFE125:
+ 151              		.section	.text.CRC_GetCRC,"ax",%progbits
+ 152              		.align	1
+ 153              		.global	CRC_GetCRC
+ 154              		.syntax unified
+ 155              		.thumb
+ 156              		.thumb_func
+ 158              	CRC_GetCRC:
+ 159              	.LFB126:
+  90:./Libraries/src/stm32f4xx_crc.c **** 
+  91:./Libraries/src/stm32f4xx_crc.c **** /**
+  92:./Libraries/src/stm32f4xx_crc.c ****   * @brief  Returns the current CRC value.
+  93:./Libraries/src/stm32f4xx_crc.c ****   * @param  None
+  94:./Libraries/src/stm32f4xx_crc.c ****   * @retval 32-bit CRC
+  95:./Libraries/src/stm32f4xx_crc.c ****   */
+  96:./Libraries/src/stm32f4xx_crc.c **** uint32_t CRC_GetCRC(void)
+  97:./Libraries/src/stm32f4xx_crc.c **** {
+ 160              		.loc 1 97 1 is_stmt 1 view -0
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164              		@ link register save eliminated.
+  98:./Libraries/src/stm32f4xx_crc.c ****   return (CRC->DR);
+ 165              		.loc 1 98 3 view .LVU29
+ 166              		.loc 1 98 14 is_stmt 0 view .LVU30
+ 167 0000 014B     		ldr	r3, .L18
+ 168 0002 1868     		ldr	r0, [r3]
+  99:./Libraries/src/stm32f4xx_crc.c **** }
+ 169              		.loc 1 99 1 view .LVU31
+ 170 0004 7047     		bx	lr
+ 171              	.L19:
+ 172 0006 00BF     		.align	2
+ 173              	.L18:
+ 174 0008 00300240 		.word	1073885184
+ 175              		.cfi_endproc
+ 176              	.LFE126:
+ 178              		.section	.text.CRC_SetIDRegister,"ax",%progbits
+ 179              		.align	1
+ 180              		.global	CRC_SetIDRegister
+ 181              		.syntax unified
+ 182              		.thumb
+ 183              		.thumb_func
+ 185              	CRC_SetIDRegister:
+ 186              	.LVL10:
+ 187              	.LFB127:
+ 100:./Libraries/src/stm32f4xx_crc.c **** 
+ 101:./Libraries/src/stm32f4xx_crc.c **** /**
+ARM GAS  /tmp/ccUxAlEO.s 			page 6
+
+
+ 102:./Libraries/src/stm32f4xx_crc.c ****   * @brief  Stores a 8-bit data in the Independent Data(ID) register.
+ 103:./Libraries/src/stm32f4xx_crc.c ****   * @param  IDValue: 8-bit value to be stored in the ID register 					
+ 104:./Libraries/src/stm32f4xx_crc.c ****   * @retval None
+ 105:./Libraries/src/stm32f4xx_crc.c ****   */
+ 106:./Libraries/src/stm32f4xx_crc.c **** void CRC_SetIDRegister(uint8_t IDValue)
+ 107:./Libraries/src/stm32f4xx_crc.c **** {
+ 188              		.loc 1 107 1 is_stmt 1 view -0
+ 189              		.cfi_startproc
+ 190              		@ args = 0, pretend = 0, frame = 0
+ 191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 192              		@ link register save eliminated.
+ 108:./Libraries/src/stm32f4xx_crc.c ****   CRC->IDR = IDValue;
+ 193              		.loc 1 108 3 view .LVU33
+ 194              		.loc 1 108 12 is_stmt 0 view .LVU34
+ 195 0000 014B     		ldr	r3, .L21
+ 196 0002 1871     		strb	r0, [r3, #4]
+ 109:./Libraries/src/stm32f4xx_crc.c **** }
+ 197              		.loc 1 109 1 view .LVU35
+ 198 0004 7047     		bx	lr
+ 199              	.L22:
+ 200 0006 00BF     		.align	2
+ 201              	.L21:
+ 202 0008 00300240 		.word	1073885184
+ 203              		.cfi_endproc
+ 204              	.LFE127:
+ 206              		.section	.text.CRC_GetIDRegister,"ax",%progbits
+ 207              		.align	1
+ 208              		.global	CRC_GetIDRegister
+ 209              		.syntax unified
+ 210              		.thumb
+ 211              		.thumb_func
+ 213              	CRC_GetIDRegister:
+ 214              	.LFB128:
+ 110:./Libraries/src/stm32f4xx_crc.c **** 
+ 111:./Libraries/src/stm32f4xx_crc.c **** /**
+ 112:./Libraries/src/stm32f4xx_crc.c ****   * @brief  Returns the 8-bit data stored in the Independent Data(ID) register
+ 113:./Libraries/src/stm32f4xx_crc.c ****   * @param  None
+ 114:./Libraries/src/stm32f4xx_crc.c ****   * @retval 8-bit value of the ID register 
+ 115:./Libraries/src/stm32f4xx_crc.c ****   */
+ 116:./Libraries/src/stm32f4xx_crc.c **** uint8_t CRC_GetIDRegister(void)
+ 117:./Libraries/src/stm32f4xx_crc.c **** {
+ 215              		.loc 1 117 1 is_stmt 1 view -0
+ 216              		.cfi_startproc
+ 217              		@ args = 0, pretend = 0, frame = 0
+ 218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 219              		@ link register save eliminated.
+ 118:./Libraries/src/stm32f4xx_crc.c ****   return (CRC->IDR);
+ 220              		.loc 1 118 3 view .LVU37
+ 221              		.loc 1 118 14 is_stmt 0 view .LVU38
+ 222 0000 014B     		ldr	r3, .L24
+ 223 0002 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
+ 119:./Libraries/src/stm32f4xx_crc.c **** }
+ 224              		.loc 1 119 1 view .LVU39
+ 225 0004 7047     		bx	lr
+ 226              	.L25:
+ 227 0006 00BF     		.align	2
+ 228              	.L24:
+ARM GAS  /tmp/ccUxAlEO.s 			page 7
+
+
+ 229 0008 00300240 		.word	1073885184
+ 230              		.cfi_endproc
+ 231              	.LFE128:
+ 233              		.text
+ 234              	.Letext0:
+ 235              		.file 2 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 236              		.file 3 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 237              		.file 4 "./system/stm32f4xx.h"
+ARM GAS  /tmp/ccUxAlEO.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f4xx_crc.c
+     /tmp/ccUxAlEO.s:21     .text.CRC_ResetDR:00000000 $t
+     /tmp/ccUxAlEO.s:27     .text.CRC_ResetDR:00000000 CRC_ResetDR
+     /tmp/ccUxAlEO.s:44     .text.CRC_ResetDR:00000008 $d
+     /tmp/ccUxAlEO.s:49     .text.CRC_CalcCRC:00000000 $t
+     /tmp/ccUxAlEO.s:55     .text.CRC_CalcCRC:00000000 CRC_CalcCRC
+     /tmp/ccUxAlEO.s:76     .text.CRC_CalcCRC:00000008 $d
+     /tmp/ccUxAlEO.s:81     .text.CRC_CalcBlockCRC:00000000 $t
+     /tmp/ccUxAlEO.s:87     .text.CRC_CalcBlockCRC:00000000 CRC_CalcBlockCRC
+     /tmp/ccUxAlEO.s:147    .text.CRC_CalcBlockCRC:00000028 $d
+     /tmp/ccUxAlEO.s:152    .text.CRC_GetCRC:00000000 $t
+     /tmp/ccUxAlEO.s:158    .text.CRC_GetCRC:00000000 CRC_GetCRC
+     /tmp/ccUxAlEO.s:174    .text.CRC_GetCRC:00000008 $d
+     /tmp/ccUxAlEO.s:179    .text.CRC_SetIDRegister:00000000 $t
+     /tmp/ccUxAlEO.s:185    .text.CRC_SetIDRegister:00000000 CRC_SetIDRegister
+     /tmp/ccUxAlEO.s:202    .text.CRC_SetIDRegister:00000008 $d
+     /tmp/ccUxAlEO.s:207    .text.CRC_GetIDRegister:00000000 $t
+     /tmp/ccUxAlEO.s:213    .text.CRC_GetIDRegister:00000000 CRC_GetIDRegister
+     /tmp/ccUxAlEO.s:229    .text.CRC_GetIDRegister:00000008 $d
+
+NO UNDEFINED SYMBOLS

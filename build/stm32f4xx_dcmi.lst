@@ -1,0 +1,1360 @@
+ARM GAS  /tmp/ccdCpHpZ.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"stm32f4xx_dcmi.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./Libraries/src/stm32f4xx_dcmi.c"
+  20              		.section	.text.DCMI_DeInit,"ax",%progbits
+  21              		.align	1
+  22              		.global	DCMI_DeInit
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	DCMI_DeInit:
+  28              	.LFB123:
+   1:./Libraries/src/stm32f4xx_dcmi.c **** /**
+   2:./Libraries/src/stm32f4xx_dcmi.c ****   ******************************************************************************
+   3:./Libraries/src/stm32f4xx_dcmi.c ****   * @file    stm32f4xx_dcmi.c
+   4:./Libraries/src/stm32f4xx_dcmi.c ****   * @author  MCD Application Team
+   5:./Libraries/src/stm32f4xx_dcmi.c ****   * @version V1.8.0
+   6:./Libraries/src/stm32f4xx_dcmi.c ****   * @date    04-November-2016
+   7:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:./Libraries/src/stm32f4xx_dcmi.c ****   *          functionalities of the DCMI peripheral:           
+   9:./Libraries/src/stm32f4xx_dcmi.c ****   *           + Initialization and Configuration
+  10:./Libraries/src/stm32f4xx_dcmi.c ****   *           + Image capture functions  
+  11:./Libraries/src/stm32f4xx_dcmi.c ****   *           + Interrupts and flags management
+  12:./Libraries/src/stm32f4xx_dcmi.c ****   *
+  13:./Libraries/src/stm32f4xx_dcmi.c ****  @verbatim          
+  14:./Libraries/src/stm32f4xx_dcmi.c ****  ===============================================================================
+  15:./Libraries/src/stm32f4xx_dcmi.c ****                         ##### How to use this driver #####
+  16:./Libraries/src/stm32f4xx_dcmi.c ****  ===============================================================================  
+  17:./Libraries/src/stm32f4xx_dcmi.c ****     [..]       
+  18:./Libraries/src/stm32f4xx_dcmi.c ****       The sequence below describes how to use this driver to capture image
+  19:./Libraries/src/stm32f4xx_dcmi.c ****       from a camera module connected to the DCMI Interface.
+  20:./Libraries/src/stm32f4xx_dcmi.c ****       This sequence does not take into account the configuration of the  
+  21:./Libraries/src/stm32f4xx_dcmi.c ****       camera module, which should be made before to configure and enable
+  22:./Libraries/src/stm32f4xx_dcmi.c ****       the DCMI to capture images.
+  23:./Libraries/src/stm32f4xx_dcmi.c ****              
+  24:./Libraries/src/stm32f4xx_dcmi.c ****       (#) Enable the clock for the DCMI and associated GPIOs using the following 
+  25:./Libraries/src/stm32f4xx_dcmi.c ****           functions:
+  26:./Libraries/src/stm32f4xx_dcmi.c ****           RCC_AHB2PeriphClockCmd(RCC_AHB2Periph_DCMI, ENABLE);
+  27:./Libraries/src/stm32f4xx_dcmi.c ****           RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOx, ENABLE);
+  28:./Libraries/src/stm32f4xx_dcmi.c ****   
+  29:./Libraries/src/stm32f4xx_dcmi.c ****       (#) DCMI pins configuration 
+  30:./Libraries/src/stm32f4xx_dcmi.c ****         (++) Connect the involved DCMI pins to AF13 using the following function 
+ARM GAS  /tmp/ccdCpHpZ.s 			page 2
+
+
+  31:./Libraries/src/stm32f4xx_dcmi.c ****             GPIO_PinAFConfig(GPIOx, GPIO_PinSourcex, GPIO_AF_DCMI); 
+  32:./Libraries/src/stm32f4xx_dcmi.c ****         (++) Configure these DCMI pins in alternate function mode by calling 
+  33:./Libraries/src/stm32f4xx_dcmi.c ****             the function GPIO_Init();
+  34:./Libraries/src/stm32f4xx_dcmi.c ****       
+  35:./Libraries/src/stm32f4xx_dcmi.c ****       (#) Declare a DCMI_InitTypeDef structure, for example:
+  36:./Libraries/src/stm32f4xx_dcmi.c ****           DCMI_InitTypeDef  DCMI_InitStructure;
+  37:./Libraries/src/stm32f4xx_dcmi.c ****           and fill the DCMI_InitStructure variable with the allowed values
+  38:./Libraries/src/stm32f4xx_dcmi.c ****           of the structure member.
+  39:./Libraries/src/stm32f4xx_dcmi.c ****     
+  40:./Libraries/src/stm32f4xx_dcmi.c ****       (#) Initialize the DCMI interface by calling the function
+  41:./Libraries/src/stm32f4xx_dcmi.c ****           DCMI_Init(&DCMI_InitStructure); 
+  42:./Libraries/src/stm32f4xx_dcmi.c ****     
+  43:./Libraries/src/stm32f4xx_dcmi.c ****       (#) Configure the DMA2_Stream1 channel1 to transfer Data from DCMI DR
+  44:./Libraries/src/stm32f4xx_dcmi.c ****           register to the destination memory buffer.
+  45:./Libraries/src/stm32f4xx_dcmi.c ****     
+  46:./Libraries/src/stm32f4xx_dcmi.c ****       (#) Enable DCMI interface using the function
+  47:./Libraries/src/stm32f4xx_dcmi.c ****           DCMI_Cmd(ENABLE);
+  48:./Libraries/src/stm32f4xx_dcmi.c ****                    
+  49:./Libraries/src/stm32f4xx_dcmi.c ****       (#) Start the image capture using the function
+  50:./Libraries/src/stm32f4xx_dcmi.c ****           DCMI_CaptureCmd(ENABLE);
+  51:./Libraries/src/stm32f4xx_dcmi.c ****                    
+  52:./Libraries/src/stm32f4xx_dcmi.c ****       (#) At this stage the DCMI interface waits for the first start of frame,
+  53:./Libraries/src/stm32f4xx_dcmi.c ****           then a DMA request is generated continuously/once (depending on the
+  54:./Libraries/src/stm32f4xx_dcmi.c ****           mode used, Continuous/Snapshot) to transfer the received data into
+  55:./Libraries/src/stm32f4xx_dcmi.c ****           the destination memory. 
+  56:./Libraries/src/stm32f4xx_dcmi.c ****      
+  57:./Libraries/src/stm32f4xx_dcmi.c ****       -@-  If you need to capture only a rectangular window from the received
+  58:./Libraries/src/stm32f4xx_dcmi.c ****            image, you have to use the DCMI_CROPConfig() function to configure 
+  59:./Libraries/src/stm32f4xx_dcmi.c ****            the coordinates and size of the window to be captured, then enable 
+  60:./Libraries/src/stm32f4xx_dcmi.c ****            the Crop feature using DCMI_CROPCmd(ENABLE);  
+  61:./Libraries/src/stm32f4xx_dcmi.c ****            In this case, the Crop configuration should be made before to enable
+  62:./Libraries/src/stm32f4xx_dcmi.c ****            and start the DCMI interface. 
+  63:./Libraries/src/stm32f4xx_dcmi.c **** 
+  64:./Libraries/src/stm32f4xx_dcmi.c ****  @endverbatim     
+  65:./Libraries/src/stm32f4xx_dcmi.c ****   ******************************************************************************
+  66:./Libraries/src/stm32f4xx_dcmi.c ****   * @attention
+  67:./Libraries/src/stm32f4xx_dcmi.c ****   *
+  68:./Libraries/src/stm32f4xx_dcmi.c ****   * <h2><center>&copy; COPYRIGHT 2016 STMicroelectronics</center></h2>
+  69:./Libraries/src/stm32f4xx_dcmi.c ****   *
+  70:./Libraries/src/stm32f4xx_dcmi.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  71:./Libraries/src/stm32f4xx_dcmi.c ****   * You may not use this file except in compliance with the License.
+  72:./Libraries/src/stm32f4xx_dcmi.c ****   * You may obtain a copy of the License at:
+  73:./Libraries/src/stm32f4xx_dcmi.c ****   *
+  74:./Libraries/src/stm32f4xx_dcmi.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  75:./Libraries/src/stm32f4xx_dcmi.c ****   *
+  76:./Libraries/src/stm32f4xx_dcmi.c ****   * Unless required by applicable law or agreed to in writing, software 
+  77:./Libraries/src/stm32f4xx_dcmi.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  78:./Libraries/src/stm32f4xx_dcmi.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  79:./Libraries/src/stm32f4xx_dcmi.c ****   * See the License for the specific language governing permissions and
+  80:./Libraries/src/stm32f4xx_dcmi.c ****   * limitations under the License.
+  81:./Libraries/src/stm32f4xx_dcmi.c ****   *
+  82:./Libraries/src/stm32f4xx_dcmi.c ****   ******************************************************************************
+  83:./Libraries/src/stm32f4xx_dcmi.c ****   */
+  84:./Libraries/src/stm32f4xx_dcmi.c **** 
+  85:./Libraries/src/stm32f4xx_dcmi.c **** /* Includes ------------------------------------------------------------------*/
+  86:./Libraries/src/stm32f4xx_dcmi.c **** #include "stm32f4xx_dcmi.h"
+  87:./Libraries/src/stm32f4xx_dcmi.c **** #include "stm32f4xx_rcc.h"
+ARM GAS  /tmp/ccdCpHpZ.s 			page 3
+
+
+  88:./Libraries/src/stm32f4xx_dcmi.c **** 
+  89:./Libraries/src/stm32f4xx_dcmi.c **** /** @addtogroup STM32F4xx_StdPeriph_Driver
+  90:./Libraries/src/stm32f4xx_dcmi.c ****   * @{
+  91:./Libraries/src/stm32f4xx_dcmi.c ****   */
+  92:./Libraries/src/stm32f4xx_dcmi.c **** 
+  93:./Libraries/src/stm32f4xx_dcmi.c **** /** @defgroup DCMI 
+  94:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief DCMI driver modules
+  95:./Libraries/src/stm32f4xx_dcmi.c ****   * @{
+  96:./Libraries/src/stm32f4xx_dcmi.c ****   */ 
+  97:./Libraries/src/stm32f4xx_dcmi.c **** 
+  98:./Libraries/src/stm32f4xx_dcmi.c **** /* Private typedef -----------------------------------------------------------*/
+  99:./Libraries/src/stm32f4xx_dcmi.c **** /* Private define ------------------------------------------------------------*/
+ 100:./Libraries/src/stm32f4xx_dcmi.c **** /* Private macro -------------------------------------------------------------*/
+ 101:./Libraries/src/stm32f4xx_dcmi.c **** /* Private variables ---------------------------------------------------------*/
+ 102:./Libraries/src/stm32f4xx_dcmi.c **** /* Private function prototypes -----------------------------------------------*/
+ 103:./Libraries/src/stm32f4xx_dcmi.c **** /* Private functions ---------------------------------------------------------*/
+ 104:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 105:./Libraries/src/stm32f4xx_dcmi.c **** /** @defgroup DCMI_Private_Functions
+ 106:./Libraries/src/stm32f4xx_dcmi.c ****   * @{
+ 107:./Libraries/src/stm32f4xx_dcmi.c ****   */ 
+ 108:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 109:./Libraries/src/stm32f4xx_dcmi.c **** /** @defgroup DCMI_Group1 Initialization and Configuration functions
+ 110:./Libraries/src/stm32f4xx_dcmi.c ****  *  @brief   Initialization and Configuration functions 
+ 111:./Libraries/src/stm32f4xx_dcmi.c ****  *
+ 112:./Libraries/src/stm32f4xx_dcmi.c **** @verbatim   
+ 113:./Libraries/src/stm32f4xx_dcmi.c ****  ===============================================================================
+ 114:./Libraries/src/stm32f4xx_dcmi.c ****               ##### Initialization and Configuration functions #####
+ 115:./Libraries/src/stm32f4xx_dcmi.c ****  ===============================================================================  
+ 116:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 117:./Libraries/src/stm32f4xx_dcmi.c **** @endverbatim
+ 118:./Libraries/src/stm32f4xx_dcmi.c ****   * @{
+ 119:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 120:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 121:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 122:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Deinitializes the DCMI registers to their default reset values.
+ 123:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  None
+ 124:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 125:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 126:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_DeInit(void)
+ 127:./Libraries/src/stm32f4xx_dcmi.c **** {
+  29              		.loc 1 127 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ 128:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->CR = 0x0;
+  34              		.loc 1 128 3 view .LVU1
+  35              		.loc 1 128 12 is_stmt 0 view .LVU2
+  36 0000 054B     		ldr	r3, .L2
+  37 0002 0022     		movs	r2, #0
+  38 0004 1A60     		str	r2, [r3]
+ 129:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->IER = 0x0;
+  39              		.loc 1 129 3 is_stmt 1 view .LVU3
+  40              		.loc 1 129 13 is_stmt 0 view .LVU4
+  41 0006 DA60     		str	r2, [r3, #12]
+ 130:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->ICR = 0x1F;
+  42              		.loc 1 130 3 is_stmt 1 view .LVU5
+ARM GAS  /tmp/ccdCpHpZ.s 			page 4
+
+
+  43              		.loc 1 130 13 is_stmt 0 view .LVU6
+  44 0008 1F21     		movs	r1, #31
+  45 000a 5961     		str	r1, [r3, #20]
+ 131:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->ESCR = 0x0;
+  46              		.loc 1 131 3 is_stmt 1 view .LVU7
+  47              		.loc 1 131 14 is_stmt 0 view .LVU8
+  48 000c 9A61     		str	r2, [r3, #24]
+ 132:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->ESUR = 0x0;
+  49              		.loc 1 132 3 is_stmt 1 view .LVU9
+  50              		.loc 1 132 14 is_stmt 0 view .LVU10
+  51 000e DA61     		str	r2, [r3, #28]
+ 133:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->CWSTRTR = 0x0;
+  52              		.loc 1 133 3 is_stmt 1 view .LVU11
+  53              		.loc 1 133 17 is_stmt 0 view .LVU12
+  54 0010 1A62     		str	r2, [r3, #32]
+ 134:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->CWSIZER = 0x0;
+  55              		.loc 1 134 3 is_stmt 1 view .LVU13
+  56              		.loc 1 134 17 is_stmt 0 view .LVU14
+  57 0012 5A62     		str	r2, [r3, #36]
+ 135:./Libraries/src/stm32f4xx_dcmi.c **** }
+  58              		.loc 1 135 1 view .LVU15
+  59 0014 7047     		bx	lr
+  60              	.L3:
+  61 0016 00BF     		.align	2
+  62              	.L2:
+  63 0018 00000550 		.word	1342504960
+  64              		.cfi_endproc
+  65              	.LFE123:
+  67              		.section	.text.DCMI_Init,"ax",%progbits
+  68              		.align	1
+  69              		.global	DCMI_Init
+  70              		.syntax unified
+  71              		.thumb
+  72              		.thumb_func
+  74              	DCMI_Init:
+  75              	.LVL0:
+  76              	.LFB124:
+ 136:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 137:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 138:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Initializes the DCMI according to the specified parameters in the DCMI_InitStruct.
+ 139:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  DCMI_InitStruct: pointer to a DCMI_InitTypeDef structure that contains 
+ 140:./Libraries/src/stm32f4xx_dcmi.c ****   *         the configuration information for the DCMI.
+ 141:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 142:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 143:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_Init(DCMI_InitTypeDef* DCMI_InitStruct)
+ 144:./Libraries/src/stm32f4xx_dcmi.c **** {
+  77              		.loc 1 144 1 is_stmt 1 view -0
+  78              		.cfi_startproc
+  79              		@ args = 0, pretend = 0, frame = 0
+  80              		@ frame_needed = 0, uses_anonymous_args = 0
+  81              		.loc 1 144 1 is_stmt 0 view .LVU17
+  82 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  83              	.LCFI0:
+  84              		.cfi_def_cfa_offset 20
+  85              		.cfi_offset 4, -20
+  86              		.cfi_offset 5, -16
+  87              		.cfi_offset 6, -12
+ARM GAS  /tmp/ccdCpHpZ.s 			page 5
+
+
+  88              		.cfi_offset 7, -8
+  89              		.cfi_offset 14, -4
+ 145:./Libraries/src/stm32f4xx_dcmi.c ****   uint32_t temp = 0x0;
+  90              		.loc 1 145 3 is_stmt 1 view .LVU18
+  91              	.LVL1:
+ 146:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 147:./Libraries/src/stm32f4xx_dcmi.c ****   /* Check the parameters */
+ 148:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_DCMI_CAPTURE_MODE(DCMI_InitStruct->DCMI_CaptureMode));
+  92              		.loc 1 148 3 view .LVU19
+ 149:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_DCMI_SYNCHRO(DCMI_InitStruct->DCMI_SynchroMode));
+  93              		.loc 1 149 3 view .LVU20
+ 150:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_DCMI_PCKPOLARITY(DCMI_InitStruct->DCMI_PCKPolarity));
+  94              		.loc 1 150 3 view .LVU21
+ 151:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_DCMI_VSPOLARITY(DCMI_InitStruct->DCMI_VSPolarity));
+  95              		.loc 1 151 3 view .LVU22
+ 152:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_DCMI_HSPOLARITY(DCMI_InitStruct->DCMI_HSPolarity));
+  96              		.loc 1 152 3 view .LVU23
+ 153:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_DCMI_CAPTURE_RATE(DCMI_InitStruct->DCMI_CaptureRate));
+  97              		.loc 1 153 3 view .LVU24
+ 154:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_DCMI_EXTENDED_DATA(DCMI_InitStruct->DCMI_ExtendedDataMode));
+  98              		.loc 1 154 3 view .LVU25
+ 155:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 156:./Libraries/src/stm32f4xx_dcmi.c ****   /* The DCMI configuration registers should be programmed correctly before 
+ 157:./Libraries/src/stm32f4xx_dcmi.c ****   enabling the CR_ENABLE Bit and the CR_CAPTURE Bit */
+ 158:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->CR &= ~(DCMI_CR_ENABLE | DCMI_CR_CAPTURE);
+  99              		.loc 1 158 3 view .LVU26
+ 100              		.loc 1 158 7 is_stmt 0 view .LVU27
+ 101 0002 1049     		ldr	r1, .L6
+ 102 0004 0B68     		ldr	r3, [r1]
+ 103              		.loc 1 158 12 view .LVU28
+ 104 0006 23F48043 		bic	r3, r3, #16384
+ 105 000a 23F00103 		bic	r3, r3, #1
+ 106 000e 0B60     		str	r3, [r1]
+ 159:./Libraries/src/stm32f4xx_dcmi.c ****    
+ 160:./Libraries/src/stm32f4xx_dcmi.c ****   /* Reset the old DCMI configuration */
+ 161:./Libraries/src/stm32f4xx_dcmi.c ****   temp = DCMI->CR;
+ 107              		.loc 1 161 3 is_stmt 1 view .LVU29
+ 108              		.loc 1 161 8 is_stmt 0 view .LVU30
+ 109 0010 0A68     		ldr	r2, [r1]
+ 110              	.LVL2:
+ 162:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 163:./Libraries/src/stm32f4xx_dcmi.c ****   temp &= ~((uint32_t)DCMI_CR_CM     | DCMI_CR_ESS   | DCMI_CR_PCKPOL |
+ 111              		.loc 1 163 3 is_stmt 1 view .LVU31
+ 112              		.loc 1 163 8 is_stmt 0 view .LVU32
+ 113 0012 22F47F62 		bic	r2, r2, #4080
+ 114              	.LVL3:
+ 115              		.loc 1 163 8 view .LVU33
+ 116 0016 22F00202 		bic	r2, r2, #2
+ 117              	.LVL4:
+ 164:./Libraries/src/stm32f4xx_dcmi.c ****                       DCMI_CR_HSPOL  | DCMI_CR_VSPOL | DCMI_CR_FCRC_0 | 
+ 165:./Libraries/src/stm32f4xx_dcmi.c ****                       DCMI_CR_FCRC_1 | DCMI_CR_EDM_0 | DCMI_CR_EDM_1); 
+ 166:./Libraries/src/stm32f4xx_dcmi.c ****                   
+ 167:./Libraries/src/stm32f4xx_dcmi.c ****   /* Sets the new configuration of the DCMI peripheral */
+ 168:./Libraries/src/stm32f4xx_dcmi.c ****   temp |= ((uint32_t)DCMI_InitStruct->DCMI_CaptureMode |
+ 118              		.loc 1 168 3 is_stmt 1 view .LVU34
+ 119              		.loc 1 168 37 is_stmt 0 view .LVU35
+ 120 001a 0688     		ldrh	r6, [r0]
+ARM GAS  /tmp/ccdCpHpZ.s 			page 6
+
+
+ 169:./Libraries/src/stm32f4xx_dcmi.c ****                      DCMI_InitStruct->DCMI_SynchroMode |
+ 121              		.loc 1 169 37 view .LVU36
+ 122 001c 4788     		ldrh	r7, [r0, #2]
+ 170:./Libraries/src/stm32f4xx_dcmi.c ****                      DCMI_InitStruct->DCMI_PCKPolarity |
+ 123              		.loc 1 170 37 view .LVU37
+ 124 001e 8588     		ldrh	r5, [r0, #4]
+ 171:./Libraries/src/stm32f4xx_dcmi.c ****                      DCMI_InitStruct->DCMI_VSPolarity |
+ 125              		.loc 1 171 37 view .LVU38
+ 126 0020 C488     		ldrh	r4, [r0, #6]
+ 172:./Libraries/src/stm32f4xx_dcmi.c ****                      DCMI_InitStruct->DCMI_HSPolarity |
+ 127              		.loc 1 172 37 view .LVU39
+ 128 0022 B0F808E0 		ldrh	lr, [r0, #8]
+ 173:./Libraries/src/stm32f4xx_dcmi.c ****                      DCMI_InitStruct->DCMI_CaptureRate |
+ 129              		.loc 1 173 37 view .LVU40
+ 130 0026 B0F80AC0 		ldrh	ip, [r0, #10]
+ 174:./Libraries/src/stm32f4xx_dcmi.c ****                      DCMI_InitStruct->DCMI_ExtendedDataMode);
+ 131              		.loc 1 174 37 view .LVU41
+ 132 002a 8389     		ldrh	r3, [r0, #12]
+ 173:./Libraries/src/stm32f4xx_dcmi.c ****                      DCMI_InitStruct->DCMI_CaptureRate |
+ 133              		.loc 1 173 56 view .LVU42
+ 134 002c 46EA0700 		orr	r0, r6, r7
+ 135              	.LVL5:
+ 173:./Libraries/src/stm32f4xx_dcmi.c ****                      DCMI_InitStruct->DCMI_CaptureRate |
+ 136              		.loc 1 173 56 view .LVU43
+ 137 0030 2843     		orrs	r0, r0, r5
+ 138 0032 2043     		orrs	r0, r0, r4
+ 139 0034 4EEA0000 		orr	r0, lr, r0
+ 140 0038 4CEA0000 		orr	r0, ip, r0
+ 141 003c 0343     		orrs	r3, r3, r0
+ 168:./Libraries/src/stm32f4xx_dcmi.c ****                      DCMI_InitStruct->DCMI_SynchroMode |
+ 142              		.loc 1 168 8 view .LVU44
+ 143 003e 1343     		orrs	r3, r3, r2
+ 144              	.LVL6:
+ 175:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 176:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->CR = temp;                              
+ 145              		.loc 1 176 3 is_stmt 1 view .LVU45
+ 146              		.loc 1 176 12 is_stmt 0 view .LVU46
+ 147 0040 0B60     		str	r3, [r1]
+ 177:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 148              		.loc 1 177 1 view .LVU47
+ 149 0042 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 150              	.L7:
+ 151              		.align	2
+ 152              	.L6:
+ 153 0044 00000550 		.word	1342504960
+ 154              		.cfi_endproc
+ 155              	.LFE124:
+ 157              		.section	.text.DCMI_StructInit,"ax",%progbits
+ 158              		.align	1
+ 159              		.global	DCMI_StructInit
+ 160              		.syntax unified
+ 161              		.thumb
+ 162              		.thumb_func
+ 164              	DCMI_StructInit:
+ 165              	.LVL7:
+ 166              	.LFB125:
+ 178:./Libraries/src/stm32f4xx_dcmi.c **** 
+ARM GAS  /tmp/ccdCpHpZ.s 			page 7
+
+
+ 179:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 180:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Fills each DCMI_InitStruct member with its default value.
+ 181:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  DCMI_InitStruct : pointer to a DCMI_InitTypeDef structure which will
+ 182:./Libraries/src/stm32f4xx_dcmi.c ****   *         be initialized.
+ 183:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 184:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 185:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_StructInit(DCMI_InitTypeDef* DCMI_InitStruct)
+ 186:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 167              		.loc 1 186 1 is_stmt 1 view -0
+ 168              		.cfi_startproc
+ 169              		@ args = 0, pretend = 0, frame = 0
+ 170              		@ frame_needed = 0, uses_anonymous_args = 0
+ 171              		@ link register save eliminated.
+ 187:./Libraries/src/stm32f4xx_dcmi.c ****   /* Set the default configuration */
+ 188:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI_InitStruct->DCMI_CaptureMode = DCMI_CaptureMode_Continuous;
+ 172              		.loc 1 188 3 view .LVU49
+ 173              		.loc 1 188 37 is_stmt 0 view .LVU50
+ 174 0000 0023     		movs	r3, #0
+ 175 0002 0380     		strh	r3, [r0]	@ movhi
+ 189:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI_InitStruct->DCMI_SynchroMode = DCMI_SynchroMode_Hardware;
+ 176              		.loc 1 189 3 is_stmt 1 view .LVU51
+ 177              		.loc 1 189 37 is_stmt 0 view .LVU52
+ 178 0004 4380     		strh	r3, [r0, #2]	@ movhi
+ 190:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI_InitStruct->DCMI_PCKPolarity = DCMI_PCKPolarity_Falling;
+ 179              		.loc 1 190 3 is_stmt 1 view .LVU53
+ 180              		.loc 1 190 37 is_stmt 0 view .LVU54
+ 181 0006 8380     		strh	r3, [r0, #4]	@ movhi
+ 191:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI_InitStruct->DCMI_VSPolarity = DCMI_VSPolarity_Low;
+ 182              		.loc 1 191 3 is_stmt 1 view .LVU55
+ 183              		.loc 1 191 36 is_stmt 0 view .LVU56
+ 184 0008 C380     		strh	r3, [r0, #6]	@ movhi
+ 192:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI_InitStruct->DCMI_HSPolarity = DCMI_HSPolarity_Low;
+ 185              		.loc 1 192 3 is_stmt 1 view .LVU57
+ 186              		.loc 1 192 36 is_stmt 0 view .LVU58
+ 187 000a 0381     		strh	r3, [r0, #8]	@ movhi
+ 193:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI_InitStruct->DCMI_CaptureRate = DCMI_CaptureRate_All_Frame;
+ 188              		.loc 1 193 3 is_stmt 1 view .LVU59
+ 189              		.loc 1 193 37 is_stmt 0 view .LVU60
+ 190 000c 4381     		strh	r3, [r0, #10]	@ movhi
+ 194:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI_InitStruct->DCMI_ExtendedDataMode = DCMI_ExtendedDataMode_8b;
+ 191              		.loc 1 194 3 is_stmt 1 view .LVU61
+ 192              		.loc 1 194 42 is_stmt 0 view .LVU62
+ 193 000e 8381     		strh	r3, [r0, #12]	@ movhi
+ 195:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 194              		.loc 1 195 1 view .LVU63
+ 195 0010 7047     		bx	lr
+ 196              		.cfi_endproc
+ 197              	.LFE125:
+ 199              		.section	.text.DCMI_CROPConfig,"ax",%progbits
+ 200              		.align	1
+ 201              		.global	DCMI_CROPConfig
+ 202              		.syntax unified
+ 203              		.thumb
+ 204              		.thumb_func
+ 206              	DCMI_CROPConfig:
+ 207              	.LVL8:
+ 208              	.LFB126:
+ARM GAS  /tmp/ccdCpHpZ.s 			page 8
+
+
+ 196:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 197:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 198:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Initializes the DCMI peripheral CROP mode according to the specified
+ 199:./Libraries/src/stm32f4xx_dcmi.c ****   *         parameters in the DCMI_CROPInitStruct.
+ 200:./Libraries/src/stm32f4xx_dcmi.c ****   * @note   This function should be called before to enable and start the DCMI interface.   
+ 201:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  DCMI_CROPInitStruct:  pointer to a DCMI_CROPInitTypeDef structure that 
+ 202:./Libraries/src/stm32f4xx_dcmi.c ****   *         contains the configuration information for the DCMI peripheral CROP mode.
+ 203:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 204:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 205:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_CROPConfig(DCMI_CROPInitTypeDef* DCMI_CROPInitStruct)
+ 206:./Libraries/src/stm32f4xx_dcmi.c **** {  
+ 209              		.loc 1 206 1 is_stmt 1 view -0
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 0
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213              		@ link register save eliminated.
+ 207:./Libraries/src/stm32f4xx_dcmi.c ****   /* Sets the CROP window coordinates */
+ 208:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->CWSTRTR = (uint32_t)((uint32_t)DCMI_CROPInitStruct->DCMI_HorizontalOffsetCount |
+ 214              		.loc 1 208 3 view .LVU65
+ 215              		.loc 1 208 59 is_stmt 0 view .LVU66
+ 216 0000 4388     		ldrh	r3, [r0, #2]
+ 209:./Libraries/src/stm32f4xx_dcmi.c ****                   ((uint32_t)DCMI_CROPInitStruct->DCMI_VerticalStartLine << 16));
+ 217              		.loc 1 209 49 view .LVU67
+ 218 0002 0288     		ldrh	r2, [r0]
+ 208:./Libraries/src/stm32f4xx_dcmi.c ****                   ((uint32_t)DCMI_CROPInitStruct->DCMI_VerticalStartLine << 16));
+ 219              		.loc 1 208 19 view .LVU68
+ 220 0004 43EA0243 		orr	r3, r3, r2, lsl #16
+ 208:./Libraries/src/stm32f4xx_dcmi.c ****                   ((uint32_t)DCMI_CROPInitStruct->DCMI_VerticalStartLine << 16));
+ 221              		.loc 1 208 17 view .LVU69
+ 222 0008 034A     		ldr	r2, .L10
+ 223 000a 1362     		str	r3, [r2, #32]
+ 210:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 211:./Libraries/src/stm32f4xx_dcmi.c ****   /* Sets the CROP window size */
+ 212:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->CWSIZER = (uint32_t)(DCMI_CROPInitStruct->DCMI_CaptureCount |
+ 224              		.loc 1 212 3 is_stmt 1 view .LVU70
+ 225              		.loc 1 212 49 is_stmt 0 view .LVU71
+ 226 000c C388     		ldrh	r3, [r0, #6]
+ 213:./Libraries/src/stm32f4xx_dcmi.c ****                   ((uint32_t)DCMI_CROPInitStruct->DCMI_VerticalLineCount << 16));
+ 227              		.loc 1 213 49 view .LVU72
+ 228 000e 8188     		ldrh	r1, [r0, #4]
+ 212:./Libraries/src/stm32f4xx_dcmi.c ****                   ((uint32_t)DCMI_CROPInitStruct->DCMI_VerticalLineCount << 16));
+ 229              		.loc 1 212 19 view .LVU73
+ 230 0010 43EA0143 		orr	r3, r3, r1, lsl #16
+ 212:./Libraries/src/stm32f4xx_dcmi.c ****                   ((uint32_t)DCMI_CROPInitStruct->DCMI_VerticalLineCount << 16));
+ 231              		.loc 1 212 17 view .LVU74
+ 232 0014 5362     		str	r3, [r2, #36]
+ 214:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 233              		.loc 1 214 1 view .LVU75
+ 234 0016 7047     		bx	lr
+ 235              	.L11:
+ 236              		.align	2
+ 237              	.L10:
+ 238 0018 00000550 		.word	1342504960
+ 239              		.cfi_endproc
+ 240              	.LFE126:
+ 242              		.section	.text.DCMI_CROPCmd,"ax",%progbits
+ 243              		.align	1
+ARM GAS  /tmp/ccdCpHpZ.s 			page 9
+
+
+ 244              		.global	DCMI_CROPCmd
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 249              	DCMI_CROPCmd:
+ 250              	.LVL9:
+ 251              	.LFB127:
+ 215:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 216:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 217:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Enables or disables the DCMI Crop feature.
+ 218:./Libraries/src/stm32f4xx_dcmi.c ****   * @note   This function should be called before to enable and start the DCMI interface.
+ 219:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  NewState: new state of the DCMI Crop feature. 
+ 220:./Libraries/src/stm32f4xx_dcmi.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 221:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 222:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 223:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_CROPCmd(FunctionalState NewState)
+ 224:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 252              		.loc 1 224 1 is_stmt 1 view -0
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 0
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 256              		@ link register save eliminated.
+ 225:./Libraries/src/stm32f4xx_dcmi.c ****   /* Check the parameters */
+ 226:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 257              		.loc 1 226 3 view .LVU77
+ 227:./Libraries/src/stm32f4xx_dcmi.c ****     
+ 228:./Libraries/src/stm32f4xx_dcmi.c ****   if (NewState != DISABLE)
+ 258              		.loc 1 228 3 view .LVU78
+ 259              		.loc 1 228 6 is_stmt 0 view .LVU79
+ 260 0000 28B1     		cbz	r0, .L13
+ 229:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 230:./Libraries/src/stm32f4xx_dcmi.c ****     /* Enable the DCMI Crop feature */
+ 231:./Libraries/src/stm32f4xx_dcmi.c ****     DCMI->CR |= (uint32_t)DCMI_CR_CROP;
+ 261              		.loc 1 231 5 is_stmt 1 view .LVU80
+ 262              		.loc 1 231 9 is_stmt 0 view .LVU81
+ 263 0002 064A     		ldr	r2, .L15
+ 264 0004 1368     		ldr	r3, [r2]
+ 265              		.loc 1 231 14 view .LVU82
+ 266 0006 43F00403 		orr	r3, r3, #4
+ 267 000a 1360     		str	r3, [r2]
+ 268 000c 7047     		bx	lr
+ 269              	.L13:
+ 232:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 233:./Libraries/src/stm32f4xx_dcmi.c ****   else
+ 234:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 235:./Libraries/src/stm32f4xx_dcmi.c ****     /* Disable the DCMI Crop feature */
+ 236:./Libraries/src/stm32f4xx_dcmi.c ****     DCMI->CR &= ~(uint32_t)DCMI_CR_CROP;
+ 270              		.loc 1 236 5 is_stmt 1 view .LVU83
+ 271              		.loc 1 236 9 is_stmt 0 view .LVU84
+ 272 000e 034A     		ldr	r2, .L15
+ 273 0010 1368     		ldr	r3, [r2]
+ 274              		.loc 1 236 14 view .LVU85
+ 275 0012 23F00403 		bic	r3, r3, #4
+ 276 0016 1360     		str	r3, [r2]
+ 237:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 238:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 277              		.loc 1 238 1 view .LVU86
+ARM GAS  /tmp/ccdCpHpZ.s 			page 10
+
+
+ 278 0018 7047     		bx	lr
+ 279              	.L16:
+ 280 001a 00BF     		.align	2
+ 281              	.L15:
+ 282 001c 00000550 		.word	1342504960
+ 283              		.cfi_endproc
+ 284              	.LFE127:
+ 286              		.section	.text.DCMI_SetEmbeddedSynchroCodes,"ax",%progbits
+ 287              		.align	1
+ 288              		.global	DCMI_SetEmbeddedSynchroCodes
+ 289              		.syntax unified
+ 290              		.thumb
+ 291              		.thumb_func
+ 293              	DCMI_SetEmbeddedSynchroCodes:
+ 294              	.LVL10:
+ 295              	.LFB128:
+ 239:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 240:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 241:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Sets the embedded synchronization codes
+ 242:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  DCMI_CodesInitTypeDef: pointer to a DCMI_CodesInitTypeDef structure that
+ 243:./Libraries/src/stm32f4xx_dcmi.c ****   *         contains the embedded synchronization codes for the DCMI peripheral.
+ 244:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 245:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 246:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_SetEmbeddedSynchroCodes(DCMI_CodesInitTypeDef* DCMI_CodesInitStruct)
+ 247:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 296              		.loc 1 247 1 is_stmt 1 view -0
+ 297              		.cfi_startproc
+ 298              		@ args = 0, pretend = 0, frame = 0
+ 299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 300              		@ link register save eliminated.
+ 248:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->ESCR = (uint32_t)(DCMI_CodesInitStruct->DCMI_FrameStartCode |
+ 301              		.loc 1 248 3 view .LVU88
+ 302              		.loc 1 248 47 is_stmt 0 view .LVU89
+ 303 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 249:./Libraries/src/stm32f4xx_dcmi.c ****                           ((uint32_t)DCMI_CodesInitStruct->DCMI_LineStartCode << 8)|
+ 304              		.loc 1 249 58 view .LVU90
+ 305 0002 4278     		ldrb	r2, [r0, #1]	@ zero_extendqisi2
+ 248:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->ESCR = (uint32_t)(DCMI_CodesInitStruct->DCMI_FrameStartCode |
+ 306              		.loc 1 248 69 view .LVU91
+ 307 0004 43EA0223 		orr	r3, r3, r2, lsl #8
+ 250:./Libraries/src/stm32f4xx_dcmi.c ****                           ((uint32_t)DCMI_CodesInitStruct->DCMI_LineEndCode << 16)|
+ 308              		.loc 1 250 58 view .LVU92
+ 309 0008 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+ 249:./Libraries/src/stm32f4xx_dcmi.c ****                           ((uint32_t)DCMI_CodesInitStruct->DCMI_LineStartCode << 8)|
+ 310              		.loc 1 249 84 view .LVU93
+ 311 000a 43EA0243 		orr	r3, r3, r2, lsl #16
+ 251:./Libraries/src/stm32f4xx_dcmi.c ****                           ((uint32_t)DCMI_CodesInitStruct->DCMI_FrameEndCode << 24));
+ 312              		.loc 1 251 58 view .LVU94
+ 313 000e C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+ 248:./Libraries/src/stm32f4xx_dcmi.c ****                           ((uint32_t)DCMI_CodesInitStruct->DCMI_LineStartCode << 8)|
+ 314              		.loc 1 248 16 view .LVU95
+ 315 0010 43EA0263 		orr	r3, r3, r2, lsl #24
+ 248:./Libraries/src/stm32f4xx_dcmi.c ****                           ((uint32_t)DCMI_CodesInitStruct->DCMI_LineStartCode << 8)|
+ 316              		.loc 1 248 14 view .LVU96
+ 317 0014 014A     		ldr	r2, .L18
+ 318 0016 9361     		str	r3, [r2, #24]
+ 252:./Libraries/src/stm32f4xx_dcmi.c **** }
+ARM GAS  /tmp/ccdCpHpZ.s 			page 11
+
+
+ 319              		.loc 1 252 1 view .LVU97
+ 320 0018 7047     		bx	lr
+ 321              	.L19:
+ 322 001a 00BF     		.align	2
+ 323              	.L18:
+ 324 001c 00000550 		.word	1342504960
+ 325              		.cfi_endproc
+ 326              	.LFE128:
+ 328              		.section	.text.DCMI_JPEGCmd,"ax",%progbits
+ 329              		.align	1
+ 330              		.global	DCMI_JPEGCmd
+ 331              		.syntax unified
+ 332              		.thumb
+ 333              		.thumb_func
+ 335              	DCMI_JPEGCmd:
+ 336              	.LVL11:
+ 337              	.LFB129:
+ 253:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 254:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 255:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Enables or disables the DCMI JPEG format.
+ 256:./Libraries/src/stm32f4xx_dcmi.c ****   * @note   The Crop and Embedded Synchronization features cannot be used in this mode.  
+ 257:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  NewState: new state of the DCMI JPEG format. 
+ 258:./Libraries/src/stm32f4xx_dcmi.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 259:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 260:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 261:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_JPEGCmd(FunctionalState NewState)
+ 262:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 338              		.loc 1 262 1 is_stmt 1 view -0
+ 339              		.cfi_startproc
+ 340              		@ args = 0, pretend = 0, frame = 0
+ 341              		@ frame_needed = 0, uses_anonymous_args = 0
+ 342              		@ link register save eliminated.
+ 263:./Libraries/src/stm32f4xx_dcmi.c ****   /* Check the parameters */
+ 264:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 343              		.loc 1 264 3 view .LVU99
+ 265:./Libraries/src/stm32f4xx_dcmi.c ****  
+ 266:./Libraries/src/stm32f4xx_dcmi.c ****   if (NewState != DISABLE)
+ 344              		.loc 1 266 3 view .LVU100
+ 345              		.loc 1 266 6 is_stmt 0 view .LVU101
+ 346 0000 28B1     		cbz	r0, .L21
+ 267:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 268:./Libraries/src/stm32f4xx_dcmi.c ****     /* Enable the DCMI JPEG format */
+ 269:./Libraries/src/stm32f4xx_dcmi.c ****     DCMI->CR |= (uint32_t)DCMI_CR_JPEG;
+ 347              		.loc 1 269 5 is_stmt 1 view .LVU102
+ 348              		.loc 1 269 9 is_stmt 0 view .LVU103
+ 349 0002 064A     		ldr	r2, .L23
+ 350 0004 1368     		ldr	r3, [r2]
+ 351              		.loc 1 269 14 view .LVU104
+ 352 0006 43F00803 		orr	r3, r3, #8
+ 353 000a 1360     		str	r3, [r2]
+ 354 000c 7047     		bx	lr
+ 355              	.L21:
+ 270:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 271:./Libraries/src/stm32f4xx_dcmi.c ****   else
+ 272:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 273:./Libraries/src/stm32f4xx_dcmi.c ****     /* Disable the DCMI JPEG format */
+ 274:./Libraries/src/stm32f4xx_dcmi.c ****     DCMI->CR &= ~(uint32_t)DCMI_CR_JPEG;
+ARM GAS  /tmp/ccdCpHpZ.s 			page 12
+
+
+ 356              		.loc 1 274 5 is_stmt 1 view .LVU105
+ 357              		.loc 1 274 9 is_stmt 0 view .LVU106
+ 358 000e 034A     		ldr	r2, .L23
+ 359 0010 1368     		ldr	r3, [r2]
+ 360              		.loc 1 274 14 view .LVU107
+ 361 0012 23F00803 		bic	r3, r3, #8
+ 362 0016 1360     		str	r3, [r2]
+ 275:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 276:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 363              		.loc 1 276 1 view .LVU108
+ 364 0018 7047     		bx	lr
+ 365              	.L24:
+ 366 001a 00BF     		.align	2
+ 367              	.L23:
+ 368 001c 00000550 		.word	1342504960
+ 369              		.cfi_endproc
+ 370              	.LFE129:
+ 372              		.section	.text.DCMI_Cmd,"ax",%progbits
+ 373              		.align	1
+ 374              		.global	DCMI_Cmd
+ 375              		.syntax unified
+ 376              		.thumb
+ 377              		.thumb_func
+ 379              	DCMI_Cmd:
+ 380              	.LVL12:
+ 381              	.LFB130:
+ 277:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 278:./Libraries/src/stm32f4xx_dcmi.c ****   * @}
+ 279:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 280:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 281:./Libraries/src/stm32f4xx_dcmi.c **** /** @defgroup DCMI_Group2 Image capture functions
+ 282:./Libraries/src/stm32f4xx_dcmi.c ****  *  @brief   Image capture functions
+ 283:./Libraries/src/stm32f4xx_dcmi.c ****  *
+ 284:./Libraries/src/stm32f4xx_dcmi.c **** @verbatim   
+ 285:./Libraries/src/stm32f4xx_dcmi.c ****  ===============================================================================
+ 286:./Libraries/src/stm32f4xx_dcmi.c ****                     ##### Image capture functions #####
+ 287:./Libraries/src/stm32f4xx_dcmi.c ****  ===============================================================================  
+ 288:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 289:./Libraries/src/stm32f4xx_dcmi.c **** @endverbatim
+ 290:./Libraries/src/stm32f4xx_dcmi.c ****   * @{
+ 291:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 292:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 293:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 294:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Enables or disables the DCMI interface.
+ 295:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  NewState: new state of the DCMI interface. 
+ 296:./Libraries/src/stm32f4xx_dcmi.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 297:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 298:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 299:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_Cmd(FunctionalState NewState)
+ 300:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 382              		.loc 1 300 1 is_stmt 1 view -0
+ 383              		.cfi_startproc
+ 384              		@ args = 0, pretend = 0, frame = 0
+ 385              		@ frame_needed = 0, uses_anonymous_args = 0
+ 386              		@ link register save eliminated.
+ 301:./Libraries/src/stm32f4xx_dcmi.c ****   /* Check the parameters */
+ 302:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ARM GAS  /tmp/ccdCpHpZ.s 			page 13
+
+
+ 387              		.loc 1 302 3 view .LVU110
+ 303:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 304:./Libraries/src/stm32f4xx_dcmi.c ****   if (NewState != DISABLE)
+ 388              		.loc 1 304 3 view .LVU111
+ 389              		.loc 1 304 6 is_stmt 0 view .LVU112
+ 390 0000 28B1     		cbz	r0, .L26
+ 305:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 306:./Libraries/src/stm32f4xx_dcmi.c ****     /* Enable the DCMI by setting ENABLE bit */
+ 307:./Libraries/src/stm32f4xx_dcmi.c ****     DCMI->CR |= (uint32_t)DCMI_CR_ENABLE;
+ 391              		.loc 1 307 5 is_stmt 1 view .LVU113
+ 392              		.loc 1 307 9 is_stmt 0 view .LVU114
+ 393 0002 064A     		ldr	r2, .L28
+ 394 0004 1368     		ldr	r3, [r2]
+ 395              		.loc 1 307 14 view .LVU115
+ 396 0006 43F48043 		orr	r3, r3, #16384
+ 397 000a 1360     		str	r3, [r2]
+ 398 000c 7047     		bx	lr
+ 399              	.L26:
+ 308:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 309:./Libraries/src/stm32f4xx_dcmi.c ****   else
+ 310:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 311:./Libraries/src/stm32f4xx_dcmi.c ****     /* Disable the DCMI by clearing ENABLE bit */
+ 312:./Libraries/src/stm32f4xx_dcmi.c ****     DCMI->CR &= ~(uint32_t)DCMI_CR_ENABLE;
+ 400              		.loc 1 312 5 is_stmt 1 view .LVU116
+ 401              		.loc 1 312 9 is_stmt 0 view .LVU117
+ 402 000e 034A     		ldr	r2, .L28
+ 403 0010 1368     		ldr	r3, [r2]
+ 404              		.loc 1 312 14 view .LVU118
+ 405 0012 23F48043 		bic	r3, r3, #16384
+ 406 0016 1360     		str	r3, [r2]
+ 313:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 314:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 407              		.loc 1 314 1 view .LVU119
+ 408 0018 7047     		bx	lr
+ 409              	.L29:
+ 410 001a 00BF     		.align	2
+ 411              	.L28:
+ 412 001c 00000550 		.word	1342504960
+ 413              		.cfi_endproc
+ 414              	.LFE130:
+ 416              		.section	.text.DCMI_CaptureCmd,"ax",%progbits
+ 417              		.align	1
+ 418              		.global	DCMI_CaptureCmd
+ 419              		.syntax unified
+ 420              		.thumb
+ 421              		.thumb_func
+ 423              	DCMI_CaptureCmd:
+ 424              	.LVL13:
+ 425              	.LFB131:
+ 315:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 316:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 317:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Enables or disables the DCMI Capture.
+ 318:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  NewState: new state of the DCMI capture. 
+ 319:./Libraries/src/stm32f4xx_dcmi.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 320:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 321:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 322:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_CaptureCmd(FunctionalState NewState)
+ARM GAS  /tmp/ccdCpHpZ.s 			page 14
+
+
+ 323:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 426              		.loc 1 323 1 is_stmt 1 view -0
+ 427              		.cfi_startproc
+ 428              		@ args = 0, pretend = 0, frame = 0
+ 429              		@ frame_needed = 0, uses_anonymous_args = 0
+ 430              		@ link register save eliminated.
+ 324:./Libraries/src/stm32f4xx_dcmi.c ****   /* Check the parameters */
+ 325:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 431              		.loc 1 325 3 view .LVU121
+ 326:./Libraries/src/stm32f4xx_dcmi.c ****     
+ 327:./Libraries/src/stm32f4xx_dcmi.c ****   if (NewState != DISABLE)
+ 432              		.loc 1 327 3 view .LVU122
+ 433              		.loc 1 327 6 is_stmt 0 view .LVU123
+ 434 0000 28B1     		cbz	r0, .L31
+ 328:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 329:./Libraries/src/stm32f4xx_dcmi.c ****     /* Enable the DCMI Capture */
+ 330:./Libraries/src/stm32f4xx_dcmi.c ****     DCMI->CR |= (uint32_t)DCMI_CR_CAPTURE;
+ 435              		.loc 1 330 5 is_stmt 1 view .LVU124
+ 436              		.loc 1 330 9 is_stmt 0 view .LVU125
+ 437 0002 064A     		ldr	r2, .L33
+ 438 0004 1368     		ldr	r3, [r2]
+ 439              		.loc 1 330 14 view .LVU126
+ 440 0006 43F00103 		orr	r3, r3, #1
+ 441 000a 1360     		str	r3, [r2]
+ 442 000c 7047     		bx	lr
+ 443              	.L31:
+ 331:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 332:./Libraries/src/stm32f4xx_dcmi.c ****   else
+ 333:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 334:./Libraries/src/stm32f4xx_dcmi.c ****     /* Disable the DCMI Capture */
+ 335:./Libraries/src/stm32f4xx_dcmi.c ****     DCMI->CR &= ~(uint32_t)DCMI_CR_CAPTURE;
+ 444              		.loc 1 335 5 is_stmt 1 view .LVU127
+ 445              		.loc 1 335 9 is_stmt 0 view .LVU128
+ 446 000e 034A     		ldr	r2, .L33
+ 447 0010 1368     		ldr	r3, [r2]
+ 448              		.loc 1 335 14 view .LVU129
+ 449 0012 23F00103 		bic	r3, r3, #1
+ 450 0016 1360     		str	r3, [r2]
+ 336:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 337:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 451              		.loc 1 337 1 view .LVU130
+ 452 0018 7047     		bx	lr
+ 453              	.L34:
+ 454 001a 00BF     		.align	2
+ 455              	.L33:
+ 456 001c 00000550 		.word	1342504960
+ 457              		.cfi_endproc
+ 458              	.LFE131:
+ 460              		.section	.text.DCMI_ReadData,"ax",%progbits
+ 461              		.align	1
+ 462              		.global	DCMI_ReadData
+ 463              		.syntax unified
+ 464              		.thumb
+ 465              		.thumb_func
+ 467              	DCMI_ReadData:
+ 468              	.LFB132:
+ 338:./Libraries/src/stm32f4xx_dcmi.c **** 
+ARM GAS  /tmp/ccdCpHpZ.s 			page 15
+
+
+ 339:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 340:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Reads the data stored in the DR register.
+ 341:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  None 
+ 342:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval Data register value
+ 343:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 344:./Libraries/src/stm32f4xx_dcmi.c **** uint32_t DCMI_ReadData(void)
+ 345:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 469              		.loc 1 345 1 is_stmt 1 view -0
+ 470              		.cfi_startproc
+ 471              		@ args = 0, pretend = 0, frame = 0
+ 472              		@ frame_needed = 0, uses_anonymous_args = 0
+ 473              		@ link register save eliminated.
+ 346:./Libraries/src/stm32f4xx_dcmi.c ****   return DCMI->DR;
+ 474              		.loc 1 346 3 view .LVU132
+ 475              		.loc 1 346 14 is_stmt 0 view .LVU133
+ 476 0000 014B     		ldr	r3, .L36
+ 477 0002 986A     		ldr	r0, [r3, #40]
+ 347:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 478              		.loc 1 347 1 view .LVU134
+ 479 0004 7047     		bx	lr
+ 480              	.L37:
+ 481 0006 00BF     		.align	2
+ 482              	.L36:
+ 483 0008 00000550 		.word	1342504960
+ 484              		.cfi_endproc
+ 485              	.LFE132:
+ 487              		.section	.text.DCMI_ITConfig,"ax",%progbits
+ 488              		.align	1
+ 489              		.global	DCMI_ITConfig
+ 490              		.syntax unified
+ 491              		.thumb
+ 492              		.thumb_func
+ 494              	DCMI_ITConfig:
+ 495              	.LVL14:
+ 496              	.LFB133:
+ 348:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 349:./Libraries/src/stm32f4xx_dcmi.c ****   * @}
+ 350:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 351:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 352:./Libraries/src/stm32f4xx_dcmi.c **** /** @defgroup DCMI_Group3 Interrupts and flags management functions
+ 353:./Libraries/src/stm32f4xx_dcmi.c ****  *  @brief   Interrupts and flags management functions
+ 354:./Libraries/src/stm32f4xx_dcmi.c ****  *
+ 355:./Libraries/src/stm32f4xx_dcmi.c **** @verbatim   
+ 356:./Libraries/src/stm32f4xx_dcmi.c ****  ===============================================================================
+ 357:./Libraries/src/stm32f4xx_dcmi.c ****              ##### Interrupts and flags management functions #####
+ 358:./Libraries/src/stm32f4xx_dcmi.c ****  ===============================================================================  
+ 359:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 360:./Libraries/src/stm32f4xx_dcmi.c **** @endverbatim
+ 361:./Libraries/src/stm32f4xx_dcmi.c ****   * @{
+ 362:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 363:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 364:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 365:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Enables or disables the DCMI interface interrupts.
+ 366:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  DCMI_IT: specifies the DCMI interrupt sources to be enabled or disabled. 
+ 367:./Libraries/src/stm32f4xx_dcmi.c ****   *          This parameter can be any combination of the following values:
+ 368:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_FRAME: Frame capture complete interrupt mask
+ 369:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_OVF: Overflow interrupt mask
+ARM GAS  /tmp/ccdCpHpZ.s 			page 16
+
+
+ 370:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_ERR: Synchronization error interrupt mask
+ 371:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_VSYNC: VSYNC interrupt mask
+ 372:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_LINE: Line interrupt mask
+ 373:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  NewState: new state of the specified DCMI interrupts.
+ 374:./Libraries/src/stm32f4xx_dcmi.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 375:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 376:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 377:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_ITConfig(uint16_t DCMI_IT, FunctionalState NewState)
+ 378:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 497              		.loc 1 378 1 is_stmt 1 view -0
+ 498              		.cfi_startproc
+ 499              		@ args = 0, pretend = 0, frame = 0
+ 500              		@ frame_needed = 0, uses_anonymous_args = 0
+ 501              		@ link register save eliminated.
+ 379:./Libraries/src/stm32f4xx_dcmi.c ****   /* Check the parameters */
+ 380:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_DCMI_CONFIG_IT(DCMI_IT));
+ 502              		.loc 1 380 3 view .LVU136
+ 381:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 503              		.loc 1 381 3 view .LVU137
+ 382:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 383:./Libraries/src/stm32f4xx_dcmi.c ****   if (NewState != DISABLE)
+ 504              		.loc 1 383 3 view .LVU138
+ 505              		.loc 1 383 6 is_stmt 0 view .LVU139
+ 506 0000 21B1     		cbz	r1, .L39
+ 384:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 385:./Libraries/src/stm32f4xx_dcmi.c ****     /* Enable the Interrupt sources */
+ 386:./Libraries/src/stm32f4xx_dcmi.c ****     DCMI->IER |= DCMI_IT;
+ 507              		.loc 1 386 5 is_stmt 1 view .LVU140
+ 508              		.loc 1 386 9 is_stmt 0 view .LVU141
+ 509 0002 064B     		ldr	r3, .L41
+ 510 0004 DA68     		ldr	r2, [r3, #12]
+ 511              		.loc 1 386 15 view .LVU142
+ 512 0006 1043     		orrs	r0, r0, r2
+ 513              	.LVL15:
+ 514              		.loc 1 386 15 view .LVU143
+ 515 0008 D860     		str	r0, [r3, #12]
+ 516 000a 7047     		bx	lr
+ 517              	.LVL16:
+ 518              	.L39:
+ 387:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 388:./Libraries/src/stm32f4xx_dcmi.c ****   else
+ 389:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 390:./Libraries/src/stm32f4xx_dcmi.c ****     /* Disable the Interrupt sources */
+ 391:./Libraries/src/stm32f4xx_dcmi.c ****     DCMI->IER &= (uint16_t)(~DCMI_IT);
+ 519              		.loc 1 391 5 is_stmt 1 view .LVU144
+ 520              		.loc 1 391 9 is_stmt 0 view .LVU145
+ 521 000c 034A     		ldr	r2, .L41
+ 522 000e D368     		ldr	r3, [r2, #12]
+ 523              		.loc 1 391 18 view .LVU146
+ 524 0010 C043     		mvns	r0, r0
+ 525              	.LVL17:
+ 526              		.loc 1 391 18 view .LVU147
+ 527 0012 80B2     		uxth	r0, r0
+ 528              		.loc 1 391 15 view .LVU148
+ 529 0014 0340     		ands	r3, r3, r0
+ 530 0016 D360     		str	r3, [r2, #12]
+ 392:./Libraries/src/stm32f4xx_dcmi.c ****   }  
+ARM GAS  /tmp/ccdCpHpZ.s 			page 17
+
+
+ 393:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 531              		.loc 1 393 1 view .LVU149
+ 532 0018 7047     		bx	lr
+ 533              	.L42:
+ 534 001a 00BF     		.align	2
+ 535              	.L41:
+ 536 001c 00000550 		.word	1342504960
+ 537              		.cfi_endproc
+ 538              	.LFE133:
+ 540              		.section	.text.DCMI_GetFlagStatus,"ax",%progbits
+ 541              		.align	1
+ 542              		.global	DCMI_GetFlagStatus
+ 543              		.syntax unified
+ 544              		.thumb
+ 545              		.thumb_func
+ 547              	DCMI_GetFlagStatus:
+ 548              	.LVL18:
+ 549              	.LFB134:
+ 394:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 395:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 396:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Checks whether the  DCMI interface flag is set or not.
+ 397:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  DCMI_FLAG: specifies the flag to check.
+ 398:./Libraries/src/stm32f4xx_dcmi.c ****   *          This parameter can be one of the following values:
+ 399:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_FRAMERI: Frame capture complete Raw flag mask
+ 400:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_OVFRI: Overflow Raw flag mask
+ 401:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_ERRRI: Synchronization error Raw flag mask
+ 402:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_VSYNCRI: VSYNC Raw flag mask
+ 403:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_LINERI: Line Raw flag mask
+ 404:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_FRAMEMI: Frame capture complete Masked flag mask
+ 405:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_OVFMI: Overflow Masked flag mask
+ 406:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_ERRMI: Synchronization error Masked flag mask
+ 407:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_VSYNCMI: VSYNC Masked flag mask
+ 408:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_LINEMI: Line Masked flag mask
+ 409:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_HSYNC: HSYNC flag mask
+ 410:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_VSYNC: VSYNC flag mask
+ 411:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_FNE: Fifo not empty flag mask
+ 412:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval The new state of DCMI_FLAG (SET or RESET).
+ 413:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 414:./Libraries/src/stm32f4xx_dcmi.c **** FlagStatus DCMI_GetFlagStatus(uint16_t DCMI_FLAG)
+ 415:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 550              		.loc 1 415 1 is_stmt 1 view -0
+ 551              		.cfi_startproc
+ 552              		@ args = 0, pretend = 0, frame = 0
+ 553              		@ frame_needed = 0, uses_anonymous_args = 0
+ 554              		@ link register save eliminated.
+ 416:./Libraries/src/stm32f4xx_dcmi.c ****   FlagStatus bitstatus = RESET;
+ 555              		.loc 1 416 3 view .LVU151
+ 417:./Libraries/src/stm32f4xx_dcmi.c ****   uint32_t dcmireg, tempreg = 0;
+ 556              		.loc 1 417 3 view .LVU152
+ 418:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 419:./Libraries/src/stm32f4xx_dcmi.c ****   /* Check the parameters */
+ 420:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_DCMI_GET_FLAG(DCMI_FLAG));
+ 557              		.loc 1 420 3 view .LVU153
+ 421:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 422:./Libraries/src/stm32f4xx_dcmi.c ****   /* Get the DCMI register index */
+ 423:./Libraries/src/stm32f4xx_dcmi.c ****   dcmireg = (((uint16_t)DCMI_FLAG) >> 12);
+ 558              		.loc 1 423 3 view .LVU154
+ARM GAS  /tmp/ccdCpHpZ.s 			page 18
+
+
+ 424:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 425:./Libraries/src/stm32f4xx_dcmi.c ****   if (dcmireg == 0x00) /* The FLAG is in RISR register */
+ 559              		.loc 1 425 3 view .LVU155
+ 560              		.loc 1 425 6 is_stmt 0 view .LVU156
+ 561 0000 030B     		lsrs	r3, r0, #12
+ 562              	.LVL19:
+ 563              		.loc 1 425 6 view .LVU157
+ 564 0002 05D1     		bne	.L44
+ 426:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 427:./Libraries/src/stm32f4xx_dcmi.c ****     tempreg= DCMI->RISR;
+ 565              		.loc 1 427 5 is_stmt 1 view .LVU158
+ 566              		.loc 1 427 12 is_stmt 0 view .LVU159
+ 567 0004 074B     		ldr	r3, .L50
+ 568              	.LVL20:
+ 569              		.loc 1 427 12 view .LVU160
+ 570 0006 9B68     		ldr	r3, [r3, #8]
+ 571              	.LVL21:
+ 572              	.L45:
+ 428:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 429:./Libraries/src/stm32f4xx_dcmi.c ****   else if (dcmireg == 0x02) /* The FLAG is in SR register */
+ 430:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 431:./Libraries/src/stm32f4xx_dcmi.c ****     tempreg = DCMI->SR;
+ 432:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 433:./Libraries/src/stm32f4xx_dcmi.c ****   else /* The FLAG is in MISR register */
+ 434:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 435:./Libraries/src/stm32f4xx_dcmi.c ****     tempreg = DCMI->MISR;
+ 436:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 437:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 438:./Libraries/src/stm32f4xx_dcmi.c ****   if ((tempreg & DCMI_FLAG) != (uint16_t)RESET )
+ 573              		.loc 1 438 3 is_stmt 1 view .LVU161
+ 574              		.loc 1 438 6 is_stmt 0 view .LVU162
+ 575 0008 1842     		tst	r0, r3
+ 576 000a 09D0     		beq	.L48
+ 439:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 440:./Libraries/src/stm32f4xx_dcmi.c ****     bitstatus = SET;
+ 577              		.loc 1 440 15 view .LVU163
+ 578 000c 0120     		movs	r0, #1
+ 579              	.LVL22:
+ 580              		.loc 1 440 15 view .LVU164
+ 581 000e 7047     		bx	lr
+ 582              	.LVL23:
+ 583              	.L44:
+ 429:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 584              		.loc 1 429 8 is_stmt 1 view .LVU165
+ 429:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 585              		.loc 1 429 11 is_stmt 0 view .LVU166
+ 586 0010 022B     		cmp	r3, #2
+ 587 0012 02D0     		beq	.L49
+ 435:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 588              		.loc 1 435 5 is_stmt 1 view .LVU167
+ 435:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 589              		.loc 1 435 13 is_stmt 0 view .LVU168
+ 590 0014 034B     		ldr	r3, .L50
+ 591              	.LVL24:
+ 435:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 592              		.loc 1 435 13 view .LVU169
+ 593 0016 1B69     		ldr	r3, [r3, #16]
+ARM GAS  /tmp/ccdCpHpZ.s 			page 19
+
+
+ 594              	.LVL25:
+ 435:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 595              		.loc 1 435 13 view .LVU170
+ 596 0018 F6E7     		b	.L45
+ 597              	.LVL26:
+ 598              	.L49:
+ 431:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 599              		.loc 1 431 5 is_stmt 1 view .LVU171
+ 431:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 600              		.loc 1 431 13 is_stmt 0 view .LVU172
+ 601 001a 024B     		ldr	r3, .L50
+ 602              	.LVL27:
+ 431:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 603              		.loc 1 431 13 view .LVU173
+ 604 001c 5B68     		ldr	r3, [r3, #4]
+ 605              	.LVL28:
+ 431:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 606              		.loc 1 431 13 view .LVU174
+ 607 001e F3E7     		b	.L45
+ 608              	.L48:
+ 441:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 442:./Libraries/src/stm32f4xx_dcmi.c ****   else
+ 443:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 444:./Libraries/src/stm32f4xx_dcmi.c ****     bitstatus = RESET;
+ 609              		.loc 1 444 15 view .LVU175
+ 610 0020 0020     		movs	r0, #0
+ 611              	.LVL29:
+ 445:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 446:./Libraries/src/stm32f4xx_dcmi.c ****   /* Return the DCMI_FLAG status */
+ 447:./Libraries/src/stm32f4xx_dcmi.c ****   return  bitstatus;
+ 612              		.loc 1 447 3 is_stmt 1 view .LVU176
+ 448:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 613              		.loc 1 448 1 is_stmt 0 view .LVU177
+ 614 0022 7047     		bx	lr
+ 615              	.L51:
+ 616              		.align	2
+ 617              	.L50:
+ 618 0024 00000550 		.word	1342504960
+ 619              		.cfi_endproc
+ 620              	.LFE134:
+ 622              		.section	.text.DCMI_ClearFlag,"ax",%progbits
+ 623              		.align	1
+ 624              		.global	DCMI_ClearFlag
+ 625              		.syntax unified
+ 626              		.thumb
+ 627              		.thumb_func
+ 629              	DCMI_ClearFlag:
+ 630              	.LVL30:
+ 631              	.LFB135:
+ 449:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 450:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 451:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Clears the DCMI's pending flags.
+ 452:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  DCMI_FLAG: specifies the flag to clear.
+ 453:./Libraries/src/stm32f4xx_dcmi.c ****   *          This parameter can be any combination of the following values:
+ 454:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_FRAMERI: Frame capture complete Raw flag mask
+ 455:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_OVFRI: Overflow Raw flag mask
+ 456:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_ERRRI: Synchronization error Raw flag mask
+ARM GAS  /tmp/ccdCpHpZ.s 			page 20
+
+
+ 457:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_VSYNCRI: VSYNC Raw flag mask
+ 458:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_FLAG_LINERI: Line Raw flag mask
+ 459:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 460:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 461:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_ClearFlag(uint16_t DCMI_FLAG)
+ 462:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 632              		.loc 1 462 1 is_stmt 1 view -0
+ 633              		.cfi_startproc
+ 634              		@ args = 0, pretend = 0, frame = 0
+ 635              		@ frame_needed = 0, uses_anonymous_args = 0
+ 636              		@ link register save eliminated.
+ 463:./Libraries/src/stm32f4xx_dcmi.c ****   /* Check the parameters */
+ 464:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_DCMI_CLEAR_FLAG(DCMI_FLAG));
+ 637              		.loc 1 464 3 view .LVU179
+ 465:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 466:./Libraries/src/stm32f4xx_dcmi.c ****   /* Clear the flag by writing in the ICR register 1 in the corresponding 
+ 467:./Libraries/src/stm32f4xx_dcmi.c ****   Flag position*/
+ 468:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 469:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->ICR = DCMI_FLAG;
+ 638              		.loc 1 469 3 view .LVU180
+ 639              		.loc 1 469 13 is_stmt 0 view .LVU181
+ 640 0000 014B     		ldr	r3, .L53
+ 641 0002 5861     		str	r0, [r3, #20]
+ 470:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 642              		.loc 1 470 1 view .LVU182
+ 643 0004 7047     		bx	lr
+ 644              	.L54:
+ 645 0006 00BF     		.align	2
+ 646              	.L53:
+ 647 0008 00000550 		.word	1342504960
+ 648              		.cfi_endproc
+ 649              	.LFE135:
+ 651              		.section	.text.DCMI_GetITStatus,"ax",%progbits
+ 652              		.align	1
+ 653              		.global	DCMI_GetITStatus
+ 654              		.syntax unified
+ 655              		.thumb
+ 656              		.thumb_func
+ 658              	DCMI_GetITStatus:
+ 659              	.LVL31:
+ 660              	.LFB136:
+ 471:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 472:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 473:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Checks whether the DCMI interrupt has occurred or not.
+ 474:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  DCMI_IT: specifies the DCMI interrupt source to check.
+ 475:./Libraries/src/stm32f4xx_dcmi.c ****   *          This parameter can be one of the following values:
+ 476:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_FRAME: Frame capture complete interrupt mask
+ 477:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_OVF: Overflow interrupt mask
+ 478:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_ERR: Synchronization error interrupt mask
+ 479:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_VSYNC: VSYNC interrupt mask
+ 480:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_LINE: Line interrupt mask
+ 481:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval The new state of DCMI_IT (SET or RESET).
+ 482:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 483:./Libraries/src/stm32f4xx_dcmi.c **** ITStatus DCMI_GetITStatus(uint16_t DCMI_IT)
+ 484:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 661              		.loc 1 484 1 is_stmt 1 view -0
+ 662              		.cfi_startproc
+ARM GAS  /tmp/ccdCpHpZ.s 			page 21
+
+
+ 663              		@ args = 0, pretend = 0, frame = 0
+ 664              		@ frame_needed = 0, uses_anonymous_args = 0
+ 665              		@ link register save eliminated.
+ 485:./Libraries/src/stm32f4xx_dcmi.c ****   ITStatus bitstatus = RESET;
+ 666              		.loc 1 485 3 view .LVU184
+ 486:./Libraries/src/stm32f4xx_dcmi.c ****   uint32_t itstatus = 0;
+ 667              		.loc 1 486 3 view .LVU185
+ 487:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 488:./Libraries/src/stm32f4xx_dcmi.c ****   /* Check the parameters */
+ 489:./Libraries/src/stm32f4xx_dcmi.c ****   assert_param(IS_DCMI_GET_IT(DCMI_IT));
+ 668              		.loc 1 489 3 view .LVU186
+ 490:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 491:./Libraries/src/stm32f4xx_dcmi.c ****   itstatus = DCMI->MISR & DCMI_IT; /* Only masked interrupts are checked */
+ 669              		.loc 1 491 3 view .LVU187
+ 670              		.loc 1 491 18 is_stmt 0 view .LVU188
+ 671 0000 034B     		ldr	r3, .L58
+ 672 0002 1B69     		ldr	r3, [r3, #16]
+ 673              	.LVL32:
+ 492:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 493:./Libraries/src/stm32f4xx_dcmi.c ****   if ((itstatus != (uint16_t)RESET))
+ 674              		.loc 1 493 3 is_stmt 1 view .LVU189
+ 675              		.loc 1 493 6 is_stmt 0 view .LVU190
+ 676 0004 0342     		tst	r3, r0
+ 677 0006 01D0     		beq	.L57
+ 494:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 495:./Libraries/src/stm32f4xx_dcmi.c ****     bitstatus = SET;
+ 678              		.loc 1 495 15 view .LVU191
+ 679 0008 0120     		movs	r0, #1
+ 680              	.LVL33:
+ 681              		.loc 1 495 15 view .LVU192
+ 682 000a 7047     		bx	lr
+ 683              	.LVL34:
+ 684              	.L57:
+ 496:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 497:./Libraries/src/stm32f4xx_dcmi.c ****   else
+ 498:./Libraries/src/stm32f4xx_dcmi.c ****   {
+ 499:./Libraries/src/stm32f4xx_dcmi.c ****     bitstatus = RESET;
+ 685              		.loc 1 499 15 view .LVU193
+ 686 000c 0020     		movs	r0, #0
+ 687              	.LVL35:
+ 500:./Libraries/src/stm32f4xx_dcmi.c ****   }
+ 501:./Libraries/src/stm32f4xx_dcmi.c ****   return bitstatus;
+ 688              		.loc 1 501 3 is_stmt 1 view .LVU194
+ 502:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 689              		.loc 1 502 1 is_stmt 0 view .LVU195
+ 690 000e 7047     		bx	lr
+ 691              	.L59:
+ 692              		.align	2
+ 693              	.L58:
+ 694 0010 00000550 		.word	1342504960
+ 695              		.cfi_endproc
+ 696              	.LFE136:
+ 698              		.section	.text.DCMI_ClearITPendingBit,"ax",%progbits
+ 699              		.align	1
+ 700              		.global	DCMI_ClearITPendingBit
+ 701              		.syntax unified
+ 702              		.thumb
+ARM GAS  /tmp/ccdCpHpZ.s 			page 22
+
+
+ 703              		.thumb_func
+ 705              	DCMI_ClearITPendingBit:
+ 706              	.LVL36:
+ 707              	.LFB137:
+ 503:./Libraries/src/stm32f4xx_dcmi.c **** 
+ 504:./Libraries/src/stm32f4xx_dcmi.c **** /**
+ 505:./Libraries/src/stm32f4xx_dcmi.c ****   * @brief  Clears the DCMI's interrupt pending bits.
+ 506:./Libraries/src/stm32f4xx_dcmi.c ****   * @param  DCMI_IT: specifies the DCMI interrupt pending bit to clear.
+ 507:./Libraries/src/stm32f4xx_dcmi.c ****   *          This parameter can be any combination of the following values:
+ 508:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_FRAME: Frame capture complete interrupt mask
+ 509:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_OVF: Overflow interrupt mask
+ 510:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_ERR: Synchronization error interrupt mask
+ 511:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_VSYNC: VSYNC interrupt mask
+ 512:./Libraries/src/stm32f4xx_dcmi.c ****   *            @arg DCMI_IT_LINE: Line interrupt mask
+ 513:./Libraries/src/stm32f4xx_dcmi.c ****   * @retval None
+ 514:./Libraries/src/stm32f4xx_dcmi.c ****   */
+ 515:./Libraries/src/stm32f4xx_dcmi.c **** void DCMI_ClearITPendingBit(uint16_t DCMI_IT)
+ 516:./Libraries/src/stm32f4xx_dcmi.c **** {
+ 708              		.loc 1 516 1 is_stmt 1 view -0
+ 709              		.cfi_startproc
+ 710              		@ args = 0, pretend = 0, frame = 0
+ 711              		@ frame_needed = 0, uses_anonymous_args = 0
+ 712              		@ link register save eliminated.
+ 517:./Libraries/src/stm32f4xx_dcmi.c ****   /* Clear the interrupt pending Bit by writing in the ICR register 1 in the 
+ 518:./Libraries/src/stm32f4xx_dcmi.c ****   corresponding pending Bit position*/
+ 519:./Libraries/src/stm32f4xx_dcmi.c ****   
+ 520:./Libraries/src/stm32f4xx_dcmi.c ****   DCMI->ICR = DCMI_IT;
+ 713              		.loc 1 520 3 view .LVU197
+ 714              		.loc 1 520 13 is_stmt 0 view .LVU198
+ 715 0000 014B     		ldr	r3, .L61
+ 716 0002 5861     		str	r0, [r3, #20]
+ 521:./Libraries/src/stm32f4xx_dcmi.c **** }
+ 717              		.loc 1 521 1 view .LVU199
+ 718 0004 7047     		bx	lr
+ 719              	.L62:
+ 720 0006 00BF     		.align	2
+ 721              	.L61:
+ 722 0008 00000550 		.word	1342504960
+ 723              		.cfi_endproc
+ 724              	.LFE137:
+ 726              		.text
+ 727              	.Letext0:
+ 728              		.file 2 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 729              		.file 3 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 730              		.file 4 "./system/stm32f4xx.h"
+ 731              		.file 5 "./Libraries/inc/stm32f4xx_dcmi.h"
+ARM GAS  /tmp/ccdCpHpZ.s 			page 23
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f4xx_dcmi.c
+     /tmp/ccdCpHpZ.s:21     .text.DCMI_DeInit:00000000 $t
+     /tmp/ccdCpHpZ.s:27     .text.DCMI_DeInit:00000000 DCMI_DeInit
+     /tmp/ccdCpHpZ.s:63     .text.DCMI_DeInit:00000018 $d
+     /tmp/ccdCpHpZ.s:68     .text.DCMI_Init:00000000 $t
+     /tmp/ccdCpHpZ.s:74     .text.DCMI_Init:00000000 DCMI_Init
+     /tmp/ccdCpHpZ.s:153    .text.DCMI_Init:00000044 $d
+     /tmp/ccdCpHpZ.s:158    .text.DCMI_StructInit:00000000 $t
+     /tmp/ccdCpHpZ.s:164    .text.DCMI_StructInit:00000000 DCMI_StructInit
+     /tmp/ccdCpHpZ.s:200    .text.DCMI_CROPConfig:00000000 $t
+     /tmp/ccdCpHpZ.s:206    .text.DCMI_CROPConfig:00000000 DCMI_CROPConfig
+     /tmp/ccdCpHpZ.s:238    .text.DCMI_CROPConfig:00000018 $d
+     /tmp/ccdCpHpZ.s:243    .text.DCMI_CROPCmd:00000000 $t
+     /tmp/ccdCpHpZ.s:249    .text.DCMI_CROPCmd:00000000 DCMI_CROPCmd
+     /tmp/ccdCpHpZ.s:282    .text.DCMI_CROPCmd:0000001c $d
+     /tmp/ccdCpHpZ.s:287    .text.DCMI_SetEmbeddedSynchroCodes:00000000 $t
+     /tmp/ccdCpHpZ.s:293    .text.DCMI_SetEmbeddedSynchroCodes:00000000 DCMI_SetEmbeddedSynchroCodes
+     /tmp/ccdCpHpZ.s:324    .text.DCMI_SetEmbeddedSynchroCodes:0000001c $d
+     /tmp/ccdCpHpZ.s:329    .text.DCMI_JPEGCmd:00000000 $t
+     /tmp/ccdCpHpZ.s:335    .text.DCMI_JPEGCmd:00000000 DCMI_JPEGCmd
+     /tmp/ccdCpHpZ.s:368    .text.DCMI_JPEGCmd:0000001c $d
+     /tmp/ccdCpHpZ.s:373    .text.DCMI_Cmd:00000000 $t
+     /tmp/ccdCpHpZ.s:379    .text.DCMI_Cmd:00000000 DCMI_Cmd
+     /tmp/ccdCpHpZ.s:412    .text.DCMI_Cmd:0000001c $d
+     /tmp/ccdCpHpZ.s:417    .text.DCMI_CaptureCmd:00000000 $t
+     /tmp/ccdCpHpZ.s:423    .text.DCMI_CaptureCmd:00000000 DCMI_CaptureCmd
+     /tmp/ccdCpHpZ.s:456    .text.DCMI_CaptureCmd:0000001c $d
+     /tmp/ccdCpHpZ.s:461    .text.DCMI_ReadData:00000000 $t
+     /tmp/ccdCpHpZ.s:467    .text.DCMI_ReadData:00000000 DCMI_ReadData
+     /tmp/ccdCpHpZ.s:483    .text.DCMI_ReadData:00000008 $d
+     /tmp/ccdCpHpZ.s:488    .text.DCMI_ITConfig:00000000 $t
+     /tmp/ccdCpHpZ.s:494    .text.DCMI_ITConfig:00000000 DCMI_ITConfig
+     /tmp/ccdCpHpZ.s:536    .text.DCMI_ITConfig:0000001c $d
+     /tmp/ccdCpHpZ.s:541    .text.DCMI_GetFlagStatus:00000000 $t
+     /tmp/ccdCpHpZ.s:547    .text.DCMI_GetFlagStatus:00000000 DCMI_GetFlagStatus
+     /tmp/ccdCpHpZ.s:618    .text.DCMI_GetFlagStatus:00000024 $d
+     /tmp/ccdCpHpZ.s:623    .text.DCMI_ClearFlag:00000000 $t
+     /tmp/ccdCpHpZ.s:629    .text.DCMI_ClearFlag:00000000 DCMI_ClearFlag
+     /tmp/ccdCpHpZ.s:647    .text.DCMI_ClearFlag:00000008 $d
+     /tmp/ccdCpHpZ.s:652    .text.DCMI_GetITStatus:00000000 $t
+     /tmp/ccdCpHpZ.s:658    .text.DCMI_GetITStatus:00000000 DCMI_GetITStatus
+     /tmp/ccdCpHpZ.s:694    .text.DCMI_GetITStatus:00000010 $d
+     /tmp/ccdCpHpZ.s:699    .text.DCMI_ClearITPendingBit:00000000 $t
+     /tmp/ccdCpHpZ.s:705    .text.DCMI_ClearITPendingBit:00000000 DCMI_ClearITPendingBit
+     /tmp/ccdCpHpZ.s:722    .text.DCMI_ClearITPendingBit:00000008 $d
+
+NO UNDEFINED SYMBOLS

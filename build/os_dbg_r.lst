@@ -1,0 +1,894 @@
+ARM GAS  /tmp/ccHU5b7d.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"os_dbg_r.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./ucos/Core/os_dbg_r.c"
+  20              		.section	.text.OSDebugInit,"ax",%progbits
+  21              		.align	1
+  22              		.global	OSDebugInit
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	OSDebugInit:
+  28              	.LFB0:
+   1:./ucos/Core/os_dbg_r.c **** /*
+   2:./ucos/Core/os_dbg_r.c **** ***************************************************************************************************
+   3:./ucos/Core/os_dbg_r.c **** *                                              uC/OS-II
+   4:./ucos/Core/os_dbg_r.c **** *                                        The Real-Time Kernel
+   5:./ucos/Core/os_dbg_r.c **** *
+   6:./ucos/Core/os_dbg_r.c **** *                    Copyright 1992-2021 Silicon Laboratories Inc. www.silabs.com
+   7:./ucos/Core/os_dbg_r.c **** *
+   8:./ucos/Core/os_dbg_r.c **** *                                 SPDX-License-Identifier: APACHE-2.0
+   9:./ucos/Core/os_dbg_r.c **** *
+  10:./ucos/Core/os_dbg_r.c **** *               This software is subject to an open source license and is distributed by
+  11:./ucos/Core/os_dbg_r.c **** *                Silicon Laboratories Inc. pursuant to the terms of the Apache License,
+  12:./ucos/Core/os_dbg_r.c **** *                    Version 2.0 available at www.apache.org/licenses/LICENSE-2.0.
+  13:./ucos/Core/os_dbg_r.c **** *
+  14:./ucos/Core/os_dbg_r.c **** ***************************************************************************************************
+  15:./ucos/Core/os_dbg_r.c **** */
+  16:./ucos/Core/os_dbg_r.c **** 
+  17:./ucos/Core/os_dbg_r.c **** 
+  18:./ucos/Core/os_dbg_r.c **** /*
+  19:./ucos/Core/os_dbg_r.c **** ***************************************************************************************************
+  20:./ucos/Core/os_dbg_r.c **** *
+  21:./ucos/Core/os_dbg_r.c **** *                                          DEBUGGER CONSTANTS
+  22:./ucos/Core/os_dbg_r.c **** *
+  23:./ucos/Core/os_dbg_r.c **** * Filename : os_dbg_r.c
+  24:./ucos/Core/os_dbg_r.c **** * Version  : V2.93.01
+  25:./ucos/Core/os_dbg_r.c **** ***************************************************************************************************
+  26:./ucos/Core/os_dbg_r.c **** */
+  27:./ucos/Core/os_dbg_r.c **** 
+  28:./ucos/Core/os_dbg_r.c **** #define  MICRIUM_SOURCE
+  29:./ucos/Core/os_dbg_r.c **** 
+  30:./ucos/Core/os_dbg_r.c **** #include <ucos_ii.h>
+ARM GAS  /tmp/ccHU5b7d.s 			page 2
+
+
+  31:./ucos/Core/os_dbg_r.c **** 
+  32:./ucos/Core/os_dbg_r.c **** /*
+  33:./ucos/Core/os_dbg_r.c **** ***************************************************************************************************
+  34:./ucos/Core/os_dbg_r.c **** *                                             DEBUG DATA
+  35:./ucos/Core/os_dbg_r.c **** ***************************************************************************************************
+  36:./ucos/Core/os_dbg_r.c **** */
+  37:./ucos/Core/os_dbg_r.c **** 
+  38:./ucos/Core/os_dbg_r.c **** INT16U  const  OSDebugEn             = OS_DEBUG_EN;             /* Debug constants are defined belo
+  39:./ucos/Core/os_dbg_r.c **** 
+  40:./ucos/Core/os_dbg_r.c **** #if OS_DEBUG_EN > 0u
+  41:./ucos/Core/os_dbg_r.c **** 
+  42:./ucos/Core/os_dbg_r.c **** INT32U  const  OSEndiannessTest      = 0x12345678uL;            /* Variable to test CPU endianness 
+  43:./ucos/Core/os_dbg_r.c **** 
+  44:./ucos/Core/os_dbg_r.c **** INT16U  const  OSEventEn             = OS_EVENT_EN;
+  45:./ucos/Core/os_dbg_r.c **** INT16U  const  OSEventMax            = OS_MAX_EVENTS;           /* Number of event control blocks  
+  46:./ucos/Core/os_dbg_r.c **** INT16U  const  OSEventNameEn         = OS_EVENT_NAME_EN;
+  47:./ucos/Core/os_dbg_r.c **** #if (OS_EVENT_EN) && (OS_MAX_EVENTS > 0u)
+  48:./ucos/Core/os_dbg_r.c **** INT16U  const  OSEventSize           = sizeof(OS_EVENT);        /* Size in Bytes of OS_EVENT       
+  49:./ucos/Core/os_dbg_r.c **** INT16U  const  OSEventTblSize        = sizeof(OSEventTbl);      /* Size of OSEventTbl[] in bytes   
+  50:./ucos/Core/os_dbg_r.c **** #else
+  51:./ucos/Core/os_dbg_r.c **** INT16U  const  OSEventSize           = 0u;
+  52:./ucos/Core/os_dbg_r.c **** INT16U  const  OSEventTblSize        = 0u;
+  53:./ucos/Core/os_dbg_r.c **** #endif
+  54:./ucos/Core/os_dbg_r.c **** INT16U  const  OSEventMultiEn        = OS_EVENT_MULTI_EN;
+  55:./ucos/Core/os_dbg_r.c **** 
+  56:./ucos/Core/os_dbg_r.c **** 
+  57:./ucos/Core/os_dbg_r.c **** INT16U  const  OSFlagEn              = OS_FLAG_EN;
+  58:./ucos/Core/os_dbg_r.c **** #if (OS_FLAG_EN > 0u) && (OS_MAX_FLAGS > 0u)
+  59:./ucos/Core/os_dbg_r.c **** INT16U  const  OSFlagGrpSize         = sizeof(OS_FLAG_GRP);     /* Size in Bytes of OS_FLAG_GRP    
+  60:./ucos/Core/os_dbg_r.c **** INT16U  const  OSFlagNodeSize        = sizeof(OS_FLAG_NODE);    /* Size in Bytes of OS_FLAG_NODE   
+  61:./ucos/Core/os_dbg_r.c **** INT16U  const  OSFlagWidth           = sizeof(OS_FLAGS);        /* Width (in bytes) of OS_FLAGS    
+  62:./ucos/Core/os_dbg_r.c **** #else
+  63:./ucos/Core/os_dbg_r.c **** INT16U  const  OSFlagGrpSize         = 0u;
+  64:./ucos/Core/os_dbg_r.c **** INT16U  const  OSFlagNodeSize        = 0u;
+  65:./ucos/Core/os_dbg_r.c **** INT16U  const  OSFlagWidth           = 0u;
+  66:./ucos/Core/os_dbg_r.c **** #endif
+  67:./ucos/Core/os_dbg_r.c **** INT16U  const  OSFlagMax             = OS_MAX_FLAGS;
+  68:./ucos/Core/os_dbg_r.c **** INT16U  const  OSFlagNameEn          = OS_FLAG_NAME_EN;
+  69:./ucos/Core/os_dbg_r.c **** 
+  70:./ucos/Core/os_dbg_r.c **** INT16U  const  OSLowestPrio          = OS_LOWEST_PRIO;
+  71:./ucos/Core/os_dbg_r.c **** 
+  72:./ucos/Core/os_dbg_r.c **** INT16U  const  OSMboxEn              = OS_MBOX_EN;
+  73:./ucos/Core/os_dbg_r.c **** 
+  74:./ucos/Core/os_dbg_r.c **** INT16U  const  OSMemEn               = OS_MEM_EN;
+  75:./ucos/Core/os_dbg_r.c **** INT16U  const  OSMemMax              = OS_MAX_MEM_PART;         /* Number of memory partitions     
+  76:./ucos/Core/os_dbg_r.c **** INT16U  const  OSMemNameEn           = OS_MEM_NAME_EN;
+  77:./ucos/Core/os_dbg_r.c **** #if (OS_MEM_EN > 0u) && (OS_MAX_MEM_PART > 0u)
+  78:./ucos/Core/os_dbg_r.c **** INT16U  const  OSMemSize             = sizeof(OS_MEM);          /* Mem. Partition header sine (byte
+  79:./ucos/Core/os_dbg_r.c **** INT16U  const  OSMemTblSize          = sizeof(OSMemTbl);
+  80:./ucos/Core/os_dbg_r.c **** #else
+  81:./ucos/Core/os_dbg_r.c **** INT16U  const  OSMemSize             = 0u;
+  82:./ucos/Core/os_dbg_r.c **** INT16U  const  OSMemTblSize          = 0u;
+  83:./ucos/Core/os_dbg_r.c **** #endif
+  84:./ucos/Core/os_dbg_r.c **** INT16U  const  OSMutexEn             = OS_MUTEX_EN;
+  85:./ucos/Core/os_dbg_r.c **** 
+  86:./ucos/Core/os_dbg_r.c **** INT16U  const  OSPtrSize             = sizeof(void *);          /* Size in Bytes of a pointer      
+  87:./ucos/Core/os_dbg_r.c **** 
+ARM GAS  /tmp/ccHU5b7d.s 			page 3
+
+
+  88:./ucos/Core/os_dbg_r.c **** INT16U  const  OSQEn                 = OS_Q_EN;
+  89:./ucos/Core/os_dbg_r.c **** INT16U  const  OSQMax                = OS_MAX_QS;               /* Number of queues                
+  90:./ucos/Core/os_dbg_r.c **** #if (OS_Q_EN > 0u) && (OS_MAX_QS > 0u)
+  91:./ucos/Core/os_dbg_r.c **** INT16U  const  OSQSize               = sizeof(OS_Q);            /* Size in bytes of OS_Q structure 
+  92:./ucos/Core/os_dbg_r.c **** #else
+  93:./ucos/Core/os_dbg_r.c **** INT16U  const  OSQSize               = 0u;
+  94:./ucos/Core/os_dbg_r.c **** #endif
+  95:./ucos/Core/os_dbg_r.c **** 
+  96:./ucos/Core/os_dbg_r.c **** INT16U  const  OSRdyTblSize          = OS_RDY_TBL_SIZE;         /* Number of bytes in the ready tab
+  97:./ucos/Core/os_dbg_r.c **** 
+  98:./ucos/Core/os_dbg_r.c **** INT16U  const  OSSemEn               = OS_SEM_EN;
+  99:./ucos/Core/os_dbg_r.c **** 
+ 100:./ucos/Core/os_dbg_r.c **** INT16U  const  OSStkWidth            = sizeof(OS_STK);          /* Size in Bytes of a stack entry  
+ 101:./ucos/Core/os_dbg_r.c **** 
+ 102:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskCreateEn        = OS_TASK_CREATE_EN;
+ 103:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskCreateExtEn     = OS_TASK_CREATE_EXT_EN;
+ 104:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskDelEn           = OS_TASK_DEL_EN;
+ 105:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskIdleStkSize     = OS_TASK_IDLE_STK_SIZE;
+ 106:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskProfileEn       = OS_TASK_PROFILE_EN;
+ 107:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskMax             = OS_MAX_TASKS + OS_N_SYS_TASKS; /* Total max. number of tasks
+ 108:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskNameEn          = OS_TASK_NAME_EN;
+ 109:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskStatEn          = OS_TASK_STAT_EN;
+ 110:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskStatStkSize     = OS_TASK_STAT_STK_SIZE;
+ 111:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskStatStkChkEn    = OS_TASK_STAT_STK_CHK_EN;
+ 112:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskSwHookEn        = OS_TASK_SW_HOOK_EN;
+ 113:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTaskRegTblSize      = OS_TASK_REG_TBL_SIZE;
+ 114:./ucos/Core/os_dbg_r.c **** 
+ 115:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTCBPrioTblMax       = OS_LOWEST_PRIO + 1u;     /* Number of entries in OSTCBPrioTb
+ 116:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTCBSize             = sizeof(OS_TCB);          /* Size in Bytes of OS_TCB         
+ 117:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTicksPerSec         = OS_TICKS_PER_SEC;
+ 118:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTimeTickHookEn      = OS_TIME_TICK_HOOK_EN;
+ 119:./ucos/Core/os_dbg_r.c **** INT16U  const  OSVersionNbr          = OS_VERSION;
+ 120:./ucos/Core/os_dbg_r.c **** 
+ 121:./ucos/Core/os_dbg_r.c **** #if OS_TASK_CREATE_EXT_EN > 0u
+ 122:./ucos/Core/os_dbg_r.c **** #if defined(OS_TLS_TBL_SIZE) && (OS_TLS_TBL_SIZE > 0u)
+ 123:./ucos/Core/os_dbg_r.c **** INT16U  const  OS_TLS_TblSize        = OS_TLS_TBL_SIZE * sizeof(OS_TLS);
+ 124:./ucos/Core/os_dbg_r.c **** #else
+ 125:./ucos/Core/os_dbg_r.c **** INT16U  const  OS_TLS_TblSize        = 0u;
+ 126:./ucos/Core/os_dbg_r.c **** #endif
+ 127:./ucos/Core/os_dbg_r.c **** #endif
+ 128:./ucos/Core/os_dbg_r.c **** 
+ 129:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrEn               = OS_TMR_EN;
+ 130:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrCfgMax           = OS_TMR_CFG_MAX;
+ 131:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrCfgNameEn        = OS_TMR_CFG_NAME_EN;
+ 132:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrCfgWheelSize     = OS_TMR_CFG_WHEEL_SIZE;
+ 133:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrCfgTicksPerSec   = OS_TMR_CFG_TICKS_PER_SEC;
+ 134:./ucos/Core/os_dbg_r.c **** 
+ 135:./ucos/Core/os_dbg_r.c **** #if (OS_TMR_EN > 0u) && (OS_TMR_CFG_MAX > 0u)
+ 136:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrSize             = sizeof(OS_TMR);
+ 137:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrTblSize          = sizeof(OSTmrTbl);
+ 138:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrWheelSize        = sizeof(OS_TMR_WHEEL);
+ 139:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrWheelTblSize     = sizeof(OSTmrWheelTbl);
+ 140:./ucos/Core/os_dbg_r.c **** #else
+ 141:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrSize             = 0u;
+ 142:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrTblSize          = 0u;
+ 143:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrWheelSize        = 0u;
+ 144:./ucos/Core/os_dbg_r.c **** INT16U  const  OSTmrWheelTblSize     = 0u;
+ARM GAS  /tmp/ccHU5b7d.s 			page 4
+
+
+ 145:./ucos/Core/os_dbg_r.c **** #endif
+ 146:./ucos/Core/os_dbg_r.c **** 
+ 147:./ucos/Core/os_dbg_r.c **** #endif
+ 148:./ucos/Core/os_dbg_r.c **** 
+ 149:./ucos/Core/os_dbg_r.c **** 
+ 150:./ucos/Core/os_dbg_r.c **** /*
+ 151:./ucos/Core/os_dbg_r.c **** ***************************************************************************************************
+ 152:./ucos/Core/os_dbg_r.c **** *                                             DEBUG DATA
+ 153:./ucos/Core/os_dbg_r.c **** *                            TOTAL DATA SPACE (i.e. RAM) USED BY uC/OS-II
+ 154:./ucos/Core/os_dbg_r.c **** ***************************************************************************************************
+ 155:./ucos/Core/os_dbg_r.c **** */
+ 156:./ucos/Core/os_dbg_r.c **** #if OS_DEBUG_EN > 0u
+ 157:./ucos/Core/os_dbg_r.c **** 
+ 158:./ucos/Core/os_dbg_r.c **** INT16U  const  OSDataSize = sizeof(OSCtxSwCtr)
+ 159:./ucos/Core/os_dbg_r.c **** #if (OS_EVENT_EN) && (OS_MAX_EVENTS > 0u)
+ 160:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSEventFreeList)
+ 161:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSEventTbl)
+ 162:./ucos/Core/os_dbg_r.c **** #endif
+ 163:./ucos/Core/os_dbg_r.c **** 
+ 164:./ucos/Core/os_dbg_r.c **** #if (OS_FLAG_EN > 0u) && (OS_MAX_FLAGS > 0u)
+ 165:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSFlagTbl)
+ 166:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSFlagFreeList)
+ 167:./ucos/Core/os_dbg_r.c **** #endif
+ 168:./ucos/Core/os_dbg_r.c **** 
+ 169:./ucos/Core/os_dbg_r.c **** #if OS_TASK_STAT_EN > 0u
+ 170:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSCPUUsage)
+ 171:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSIdleCtrMax)
+ 172:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSIdleCtrRun)
+ 173:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSStatRdy)
+ 174:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTaskStatStk)
+ 175:./ucos/Core/os_dbg_r.c **** #endif
+ 176:./ucos/Core/os_dbg_r.c **** 
+ 177:./ucos/Core/os_dbg_r.c **** #if OS_TICK_STEP_EN > 0u
+ 178:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTickStepState)
+ 179:./ucos/Core/os_dbg_r.c **** #endif
+ 180:./ucos/Core/os_dbg_r.c **** 
+ 181:./ucos/Core/os_dbg_r.c **** #if (OS_MEM_EN > 0u) && (OS_MAX_MEM_PART > 0u)
+ 182:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSMemFreeList)
+ 183:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSMemTbl)
+ 184:./ucos/Core/os_dbg_r.c **** #endif
+ 185:./ucos/Core/os_dbg_r.c **** 
+ 186:./ucos/Core/os_dbg_r.c **** #ifdef OS_SAFETY_CRITICAL_IEC61508
+ 187:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSSafetyCriticalStartFlag)
+ 188:./ucos/Core/os_dbg_r.c **** #endif
+ 189:./ucos/Core/os_dbg_r.c **** 
+ 190:./ucos/Core/os_dbg_r.c **** #if (OS_Q_EN > 0u) && (OS_MAX_QS > 0u)
+ 191:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSQFreeList)
+ 192:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSQTbl)
+ 193:./ucos/Core/os_dbg_r.c **** #endif
+ 194:./ucos/Core/os_dbg_r.c **** 
+ 195:./ucos/Core/os_dbg_r.c **** #if OS_TASK_REG_TBL_SIZE > 0u
+ 196:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTaskRegNextAvailID)
+ 197:./ucos/Core/os_dbg_r.c **** #endif
+ 198:./ucos/Core/os_dbg_r.c **** 
+ 199:./ucos/Core/os_dbg_r.c **** #if OS_TIME_GET_SET_EN > 0u
+ 200:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTime)
+ 201:./ucos/Core/os_dbg_r.c **** #endif
+ARM GAS  /tmp/ccHU5b7d.s 			page 5
+
+
+ 202:./ucos/Core/os_dbg_r.c **** 
+ 203:./ucos/Core/os_dbg_r.c **** #if (OS_TMR_EN > 0u) && (OS_TMR_CFG_MAX > 0u)
+ 204:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTmrFree)
+ 205:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTmrUsed)
+ 206:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTmrTime)
+ 207:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTmrSem)
+ 208:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTmrSemSignal)
+ 209:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTmrTbl)
+ 210:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTmrFreeList)
+ 211:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTmrTaskStk)
+ 212:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTmrWheelTbl)
+ 213:./ucos/Core/os_dbg_r.c **** #endif
+ 214:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSIntNesting)
+ 215:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSLockNesting)
+ 216:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSPrioCur)
+ 217:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSPrioHighRdy)
+ 218:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSRdyGrp)
+ 219:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSRdyTbl)
+ 220:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSRunning)
+ 221:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTaskCtr)
+ 222:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSIdleCtr)
+ 223:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTaskIdleStk)
+ 224:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTCBCur)
+ 225:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTCBFreeList)
+ 226:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTCBHighRdy)
+ 227:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTCBList)
+ 228:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTCBPrioTbl)
+ 229:./ucos/Core/os_dbg_r.c ****                           + sizeof(OSTCBTbl);
+ 230:./ucos/Core/os_dbg_r.c **** 
+ 231:./ucos/Core/os_dbg_r.c **** #endif
+ 232:./ucos/Core/os_dbg_r.c **** 
+ 233:./ucos/Core/os_dbg_r.c **** 
+ 234:./ucos/Core/os_dbg_r.c **** /*
+ 235:./ucos/Core/os_dbg_r.c **** ***************************************************************************************************
+ 236:./ucos/Core/os_dbg_r.c **** *                                       OS DEBUG INITIALIZATION
+ 237:./ucos/Core/os_dbg_r.c **** *
+ 238:./ucos/Core/os_dbg_r.c **** * Description: This function is used to make sure that debug variables that are unused in the appli
+ 239:./ucos/Core/os_dbg_r.c **** *              are not optimized away.  This function might not be necessary for all compilers.  In
+ 240:./ucos/Core/os_dbg_r.c **** *              case, you should simply DELETE the code in this function while still leaving the dec
+ 241:./ucos/Core/os_dbg_r.c **** *              of the function itself.
+ 242:./ucos/Core/os_dbg_r.c **** *
+ 243:./ucos/Core/os_dbg_r.c **** * Arguments  : none
+ 244:./ucos/Core/os_dbg_r.c **** *
+ 245:./ucos/Core/os_dbg_r.c **** * Returns    : none
+ 246:./ucos/Core/os_dbg_r.c **** *
+ 247:./ucos/Core/os_dbg_r.c **** * Note(s)    : (1) This code doesn't do anything, it simply prevents the compiler from optimizing o
+ 248:./ucos/Core/os_dbg_r.c **** *                  the 'const' variables which are declared in this file.
+ 249:./ucos/Core/os_dbg_r.c **** *              (2) You may decide to 'compile out' the code (by using #if 0/#endif) INSIDE the func
+ 250:./ucos/Core/os_dbg_r.c **** *                  if your compiler DOES NOT optimize out the 'const' variables above.
+ 251:./ucos/Core/os_dbg_r.c **** ***************************************************************************************************
+ 252:./ucos/Core/os_dbg_r.c **** */
+ 253:./ucos/Core/os_dbg_r.c **** 
+ 254:./ucos/Core/os_dbg_r.c **** #if OS_DEBUG_EN > 0u
+ 255:./ucos/Core/os_dbg_r.c **** void  OSDebugInit (void)
+ 256:./ucos/Core/os_dbg_r.c **** {
+  29              		.loc 1 256 1 view -0
+  30              		.cfi_startproc
+ARM GAS  /tmp/ccHU5b7d.s 			page 6
+
+
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ 257:./ucos/Core/os_dbg_r.c ****     void  const  *ptemp;
+  34              		.loc 1 257 5 view .LVU1
+ 258:./ucos/Core/os_dbg_r.c **** 
+ 259:./ucos/Core/os_dbg_r.c **** 
+ 260:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSDebugEn;
+  35              		.loc 1 260 5 view .LVU2
+  36              	.LVL0:
+ 261:./ucos/Core/os_dbg_r.c **** 
+ 262:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSEndiannessTest;
+  37              		.loc 1 262 5 view .LVU3
+ 263:./ucos/Core/os_dbg_r.c **** 
+ 264:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSEventMax;
+  38              		.loc 1 264 5 view .LVU4
+ 265:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSEventNameEn;
+  39              		.loc 1 265 5 view .LVU5
+ 266:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSEventEn;
+  40              		.loc 1 266 5 view .LVU6
+ 267:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSEventSize;
+  41              		.loc 1 267 5 view .LVU7
+ 268:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSEventTblSize;
+  42              		.loc 1 268 5 view .LVU8
+ 269:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSEventMultiEn;
+  43              		.loc 1 269 5 view .LVU9
+ 270:./ucos/Core/os_dbg_r.c **** 
+ 271:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSFlagEn;
+  44              		.loc 1 271 5 view .LVU10
+ 272:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSFlagGrpSize;
+  45              		.loc 1 272 5 view .LVU11
+ 273:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSFlagNodeSize;
+  46              		.loc 1 273 5 view .LVU12
+ 274:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSFlagWidth;
+  47              		.loc 1 274 5 view .LVU13
+ 275:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSFlagMax;
+  48              		.loc 1 275 5 view .LVU14
+ 276:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSFlagNameEn;
+  49              		.loc 1 276 5 view .LVU15
+ 277:./ucos/Core/os_dbg_r.c **** 
+ 278:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSLowestPrio;
+  50              		.loc 1 278 5 view .LVU16
+ 279:./ucos/Core/os_dbg_r.c **** 
+ 280:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSMboxEn;
+  51              		.loc 1 280 5 view .LVU17
+ 281:./ucos/Core/os_dbg_r.c **** 
+ 282:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSMemEn;
+  52              		.loc 1 282 5 view .LVU18
+ 283:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSMemMax;
+  53              		.loc 1 283 5 view .LVU19
+ 284:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSMemNameEn;
+  54              		.loc 1 284 5 view .LVU20
+ 285:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSMemSize;
+  55              		.loc 1 285 5 view .LVU21
+ 286:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSMemTblSize;
+  56              		.loc 1 286 5 view .LVU22
+ 287:./ucos/Core/os_dbg_r.c **** 
+ARM GAS  /tmp/ccHU5b7d.s 			page 7
+
+
+ 288:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSMutexEn;
+  57              		.loc 1 288 5 view .LVU23
+ 289:./ucos/Core/os_dbg_r.c **** 
+ 290:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSPtrSize;
+  58              		.loc 1 290 5 view .LVU24
+ 291:./ucos/Core/os_dbg_r.c **** 
+ 292:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSQEn;
+  59              		.loc 1 292 5 view .LVU25
+ 293:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSQMax;
+  60              		.loc 1 293 5 view .LVU26
+ 294:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSQSize;
+  61              		.loc 1 294 5 view .LVU27
+ 295:./ucos/Core/os_dbg_r.c **** 
+ 296:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSRdyTblSize;
+  62              		.loc 1 296 5 view .LVU28
+ 297:./ucos/Core/os_dbg_r.c **** 
+ 298:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSSemEn;
+  63              		.loc 1 298 5 view .LVU29
+ 299:./ucos/Core/os_dbg_r.c **** 
+ 300:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSStkWidth;
+  64              		.loc 1 300 5 view .LVU30
+ 301:./ucos/Core/os_dbg_r.c **** 
+ 302:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTaskCreateEn;
+  65              		.loc 1 302 5 view .LVU31
+ 303:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTaskCreateExtEn;
+  66              		.loc 1 303 5 view .LVU32
+ 304:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTaskDelEn;
+  67              		.loc 1 304 5 view .LVU33
+ 305:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTaskIdleStkSize;
+  68              		.loc 1 305 5 view .LVU34
+ 306:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTaskProfileEn;
+  69              		.loc 1 306 5 view .LVU35
+ 307:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTaskMax;
+  70              		.loc 1 307 5 view .LVU36
+ 308:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTaskNameEn;
+  71              		.loc 1 308 5 view .LVU37
+ 309:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTaskStatEn;
+  72              		.loc 1 309 5 view .LVU38
+ 310:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTaskStatStkSize;
+  73              		.loc 1 310 5 view .LVU39
+ 311:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTaskStatStkChkEn;
+  74              		.loc 1 311 5 view .LVU40
+ 312:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTaskSwHookEn;
+  75              		.loc 1 312 5 view .LVU41
+ 313:./ucos/Core/os_dbg_r.c **** 
+ 314:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTCBPrioTblMax;
+  76              		.loc 1 314 5 view .LVU42
+ 315:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTCBSize;
+  77              		.loc 1 315 5 view .LVU43
+ 316:./ucos/Core/os_dbg_r.c **** 
+ 317:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTicksPerSec;
+  78              		.loc 1 317 5 view .LVU44
+ 318:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTimeTickHookEn;
+  79              		.loc 1 318 5 view .LVU45
+ 319:./ucos/Core/os_dbg_r.c **** 
+ 320:./ucos/Core/os_dbg_r.c **** #if OS_TMR_EN > 0u
+ 321:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTmrTbl[0];
+ARM GAS  /tmp/ccHU5b7d.s 			page 8
+
+
+  80              		.loc 1 321 5 view .LVU46
+ 322:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTmrWheelTbl[0];
+  81              		.loc 1 322 5 view .LVU47
+ 323:./ucos/Core/os_dbg_r.c **** 
+ 324:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTmrEn;
+  82              		.loc 1 324 5 view .LVU48
+ 325:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTmrCfgMax;
+  83              		.loc 1 325 5 view .LVU49
+ 326:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTmrCfgNameEn;
+  84              		.loc 1 326 5 view .LVU50
+ 327:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTmrCfgWheelSize;
+  85              		.loc 1 327 5 view .LVU51
+ 328:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTmrCfgTicksPerSec;
+  86              		.loc 1 328 5 view .LVU52
+ 329:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTmrSize;
+  87              		.loc 1 329 5 view .LVU53
+ 330:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTmrTblSize;
+  88              		.loc 1 330 5 view .LVU54
+ 331:./ucos/Core/os_dbg_r.c **** 
+ 332:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTmrWheelSize;
+  89              		.loc 1 332 5 view .LVU55
+ 333:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSTmrWheelTblSize;
+  90              		.loc 1 333 5 view .LVU56
+ 334:./ucos/Core/os_dbg_r.c **** #endif
+ 335:./ucos/Core/os_dbg_r.c **** 
+ 336:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSVersionNbr;
+  91              		.loc 1 336 5 view .LVU57
+ 337:./ucos/Core/os_dbg_r.c **** 
+ 338:./ucos/Core/os_dbg_r.c ****     ptemp = (void const *)&OSDataSize;
+  92              		.loc 1 338 5 view .LVU58
+ 339:./ucos/Core/os_dbg_r.c **** 
+ 340:./ucos/Core/os_dbg_r.c ****     ptemp = ptemp;                             /* Prevent compiler warning for 'ptemp' not being us
+  93              		.loc 1 340 5 view .LVU59
+ 341:./ucos/Core/os_dbg_r.c **** }
+  94              		.loc 1 341 1 is_stmt 0 view .LVU60
+  95 0000 7047     		bx	lr
+  96              		.cfi_endproc
+  97              	.LFE0:
+  99              		.global	OSDataSize
+ 100              		.section	.rodata.OSDataSize,"a"
+ 101              		.align	1
+ 104              	OSDataSize:
+ 105 0000 1314     		.short	5139
+ 106              		.global	OSTmrWheelTblSize
+ 107              		.section	.rodata.OSTmrWheelTblSize,"a"
+ 108              		.align	1
+ 111              	OSTmrWheelTblSize:
+ 112 0000 3800     		.short	56
+ 113              		.global	OSTmrWheelSize
+ 114              		.section	.rodata.OSTmrWheelSize,"a"
+ 115              		.align	1
+ 118              	OSTmrWheelSize:
+ 119 0000 0800     		.short	8
+ 120              		.global	OSTmrTblSize
+ 121              		.section	.rodata.OSTmrTblSize,"a"
+ 122              		.align	1
+ 125              	OSTmrTblSize:
+ARM GAS  /tmp/ccHU5b7d.s 			page 9
+
+
+ 126 0000 8002     		.short	640
+ 127              		.global	OSTmrSize
+ 128              		.section	.rodata.OSTmrSize,"a"
+ 129              		.align	1
+ 132              	OSTmrSize:
+ 133 0000 2800     		.short	40
+ 134              		.global	OSTmrCfgTicksPerSec
+ 135              		.section	.rodata.OSTmrCfgTicksPerSec,"a"
+ 136              		.align	1
+ 139              	OSTmrCfgTicksPerSec:
+ 140 0000 0A00     		.short	10
+ 141              		.global	OSTmrCfgWheelSize
+ 142              		.section	.rodata.OSTmrCfgWheelSize,"a"
+ 143              		.align	1
+ 146              	OSTmrCfgWheelSize:
+ 147 0000 0700     		.short	7
+ 148              		.global	OSTmrCfgNameEn
+ 149              		.section	.rodata.OSTmrCfgNameEn,"a"
+ 150              		.align	1
+ 153              	OSTmrCfgNameEn:
+ 154 0000 0100     		.short	1
+ 155              		.global	OSTmrCfgMax
+ 156              		.section	.rodata.OSTmrCfgMax,"a"
+ 157              		.align	1
+ 160              	OSTmrCfgMax:
+ 161 0000 1000     		.short	16
+ 162              		.global	OSTmrEn
+ 163              		.section	.rodata.OSTmrEn,"a"
+ 164              		.align	1
+ 167              	OSTmrEn:
+ 168 0000 0100     		.short	1
+ 169              		.global	OS_TLS_TblSize
+ 170              		.section	.rodata.OS_TLS_TblSize,"a"
+ 171              		.align	1
+ 174              	OS_TLS_TblSize:
+ 175 0000 0000     		.space	2
+ 176              		.global	OSVersionNbr
+ 177              		.section	.rodata.OSVersionNbr,"a"
+ 178              		.align	1
+ 181              	OSVersionNbr:
+ 182 0000 7472     		.short	29300
+ 183              		.global	OSTimeTickHookEn
+ 184              		.section	.rodata.OSTimeTickHookEn,"a"
+ 185              		.align	1
+ 188              	OSTimeTickHookEn:
+ 189 0000 0100     		.short	1
+ 190              		.global	OSTicksPerSec
+ 191              		.section	.rodata.OSTicksPerSec,"a"
+ 192              		.align	1
+ 195              	OSTicksPerSec:
+ 196 0000 6400     		.short	100
+ 197              		.global	OSTCBSize
+ 198              		.section	.rodata.OSTCBSize,"a"
+ 199              		.align	1
+ 202              	OSTCBSize:
+ 203 0000 5C00     		.short	92
+ 204              		.global	OSTCBPrioTblMax
+ARM GAS  /tmp/ccHU5b7d.s 			page 10
+
+
+ 205              		.section	.rodata.OSTCBPrioTblMax,"a"
+ 206              		.align	1
+ 209              	OSTCBPrioTblMax:
+ 210 0000 4000     		.short	64
+ 211              		.global	OSTaskRegTblSize
+ 212              		.section	.rodata.OSTaskRegTblSize,"a"
+ 213              		.align	1
+ 216              	OSTaskRegTblSize:
+ 217 0000 0100     		.short	1
+ 218              		.global	OSTaskSwHookEn
+ 219              		.section	.rodata.OSTaskSwHookEn,"a"
+ 220              		.align	1
+ 223              	OSTaskSwHookEn:
+ 224 0000 0100     		.short	1
+ 225              		.global	OSTaskStatStkChkEn
+ 226              		.section	.rodata.OSTaskStatStkChkEn,"a"
+ 227              		.align	1
+ 230              	OSTaskStatStkChkEn:
+ 231 0000 0100     		.short	1
+ 232              		.global	OSTaskStatStkSize
+ 233              		.section	.rodata.OSTaskStatStkSize,"a"
+ 234              		.align	1
+ 237              	OSTaskStatStkSize:
+ 238 0000 8000     		.short	128
+ 239              		.global	OSTaskStatEn
+ 240              		.section	.rodata.OSTaskStatEn,"a"
+ 241              		.align	1
+ 244              	OSTaskStatEn:
+ 245 0000 0100     		.short	1
+ 246              		.global	OSTaskNameEn
+ 247              		.section	.rodata.OSTaskNameEn,"a"
+ 248              		.align	1
+ 251              	OSTaskNameEn:
+ 252 0000 0100     		.short	1
+ 253              		.global	OSTaskMax
+ 254              		.section	.rodata.OSTaskMax,"a"
+ 255              		.align	1
+ 258              	OSTaskMax:
+ 259 0000 1600     		.short	22
+ 260              		.global	OSTaskProfileEn
+ 261              		.section	.rodata.OSTaskProfileEn,"a"
+ 262              		.align	1
+ 265              	OSTaskProfileEn:
+ 266 0000 0100     		.short	1
+ 267              		.global	OSTaskIdleStkSize
+ 268              		.section	.rodata.OSTaskIdleStkSize,"a"
+ 269              		.align	1
+ 272              	OSTaskIdleStkSize:
+ 273 0000 8000     		.short	128
+ 274              		.global	OSTaskDelEn
+ 275              		.section	.rodata.OSTaskDelEn,"a"
+ 276              		.align	1
+ 279              	OSTaskDelEn:
+ 280 0000 0100     		.short	1
+ 281              		.global	OSTaskCreateExtEn
+ 282              		.section	.rodata.OSTaskCreateExtEn,"a"
+ 283              		.align	1
+ARM GAS  /tmp/ccHU5b7d.s 			page 11
+
+
+ 286              	OSTaskCreateExtEn:
+ 287 0000 0100     		.short	1
+ 288              		.global	OSTaskCreateEn
+ 289              		.section	.rodata.OSTaskCreateEn,"a"
+ 290              		.align	1
+ 293              	OSTaskCreateEn:
+ 294 0000 0100     		.short	1
+ 295              		.global	OSStkWidth
+ 296              		.section	.rodata.OSStkWidth,"a"
+ 297              		.align	1
+ 300              	OSStkWidth:
+ 301 0000 0400     		.short	4
+ 302              		.global	OSSemEn
+ 303              		.section	.rodata.OSSemEn,"a"
+ 304              		.align	1
+ 307              	OSSemEn:
+ 308 0000 0100     		.short	1
+ 309              		.global	OSRdyTblSize
+ 310              		.section	.rodata.OSRdyTblSize,"a"
+ 311              		.align	1
+ 314              	OSRdyTblSize:
+ 315 0000 0800     		.short	8
+ 316              		.global	OSQSize
+ 317              		.section	.rodata.OSQSize,"a"
+ 318              		.align	1
+ 321              	OSQSize:
+ 322 0000 1800     		.short	24
+ 323              		.global	OSQMax
+ 324              		.section	.rodata.OSQMax,"a"
+ 325              		.align	1
+ 328              	OSQMax:
+ 329 0000 0400     		.short	4
+ 330              		.global	OSQEn
+ 331              		.section	.rodata.OSQEn,"a"
+ 332              		.align	1
+ 335              	OSQEn:
+ 336 0000 0100     		.short	1
+ 337              		.global	OSPtrSize
+ 338              		.section	.rodata.OSPtrSize,"a"
+ 339              		.align	1
+ 342              	OSPtrSize:
+ 343 0000 0400     		.short	4
+ 344              		.global	OSMutexEn
+ 345              		.section	.rodata.OSMutexEn,"a"
+ 346              		.align	1
+ 349              	OSMutexEn:
+ 350 0000 0100     		.short	1
+ 351              		.global	OSMemTblSize
+ 352              		.section	.rodata.OSMemTblSize,"a"
+ 353              		.align	1
+ 356              	OSMemTblSize:
+ 357 0000 7800     		.short	120
+ 358              		.global	OSMemSize
+ 359              		.section	.rodata.OSMemSize,"a"
+ 360              		.align	1
+ 363              	OSMemSize:
+ 364 0000 1800     		.short	24
+ARM GAS  /tmp/ccHU5b7d.s 			page 12
+
+
+ 365              		.global	OSMemNameEn
+ 366              		.section	.rodata.OSMemNameEn,"a"
+ 367              		.align	1
+ 370              	OSMemNameEn:
+ 371 0000 0100     		.short	1
+ 372              		.global	OSMemMax
+ 373              		.section	.rodata.OSMemMax,"a"
+ 374              		.align	1
+ 377              	OSMemMax:
+ 378 0000 0500     		.short	5
+ 379              		.global	OSMemEn
+ 380              		.section	.rodata.OSMemEn,"a"
+ 381              		.align	1
+ 384              	OSMemEn:
+ 385 0000 0100     		.short	1
+ 386              		.global	OSMboxEn
+ 387              		.section	.rodata.OSMboxEn,"a"
+ 388              		.align	1
+ 391              	OSMboxEn:
+ 392 0000 0100     		.short	1
+ 393              		.global	OSLowestPrio
+ 394              		.section	.rodata.OSLowestPrio,"a"
+ 395              		.align	1
+ 398              	OSLowestPrio:
+ 399 0000 3F00     		.short	63
+ 400              		.global	OSFlagNameEn
+ 401              		.section	.rodata.OSFlagNameEn,"a"
+ 402              		.align	1
+ 405              	OSFlagNameEn:
+ 406 0000 0100     		.short	1
+ 407              		.global	OSFlagMax
+ 408              		.section	.rodata.OSFlagMax,"a"
+ 409              		.align	1
+ 412              	OSFlagMax:
+ 413 0000 0500     		.short	5
+ 414              		.global	OSFlagWidth
+ 415              		.section	.rodata.OSFlagWidth,"a"
+ 416              		.align	1
+ 419              	OSFlagWidth:
+ 420 0000 0200     		.short	2
+ 421              		.global	OSFlagNodeSize
+ 422              		.section	.rodata.OSFlagNodeSize,"a"
+ 423              		.align	1
+ 426              	OSFlagNodeSize:
+ 427 0000 1400     		.short	20
+ 428              		.global	OSFlagGrpSize
+ 429              		.section	.rodata.OSFlagGrpSize,"a"
+ 430              		.align	1
+ 433              	OSFlagGrpSize:
+ 434 0000 1000     		.short	16
+ 435              		.global	OSFlagEn
+ 436              		.section	.rodata.OSFlagEn,"a"
+ 437              		.align	1
+ 440              	OSFlagEn:
+ 441 0000 0100     		.short	1
+ 442              		.global	OSEventMultiEn
+ 443              		.section	.rodata.OSEventMultiEn,"a"
+ARM GAS  /tmp/ccHU5b7d.s 			page 13
+
+
+ 444              		.align	1
+ 447              	OSEventMultiEn:
+ 448 0000 0100     		.short	1
+ 449              		.global	OSEventTblSize
+ 450              		.section	.rodata.OSEventTblSize,"a"
+ 451              		.align	1
+ 454              	OSEventTblSize:
+ 455 0000 F000     		.short	240
+ 456              		.global	OSEventSize
+ 457              		.section	.rodata.OSEventSize,"a"
+ 458              		.align	1
+ 461              	OSEventSize:
+ 462 0000 1800     		.short	24
+ 463              		.global	OSEventNameEn
+ 464              		.section	.rodata.OSEventNameEn,"a"
+ 465              		.align	1
+ 468              	OSEventNameEn:
+ 469 0000 0100     		.short	1
+ 470              		.global	OSEventMax
+ 471              		.section	.rodata.OSEventMax,"a"
+ 472              		.align	1
+ 475              	OSEventMax:
+ 476 0000 0A00     		.short	10
+ 477              		.global	OSEventEn
+ 478              		.section	.rodata.OSEventEn,"a"
+ 479              		.align	1
+ 482              	OSEventEn:
+ 483 0000 0100     		.short	1
+ 484              		.global	OSEndiannessTest
+ 485              		.section	.rodata.OSEndiannessTest,"a"
+ 486              		.align	2
+ 489              	OSEndiannessTest:
+ 490 0000 78563412 		.word	305419896
+ 491              		.global	OSDebugEn
+ 492              		.section	.rodata.OSDebugEn,"a"
+ 493              		.align	1
+ 496              	OSDebugEn:
+ 497 0000 0100     		.short	1
+ 498              		.text
+ 499              	.Letext0:
+ 500              		.file 2 "./ucos/Ports/os_cpu.h"
+ 501              		.file 3 "./ucos/Core/ucos_ii.h"
+ARM GAS  /tmp/ccHU5b7d.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 os_dbg_r.c
+     /tmp/ccHU5b7d.s:21     .text.OSDebugInit:00000000 $t
+     /tmp/ccHU5b7d.s:27     .text.OSDebugInit:00000000 OSDebugInit
+     /tmp/ccHU5b7d.s:104    .rodata.OSDataSize:00000000 OSDataSize
+     /tmp/ccHU5b7d.s:101    .rodata.OSDataSize:00000000 $d
+     /tmp/ccHU5b7d.s:111    .rodata.OSTmrWheelTblSize:00000000 OSTmrWheelTblSize
+     /tmp/ccHU5b7d.s:108    .rodata.OSTmrWheelTblSize:00000000 $d
+     /tmp/ccHU5b7d.s:118    .rodata.OSTmrWheelSize:00000000 OSTmrWheelSize
+     /tmp/ccHU5b7d.s:115    .rodata.OSTmrWheelSize:00000000 $d
+     /tmp/ccHU5b7d.s:125    .rodata.OSTmrTblSize:00000000 OSTmrTblSize
+     /tmp/ccHU5b7d.s:122    .rodata.OSTmrTblSize:00000000 $d
+     /tmp/ccHU5b7d.s:132    .rodata.OSTmrSize:00000000 OSTmrSize
+     /tmp/ccHU5b7d.s:129    .rodata.OSTmrSize:00000000 $d
+     /tmp/ccHU5b7d.s:139    .rodata.OSTmrCfgTicksPerSec:00000000 OSTmrCfgTicksPerSec
+     /tmp/ccHU5b7d.s:136    .rodata.OSTmrCfgTicksPerSec:00000000 $d
+     /tmp/ccHU5b7d.s:146    .rodata.OSTmrCfgWheelSize:00000000 OSTmrCfgWheelSize
+     /tmp/ccHU5b7d.s:143    .rodata.OSTmrCfgWheelSize:00000000 $d
+     /tmp/ccHU5b7d.s:153    .rodata.OSTmrCfgNameEn:00000000 OSTmrCfgNameEn
+     /tmp/ccHU5b7d.s:150    .rodata.OSTmrCfgNameEn:00000000 $d
+     /tmp/ccHU5b7d.s:160    .rodata.OSTmrCfgMax:00000000 OSTmrCfgMax
+     /tmp/ccHU5b7d.s:157    .rodata.OSTmrCfgMax:00000000 $d
+     /tmp/ccHU5b7d.s:167    .rodata.OSTmrEn:00000000 OSTmrEn
+     /tmp/ccHU5b7d.s:164    .rodata.OSTmrEn:00000000 $d
+     /tmp/ccHU5b7d.s:174    .rodata.OS_TLS_TblSize:00000000 OS_TLS_TblSize
+     /tmp/ccHU5b7d.s:171    .rodata.OS_TLS_TblSize:00000000 $d
+     /tmp/ccHU5b7d.s:181    .rodata.OSVersionNbr:00000000 OSVersionNbr
+     /tmp/ccHU5b7d.s:178    .rodata.OSVersionNbr:00000000 $d
+     /tmp/ccHU5b7d.s:188    .rodata.OSTimeTickHookEn:00000000 OSTimeTickHookEn
+     /tmp/ccHU5b7d.s:185    .rodata.OSTimeTickHookEn:00000000 $d
+     /tmp/ccHU5b7d.s:195    .rodata.OSTicksPerSec:00000000 OSTicksPerSec
+     /tmp/ccHU5b7d.s:192    .rodata.OSTicksPerSec:00000000 $d
+     /tmp/ccHU5b7d.s:202    .rodata.OSTCBSize:00000000 OSTCBSize
+     /tmp/ccHU5b7d.s:199    .rodata.OSTCBSize:00000000 $d
+     /tmp/ccHU5b7d.s:209    .rodata.OSTCBPrioTblMax:00000000 OSTCBPrioTblMax
+     /tmp/ccHU5b7d.s:206    .rodata.OSTCBPrioTblMax:00000000 $d
+     /tmp/ccHU5b7d.s:216    .rodata.OSTaskRegTblSize:00000000 OSTaskRegTblSize
+     /tmp/ccHU5b7d.s:213    .rodata.OSTaskRegTblSize:00000000 $d
+     /tmp/ccHU5b7d.s:223    .rodata.OSTaskSwHookEn:00000000 OSTaskSwHookEn
+     /tmp/ccHU5b7d.s:220    .rodata.OSTaskSwHookEn:00000000 $d
+     /tmp/ccHU5b7d.s:230    .rodata.OSTaskStatStkChkEn:00000000 OSTaskStatStkChkEn
+     /tmp/ccHU5b7d.s:227    .rodata.OSTaskStatStkChkEn:00000000 $d
+     /tmp/ccHU5b7d.s:237    .rodata.OSTaskStatStkSize:00000000 OSTaskStatStkSize
+     /tmp/ccHU5b7d.s:234    .rodata.OSTaskStatStkSize:00000000 $d
+     /tmp/ccHU5b7d.s:244    .rodata.OSTaskStatEn:00000000 OSTaskStatEn
+     /tmp/ccHU5b7d.s:241    .rodata.OSTaskStatEn:00000000 $d
+     /tmp/ccHU5b7d.s:251    .rodata.OSTaskNameEn:00000000 OSTaskNameEn
+     /tmp/ccHU5b7d.s:248    .rodata.OSTaskNameEn:00000000 $d
+     /tmp/ccHU5b7d.s:258    .rodata.OSTaskMax:00000000 OSTaskMax
+     /tmp/ccHU5b7d.s:255    .rodata.OSTaskMax:00000000 $d
+     /tmp/ccHU5b7d.s:265    .rodata.OSTaskProfileEn:00000000 OSTaskProfileEn
+     /tmp/ccHU5b7d.s:262    .rodata.OSTaskProfileEn:00000000 $d
+     /tmp/ccHU5b7d.s:272    .rodata.OSTaskIdleStkSize:00000000 OSTaskIdleStkSize
+     /tmp/ccHU5b7d.s:269    .rodata.OSTaskIdleStkSize:00000000 $d
+     /tmp/ccHU5b7d.s:279    .rodata.OSTaskDelEn:00000000 OSTaskDelEn
+     /tmp/ccHU5b7d.s:276    .rodata.OSTaskDelEn:00000000 $d
+     /tmp/ccHU5b7d.s:286    .rodata.OSTaskCreateExtEn:00000000 OSTaskCreateExtEn
+ARM GAS  /tmp/ccHU5b7d.s 			page 15
+
+
+     /tmp/ccHU5b7d.s:283    .rodata.OSTaskCreateExtEn:00000000 $d
+     /tmp/ccHU5b7d.s:293    .rodata.OSTaskCreateEn:00000000 OSTaskCreateEn
+     /tmp/ccHU5b7d.s:290    .rodata.OSTaskCreateEn:00000000 $d
+     /tmp/ccHU5b7d.s:300    .rodata.OSStkWidth:00000000 OSStkWidth
+     /tmp/ccHU5b7d.s:297    .rodata.OSStkWidth:00000000 $d
+     /tmp/ccHU5b7d.s:307    .rodata.OSSemEn:00000000 OSSemEn
+     /tmp/ccHU5b7d.s:304    .rodata.OSSemEn:00000000 $d
+     /tmp/ccHU5b7d.s:314    .rodata.OSRdyTblSize:00000000 OSRdyTblSize
+     /tmp/ccHU5b7d.s:311    .rodata.OSRdyTblSize:00000000 $d
+     /tmp/ccHU5b7d.s:321    .rodata.OSQSize:00000000 OSQSize
+     /tmp/ccHU5b7d.s:318    .rodata.OSQSize:00000000 $d
+     /tmp/ccHU5b7d.s:328    .rodata.OSQMax:00000000 OSQMax
+     /tmp/ccHU5b7d.s:325    .rodata.OSQMax:00000000 $d
+     /tmp/ccHU5b7d.s:335    .rodata.OSQEn:00000000 OSQEn
+     /tmp/ccHU5b7d.s:332    .rodata.OSQEn:00000000 $d
+     /tmp/ccHU5b7d.s:342    .rodata.OSPtrSize:00000000 OSPtrSize
+     /tmp/ccHU5b7d.s:339    .rodata.OSPtrSize:00000000 $d
+     /tmp/ccHU5b7d.s:349    .rodata.OSMutexEn:00000000 OSMutexEn
+     /tmp/ccHU5b7d.s:346    .rodata.OSMutexEn:00000000 $d
+     /tmp/ccHU5b7d.s:356    .rodata.OSMemTblSize:00000000 OSMemTblSize
+     /tmp/ccHU5b7d.s:353    .rodata.OSMemTblSize:00000000 $d
+     /tmp/ccHU5b7d.s:363    .rodata.OSMemSize:00000000 OSMemSize
+     /tmp/ccHU5b7d.s:360    .rodata.OSMemSize:00000000 $d
+     /tmp/ccHU5b7d.s:370    .rodata.OSMemNameEn:00000000 OSMemNameEn
+     /tmp/ccHU5b7d.s:367    .rodata.OSMemNameEn:00000000 $d
+     /tmp/ccHU5b7d.s:377    .rodata.OSMemMax:00000000 OSMemMax
+     /tmp/ccHU5b7d.s:374    .rodata.OSMemMax:00000000 $d
+     /tmp/ccHU5b7d.s:384    .rodata.OSMemEn:00000000 OSMemEn
+     /tmp/ccHU5b7d.s:381    .rodata.OSMemEn:00000000 $d
+     /tmp/ccHU5b7d.s:391    .rodata.OSMboxEn:00000000 OSMboxEn
+     /tmp/ccHU5b7d.s:388    .rodata.OSMboxEn:00000000 $d
+     /tmp/ccHU5b7d.s:398    .rodata.OSLowestPrio:00000000 OSLowestPrio
+     /tmp/ccHU5b7d.s:395    .rodata.OSLowestPrio:00000000 $d
+     /tmp/ccHU5b7d.s:405    .rodata.OSFlagNameEn:00000000 OSFlagNameEn
+     /tmp/ccHU5b7d.s:402    .rodata.OSFlagNameEn:00000000 $d
+     /tmp/ccHU5b7d.s:412    .rodata.OSFlagMax:00000000 OSFlagMax
+     /tmp/ccHU5b7d.s:409    .rodata.OSFlagMax:00000000 $d
+     /tmp/ccHU5b7d.s:419    .rodata.OSFlagWidth:00000000 OSFlagWidth
+     /tmp/ccHU5b7d.s:416    .rodata.OSFlagWidth:00000000 $d
+     /tmp/ccHU5b7d.s:426    .rodata.OSFlagNodeSize:00000000 OSFlagNodeSize
+     /tmp/ccHU5b7d.s:423    .rodata.OSFlagNodeSize:00000000 $d
+     /tmp/ccHU5b7d.s:433    .rodata.OSFlagGrpSize:00000000 OSFlagGrpSize
+     /tmp/ccHU5b7d.s:430    .rodata.OSFlagGrpSize:00000000 $d
+     /tmp/ccHU5b7d.s:440    .rodata.OSFlagEn:00000000 OSFlagEn
+     /tmp/ccHU5b7d.s:437    .rodata.OSFlagEn:00000000 $d
+     /tmp/ccHU5b7d.s:447    .rodata.OSEventMultiEn:00000000 OSEventMultiEn
+     /tmp/ccHU5b7d.s:444    .rodata.OSEventMultiEn:00000000 $d
+     /tmp/ccHU5b7d.s:454    .rodata.OSEventTblSize:00000000 OSEventTblSize
+     /tmp/ccHU5b7d.s:451    .rodata.OSEventTblSize:00000000 $d
+     /tmp/ccHU5b7d.s:461    .rodata.OSEventSize:00000000 OSEventSize
+     /tmp/ccHU5b7d.s:458    .rodata.OSEventSize:00000000 $d
+     /tmp/ccHU5b7d.s:468    .rodata.OSEventNameEn:00000000 OSEventNameEn
+     /tmp/ccHU5b7d.s:465    .rodata.OSEventNameEn:00000000 $d
+     /tmp/ccHU5b7d.s:475    .rodata.OSEventMax:00000000 OSEventMax
+     /tmp/ccHU5b7d.s:472    .rodata.OSEventMax:00000000 $d
+     /tmp/ccHU5b7d.s:482    .rodata.OSEventEn:00000000 OSEventEn
+     /tmp/ccHU5b7d.s:479    .rodata.OSEventEn:00000000 $d
+ARM GAS  /tmp/ccHU5b7d.s 			page 16
+
+
+     /tmp/ccHU5b7d.s:489    .rodata.OSEndiannessTest:00000000 OSEndiannessTest
+     /tmp/ccHU5b7d.s:486    .rodata.OSEndiannessTest:00000000 $d
+     /tmp/ccHU5b7d.s:496    .rodata.OSDebugEn:00000000 OSDebugEn
+     /tmp/ccHU5b7d.s:493    .rodata.OSDebugEn:00000000 $d
+
+NO UNDEFINED SYMBOLS

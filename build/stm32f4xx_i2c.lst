@@ -1,0 +1,3474 @@
+ARM GAS  /tmp/ccKogwsQ.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"stm32f4xx_i2c.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./Libraries/src/stm32f4xx_i2c.c"
+  20              		.section	.text.I2C_DeInit,"ax",%progbits
+  21              		.align	1
+  22              		.global	I2C_DeInit
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	I2C_DeInit:
+  28              	.LVL0:
+  29              	.LFB123:
+   1:./Libraries/src/stm32f4xx_i2c.c **** /**
+   2:./Libraries/src/stm32f4xx_i2c.c ****   ******************************************************************************
+   3:./Libraries/src/stm32f4xx_i2c.c ****   * @file    stm32f4xx_i2c.c
+   4:./Libraries/src/stm32f4xx_i2c.c ****   * @author  MCD Application Team
+   5:./Libraries/src/stm32f4xx_i2c.c ****   * @version V1.8.0
+   6:./Libraries/src/stm32f4xx_i2c.c ****   * @date    04-November-2016
+   7:./Libraries/src/stm32f4xx_i2c.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:./Libraries/src/stm32f4xx_i2c.c ****   *          functionalities of the Inter-integrated circuit (I2C)
+   9:./Libraries/src/stm32f4xx_i2c.c ****   *           + Initialization and Configuration
+  10:./Libraries/src/stm32f4xx_i2c.c ****   *           + Data transfers
+  11:./Libraries/src/stm32f4xx_i2c.c ****   *           + PEC management
+  12:./Libraries/src/stm32f4xx_i2c.c ****   *           + DMA transfers management
+  13:./Libraries/src/stm32f4xx_i2c.c ****   *           + Interrupts, events and flags management 
+  14:./Libraries/src/stm32f4xx_i2c.c ****   *           
+  15:./Libraries/src/stm32f4xx_i2c.c ****     @verbatim    
+  16:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================
+  17:./Libraries/src/stm32f4xx_i2c.c ****                     ##### How to use this driver #####
+  18:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================
+  19:./Libraries/src/stm32f4xx_i2c.c ****     [..]
+  20:./Libraries/src/stm32f4xx_i2c.c ****       (#) Enable peripheral clock using RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2Cx, ENABLE)
+  21:./Libraries/src/stm32f4xx_i2c.c ****           function for I2C1, I2C2 or I2C3.
+  22:./Libraries/src/stm32f4xx_i2c.c ****   
+  23:./Libraries/src/stm32f4xx_i2c.c ****       (#) Enable SDA, SCL  and SMBA (when used) GPIO clocks using 
+  24:./Libraries/src/stm32f4xx_i2c.c ****           RCC_AHBPeriphClockCmd() function. 
+  25:./Libraries/src/stm32f4xx_i2c.c ****   
+  26:./Libraries/src/stm32f4xx_i2c.c ****       (#) Peripherals alternate function: 
+  27:./Libraries/src/stm32f4xx_i2c.c ****         (++) Connect the pin to the desired peripherals' Alternate 
+  28:./Libraries/src/stm32f4xx_i2c.c ****              Function (AF) using GPIO_PinAFConfig() function
+  29:./Libraries/src/stm32f4xx_i2c.c ****         (++) Configure the desired pin in alternate function by:
+ARM GAS  /tmp/ccKogwsQ.s 			page 2
+
+
+  30:./Libraries/src/stm32f4xx_i2c.c ****              GPIO_InitStruct->GPIO_Mode = GPIO_Mode_AF
+  31:./Libraries/src/stm32f4xx_i2c.c ****         (++) Select the type, pull-up/pull-down and output speed via 
+  32:./Libraries/src/stm32f4xx_i2c.c ****              GPIO_PuPd, GPIO_OType and GPIO_Speed members
+  33:./Libraries/src/stm32f4xx_i2c.c ****         (++) Call GPIO_Init() function
+  34:./Libraries/src/stm32f4xx_i2c.c ****              Recommended configuration is Push-Pull, Pull-up, Open-Drain.
+  35:./Libraries/src/stm32f4xx_i2c.c ****              Add an external pull up if necessary (typically 4.7 KOhm).      
+  36:./Libraries/src/stm32f4xx_i2c.c ****           
+  37:./Libraries/src/stm32f4xx_i2c.c ****       (#) Program the Mode, duty cycle , Own address, Ack, Speed and Acknowledged
+  38:./Libraries/src/stm32f4xx_i2c.c ****           Address using the I2C_Init() function.
+  39:./Libraries/src/stm32f4xx_i2c.c ****   
+  40:./Libraries/src/stm32f4xx_i2c.c ****       (#) Optionally you can enable/configure the following parameters without
+  41:./Libraries/src/stm32f4xx_i2c.c ****           re-initialization (i.e there is no need to call again I2C_Init() function):
+  42:./Libraries/src/stm32f4xx_i2c.c ****         (++) Enable the acknowledge feature using I2C_AcknowledgeConfig() function
+  43:./Libraries/src/stm32f4xx_i2c.c ****         (++) Enable the dual addressing mode using I2C_DualAddressCmd() function
+  44:./Libraries/src/stm32f4xx_i2c.c ****         (++) Enable the general call using the I2C_GeneralCallCmd() function
+  45:./Libraries/src/stm32f4xx_i2c.c ****         (++) Enable the clock stretching using I2C_StretchClockCmd() function
+  46:./Libraries/src/stm32f4xx_i2c.c ****         (++) Enable the fast mode duty cycle using the I2C_FastModeDutyCycleConfig()
+  47:./Libraries/src/stm32f4xx_i2c.c ****              function.
+  48:./Libraries/src/stm32f4xx_i2c.c ****         (++) Configure the NACK position for Master Receiver mode in case of 
+  49:./Libraries/src/stm32f4xx_i2c.c ****              2 bytes reception using the function I2C_NACKPositionConfig().  
+  50:./Libraries/src/stm32f4xx_i2c.c ****         (++) Enable the PEC Calculation using I2C_CalculatePEC() function
+  51:./Libraries/src/stm32f4xx_i2c.c ****         (++) For SMBus Mode: 
+  52:./Libraries/src/stm32f4xx_i2c.c ****           (+++) Enable the Address Resolution Protocol (ARP) using I2C_ARPCmd() function
+  53:./Libraries/src/stm32f4xx_i2c.c ****           (+++) Configure the SMBusAlert pin using I2C_SMBusAlertConfig() function
+  54:./Libraries/src/stm32f4xx_i2c.c ****   
+  55:./Libraries/src/stm32f4xx_i2c.c ****       (#) Enable the NVIC and the corresponding interrupt using the function 
+  56:./Libraries/src/stm32f4xx_i2c.c ****           I2C_ITConfig() if you need to use interrupt mode. 
+  57:./Libraries/src/stm32f4xx_i2c.c ****   
+  58:./Libraries/src/stm32f4xx_i2c.c ****       (#) When using the DMA mode 
+  59:./Libraries/src/stm32f4xx_i2c.c ****         (++) Configure the DMA using DMA_Init() function
+  60:./Libraries/src/stm32f4xx_i2c.c ****         (++) Active the needed channel Request using I2C_DMACmd() or
+  61:./Libraries/src/stm32f4xx_i2c.c ****              I2C_DMALastTransferCmd() function.
+  62:./Libraries/src/stm32f4xx_i2c.c ****         -@@- When using DMA mode, I2C interrupts may be used at the same time to
+  63:./Libraries/src/stm32f4xx_i2c.c ****              control the communication flow (Start/Stop/Ack... events and errors).
+  64:./Libraries/src/stm32f4xx_i2c.c ****    
+  65:./Libraries/src/stm32f4xx_i2c.c ****       (#) Enable the I2C using the I2C_Cmd() function.
+  66:./Libraries/src/stm32f4xx_i2c.c ****    
+  67:./Libraries/src/stm32f4xx_i2c.c ****       (#) Enable the DMA using the DMA_Cmd() function when using DMA mode in the 
+  68:./Libraries/src/stm32f4xx_i2c.c ****           transfers. 
+  69:./Libraries/src/stm32f4xx_i2c.c ****   
+  70:./Libraries/src/stm32f4xx_i2c.c ****     @endverbatim  
+  71:./Libraries/src/stm32f4xx_i2c.c ****   ******************************************************************************
+  72:./Libraries/src/stm32f4xx_i2c.c ****   * @attention
+  73:./Libraries/src/stm32f4xx_i2c.c ****   *
+  74:./Libraries/src/stm32f4xx_i2c.c ****   * <h2><center>&copy; COPYRIGHT 2016 STMicroelectronics</center></h2>
+  75:./Libraries/src/stm32f4xx_i2c.c ****   *
+  76:./Libraries/src/stm32f4xx_i2c.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  77:./Libraries/src/stm32f4xx_i2c.c ****   * You may not use this file except in compliance with the License.
+  78:./Libraries/src/stm32f4xx_i2c.c ****   * You may obtain a copy of the License at:
+  79:./Libraries/src/stm32f4xx_i2c.c ****   *
+  80:./Libraries/src/stm32f4xx_i2c.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  81:./Libraries/src/stm32f4xx_i2c.c ****   *
+  82:./Libraries/src/stm32f4xx_i2c.c ****   * Unless required by applicable law or agreed to in writing, software 
+  83:./Libraries/src/stm32f4xx_i2c.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  84:./Libraries/src/stm32f4xx_i2c.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  85:./Libraries/src/stm32f4xx_i2c.c ****   * See the License for the specific language governing permissions and
+  86:./Libraries/src/stm32f4xx_i2c.c ****   * limitations under the License.
+ARM GAS  /tmp/ccKogwsQ.s 			page 3
+
+
+  87:./Libraries/src/stm32f4xx_i2c.c ****   *
+  88:./Libraries/src/stm32f4xx_i2c.c ****   ******************************************************************************  
+  89:./Libraries/src/stm32f4xx_i2c.c ****   */ 
+  90:./Libraries/src/stm32f4xx_i2c.c **** 
+  91:./Libraries/src/stm32f4xx_i2c.c **** /* Includes ------------------------------------------------------------------*/
+  92:./Libraries/src/stm32f4xx_i2c.c **** #include "stm32f4xx_i2c.h"
+  93:./Libraries/src/stm32f4xx_i2c.c **** #include "stm32f4xx_rcc.h"
+  94:./Libraries/src/stm32f4xx_i2c.c **** 
+  95:./Libraries/src/stm32f4xx_i2c.c **** /** @addtogroup STM32F4xx_StdPeriph_Driver
+  96:./Libraries/src/stm32f4xx_i2c.c ****   * @{
+  97:./Libraries/src/stm32f4xx_i2c.c ****   */
+  98:./Libraries/src/stm32f4xx_i2c.c **** 
+  99:./Libraries/src/stm32f4xx_i2c.c **** /** @defgroup I2C 
+ 100:./Libraries/src/stm32f4xx_i2c.c ****   * @brief I2C driver modules
+ 101:./Libraries/src/stm32f4xx_i2c.c ****   * @{
+ 102:./Libraries/src/stm32f4xx_i2c.c ****   */ 
+ 103:./Libraries/src/stm32f4xx_i2c.c **** 
+ 104:./Libraries/src/stm32f4xx_i2c.c **** /* Private typedef -----------------------------------------------------------*/
+ 105:./Libraries/src/stm32f4xx_i2c.c **** /* Private define ------------------------------------------------------------*/
+ 106:./Libraries/src/stm32f4xx_i2c.c **** 
+ 107:./Libraries/src/stm32f4xx_i2c.c **** #define CR1_CLEAR_MASK    ((uint16_t)0xFBF5)      /*<! I2C registers Masks */
+ 108:./Libraries/src/stm32f4xx_i2c.c **** #define FLAG_MASK         ((uint32_t)0x00FFFFFF)  /*<! I2C FLAG mask */
+ 109:./Libraries/src/stm32f4xx_i2c.c **** #define ITEN_MASK         ((uint32_t)0x07000000)  /*<! I2C Interrupt Enable mask */
+ 110:./Libraries/src/stm32f4xx_i2c.c **** 
+ 111:./Libraries/src/stm32f4xx_i2c.c **** /* Private macro -------------------------------------------------------------*/
+ 112:./Libraries/src/stm32f4xx_i2c.c **** /* Private variables ---------------------------------------------------------*/
+ 113:./Libraries/src/stm32f4xx_i2c.c **** /* Private function prototypes -----------------------------------------------*/
+ 114:./Libraries/src/stm32f4xx_i2c.c **** /* Private functions ---------------------------------------------------------*/
+ 115:./Libraries/src/stm32f4xx_i2c.c **** 
+ 116:./Libraries/src/stm32f4xx_i2c.c **** /** @defgroup I2C_Private_Functions
+ 117:./Libraries/src/stm32f4xx_i2c.c ****   * @{
+ 118:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 119:./Libraries/src/stm32f4xx_i2c.c **** 
+ 120:./Libraries/src/stm32f4xx_i2c.c **** /** @defgroup I2C_Group1 Initialization and Configuration functions
+ 121:./Libraries/src/stm32f4xx_i2c.c ****  *  @brief   Initialization and Configuration functions 
+ 122:./Libraries/src/stm32f4xx_i2c.c ****  *
+ 123:./Libraries/src/stm32f4xx_i2c.c **** @verbatim   
+ 124:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================
+ 125:./Libraries/src/stm32f4xx_i2c.c ****             ##### Initialization and Configuration functions #####
+ 126:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================  
+ 127:./Libraries/src/stm32f4xx_i2c.c **** 
+ 128:./Libraries/src/stm32f4xx_i2c.c **** @endverbatim
+ 129:./Libraries/src/stm32f4xx_i2c.c ****   * @{
+ 130:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 131:./Libraries/src/stm32f4xx_i2c.c **** 
+ 132:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 133:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Deinitialize the I2Cx peripheral registers to their default reset values.
+ 134:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 135:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 136:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 137:./Libraries/src/stm32f4xx_i2c.c **** void I2C_DeInit(I2C_TypeDef* I2Cx)
+ 138:./Libraries/src/stm32f4xx_i2c.c **** {
+  30              		.loc 1 138 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 138 1 is_stmt 0 view .LVU1
+ARM GAS  /tmp/ccKogwsQ.s 			page 4
+
+
+  35 0000 08B5     		push	{r3, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 3, -8
+  39              		.cfi_offset 14, -4
+ 139:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 140:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+  40              		.loc 1 140 3 is_stmt 1 view .LVU2
+ 141:./Libraries/src/stm32f4xx_i2c.c **** 
+ 142:./Libraries/src/stm32f4xx_i2c.c ****   if (I2Cx == I2C1)
+  41              		.loc 1 142 3 view .LVU3
+  42              		.loc 1 142 6 is_stmt 0 view .LVU4
+  43 0002 154B     		ldr	r3, .L9
+  44 0004 9842     		cmp	r0, r3
+  45 0006 06D0     		beq	.L6
+ 143:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 144:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable I2C1 reset state */
+ 145:./Libraries/src/stm32f4xx_i2c.c ****     RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C1, ENABLE);
+ 146:./Libraries/src/stm32f4xx_i2c.c ****     /* Release I2C1 from reset state */
+ 147:./Libraries/src/stm32f4xx_i2c.c ****     RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C1, DISABLE);    
+ 148:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 149:./Libraries/src/stm32f4xx_i2c.c ****   else if (I2Cx == I2C2)
+  46              		.loc 1 149 8 is_stmt 1 view .LVU5
+  47              		.loc 1 149 11 is_stmt 0 view .LVU6
+  48 0008 144B     		ldr	r3, .L9+4
+  49 000a 9842     		cmp	r0, r3
+  50 000c 0ED0     		beq	.L7
+ 150:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 151:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable I2C2 reset state */
+ 152:./Libraries/src/stm32f4xx_i2c.c ****     RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C2, ENABLE);
+ 153:./Libraries/src/stm32f4xx_i2c.c ****     /* Release I2C2 from reset state */
+ 154:./Libraries/src/stm32f4xx_i2c.c ****     RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C2, DISABLE);      
+ 155:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 156:./Libraries/src/stm32f4xx_i2c.c ****   else 
+ 157:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 158:./Libraries/src/stm32f4xx_i2c.c ****     if (I2Cx == I2C3)
+  51              		.loc 1 158 5 is_stmt 1 view .LVU7
+  52              		.loc 1 158 8 is_stmt 0 view .LVU8
+  53 000e 144B     		ldr	r3, .L9+8
+  54 0010 9842     		cmp	r0, r3
+  55 0012 16D0     		beq	.L8
+  56              	.LVL1:
+  57              	.L1:
+ 159:./Libraries/src/stm32f4xx_i2c.c ****     {
+ 160:./Libraries/src/stm32f4xx_i2c.c ****       /* Enable I2C3 reset state */
+ 161:./Libraries/src/stm32f4xx_i2c.c ****       RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C3, ENABLE);
+ 162:./Libraries/src/stm32f4xx_i2c.c ****       /* Release I2C3 from reset state */
+ 163:./Libraries/src/stm32f4xx_i2c.c ****       RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C3, DISABLE);     
+ 164:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 165:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 166:./Libraries/src/stm32f4xx_i2c.c **** }
+  58              		.loc 1 166 1 view .LVU9
+  59 0014 08BD     		pop	{r3, pc}
+  60              	.LVL2:
+  61              	.L6:
+ 145:./Libraries/src/stm32f4xx_i2c.c ****     /* Release I2C1 from reset state */
+  62              		.loc 1 145 5 is_stmt 1 view .LVU10
+ARM GAS  /tmp/ccKogwsQ.s 			page 5
+
+
+  63 0016 0121     		movs	r1, #1
+  64 0018 4FF40010 		mov	r0, #2097152
+  65              	.LVL3:
+ 145:./Libraries/src/stm32f4xx_i2c.c ****     /* Release I2C1 from reset state */
+  66              		.loc 1 145 5 is_stmt 0 view .LVU11
+  67 001c FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  68              	.LVL4:
+ 147:./Libraries/src/stm32f4xx_i2c.c ****   }
+  69              		.loc 1 147 5 is_stmt 1 view .LVU12
+  70 0020 0021     		movs	r1, #0
+  71 0022 4FF40010 		mov	r0, #2097152
+  72 0026 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  73              	.LVL5:
+  74 002a F3E7     		b	.L1
+  75              	.LVL6:
+  76              	.L7:
+ 152:./Libraries/src/stm32f4xx_i2c.c ****     /* Release I2C2 from reset state */
+  77              		.loc 1 152 5 view .LVU13
+  78 002c 0121     		movs	r1, #1
+  79 002e 4FF48000 		mov	r0, #4194304
+  80              	.LVL7:
+ 152:./Libraries/src/stm32f4xx_i2c.c ****     /* Release I2C2 from reset state */
+  81              		.loc 1 152 5 is_stmt 0 view .LVU14
+  82 0032 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  83              	.LVL8:
+ 154:./Libraries/src/stm32f4xx_i2c.c ****   }
+  84              		.loc 1 154 5 is_stmt 1 view .LVU15
+  85 0036 0021     		movs	r1, #0
+  86 0038 4FF48000 		mov	r0, #4194304
+  87 003c FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  88              	.LVL9:
+  89 0040 E8E7     		b	.L1
+  90              	.LVL10:
+  91              	.L8:
+ 161:./Libraries/src/stm32f4xx_i2c.c ****       /* Release I2C3 from reset state */
+  92              		.loc 1 161 7 view .LVU16
+  93 0042 0121     		movs	r1, #1
+  94 0044 4FF40000 		mov	r0, #8388608
+  95              	.LVL11:
+ 161:./Libraries/src/stm32f4xx_i2c.c ****       /* Release I2C3 from reset state */
+  96              		.loc 1 161 7 is_stmt 0 view .LVU17
+  97 0048 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  98              	.LVL12:
+ 163:./Libraries/src/stm32f4xx_i2c.c ****     }
+  99              		.loc 1 163 7 is_stmt 1 view .LVU18
+ 100 004c 0021     		movs	r1, #0
+ 101 004e 4FF40000 		mov	r0, #8388608
+ 102 0052 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+ 103              	.LVL13:
+ 104              		.loc 1 166 1 is_stmt 0 view .LVU19
+ 105 0056 DDE7     		b	.L1
+ 106              	.L10:
+ 107              		.align	2
+ 108              	.L9:
+ 109 0058 00540040 		.word	1073763328
+ 110 005c 00580040 		.word	1073764352
+ 111 0060 005C0040 		.word	1073765376
+ARM GAS  /tmp/ccKogwsQ.s 			page 6
+
+
+ 112              		.cfi_endproc
+ 113              	.LFE123:
+ 115              		.section	.text.I2C_Init,"ax",%progbits
+ 116              		.align	1
+ 117              		.global	I2C_Init
+ 118              		.syntax unified
+ 119              		.thumb
+ 120              		.thumb_func
+ 122              	I2C_Init:
+ 123              	.LVL14:
+ 124              	.LFB124:
+ 167:./Libraries/src/stm32f4xx_i2c.c **** 
+ 168:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 169:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Initializes the I2Cx peripheral according to the specified 
+ 170:./Libraries/src/stm32f4xx_i2c.c ****   *         parameters in the I2C_InitStruct.
+ 171:./Libraries/src/stm32f4xx_i2c.c ****   *           
+ 172:./Libraries/src/stm32f4xx_i2c.c ****   * @note   To use the I2C at 400 KHz (in fast mode), the PCLK1 frequency 
+ 173:./Libraries/src/stm32f4xx_i2c.c ****   *         (I2C peripheral input clock) must be a multiple of 10 MHz.  
+ 174:./Libraries/src/stm32f4xx_i2c.c ****   *           
+ 175:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 176:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_InitStruct: pointer to a I2C_InitTypeDef structure that contains 
+ 177:./Libraries/src/stm32f4xx_i2c.c ****   *         the configuration information for the specified I2C peripheral.
+ 178:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 179:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 180:./Libraries/src/stm32f4xx_i2c.c **** void I2C_Init(I2C_TypeDef* I2Cx, I2C_InitTypeDef* I2C_InitStruct)
+ 181:./Libraries/src/stm32f4xx_i2c.c **** {
+ 125              		.loc 1 181 1 is_stmt 1 view -0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 16
+ 128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 129              		.loc 1 181 1 is_stmt 0 view .LVU21
+ 130 0000 70B5     		push	{r4, r5, r6, lr}
+ 131              	.LCFI1:
+ 132              		.cfi_def_cfa_offset 16
+ 133              		.cfi_offset 4, -16
+ 134              		.cfi_offset 5, -12
+ 135              		.cfi_offset 6, -8
+ 136              		.cfi_offset 14, -4
+ 137 0002 84B0     		sub	sp, sp, #16
+ 138              	.LCFI2:
+ 139              		.cfi_def_cfa_offset 32
+ 140 0004 0446     		mov	r4, r0
+ 141 0006 0D46     		mov	r5, r1
+ 182:./Libraries/src/stm32f4xx_i2c.c ****   uint16_t tmpreg = 0, freqrange = 0;
+ 142              		.loc 1 182 3 is_stmt 1 view .LVU22
+ 143              	.LVL15:
+ 183:./Libraries/src/stm32f4xx_i2c.c ****   uint16_t result = 0x04;
+ 144              		.loc 1 183 3 view .LVU23
+ 184:./Libraries/src/stm32f4xx_i2c.c ****   uint32_t pclk1 = 8000000;
+ 145              		.loc 1 184 3 view .LVU24
+ 185:./Libraries/src/stm32f4xx_i2c.c ****   RCC_ClocksTypeDef  rcc_clocks;
+ 146              		.loc 1 185 3 view .LVU25
+ 186:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 187:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 147              		.loc 1 187 3 view .LVU26
+ 188:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_CLOCK_SPEED(I2C_InitStruct->I2C_ClockSpeed));
+ 148              		.loc 1 188 3 view .LVU27
+ARM GAS  /tmp/ccKogwsQ.s 			page 7
+
+
+ 189:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_MODE(I2C_InitStruct->I2C_Mode));
+ 149              		.loc 1 189 3 view .LVU28
+ 190:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_DUTY_CYCLE(I2C_InitStruct->I2C_DutyCycle));
+ 150              		.loc 1 190 3 view .LVU29
+ 191:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_OWN_ADDRESS1(I2C_InitStruct->I2C_OwnAddress1));
+ 151              		.loc 1 191 3 view .LVU30
+ 192:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ACK_STATE(I2C_InitStruct->I2C_Ack));
+ 152              		.loc 1 192 3 view .LVU31
+ 193:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ACKNOWLEDGE_ADDRESS(I2C_InitStruct->I2C_AcknowledgedAddress));
+ 153              		.loc 1 193 3 view .LVU32
+ 194:./Libraries/src/stm32f4xx_i2c.c **** 
+ 195:./Libraries/src/stm32f4xx_i2c.c **** /*---------------------------- I2Cx CR2 Configuration ------------------------*/
+ 196:./Libraries/src/stm32f4xx_i2c.c ****   /* Get the I2Cx CR2 value */
+ 197:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg = I2Cx->CR2;
+ 154              		.loc 1 197 3 view .LVU33
+ 155              		.loc 1 197 10 is_stmt 0 view .LVU34
+ 156 0008 8688     		ldrh	r6, [r0, #4]
+ 157 000a B6B2     		uxth	r6, r6
+ 158              	.LVL16:
+ 198:./Libraries/src/stm32f4xx_i2c.c ****   /* Clear frequency FREQ[5:0] bits */
+ 199:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg &= (uint16_t)~((uint16_t)I2C_CR2_FREQ);
+ 159              		.loc 1 199 3 is_stmt 1 view .LVU35
+ 160              		.loc 1 199 10 is_stmt 0 view .LVU36
+ 161 000c 26F03F06 		bic	r6, r6, #63
+ 162              	.LVL17:
+ 163              		.loc 1 199 10 view .LVU37
+ 164 0010 B6B2     		uxth	r6, r6
+ 165              	.LVL18:
+ 200:./Libraries/src/stm32f4xx_i2c.c ****   /* Get pclk1 frequency value */
+ 201:./Libraries/src/stm32f4xx_i2c.c ****   RCC_GetClocksFreq(&rcc_clocks);
+ 166              		.loc 1 201 3 is_stmt 1 view .LVU38
+ 167 0012 6846     		mov	r0, sp
+ 168              	.LVL19:
+ 169              		.loc 1 201 3 is_stmt 0 view .LVU39
+ 170 0014 FFF7FEFF 		bl	RCC_GetClocksFreq
+ 171              	.LVL20:
+ 202:./Libraries/src/stm32f4xx_i2c.c ****   pclk1 = rcc_clocks.PCLK1_Frequency;
+ 172              		.loc 1 202 3 is_stmt 1 view .LVU40
+ 173              		.loc 1 202 9 is_stmt 0 view .LVU41
+ 174 0018 0299     		ldr	r1, [sp, #8]
+ 175              	.LVL21:
+ 203:./Libraries/src/stm32f4xx_i2c.c ****   /* Set frequency bits depending on pclk1 value */
+ 204:./Libraries/src/stm32f4xx_i2c.c ****   freqrange = (uint16_t)(pclk1 / 1000000);
+ 176              		.loc 1 204 3 is_stmt 1 view .LVU42
+ 177              		.loc 1 204 32 is_stmt 0 view .LVU43
+ 178 001a 2C4B     		ldr	r3, .L21
+ 179 001c A3FB0123 		umull	r2, r3, r3, r1
+ 180 0020 9A0C     		lsrs	r2, r3, #18
+ 181              	.LVL22:
+ 205:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg |= freqrange;
+ 182              		.loc 1 205 3 is_stmt 1 view .LVU44
+ 183              		.loc 1 205 10 is_stmt 0 view .LVU45
+ 184 0022 46EA9346 		orr	r6, r6, r3, lsr #18
+ 185              	.LVL23:
+ 206:./Libraries/src/stm32f4xx_i2c.c ****   /* Write to I2Cx CR2 */
+ 207:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->CR2 = tmpreg;
+ 186              		.loc 1 207 3 is_stmt 1 view .LVU46
+ARM GAS  /tmp/ccKogwsQ.s 			page 8
+
+
+ 187              		.loc 1 207 13 is_stmt 0 view .LVU47
+ 188 0026 A680     		strh	r6, [r4, #4]	@ movhi
+ 208:./Libraries/src/stm32f4xx_i2c.c **** 
+ 209:./Libraries/src/stm32f4xx_i2c.c **** /*---------------------------- I2Cx CCR Configuration ------------------------*/
+ 210:./Libraries/src/stm32f4xx_i2c.c ****   /* Disable the selected I2C peripheral to configure TRISE */
+ 211:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_PE);
+ 189              		.loc 1 211 3 is_stmt 1 view .LVU48
+ 190              		.loc 1 211 7 is_stmt 0 view .LVU49
+ 191 0028 2388     		ldrh	r3, [r4]
+ 192 002a 9BB2     		uxth	r3, r3
+ 193              		.loc 1 211 13 view .LVU50
+ 194 002c 23F00103 		bic	r3, r3, #1
+ 195 0030 9BB2     		uxth	r3, r3
+ 196 0032 2380     		strh	r3, [r4]	@ movhi
+ 212:./Libraries/src/stm32f4xx_i2c.c ****   /* Reset tmpreg value */
+ 213:./Libraries/src/stm32f4xx_i2c.c ****   /* Clear F/S, DUTY and CCR[11:0] bits */
+ 214:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg = 0;
+ 197              		.loc 1 214 3 is_stmt 1 view .LVU51
+ 198              	.LVL24:
+ 215:./Libraries/src/stm32f4xx_i2c.c **** 
+ 216:./Libraries/src/stm32f4xx_i2c.c ****   /* Configure speed in standard mode */
+ 217:./Libraries/src/stm32f4xx_i2c.c ****   if (I2C_InitStruct->I2C_ClockSpeed <= 100000)
+ 199              		.loc 1 217 3 view .LVU52
+ 200              		.loc 1 217 21 is_stmt 0 view .LVU53
+ 201 0034 2B68     		ldr	r3, [r5]
+ 202              		.loc 1 217 6 view .LVU54
+ 203 0036 264E     		ldr	r6, .L21+4
+ 204 0038 B342     		cmp	r3, r6
+ 205 003a 20D8     		bhi	.L12
+ 206 003c 1046     		mov	r0, r2
+ 218:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 219:./Libraries/src/stm32f4xx_i2c.c ****     /* Standard mode speed calculate */
+ 220:./Libraries/src/stm32f4xx_i2c.c ****     result = (uint16_t)(pclk1 / (I2C_InitStruct->I2C_ClockSpeed << 1));
+ 207              		.loc 1 220 5 is_stmt 1 view .LVU55
+ 208              		.loc 1 220 65 is_stmt 0 view .LVU56
+ 209 003e 5B00     		lsls	r3, r3, #1
+ 210              		.loc 1 220 31 view .LVU57
+ 211 0040 B1FBF3F3 		udiv	r3, r1, r3
+ 212              		.loc 1 220 12 view .LVU58
+ 213 0044 9BB2     		uxth	r3, r3
+ 214              	.LVL25:
+ 221:./Libraries/src/stm32f4xx_i2c.c ****     /* Test if CCR value is under 0x4*/
+ 222:./Libraries/src/stm32f4xx_i2c.c ****     if (result < 0x04)
+ 215              		.loc 1 222 5 is_stmt 1 view .LVU59
+ 216              		.loc 1 222 8 is_stmt 0 view .LVU60
+ 217 0046 032B     		cmp	r3, #3
+ 218 0048 00D8     		bhi	.L13
+ 223:./Libraries/src/stm32f4xx_i2c.c ****     {
+ 224:./Libraries/src/stm32f4xx_i2c.c ****       /* Set minimum allowed value */
+ 225:./Libraries/src/stm32f4xx_i2c.c ****       result = 0x04;  
+ 219              		.loc 1 225 14 view .LVU61
+ 220 004a 0423     		movs	r3, #4
+ 221              	.LVL26:
+ 222              	.L13:
+ 226:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 227:./Libraries/src/stm32f4xx_i2c.c ****     /* Set speed value for standard mode */
+ 228:./Libraries/src/stm32f4xx_i2c.c ****     tmpreg |= result;	  
+ARM GAS  /tmp/ccKogwsQ.s 			page 9
+
+
+ 223              		.loc 1 228 5 is_stmt 1 view .LVU62
+ 229:./Libraries/src/stm32f4xx_i2c.c ****     /* Set Maximum Rise Time for standard mode */
+ 230:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->TRISE = freqrange + 1; 
+ 224              		.loc 1 230 5 view .LVU63
+ 225              		.loc 1 230 29 is_stmt 0 view .LVU64
+ 226 004c 0130     		adds	r0, r0, #1
+ 227              		.loc 1 230 17 view .LVU65
+ 228 004e 2084     		strh	r0, [r4, #32]	@ movhi
+ 229              	.LVL27:
+ 230              	.L14:
+ 231:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 232:./Libraries/src/stm32f4xx_i2c.c ****   /* Configure speed in fast mode */
+ 233:./Libraries/src/stm32f4xx_i2c.c ****   /* To use the I2C at 400 KHz (in fast mode), the PCLK1 frequency (I2C peripheral
+ 234:./Libraries/src/stm32f4xx_i2c.c ****      input clock) must be a multiple of 10 MHz */
+ 235:./Libraries/src/stm32f4xx_i2c.c ****   else /*(I2C_InitStruct->I2C_ClockSpeed <= 400000)*/
+ 236:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 237:./Libraries/src/stm32f4xx_i2c.c ****     if (I2C_InitStruct->I2C_DutyCycle == I2C_DutyCycle_2)
+ 238:./Libraries/src/stm32f4xx_i2c.c ****     {
+ 239:./Libraries/src/stm32f4xx_i2c.c ****       /* Fast mode speed calculate: Tlow/Thigh = 2 */
+ 240:./Libraries/src/stm32f4xx_i2c.c ****       result = (uint16_t)(pclk1 / (I2C_InitStruct->I2C_ClockSpeed * 3));
+ 241:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 242:./Libraries/src/stm32f4xx_i2c.c ****     else /*I2C_InitStruct->I2C_DutyCycle == I2C_DutyCycle_16_9*/
+ 243:./Libraries/src/stm32f4xx_i2c.c ****     {
+ 244:./Libraries/src/stm32f4xx_i2c.c ****       /* Fast mode speed calculate: Tlow/Thigh = 16/9 */
+ 245:./Libraries/src/stm32f4xx_i2c.c ****       result = (uint16_t)(pclk1 / (I2C_InitStruct->I2C_ClockSpeed * 25));
+ 246:./Libraries/src/stm32f4xx_i2c.c ****       /* Set DUTY bit */
+ 247:./Libraries/src/stm32f4xx_i2c.c ****       result |= I2C_DutyCycle_16_9;
+ 248:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 249:./Libraries/src/stm32f4xx_i2c.c **** 
+ 250:./Libraries/src/stm32f4xx_i2c.c ****     /* Test if CCR value is under 0x1*/
+ 251:./Libraries/src/stm32f4xx_i2c.c ****     if ((result & I2C_CCR_CCR) == 0)
+ 252:./Libraries/src/stm32f4xx_i2c.c ****     {
+ 253:./Libraries/src/stm32f4xx_i2c.c ****       /* Set minimum allowed value */
+ 254:./Libraries/src/stm32f4xx_i2c.c ****       result |= (uint16_t)0x0001;  
+ 255:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 256:./Libraries/src/stm32f4xx_i2c.c ****     /* Set speed value and set F/S bit for fast mode */
+ 257:./Libraries/src/stm32f4xx_i2c.c ****     tmpreg |= (uint16_t)(result | I2C_CCR_FS);
+ 258:./Libraries/src/stm32f4xx_i2c.c ****     /* Set Maximum Rise Time for fast mode */
+ 259:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->TRISE = (uint16_t)(((freqrange * (uint16_t)300) / (uint16_t)1000) + (uint16_t)1);  
+ 260:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 261:./Libraries/src/stm32f4xx_i2c.c **** 
+ 262:./Libraries/src/stm32f4xx_i2c.c ****   /* Write to I2Cx CCR */
+ 263:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->CCR = tmpreg;
+ 231              		.loc 1 263 3 is_stmt 1 view .LVU66
+ 232              		.loc 1 263 13 is_stmt 0 view .LVU67
+ 233 0050 A383     		strh	r3, [r4, #28]	@ movhi
+ 264:./Libraries/src/stm32f4xx_i2c.c ****   /* Enable the selected I2C peripheral */
+ 265:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->CR1 |= I2C_CR1_PE;
+ 234              		.loc 1 265 3 is_stmt 1 view .LVU68
+ 235              		.loc 1 265 7 is_stmt 0 view .LVU69
+ 236 0052 2388     		ldrh	r3, [r4]
+ 237              	.LVL28:
+ 238              		.loc 1 265 7 view .LVU70
+ 239 0054 9BB2     		uxth	r3, r3
+ 240              		.loc 1 265 13 view .LVU71
+ 241 0056 43F00103 		orr	r3, r3, #1
+ 242 005a 2380     		strh	r3, [r4]	@ movhi
+ARM GAS  /tmp/ccKogwsQ.s 			page 10
+
+
+ 243              	.LVL29:
+ 266:./Libraries/src/stm32f4xx_i2c.c **** 
+ 267:./Libraries/src/stm32f4xx_i2c.c **** /*---------------------------- I2Cx CR1 Configuration ------------------------*/
+ 268:./Libraries/src/stm32f4xx_i2c.c ****   /* Get the I2Cx CR1 value */
+ 269:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg = I2Cx->CR1;
+ 244              		.loc 1 269 3 is_stmt 1 view .LVU72
+ 245              		.loc 1 269 10 is_stmt 0 view .LVU73
+ 246 005c 2388     		ldrh	r3, [r4]
+ 247 005e 9BB2     		uxth	r3, r3
+ 248              	.LVL30:
+ 270:./Libraries/src/stm32f4xx_i2c.c ****   /* Clear ACK, SMBTYPE and  SMBUS bits */
+ 271:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg &= CR1_CLEAR_MASK;
+ 249              		.loc 1 271 3 is_stmt 1 view .LVU74
+ 250              		.loc 1 271 10 is_stmt 0 view .LVU75
+ 251 0060 23F48163 		bic	r3, r3, #1032
+ 252              	.LVL31:
+ 253              		.loc 1 271 10 view .LVU76
+ 254 0064 23F00203 		bic	r3, r3, #2
+ 255              	.LVL32:
+ 272:./Libraries/src/stm32f4xx_i2c.c ****   /* Configure I2Cx: mode and acknowledgement */
+ 273:./Libraries/src/stm32f4xx_i2c.c ****   /* Set SMBTYPE and SMBUS bits according to I2C_Mode value */
+ 274:./Libraries/src/stm32f4xx_i2c.c ****   /* Set ACK bit according to I2C_Ack value */
+ 275:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg |= (uint16_t)((uint32_t)I2C_InitStruct->I2C_Mode | I2C_InitStruct->I2C_Ack);
+ 256              		.loc 1 275 3 is_stmt 1 view .LVU77
+ 257              		.loc 1 275 48 is_stmt 0 view .LVU78
+ 258 0068 AA88     		ldrh	r2, [r5, #4]
+ 259              		.loc 1 275 75 view .LVU79
+ 260 006a 6989     		ldrh	r1, [r5, #10]
+ 261              		.loc 1 275 13 view .LVU80
+ 262 006c 0A43     		orrs	r2, r2, r1
+ 263              		.loc 1 275 10 view .LVU81
+ 264 006e 1343     		orrs	r3, r3, r2
+ 265              	.LVL33:
+ 276:./Libraries/src/stm32f4xx_i2c.c ****   /* Write to I2Cx CR1 */
+ 277:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->CR1 = tmpreg;
+ 266              		.loc 1 277 3 is_stmt 1 view .LVU82
+ 267              		.loc 1 277 13 is_stmt 0 view .LVU83
+ 268 0070 2380     		strh	r3, [r4]	@ movhi
+ 278:./Libraries/src/stm32f4xx_i2c.c **** 
+ 279:./Libraries/src/stm32f4xx_i2c.c **** /*---------------------------- I2Cx OAR1 Configuration -----------------------*/
+ 280:./Libraries/src/stm32f4xx_i2c.c ****   /* Set I2Cx Own Address1 and acknowledged address */
+ 281:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->OAR1 = (I2C_InitStruct->I2C_AcknowledgedAddress | I2C_InitStruct->I2C_OwnAddress1);
+ 269              		.loc 1 281 3 is_stmt 1 view .LVU84
+ 270              		.loc 1 281 31 is_stmt 0 view .LVU85
+ 271 0072 AB89     		ldrh	r3, [r5, #12]
+ 272              	.LVL34:
+ 273              		.loc 1 281 73 view .LVU86
+ 274 0074 2A89     		ldrh	r2, [r5, #8]
+ 275              		.loc 1 281 14 view .LVU87
+ 276 0076 1343     		orrs	r3, r3, r2
+ 277 0078 2381     		strh	r3, [r4, #8]	@ movhi
+ 278              	.LVL35:
+ 282:./Libraries/src/stm32f4xx_i2c.c **** }
+ 279              		.loc 1 282 1 view .LVU88
+ 280 007a 04B0     		add	sp, sp, #16
+ 281              	.LCFI3:
+ 282              		.cfi_remember_state
+ARM GAS  /tmp/ccKogwsQ.s 			page 11
+
+
+ 283              		.cfi_def_cfa_offset 16
+ 284              		@ sp needed
+ 285 007c 70BD     		pop	{r4, r5, r6, pc}
+ 286              	.LVL36:
+ 287              	.L12:
+ 288              	.LCFI4:
+ 289              		.cfi_restore_state
+ 237:./Libraries/src/stm32f4xx_i2c.c ****     {
+ 290              		.loc 1 237 5 is_stmt 1 view .LVU89
+ 237:./Libraries/src/stm32f4xx_i2c.c ****     {
+ 291              		.loc 1 237 23 is_stmt 0 view .LVU90
+ 292 007e EE88     		ldrh	r6, [r5, #6]
+ 237:./Libraries/src/stm32f4xx_i2c.c ****     {
+ 293              		.loc 1 237 8 view .LVU91
+ 294 0080 4BF6FF70 		movw	r0, #49151
+ 295 0084 8642     		cmp	r6, r0
+ 296 0086 1BD0     		beq	.L20
+ 245:./Libraries/src/stm32f4xx_i2c.c ****       /* Set DUTY bit */
+ 297              		.loc 1 245 7 is_stmt 1 view .LVU92
+ 245:./Libraries/src/stm32f4xx_i2c.c ****       /* Set DUTY bit */
+ 298              		.loc 1 245 67 is_stmt 0 view .LVU93
+ 299 0088 03EB8303 		add	r3, r3, r3, lsl #2
+ 300 008c 03EB8303 		add	r3, r3, r3, lsl #2
+ 245:./Libraries/src/stm32f4xx_i2c.c ****       /* Set DUTY bit */
+ 301              		.loc 1 245 33 view .LVU94
+ 302 0090 B1FBF3F1 		udiv	r1, r1, r3
+ 303              	.LVL37:
+ 245:./Libraries/src/stm32f4xx_i2c.c ****       /* Set DUTY bit */
+ 304              		.loc 1 245 14 view .LVU95
+ 305 0094 89B2     		uxth	r1, r1
+ 306              	.LVL38:
+ 247:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 307              		.loc 1 247 7 is_stmt 1 view .LVU96
+ 247:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 308              		.loc 1 247 14 is_stmt 0 view .LVU97
+ 309 0096 41F48043 		orr	r3, r1, #16384
+ 310              	.LVL39:
+ 311              	.L16:
+ 251:./Libraries/src/stm32f4xx_i2c.c ****     {
+ 312              		.loc 1 251 5 is_stmt 1 view .LVU98
+ 251:./Libraries/src/stm32f4xx_i2c.c ****     {
+ 313              		.loc 1 251 8 is_stmt 0 view .LVU99
+ 314 009a C3F30B01 		ubfx	r1, r3, #0, #12
+ 315 009e 09B9     		cbnz	r1, .L17
+ 254:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 316              		.loc 1 254 7 is_stmt 1 view .LVU100
+ 254:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 317              		.loc 1 254 14 is_stmt 0 view .LVU101
+ 318 00a0 43F00103 		orr	r3, r3, #1
+ 319              	.LVL40:
+ 320              	.L17:
+ 257:./Libraries/src/stm32f4xx_i2c.c ****     /* Set Maximum Rise Time for fast mode */
+ 321              		.loc 1 257 5 is_stmt 1 view .LVU102
+ 257:./Libraries/src/stm32f4xx_i2c.c ****     /* Set Maximum Rise Time for fast mode */
+ 322              		.loc 1 257 12 is_stmt 0 view .LVU103
+ 323 00a4 43F40043 		orr	r3, r3, #32768
+ 324              	.LVL41:
+ARM GAS  /tmp/ccKogwsQ.s 			page 12
+
+
+ 259:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 325              		.loc 1 259 5 is_stmt 1 view .LVU104
+ 259:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 326              		.loc 1 259 42 is_stmt 0 view .LVU105
+ 327 00a8 4FF49671 		mov	r1, #300
+ 328 00ac 01FB02F2 		mul	r2, r1, r2
+ 329              	.LVL42:
+ 259:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 330              		.loc 1 259 59 view .LVU106
+ 331 00b0 0849     		ldr	r1, .L21+8
+ 332 00b2 81FB0212 		smull	r1, r2, r1, r2
+ 333 00b6 9211     		asrs	r2, r2, #6
+ 259:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 334              		.loc 1 259 19 view .LVU107
+ 335 00b8 0132     		adds	r2, r2, #1
+ 336 00ba 92B2     		uxth	r2, r2
+ 259:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 337              		.loc 1 259 17 view .LVU108
+ 338 00bc 2284     		strh	r2, [r4, #32]	@ movhi
+ 339 00be C7E7     		b	.L14
+ 340              	.LVL43:
+ 341              	.L20:
+ 240:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 342              		.loc 1 240 7 is_stmt 1 view .LVU109
+ 240:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 343              		.loc 1 240 67 is_stmt 0 view .LVU110
+ 344 00c0 03EB4303 		add	r3, r3, r3, lsl #1
+ 240:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 345              		.loc 1 240 33 view .LVU111
+ 346 00c4 B1FBF3F3 		udiv	r3, r1, r3
+ 240:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 347              		.loc 1 240 14 view .LVU112
+ 348 00c8 9BB2     		uxth	r3, r3
+ 349              	.LVL44:
+ 240:./Libraries/src/stm32f4xx_i2c.c ****     }
+ 350              		.loc 1 240 14 view .LVU113
+ 351 00ca E6E7     		b	.L16
+ 352              	.L22:
+ 353              		.align	2
+ 354              	.L21:
+ 355 00cc 83DE1B43 		.word	1125899907
+ 356 00d0 A0860100 		.word	100000
+ 357 00d4 D34D6210 		.word	274877907
+ 358              		.cfi_endproc
+ 359              	.LFE124:
+ 361              		.section	.text.I2C_StructInit,"ax",%progbits
+ 362              		.align	1
+ 363              		.global	I2C_StructInit
+ 364              		.syntax unified
+ 365              		.thumb
+ 366              		.thumb_func
+ 368              	I2C_StructInit:
+ 369              	.LVL45:
+ 370              	.LFB125:
+ 283:./Libraries/src/stm32f4xx_i2c.c **** 
+ 284:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 285:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Fills each I2C_InitStruct member with its default value.
+ARM GAS  /tmp/ccKogwsQ.s 			page 13
+
+
+ 286:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_InitStruct: pointer to an I2C_InitTypeDef structure which will be initialized.
+ 287:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 288:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 289:./Libraries/src/stm32f4xx_i2c.c **** void I2C_StructInit(I2C_InitTypeDef* I2C_InitStruct)
+ 290:./Libraries/src/stm32f4xx_i2c.c **** {
+ 371              		.loc 1 290 1 is_stmt 1 view -0
+ 372              		.cfi_startproc
+ 373              		@ args = 0, pretend = 0, frame = 0
+ 374              		@ frame_needed = 0, uses_anonymous_args = 0
+ 375              		@ link register save eliminated.
+ 291:./Libraries/src/stm32f4xx_i2c.c **** /*---------------- Reset I2C init structure parameters values ----------------*/
+ 292:./Libraries/src/stm32f4xx_i2c.c ****   /* initialize the I2C_ClockSpeed member */
+ 293:./Libraries/src/stm32f4xx_i2c.c ****   I2C_InitStruct->I2C_ClockSpeed = 5000;
+ 376              		.loc 1 293 3 view .LVU115
+ 377              		.loc 1 293 34 is_stmt 0 view .LVU116
+ 378 0000 41F28833 		movw	r3, #5000
+ 379 0004 0360     		str	r3, [r0]
+ 294:./Libraries/src/stm32f4xx_i2c.c ****   /* Initialize the I2C_Mode member */
+ 295:./Libraries/src/stm32f4xx_i2c.c ****   I2C_InitStruct->I2C_Mode = I2C_Mode_I2C;
+ 380              		.loc 1 295 3 is_stmt 1 view .LVU117
+ 381              		.loc 1 295 28 is_stmt 0 view .LVU118
+ 382 0006 0023     		movs	r3, #0
+ 383 0008 8380     		strh	r3, [r0, #4]	@ movhi
+ 296:./Libraries/src/stm32f4xx_i2c.c ****   /* Initialize the I2C_DutyCycle member */
+ 297:./Libraries/src/stm32f4xx_i2c.c ****   I2C_InitStruct->I2C_DutyCycle = I2C_DutyCycle_2;
+ 384              		.loc 1 297 3 is_stmt 1 view .LVU119
+ 385              		.loc 1 297 33 is_stmt 0 view .LVU120
+ 386 000a 4BF6FF72 		movw	r2, #49151
+ 387 000e C280     		strh	r2, [r0, #6]	@ movhi
+ 298:./Libraries/src/stm32f4xx_i2c.c ****   /* Initialize the I2C_OwnAddress1 member */
+ 299:./Libraries/src/stm32f4xx_i2c.c ****   I2C_InitStruct->I2C_OwnAddress1 = 0;
+ 388              		.loc 1 299 3 is_stmt 1 view .LVU121
+ 389              		.loc 1 299 35 is_stmt 0 view .LVU122
+ 390 0010 0381     		strh	r3, [r0, #8]	@ movhi
+ 300:./Libraries/src/stm32f4xx_i2c.c ****   /* Initialize the I2C_Ack member */
+ 301:./Libraries/src/stm32f4xx_i2c.c ****   I2C_InitStruct->I2C_Ack = I2C_Ack_Disable;
+ 391              		.loc 1 301 3 is_stmt 1 view .LVU123
+ 392              		.loc 1 301 27 is_stmt 0 view .LVU124
+ 393 0012 4381     		strh	r3, [r0, #10]	@ movhi
+ 302:./Libraries/src/stm32f4xx_i2c.c ****   /* Initialize the I2C_AcknowledgedAddress member */
+ 303:./Libraries/src/stm32f4xx_i2c.c ****   I2C_InitStruct->I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
+ 394              		.loc 1 303 3 is_stmt 1 view .LVU125
+ 395              		.loc 1 303 43 is_stmt 0 view .LVU126
+ 396 0014 4FF48043 		mov	r3, #16384
+ 397 0018 8381     		strh	r3, [r0, #12]	@ movhi
+ 304:./Libraries/src/stm32f4xx_i2c.c **** }
+ 398              		.loc 1 304 1 view .LVU127
+ 399 001a 7047     		bx	lr
+ 400              		.cfi_endproc
+ 401              	.LFE125:
+ 403              		.section	.text.I2C_Cmd,"ax",%progbits
+ 404              		.align	1
+ 405              		.global	I2C_Cmd
+ 406              		.syntax unified
+ 407              		.thumb
+ 408              		.thumb_func
+ 410              	I2C_Cmd:
+ARM GAS  /tmp/ccKogwsQ.s 			page 14
+
+
+ 411              	.LVL46:
+ 412              	.LFB126:
+ 305:./Libraries/src/stm32f4xx_i2c.c **** 
+ 306:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 307:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the specified I2C peripheral.
+ 308:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 309:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2Cx peripheral. 
+ 310:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 311:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 312:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 313:./Libraries/src/stm32f4xx_i2c.c **** void I2C_Cmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 314:./Libraries/src/stm32f4xx_i2c.c **** {
+ 413              		.loc 1 314 1 is_stmt 1 view -0
+ 414              		.cfi_startproc
+ 415              		@ args = 0, pretend = 0, frame = 0
+ 416              		@ frame_needed = 0, uses_anonymous_args = 0
+ 417              		@ link register save eliminated.
+ 315:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 316:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 418              		.loc 1 316 3 view .LVU129
+ 317:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 419              		.loc 1 317 3 view .LVU130
+ 318:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 420              		.loc 1 318 3 view .LVU131
+ 421              		.loc 1 318 6 is_stmt 0 view .LVU132
+ 422 0000 29B1     		cbz	r1, .L25
+ 319:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 320:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable the selected I2C peripheral */
+ 321:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_CR1_PE;
+ 423              		.loc 1 321 5 is_stmt 1 view .LVU133
+ 424              		.loc 1 321 9 is_stmt 0 view .LVU134
+ 425 0002 0388     		ldrh	r3, [r0]
+ 426 0004 9BB2     		uxth	r3, r3
+ 427              		.loc 1 321 15 view .LVU135
+ 428 0006 43F00103 		orr	r3, r3, #1
+ 429 000a 0380     		strh	r3, [r0]	@ movhi
+ 430 000c 7047     		bx	lr
+ 431              	.L25:
+ 322:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 323:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 324:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 325:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable the selected I2C peripheral */
+ 326:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_PE);
+ 432              		.loc 1 326 5 is_stmt 1 view .LVU136
+ 433              		.loc 1 326 9 is_stmt 0 view .LVU137
+ 434 000e 0388     		ldrh	r3, [r0]
+ 435 0010 9BB2     		uxth	r3, r3
+ 436              		.loc 1 326 15 view .LVU138
+ 437 0012 23F00103 		bic	r3, r3, #1
+ 438 0016 9BB2     		uxth	r3, r3
+ 439 0018 0380     		strh	r3, [r0]	@ movhi
+ 327:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 328:./Libraries/src/stm32f4xx_i2c.c **** }
+ 440              		.loc 1 328 1 view .LVU139
+ 441 001a 7047     		bx	lr
+ 442              		.cfi_endproc
+ 443              	.LFE126:
+ARM GAS  /tmp/ccKogwsQ.s 			page 15
+
+
+ 445              		.section	.text.I2C_AnalogFilterCmd,"ax",%progbits
+ 446              		.align	1
+ 447              		.global	I2C_AnalogFilterCmd
+ 448              		.syntax unified
+ 449              		.thumb
+ 450              		.thumb_func
+ 452              	I2C_AnalogFilterCmd:
+ 453              	.LVL47:
+ 454              	.LFB127:
+ 329:./Libraries/src/stm32f4xx_i2c.c **** 
+ 330:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 331:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the Analog filter of I2C peripheral.
+ 332:./Libraries/src/stm32f4xx_i2c.c ****   * 
+ 333:./Libraries/src/stm32f4xx_i2c.c ****   * @note   This function can be used only for STM32F42xxx/STM3243xxx, STM32F401xx, STM32F410xx and
+ 334:./Libraries/src/stm32f4xx_i2c.c ****   *        
+ 335:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 336:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the Analog filter. 
+ 337:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 338:./Libraries/src/stm32f4xx_i2c.c ****   * @note   This function should be called before initializing and enabling
+ 339:./Libraries/src/stm32f4xx_i2c.c ****             the I2C Peripheral.
+ 340:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 341:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 342:./Libraries/src/stm32f4xx_i2c.c **** void I2C_AnalogFilterCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 343:./Libraries/src/stm32f4xx_i2c.c **** {
+ 455              		.loc 1 343 1 is_stmt 1 view -0
+ 456              		.cfi_startproc
+ 457              		@ args = 0, pretend = 0, frame = 0
+ 458              		@ frame_needed = 0, uses_anonymous_args = 0
+ 459              		@ link register save eliminated.
+ 344:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 345:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 460              		.loc 1 345 3 view .LVU141
+ 346:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 461              		.loc 1 346 3 view .LVU142
+ 347:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 462              		.loc 1 347 3 view .LVU143
+ 463              		.loc 1 347 6 is_stmt 0 view .LVU144
+ 464 0000 31B1     		cbz	r1, .L28
+ 348:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 349:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable the analog filter */
+ 350:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->FLTR &= (uint16_t)~((uint16_t)I2C_FLTR_ANOFF);    
+ 465              		.loc 1 350 5 is_stmt 1 view .LVU145
+ 466              		.loc 1 350 9 is_stmt 0 view .LVU146
+ 467 0002 838C     		ldrh	r3, [r0, #36]
+ 468 0004 9BB2     		uxth	r3, r3
+ 469              		.loc 1 350 16 view .LVU147
+ 470 0006 23F01003 		bic	r3, r3, #16
+ 471 000a 9BB2     		uxth	r3, r3
+ 472 000c 8384     		strh	r3, [r0, #36]	@ movhi
+ 473 000e 7047     		bx	lr
+ 474              	.L28:
+ 351:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 352:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 353:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 354:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable the analog filter */
+ 355:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->FLTR |= I2C_FLTR_ANOFF;
+ 475              		.loc 1 355 5 is_stmt 1 view .LVU148
+ARM GAS  /tmp/ccKogwsQ.s 			page 16
+
+
+ 476              		.loc 1 355 9 is_stmt 0 view .LVU149
+ 477 0010 838C     		ldrh	r3, [r0, #36]
+ 478 0012 9BB2     		uxth	r3, r3
+ 479              		.loc 1 355 16 view .LVU150
+ 480 0014 43F01003 		orr	r3, r3, #16
+ 481 0018 8384     		strh	r3, [r0, #36]	@ movhi
+ 356:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 357:./Libraries/src/stm32f4xx_i2c.c **** }
+ 482              		.loc 1 357 1 view .LVU151
+ 483 001a 7047     		bx	lr
+ 484              		.cfi_endproc
+ 485              	.LFE127:
+ 487              		.section	.text.I2C_DigitalFilterConfig,"ax",%progbits
+ 488              		.align	1
+ 489              		.global	I2C_DigitalFilterConfig
+ 490              		.syntax unified
+ 491              		.thumb
+ 492              		.thumb_func
+ 494              	I2C_DigitalFilterConfig:
+ 495              	.LVL48:
+ 496              	.LFB128:
+ 358:./Libraries/src/stm32f4xx_i2c.c **** 
+ 359:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 360:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Configures the Digital noise filter of I2C peripheral.
+ 361:./Libraries/src/stm32f4xx_i2c.c ****   * 
+ 362:./Libraries/src/stm32f4xx_i2c.c ****   * @note   This function can be used only for STM32F42xxx/STM3243xxx, STM32F401xx, STM32F410xx and
+ 363:./Libraries/src/stm32f4xx_i2c.c ****   *       
+ 364:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 365:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_DigitalFilter: Coefficient of digital noise filter. 
+ 366:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be a number between 0x00 and 0x0F.
+ 367:./Libraries/src/stm32f4xx_i2c.c ****   * @note   This function should be called before initializing and enabling
+ 368:./Libraries/src/stm32f4xx_i2c.c ****             the I2C Peripheral.
+ 369:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 370:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 371:./Libraries/src/stm32f4xx_i2c.c **** void I2C_DigitalFilterConfig(I2C_TypeDef* I2Cx, uint16_t I2C_DigitalFilter)
+ 372:./Libraries/src/stm32f4xx_i2c.c **** {
+ 497              		.loc 1 372 1 is_stmt 1 view -0
+ 498              		.cfi_startproc
+ 499              		@ args = 0, pretend = 0, frame = 0
+ 500              		@ frame_needed = 0, uses_anonymous_args = 0
+ 501              		@ link register save eliminated.
+ 373:./Libraries/src/stm32f4xx_i2c.c ****   uint16_t tmpreg = 0;
+ 502              		.loc 1 373 3 view .LVU153
+ 374:./Libraries/src/stm32f4xx_i2c.c ****   
+ 375:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 376:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 503              		.loc 1 376 3 view .LVU154
+ 377:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_DIGITAL_FILTER(I2C_DigitalFilter));
+ 504              		.loc 1 377 3 view .LVU155
+ 378:./Libraries/src/stm32f4xx_i2c.c ****   
+ 379:./Libraries/src/stm32f4xx_i2c.c ****   /* Get the old register value */
+ 380:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg = I2Cx->FLTR;
+ 505              		.loc 1 380 3 view .LVU156
+ 506              		.loc 1 380 10 is_stmt 0 view .LVU157
+ 507 0000 838C     		ldrh	r3, [r0, #36]
+ 508 0002 9BB2     		uxth	r3, r3
+ 509              	.LVL49:
+ARM GAS  /tmp/ccKogwsQ.s 			page 17
+
+
+ 381:./Libraries/src/stm32f4xx_i2c.c ****   
+ 382:./Libraries/src/stm32f4xx_i2c.c ****   /* Reset I2Cx DNF bit [3:0] */
+ 383:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg &= (uint16_t)~((uint16_t)I2C_FLTR_DNF);
+ 510              		.loc 1 383 3 is_stmt 1 view .LVU158
+ 511              		.loc 1 383 10 is_stmt 0 view .LVU159
+ 512 0004 23F00F03 		bic	r3, r3, #15
+ 513              	.LVL50:
+ 384:./Libraries/src/stm32f4xx_i2c.c ****   
+ 385:./Libraries/src/stm32f4xx_i2c.c ****   /* Set I2Cx DNF coefficient */
+ 386:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg |= (uint16_t)((uint16_t)I2C_DigitalFilter & I2C_FLTR_DNF);
+ 514              		.loc 1 386 3 is_stmt 1 view .LVU160
+ 515 0008 01F00F01 		and	r1, r1, #15
+ 516              	.LVL51:
+ 517              		.loc 1 386 3 is_stmt 0 view .LVU161
+ 518 000c 0B43     		orrs	r3, r3, r1
+ 519              	.LVL52:
+ 387:./Libraries/src/stm32f4xx_i2c.c ****   
+ 388:./Libraries/src/stm32f4xx_i2c.c ****   /* Store the new register value */
+ 389:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->FLTR = tmpreg;
+ 520              		.loc 1 389 3 is_stmt 1 view .LVU162
+ 521              		.loc 1 389 14 is_stmt 0 view .LVU163
+ 522 000e 8384     		strh	r3, [r0, #36]	@ movhi
+ 390:./Libraries/src/stm32f4xx_i2c.c **** }
+ 523              		.loc 1 390 1 view .LVU164
+ 524 0010 7047     		bx	lr
+ 525              		.cfi_endproc
+ 526              	.LFE128:
+ 528              		.section	.text.I2C_GenerateSTART,"ax",%progbits
+ 529              		.align	1
+ 530              		.global	I2C_GenerateSTART
+ 531              		.syntax unified
+ 532              		.thumb
+ 533              		.thumb_func
+ 535              	I2C_GenerateSTART:
+ 536              	.LVL53:
+ 537              	.LFB129:
+ 391:./Libraries/src/stm32f4xx_i2c.c **** 
+ 392:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 393:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Generates I2Cx communication START condition.
+ 394:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 395:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2C START condition generation.
+ 396:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 397:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None.
+ 398:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 399:./Libraries/src/stm32f4xx_i2c.c **** void I2C_GenerateSTART(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 400:./Libraries/src/stm32f4xx_i2c.c **** {
+ 538              		.loc 1 400 1 is_stmt 1 view -0
+ 539              		.cfi_startproc
+ 540              		@ args = 0, pretend = 0, frame = 0
+ 541              		@ frame_needed = 0, uses_anonymous_args = 0
+ 542              		@ link register save eliminated.
+ 401:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 402:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 543              		.loc 1 402 3 view .LVU166
+ 403:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 544              		.loc 1 403 3 view .LVU167
+ 404:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ARM GAS  /tmp/ccKogwsQ.s 			page 18
+
+
+ 545              		.loc 1 404 3 view .LVU168
+ 546              		.loc 1 404 6 is_stmt 0 view .LVU169
+ 547 0000 29B1     		cbz	r1, .L32
+ 405:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 406:./Libraries/src/stm32f4xx_i2c.c ****     /* Generate a START condition */
+ 407:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_CR1_START;
+ 548              		.loc 1 407 5 is_stmt 1 view .LVU170
+ 549              		.loc 1 407 9 is_stmt 0 view .LVU171
+ 550 0002 0388     		ldrh	r3, [r0]
+ 551 0004 9BB2     		uxth	r3, r3
+ 552              		.loc 1 407 15 view .LVU172
+ 553 0006 43F48073 		orr	r3, r3, #256
+ 554 000a 0380     		strh	r3, [r0]	@ movhi
+ 555 000c 7047     		bx	lr
+ 556              	.L32:
+ 408:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 409:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 410:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 411:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable the START condition generation */
+ 412:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_START);
+ 557              		.loc 1 412 5 is_stmt 1 view .LVU173
+ 558              		.loc 1 412 9 is_stmt 0 view .LVU174
+ 559 000e 0388     		ldrh	r3, [r0]
+ 560 0010 9BB2     		uxth	r3, r3
+ 561              		.loc 1 412 15 view .LVU175
+ 562 0012 23F48073 		bic	r3, r3, #256
+ 563 0016 9BB2     		uxth	r3, r3
+ 564 0018 0380     		strh	r3, [r0]	@ movhi
+ 413:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 414:./Libraries/src/stm32f4xx_i2c.c **** }
+ 565              		.loc 1 414 1 view .LVU176
+ 566 001a 7047     		bx	lr
+ 567              		.cfi_endproc
+ 568              	.LFE129:
+ 570              		.section	.text.I2C_GenerateSTOP,"ax",%progbits
+ 571              		.align	1
+ 572              		.global	I2C_GenerateSTOP
+ 573              		.syntax unified
+ 574              		.thumb
+ 575              		.thumb_func
+ 577              	I2C_GenerateSTOP:
+ 578              	.LVL54:
+ 579              	.LFB130:
+ 415:./Libraries/src/stm32f4xx_i2c.c **** 
+ 416:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 417:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Generates I2Cx communication STOP condition.
+ 418:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 419:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2C STOP condition generation.
+ 420:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 421:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None.
+ 422:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 423:./Libraries/src/stm32f4xx_i2c.c **** void I2C_GenerateSTOP(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 424:./Libraries/src/stm32f4xx_i2c.c **** {
+ 580              		.loc 1 424 1 is_stmt 1 view -0
+ 581              		.cfi_startproc
+ 582              		@ args = 0, pretend = 0, frame = 0
+ 583              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccKogwsQ.s 			page 19
+
+
+ 584              		@ link register save eliminated.
+ 425:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 426:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 585              		.loc 1 426 3 view .LVU178
+ 427:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 586              		.loc 1 427 3 view .LVU179
+ 428:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 587              		.loc 1 428 3 view .LVU180
+ 588              		.loc 1 428 6 is_stmt 0 view .LVU181
+ 589 0000 29B1     		cbz	r1, .L35
+ 429:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 430:./Libraries/src/stm32f4xx_i2c.c ****     /* Generate a STOP condition */
+ 431:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_CR1_STOP;
+ 590              		.loc 1 431 5 is_stmt 1 view .LVU182
+ 591              		.loc 1 431 9 is_stmt 0 view .LVU183
+ 592 0002 0388     		ldrh	r3, [r0]
+ 593 0004 9BB2     		uxth	r3, r3
+ 594              		.loc 1 431 15 view .LVU184
+ 595 0006 43F40073 		orr	r3, r3, #512
+ 596 000a 0380     		strh	r3, [r0]	@ movhi
+ 597 000c 7047     		bx	lr
+ 598              	.L35:
+ 432:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 433:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 434:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 435:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable the STOP condition generation */
+ 436:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_STOP);
+ 599              		.loc 1 436 5 is_stmt 1 view .LVU185
+ 600              		.loc 1 436 9 is_stmt 0 view .LVU186
+ 601 000e 0388     		ldrh	r3, [r0]
+ 602 0010 9BB2     		uxth	r3, r3
+ 603              		.loc 1 436 15 view .LVU187
+ 604 0012 23F40073 		bic	r3, r3, #512
+ 605 0016 9BB2     		uxth	r3, r3
+ 606 0018 0380     		strh	r3, [r0]	@ movhi
+ 437:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 438:./Libraries/src/stm32f4xx_i2c.c **** }
+ 607              		.loc 1 438 1 view .LVU188
+ 608 001a 7047     		bx	lr
+ 609              		.cfi_endproc
+ 610              	.LFE130:
+ 612              		.section	.text.I2C_Send7bitAddress,"ax",%progbits
+ 613              		.align	1
+ 614              		.global	I2C_Send7bitAddress
+ 615              		.syntax unified
+ 616              		.thumb
+ 617              		.thumb_func
+ 619              	I2C_Send7bitAddress:
+ 620              	.LVL55:
+ 621              	.LFB131:
+ 439:./Libraries/src/stm32f4xx_i2c.c **** 
+ 440:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 441:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Transmits the address byte to select the slave device.
+ 442:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 443:./Libraries/src/stm32f4xx_i2c.c ****   * @param  Address: specifies the slave address which will be transmitted
+ 444:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_Direction: specifies whether the I2C device will be a Transmitter
+ 445:./Libraries/src/stm32f4xx_i2c.c ****   *         or a Receiver. 
+ARM GAS  /tmp/ccKogwsQ.s 			page 20
+
+
+ 446:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be one of the following values
+ 447:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_Direction_Transmitter: Transmitter mode
+ 448:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_Direction_Receiver: Receiver mode
+ 449:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None.
+ 450:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 451:./Libraries/src/stm32f4xx_i2c.c **** void I2C_Send7bitAddress(I2C_TypeDef* I2Cx, uint8_t Address, uint8_t I2C_Direction)
+ 452:./Libraries/src/stm32f4xx_i2c.c **** {
+ 622              		.loc 1 452 1 is_stmt 1 view -0
+ 623              		.cfi_startproc
+ 624              		@ args = 0, pretend = 0, frame = 0
+ 625              		@ frame_needed = 0, uses_anonymous_args = 0
+ 626              		@ link register save eliminated.
+ 453:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 454:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 627              		.loc 1 454 3 view .LVU190
+ 455:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_DIRECTION(I2C_Direction));
+ 628              		.loc 1 455 3 view .LVU191
+ 456:./Libraries/src/stm32f4xx_i2c.c ****   /* Test on the direction to set/reset the read/write bit */
+ 457:./Libraries/src/stm32f4xx_i2c.c ****   if (I2C_Direction != I2C_Direction_Transmitter)
+ 629              		.loc 1 457 3 view .LVU192
+ 630              		.loc 1 457 6 is_stmt 0 view .LVU193
+ 631 0000 1AB1     		cbz	r2, .L38
+ 458:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 459:./Libraries/src/stm32f4xx_i2c.c ****     /* Set the address bit0 for read */
+ 460:./Libraries/src/stm32f4xx_i2c.c ****     Address |= I2C_OAR1_ADD0;
+ 632              		.loc 1 460 5 is_stmt 1 view .LVU194
+ 633              		.loc 1 460 13 is_stmt 0 view .LVU195
+ 634 0002 41F00101 		orr	r1, r1, #1
+ 635              	.LVL56:
+ 636              	.L39:
+ 461:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 462:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 463:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 464:./Libraries/src/stm32f4xx_i2c.c ****     /* Reset the address bit0 for write */
+ 465:./Libraries/src/stm32f4xx_i2c.c ****     Address &= (uint8_t)~((uint8_t)I2C_OAR1_ADD0);
+ 466:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 467:./Libraries/src/stm32f4xx_i2c.c ****   /* Send the address */
+ 468:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->DR = Address;
+ 637              		.loc 1 468 3 is_stmt 1 view .LVU196
+ 638              		.loc 1 468 12 is_stmt 0 view .LVU197
+ 639 0006 0182     		strh	r1, [r0, #16]	@ movhi
+ 469:./Libraries/src/stm32f4xx_i2c.c **** }
+ 640              		.loc 1 469 1 view .LVU198
+ 641 0008 7047     		bx	lr
+ 642              	.L38:
+ 465:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 643              		.loc 1 465 5 is_stmt 1 view .LVU199
+ 465:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 644              		.loc 1 465 13 is_stmt 0 view .LVU200
+ 645 000a 01F0FE01 		and	r1, r1, #254
+ 646              	.LVL57:
+ 465:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 647              		.loc 1 465 13 view .LVU201
+ 648 000e FAE7     		b	.L39
+ 649              		.cfi_endproc
+ 650              	.LFE131:
+ 652              		.section	.text.I2C_AcknowledgeConfig,"ax",%progbits
+ARM GAS  /tmp/ccKogwsQ.s 			page 21
+
+
+ 653              		.align	1
+ 654              		.global	I2C_AcknowledgeConfig
+ 655              		.syntax unified
+ 656              		.thumb
+ 657              		.thumb_func
+ 659              	I2C_AcknowledgeConfig:
+ 660              	.LVL58:
+ 661              	.LFB132:
+ 470:./Libraries/src/stm32f4xx_i2c.c **** 
+ 471:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 472:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the specified I2C acknowledge feature.
+ 473:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 474:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2C Acknowledgement.
+ 475:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 476:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None.
+ 477:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 478:./Libraries/src/stm32f4xx_i2c.c **** void I2C_AcknowledgeConfig(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 479:./Libraries/src/stm32f4xx_i2c.c **** {
+ 662              		.loc 1 479 1 is_stmt 1 view -0
+ 663              		.cfi_startproc
+ 664              		@ args = 0, pretend = 0, frame = 0
+ 665              		@ frame_needed = 0, uses_anonymous_args = 0
+ 666              		@ link register save eliminated.
+ 480:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 481:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 667              		.loc 1 481 3 view .LVU203
+ 482:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 668              		.loc 1 482 3 view .LVU204
+ 483:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 669              		.loc 1 483 3 view .LVU205
+ 670              		.loc 1 483 6 is_stmt 0 view .LVU206
+ 671 0000 29B1     		cbz	r1, .L41
+ 484:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 485:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable the acknowledgement */
+ 486:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_CR1_ACK;
+ 672              		.loc 1 486 5 is_stmt 1 view .LVU207
+ 673              		.loc 1 486 9 is_stmt 0 view .LVU208
+ 674 0002 0388     		ldrh	r3, [r0]
+ 675 0004 9BB2     		uxth	r3, r3
+ 676              		.loc 1 486 15 view .LVU209
+ 677 0006 43F48063 		orr	r3, r3, #1024
+ 678 000a 0380     		strh	r3, [r0]	@ movhi
+ 679 000c 7047     		bx	lr
+ 680              	.L41:
+ 487:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 488:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 489:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 490:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable the acknowledgement */
+ 491:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_ACK);
+ 681              		.loc 1 491 5 is_stmt 1 view .LVU210
+ 682              		.loc 1 491 9 is_stmt 0 view .LVU211
+ 683 000e 0388     		ldrh	r3, [r0]
+ 684 0010 9BB2     		uxth	r3, r3
+ 685              		.loc 1 491 15 view .LVU212
+ 686 0012 23F48063 		bic	r3, r3, #1024
+ 687 0016 9BB2     		uxth	r3, r3
+ 688 0018 0380     		strh	r3, [r0]	@ movhi
+ARM GAS  /tmp/ccKogwsQ.s 			page 22
+
+
+ 492:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 493:./Libraries/src/stm32f4xx_i2c.c **** }
+ 689              		.loc 1 493 1 view .LVU213
+ 690 001a 7047     		bx	lr
+ 691              		.cfi_endproc
+ 692              	.LFE132:
+ 694              		.section	.text.I2C_OwnAddress2Config,"ax",%progbits
+ 695              		.align	1
+ 696              		.global	I2C_OwnAddress2Config
+ 697              		.syntax unified
+ 698              		.thumb
+ 699              		.thumb_func
+ 701              	I2C_OwnAddress2Config:
+ 702              	.LVL59:
+ 703              	.LFB133:
+ 494:./Libraries/src/stm32f4xx_i2c.c **** 
+ 495:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 496:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Configures the specified I2C own address2.
+ 497:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 498:./Libraries/src/stm32f4xx_i2c.c ****   * @param  Address: specifies the 7bit I2C own address2.
+ 499:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None.
+ 500:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 501:./Libraries/src/stm32f4xx_i2c.c **** void I2C_OwnAddress2Config(I2C_TypeDef* I2Cx, uint8_t Address)
+ 502:./Libraries/src/stm32f4xx_i2c.c **** {
+ 704              		.loc 1 502 1 is_stmt 1 view -0
+ 705              		.cfi_startproc
+ 706              		@ args = 0, pretend = 0, frame = 0
+ 707              		@ frame_needed = 0, uses_anonymous_args = 0
+ 708              		@ link register save eliminated.
+ 503:./Libraries/src/stm32f4xx_i2c.c ****   uint16_t tmpreg = 0;
+ 709              		.loc 1 503 3 view .LVU215
+ 504:./Libraries/src/stm32f4xx_i2c.c **** 
+ 505:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 506:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 710              		.loc 1 506 3 view .LVU216
+ 507:./Libraries/src/stm32f4xx_i2c.c **** 
+ 508:./Libraries/src/stm32f4xx_i2c.c ****   /* Get the old register value */
+ 509:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg = I2Cx->OAR2;
+ 711              		.loc 1 509 3 view .LVU217
+ 712              		.loc 1 509 10 is_stmt 0 view .LVU218
+ 713 0000 8389     		ldrh	r3, [r0, #12]
+ 714 0002 9BB2     		uxth	r3, r3
+ 715              	.LVL60:
+ 510:./Libraries/src/stm32f4xx_i2c.c **** 
+ 511:./Libraries/src/stm32f4xx_i2c.c ****   /* Reset I2Cx Own address2 bit [7:1] */
+ 512:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg &= (uint16_t)~((uint16_t)I2C_OAR2_ADD2);
+ 716              		.loc 1 512 3 is_stmt 1 view .LVU219
+ 717              		.loc 1 512 10 is_stmt 0 view .LVU220
+ 718 0004 23F0FE03 		bic	r3, r3, #254
+ 719              	.LVL61:
+ 513:./Libraries/src/stm32f4xx_i2c.c **** 
+ 514:./Libraries/src/stm32f4xx_i2c.c ****   /* Set I2Cx Own address2 */
+ 515:./Libraries/src/stm32f4xx_i2c.c ****   tmpreg |= (uint16_t)((uint16_t)Address & (uint16_t)0x00FE);
+ 720              		.loc 1 515 3 is_stmt 1 view .LVU221
+ 721              		.loc 1 515 10 is_stmt 0 view .LVU222
+ 722 0008 01F0FE01 		and	r1, r1, #254
+ 723              	.LVL62:
+ARM GAS  /tmp/ccKogwsQ.s 			page 23
+
+
+ 724              		.loc 1 515 10 view .LVU223
+ 725 000c 0B43     		orrs	r3, r3, r1
+ 726              	.LVL63:
+ 516:./Libraries/src/stm32f4xx_i2c.c **** 
+ 517:./Libraries/src/stm32f4xx_i2c.c ****   /* Store the new register value */
+ 518:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->OAR2 = tmpreg;
+ 727              		.loc 1 518 3 is_stmt 1 view .LVU224
+ 728              		.loc 1 518 14 is_stmt 0 view .LVU225
+ 729 000e 8381     		strh	r3, [r0, #12]	@ movhi
+ 519:./Libraries/src/stm32f4xx_i2c.c **** }
+ 730              		.loc 1 519 1 view .LVU226
+ 731 0010 7047     		bx	lr
+ 732              		.cfi_endproc
+ 733              	.LFE133:
+ 735              		.section	.text.I2C_DualAddressCmd,"ax",%progbits
+ 736              		.align	1
+ 737              		.global	I2C_DualAddressCmd
+ 738              		.syntax unified
+ 739              		.thumb
+ 740              		.thumb_func
+ 742              	I2C_DualAddressCmd:
+ 743              	.LVL64:
+ 744              	.LFB134:
+ 520:./Libraries/src/stm32f4xx_i2c.c **** 
+ 521:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 522:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the specified I2C dual addressing mode.
+ 523:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 524:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2C dual addressing mode.
+ 525:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 526:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 527:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 528:./Libraries/src/stm32f4xx_i2c.c **** void I2C_DualAddressCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 529:./Libraries/src/stm32f4xx_i2c.c **** {
+ 745              		.loc 1 529 1 is_stmt 1 view -0
+ 746              		.cfi_startproc
+ 747              		@ args = 0, pretend = 0, frame = 0
+ 748              		@ frame_needed = 0, uses_anonymous_args = 0
+ 749              		@ link register save eliminated.
+ 530:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 531:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 750              		.loc 1 531 3 view .LVU228
+ 532:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 751              		.loc 1 532 3 view .LVU229
+ 533:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 752              		.loc 1 533 3 view .LVU230
+ 753              		.loc 1 533 6 is_stmt 0 view .LVU231
+ 754 0000 29B1     		cbz	r1, .L45
+ 534:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 535:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable dual addressing mode */
+ 536:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->OAR2 |= I2C_OAR2_ENDUAL;
+ 755              		.loc 1 536 5 is_stmt 1 view .LVU232
+ 756              		.loc 1 536 9 is_stmt 0 view .LVU233
+ 757 0002 8389     		ldrh	r3, [r0, #12]
+ 758 0004 9BB2     		uxth	r3, r3
+ 759              		.loc 1 536 16 view .LVU234
+ 760 0006 43F00103 		orr	r3, r3, #1
+ 761 000a 8381     		strh	r3, [r0, #12]	@ movhi
+ARM GAS  /tmp/ccKogwsQ.s 			page 24
+
+
+ 762 000c 7047     		bx	lr
+ 763              	.L45:
+ 537:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 538:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 539:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 540:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable dual addressing mode */
+ 541:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->OAR2 &= (uint16_t)~((uint16_t)I2C_OAR2_ENDUAL);
+ 764              		.loc 1 541 5 is_stmt 1 view .LVU235
+ 765              		.loc 1 541 9 is_stmt 0 view .LVU236
+ 766 000e 8389     		ldrh	r3, [r0, #12]
+ 767 0010 9BB2     		uxth	r3, r3
+ 768              		.loc 1 541 16 view .LVU237
+ 769 0012 23F00103 		bic	r3, r3, #1
+ 770 0016 9BB2     		uxth	r3, r3
+ 771 0018 8381     		strh	r3, [r0, #12]	@ movhi
+ 542:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 543:./Libraries/src/stm32f4xx_i2c.c **** }
+ 772              		.loc 1 543 1 view .LVU238
+ 773 001a 7047     		bx	lr
+ 774              		.cfi_endproc
+ 775              	.LFE134:
+ 777              		.section	.text.I2C_GeneralCallCmd,"ax",%progbits
+ 778              		.align	1
+ 779              		.global	I2C_GeneralCallCmd
+ 780              		.syntax unified
+ 781              		.thumb
+ 782              		.thumb_func
+ 784              	I2C_GeneralCallCmd:
+ 785              	.LVL65:
+ 786              	.LFB135:
+ 544:./Libraries/src/stm32f4xx_i2c.c **** 
+ 545:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 546:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the specified I2C general call feature.
+ 547:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 548:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2C General call.
+ 549:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 550:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 551:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 552:./Libraries/src/stm32f4xx_i2c.c **** void I2C_GeneralCallCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 553:./Libraries/src/stm32f4xx_i2c.c **** {
+ 787              		.loc 1 553 1 is_stmt 1 view -0
+ 788              		.cfi_startproc
+ 789              		@ args = 0, pretend = 0, frame = 0
+ 790              		@ frame_needed = 0, uses_anonymous_args = 0
+ 791              		@ link register save eliminated.
+ 554:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 555:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 792              		.loc 1 555 3 view .LVU240
+ 556:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 793              		.loc 1 556 3 view .LVU241
+ 557:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 794              		.loc 1 557 3 view .LVU242
+ 795              		.loc 1 557 6 is_stmt 0 view .LVU243
+ 796 0000 29B1     		cbz	r1, .L48
+ 558:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 559:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable general call */
+ 560:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_CR1_ENGC;
+ARM GAS  /tmp/ccKogwsQ.s 			page 25
+
+
+ 797              		.loc 1 560 5 is_stmt 1 view .LVU244
+ 798              		.loc 1 560 9 is_stmt 0 view .LVU245
+ 799 0002 0388     		ldrh	r3, [r0]
+ 800 0004 9BB2     		uxth	r3, r3
+ 801              		.loc 1 560 15 view .LVU246
+ 802 0006 43F04003 		orr	r3, r3, #64
+ 803 000a 0380     		strh	r3, [r0]	@ movhi
+ 804 000c 7047     		bx	lr
+ 805              	.L48:
+ 561:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 562:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 563:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 564:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable general call */
+ 565:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_ENGC);
+ 806              		.loc 1 565 5 is_stmt 1 view .LVU247
+ 807              		.loc 1 565 9 is_stmt 0 view .LVU248
+ 808 000e 0388     		ldrh	r3, [r0]
+ 809 0010 9BB2     		uxth	r3, r3
+ 810              		.loc 1 565 15 view .LVU249
+ 811 0012 23F04003 		bic	r3, r3, #64
+ 812 0016 9BB2     		uxth	r3, r3
+ 813 0018 0380     		strh	r3, [r0]	@ movhi
+ 566:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 567:./Libraries/src/stm32f4xx_i2c.c **** }
+ 814              		.loc 1 567 1 view .LVU250
+ 815 001a 7047     		bx	lr
+ 816              		.cfi_endproc
+ 817              	.LFE135:
+ 819              		.section	.text.I2C_SoftwareResetCmd,"ax",%progbits
+ 820              		.align	1
+ 821              		.global	I2C_SoftwareResetCmd
+ 822              		.syntax unified
+ 823              		.thumb
+ 824              		.thumb_func
+ 826              	I2C_SoftwareResetCmd:
+ 827              	.LVL66:
+ 828              	.LFB136:
+ 568:./Libraries/src/stm32f4xx_i2c.c **** 
+ 569:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 570:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the specified I2C software reset.
+ 571:./Libraries/src/stm32f4xx_i2c.c ****   * @note   When software reset is enabled, the I2C IOs are released (this can
+ 572:./Libraries/src/stm32f4xx_i2c.c ****   *         be useful to recover from bus errors).  
+ 573:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 574:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2C software reset.
+ 575:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 576:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 577:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 578:./Libraries/src/stm32f4xx_i2c.c **** void I2C_SoftwareResetCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 579:./Libraries/src/stm32f4xx_i2c.c **** {
+ 829              		.loc 1 579 1 is_stmt 1 view -0
+ 830              		.cfi_startproc
+ 831              		@ args = 0, pretend = 0, frame = 0
+ 832              		@ frame_needed = 0, uses_anonymous_args = 0
+ 833              		@ link register save eliminated.
+ 580:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 581:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 834              		.loc 1 581 3 view .LVU252
+ARM GAS  /tmp/ccKogwsQ.s 			page 26
+
+
+ 582:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 835              		.loc 1 582 3 view .LVU253
+ 583:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 836              		.loc 1 583 3 view .LVU254
+ 837              		.loc 1 583 6 is_stmt 0 view .LVU255
+ 838 0000 39B1     		cbz	r1, .L51
+ 584:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 585:./Libraries/src/stm32f4xx_i2c.c ****     /* Peripheral under reset */
+ 586:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_CR1_SWRST;
+ 839              		.loc 1 586 5 is_stmt 1 view .LVU256
+ 840              		.loc 1 586 9 is_stmt 0 view .LVU257
+ 841 0002 0388     		ldrh	r3, [r0]
+ 842              		.loc 1 586 15 view .LVU258
+ 843 0004 6FEA4343 		mvn	r3, r3, lsl #17
+ 844 0008 6FEA5343 		mvn	r3, r3, lsr #17
+ 845 000c 9BB2     		uxth	r3, r3
+ 846 000e 0380     		strh	r3, [r0]	@ movhi
+ 847 0010 7047     		bx	lr
+ 848              	.L51:
+ 587:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 588:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 589:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 590:./Libraries/src/stm32f4xx_i2c.c ****     /* Peripheral not under reset */
+ 591:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_SWRST);
+ 849              		.loc 1 591 5 is_stmt 1 view .LVU259
+ 850              		.loc 1 591 9 is_stmt 0 view .LVU260
+ 851 0012 0388     		ldrh	r3, [r0]
+ 852              		.loc 1 591 15 view .LVU261
+ 853 0014 C3F30E03 		ubfx	r3, r3, #0, #15
+ 854 0018 0380     		strh	r3, [r0]	@ movhi
+ 592:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 593:./Libraries/src/stm32f4xx_i2c.c **** }
+ 855              		.loc 1 593 1 view .LVU262
+ 856 001a 7047     		bx	lr
+ 857              		.cfi_endproc
+ 858              	.LFE136:
+ 860              		.section	.text.I2C_StretchClockCmd,"ax",%progbits
+ 861              		.align	1
+ 862              		.global	I2C_StretchClockCmd
+ 863              		.syntax unified
+ 864              		.thumb
+ 865              		.thumb_func
+ 867              	I2C_StretchClockCmd:
+ 868              	.LVL67:
+ 869              	.LFB137:
+ 594:./Libraries/src/stm32f4xx_i2c.c **** 
+ 595:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 596:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the specified I2C Clock stretching.
+ 597:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 598:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2Cx Clock stretching.
+ 599:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 600:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 601:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 602:./Libraries/src/stm32f4xx_i2c.c **** void I2C_StretchClockCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 603:./Libraries/src/stm32f4xx_i2c.c **** {
+ 870              		.loc 1 603 1 is_stmt 1 view -0
+ 871              		.cfi_startproc
+ARM GAS  /tmp/ccKogwsQ.s 			page 27
+
+
+ 872              		@ args = 0, pretend = 0, frame = 0
+ 873              		@ frame_needed = 0, uses_anonymous_args = 0
+ 874              		@ link register save eliminated.
+ 604:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 605:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 875              		.loc 1 605 3 view .LVU264
+ 606:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 876              		.loc 1 606 3 view .LVU265
+ 607:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState == DISABLE)
+ 877              		.loc 1 607 3 view .LVU266
+ 878              		.loc 1 607 6 is_stmt 0 view .LVU267
+ 879 0000 29B9     		cbnz	r1, .L54
+ 608:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 609:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable the selected I2C Clock stretching */
+ 610:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_CR1_NOSTRETCH;
+ 880              		.loc 1 610 5 is_stmt 1 view .LVU268
+ 881              		.loc 1 610 9 is_stmt 0 view .LVU269
+ 882 0002 0388     		ldrh	r3, [r0]
+ 883 0004 9BB2     		uxth	r3, r3
+ 884              		.loc 1 610 15 view .LVU270
+ 885 0006 43F08003 		orr	r3, r3, #128
+ 886 000a 0380     		strh	r3, [r0]	@ movhi
+ 887 000c 7047     		bx	lr
+ 888              	.L54:
+ 611:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 612:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 613:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 614:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable the selected I2C Clock stretching */
+ 615:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_NOSTRETCH);
+ 889              		.loc 1 615 5 is_stmt 1 view .LVU271
+ 890              		.loc 1 615 9 is_stmt 0 view .LVU272
+ 891 000e 0388     		ldrh	r3, [r0]
+ 892 0010 9BB2     		uxth	r3, r3
+ 893              		.loc 1 615 15 view .LVU273
+ 894 0012 23F08003 		bic	r3, r3, #128
+ 895 0016 9BB2     		uxth	r3, r3
+ 896 0018 0380     		strh	r3, [r0]	@ movhi
+ 616:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 617:./Libraries/src/stm32f4xx_i2c.c **** }
+ 897              		.loc 1 617 1 view .LVU274
+ 898 001a 7047     		bx	lr
+ 899              		.cfi_endproc
+ 900              	.LFE137:
+ 902              		.section	.text.I2C_FastModeDutyCycleConfig,"ax",%progbits
+ 903              		.align	1
+ 904              		.global	I2C_FastModeDutyCycleConfig
+ 905              		.syntax unified
+ 906              		.thumb
+ 907              		.thumb_func
+ 909              	I2C_FastModeDutyCycleConfig:
+ 910              	.LVL68:
+ 911              	.LFB138:
+ 618:./Libraries/src/stm32f4xx_i2c.c **** 
+ 619:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 620:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Selects the specified I2C fast mode duty cycle.
+ 621:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 622:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_DutyCycle: specifies the fast mode duty cycle.
+ARM GAS  /tmp/ccKogwsQ.s 			page 28
+
+
+ 623:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be one of the following values:
+ 624:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_DutyCycle_2: I2C fast mode Tlow/Thigh = 2
+ 625:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_DutyCycle_16_9: I2C fast mode Tlow/Thigh = 16/9
+ 626:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 627:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 628:./Libraries/src/stm32f4xx_i2c.c **** void I2C_FastModeDutyCycleConfig(I2C_TypeDef* I2Cx, uint16_t I2C_DutyCycle)
+ 629:./Libraries/src/stm32f4xx_i2c.c **** {
+ 912              		.loc 1 629 1 is_stmt 1 view -0
+ 913              		.cfi_startproc
+ 914              		@ args = 0, pretend = 0, frame = 0
+ 915              		@ frame_needed = 0, uses_anonymous_args = 0
+ 916              		@ link register save eliminated.
+ 630:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 631:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 917              		.loc 1 631 3 view .LVU276
+ 632:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_DUTY_CYCLE(I2C_DutyCycle));
+ 918              		.loc 1 632 3 view .LVU277
+ 633:./Libraries/src/stm32f4xx_i2c.c ****   if (I2C_DutyCycle != I2C_DutyCycle_16_9)
+ 919              		.loc 1 633 3 view .LVU278
+ 920              		.loc 1 633 6 is_stmt 0 view .LVU279
+ 921 0000 B1F5804F 		cmp	r1, #16384
+ 922 0004 06D0     		beq	.L57
+ 634:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 635:./Libraries/src/stm32f4xx_i2c.c ****     /* I2C fast mode Tlow/Thigh=2 */
+ 636:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CCR &= I2C_DutyCycle_2;
+ 923              		.loc 1 636 5 is_stmt 1 view .LVU280
+ 924              		.loc 1 636 9 is_stmt 0 view .LVU281
+ 925 0006 838B     		ldrh	r3, [r0, #28]
+ 926 0008 9BB2     		uxth	r3, r3
+ 927              		.loc 1 636 15 view .LVU282
+ 928 000a 23F48043 		bic	r3, r3, #16384
+ 929 000e 9BB2     		uxth	r3, r3
+ 930 0010 8383     		strh	r3, [r0, #28]	@ movhi
+ 931 0012 7047     		bx	lr
+ 932              	.L57:
+ 637:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 638:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 639:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 640:./Libraries/src/stm32f4xx_i2c.c ****     /* I2C fast mode Tlow/Thigh=16/9 */
+ 641:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CCR |= I2C_DutyCycle_16_9;
+ 933              		.loc 1 641 5 is_stmt 1 view .LVU283
+ 934              		.loc 1 641 9 is_stmt 0 view .LVU284
+ 935 0014 838B     		ldrh	r3, [r0, #28]
+ 936 0016 9BB2     		uxth	r3, r3
+ 937              		.loc 1 641 15 view .LVU285
+ 938 0018 43F48043 		orr	r3, r3, #16384
+ 939 001c 8383     		strh	r3, [r0, #28]	@ movhi
+ 642:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 643:./Libraries/src/stm32f4xx_i2c.c **** }
+ 940              		.loc 1 643 1 view .LVU286
+ 941 001e 7047     		bx	lr
+ 942              		.cfi_endproc
+ 943              	.LFE138:
+ 945              		.section	.text.I2C_NACKPositionConfig,"ax",%progbits
+ 946              		.align	1
+ 947              		.global	I2C_NACKPositionConfig
+ 948              		.syntax unified
+ARM GAS  /tmp/ccKogwsQ.s 			page 29
+
+
+ 949              		.thumb
+ 950              		.thumb_func
+ 952              	I2C_NACKPositionConfig:
+ 953              	.LVL69:
+ 954              	.LFB139:
+ 644:./Libraries/src/stm32f4xx_i2c.c **** 
+ 645:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 646:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Selects the specified I2C NACK position in master receiver mode.
+ 647:./Libraries/src/stm32f4xx_i2c.c ****   * @note   This function is useful in I2C Master Receiver mode when the number
+ 648:./Libraries/src/stm32f4xx_i2c.c ****   *         of data to be received is equal to 2. In this case, this function 
+ 649:./Libraries/src/stm32f4xx_i2c.c ****   *         should be called (with parameter I2C_NACKPosition_Next) before data 
+ 650:./Libraries/src/stm32f4xx_i2c.c ****   *         reception starts,as described in the 2-byte reception procedure 
+ 651:./Libraries/src/stm32f4xx_i2c.c ****   *         recommended in Reference Manual in Section: Master receiver.                
+ 652:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 653:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_NACKPosition: specifies the NACK position. 
+ 654:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be one of the following values:
+ 655:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_NACKPosition_Next: indicates that the next byte will be the last
+ 656:./Libraries/src/stm32f4xx_i2c.c ****   *                                        received byte.  
+ 657:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_NACKPosition_Current: indicates that current byte is the last 
+ 658:./Libraries/src/stm32f4xx_i2c.c ****   *                                           received byte.
+ 659:./Libraries/src/stm32f4xx_i2c.c ****   *            
+ 660:./Libraries/src/stm32f4xx_i2c.c ****   * @note    This function configures the same bit (POS) as I2C_PECPositionConfig() 
+ 661:./Libraries/src/stm32f4xx_i2c.c ****   *          but is intended to be used in I2C mode while I2C_PECPositionConfig() 
+ 662:./Libraries/src/stm32f4xx_i2c.c ****   *          is intended to used in SMBUS mode. 
+ 663:./Libraries/src/stm32f4xx_i2c.c ****   *            
+ 664:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 665:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 666:./Libraries/src/stm32f4xx_i2c.c **** void I2C_NACKPositionConfig(I2C_TypeDef* I2Cx, uint16_t I2C_NACKPosition)
+ 667:./Libraries/src/stm32f4xx_i2c.c **** {
+ 955              		.loc 1 667 1 is_stmt 1 view -0
+ 956              		.cfi_startproc
+ 957              		@ args = 0, pretend = 0, frame = 0
+ 958              		@ frame_needed = 0, uses_anonymous_args = 0
+ 959              		@ link register save eliminated.
+ 668:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 669:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 960              		.loc 1 669 3 view .LVU288
+ 670:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_NACK_POSITION(I2C_NACKPosition));
+ 961              		.loc 1 670 3 view .LVU289
+ 671:./Libraries/src/stm32f4xx_i2c.c ****   
+ 672:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the input parameter */
+ 673:./Libraries/src/stm32f4xx_i2c.c ****   if (I2C_NACKPosition == I2C_NACKPosition_Next)
+ 962              		.loc 1 673 3 view .LVU290
+ 963              		.loc 1 673 6 is_stmt 0 view .LVU291
+ 964 0000 B1F5006F 		cmp	r1, #2048
+ 965 0004 06D0     		beq	.L62
+ 674:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 675:./Libraries/src/stm32f4xx_i2c.c ****     /* Next byte in shift register is the last received byte */
+ 676:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_NACKPosition_Next;
+ 677:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 678:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 679:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 680:./Libraries/src/stm32f4xx_i2c.c ****     /* Current byte in shift register is the last received byte */
+ 681:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= I2C_NACKPosition_Current;
+ 966              		.loc 1 681 5 is_stmt 1 view .LVU292
+ 967              		.loc 1 681 9 is_stmt 0 view .LVU293
+ 968 0006 0388     		ldrh	r3, [r0]
+ARM GAS  /tmp/ccKogwsQ.s 			page 30
+
+
+ 969 0008 9BB2     		uxth	r3, r3
+ 970              		.loc 1 681 15 view .LVU294
+ 971 000a 23F40063 		bic	r3, r3, #2048
+ 972 000e 9BB2     		uxth	r3, r3
+ 973 0010 0380     		strh	r3, [r0]	@ movhi
+ 682:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 683:./Libraries/src/stm32f4xx_i2c.c **** }
+ 974              		.loc 1 683 1 view .LVU295
+ 975 0012 7047     		bx	lr
+ 976              	.L62:
+ 676:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 977              		.loc 1 676 5 is_stmt 1 view .LVU296
+ 676:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 978              		.loc 1 676 9 is_stmt 0 view .LVU297
+ 979 0014 0388     		ldrh	r3, [r0]
+ 980 0016 9BB2     		uxth	r3, r3
+ 676:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 981              		.loc 1 676 15 view .LVU298
+ 982 0018 43F40063 		orr	r3, r3, #2048
+ 983 001c 0380     		strh	r3, [r0]	@ movhi
+ 984 001e 7047     		bx	lr
+ 985              		.cfi_endproc
+ 986              	.LFE139:
+ 988              		.section	.text.I2C_SMBusAlertConfig,"ax",%progbits
+ 989              		.align	1
+ 990              		.global	I2C_SMBusAlertConfig
+ 991              		.syntax unified
+ 992              		.thumb
+ 993              		.thumb_func
+ 995              	I2C_SMBusAlertConfig:
+ 996              	.LVL70:
+ 997              	.LFB140:
+ 684:./Libraries/src/stm32f4xx_i2c.c **** 
+ 685:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 686:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Drives the SMBusAlert pin high or low for the specified I2C.
+ 687:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 688:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_SMBusAlert: specifies SMBAlert pin level. 
+ 689:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be one of the following values:
+ 690:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_SMBusAlert_Low: SMBAlert pin driven low
+ 691:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_SMBusAlert_High: SMBAlert pin driven high
+ 692:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 693:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 694:./Libraries/src/stm32f4xx_i2c.c **** void I2C_SMBusAlertConfig(I2C_TypeDef* I2Cx, uint16_t I2C_SMBusAlert)
+ 695:./Libraries/src/stm32f4xx_i2c.c **** {
+ 998              		.loc 1 695 1 is_stmt 1 view -0
+ 999              		.cfi_startproc
+ 1000              		@ args = 0, pretend = 0, frame = 0
+ 1001              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1002              		@ link register save eliminated.
+ 696:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 697:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1003              		.loc 1 697 3 view .LVU300
+ 698:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_SMBUS_ALERT(I2C_SMBusAlert));
+ 1004              		.loc 1 698 3 view .LVU301
+ 699:./Libraries/src/stm32f4xx_i2c.c ****   if (I2C_SMBusAlert == I2C_SMBusAlert_Low)
+ 1005              		.loc 1 699 3 view .LVU302
+ 1006              		.loc 1 699 6 is_stmt 0 view .LVU303
+ARM GAS  /tmp/ccKogwsQ.s 			page 31
+
+
+ 1007 0000 B1F5005F 		cmp	r1, #8192
+ 1008 0004 06D0     		beq	.L66
+ 700:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 701:./Libraries/src/stm32f4xx_i2c.c ****     /* Drive the SMBusAlert pin Low */
+ 702:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_SMBusAlert_Low;
+ 703:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 704:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 705:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 706:./Libraries/src/stm32f4xx_i2c.c ****     /* Drive the SMBusAlert pin High  */
+ 707:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= I2C_SMBusAlert_High;
+ 1009              		.loc 1 707 5 is_stmt 1 view .LVU304
+ 1010              		.loc 1 707 9 is_stmt 0 view .LVU305
+ 1011 0006 0388     		ldrh	r3, [r0]
+ 1012 0008 9BB2     		uxth	r3, r3
+ 1013              		.loc 1 707 15 view .LVU306
+ 1014 000a 23F40053 		bic	r3, r3, #8192
+ 1015 000e 9BB2     		uxth	r3, r3
+ 1016 0010 0380     		strh	r3, [r0]	@ movhi
+ 708:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 709:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1017              		.loc 1 709 1 view .LVU307
+ 1018 0012 7047     		bx	lr
+ 1019              	.L66:
+ 702:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1020              		.loc 1 702 5 is_stmt 1 view .LVU308
+ 702:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1021              		.loc 1 702 9 is_stmt 0 view .LVU309
+ 1022 0014 0388     		ldrh	r3, [r0]
+ 1023 0016 9BB2     		uxth	r3, r3
+ 702:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1024              		.loc 1 702 15 view .LVU310
+ 1025 0018 43F40053 		orr	r3, r3, #8192
+ 1026 001c 0380     		strh	r3, [r0]	@ movhi
+ 1027 001e 7047     		bx	lr
+ 1028              		.cfi_endproc
+ 1029              	.LFE140:
+ 1031              		.section	.text.I2C_ARPCmd,"ax",%progbits
+ 1032              		.align	1
+ 1033              		.global	I2C_ARPCmd
+ 1034              		.syntax unified
+ 1035              		.thumb
+ 1036              		.thumb_func
+ 1038              	I2C_ARPCmd:
+ 1039              	.LVL71:
+ 1040              	.LFB141:
+ 710:./Libraries/src/stm32f4xx_i2c.c **** 
+ 711:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 712:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the specified I2C ARP.
+ 713:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 714:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2Cx ARP. 
+ 715:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 716:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 717:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 718:./Libraries/src/stm32f4xx_i2c.c **** void I2C_ARPCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 719:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1041              		.loc 1 719 1 is_stmt 1 view -0
+ 1042              		.cfi_startproc
+ARM GAS  /tmp/ccKogwsQ.s 			page 32
+
+
+ 1043              		@ args = 0, pretend = 0, frame = 0
+ 1044              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1045              		@ link register save eliminated.
+ 720:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 721:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1046              		.loc 1 721 3 view .LVU312
+ 722:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 1047              		.loc 1 722 3 view .LVU313
+ 723:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 1048              		.loc 1 723 3 view .LVU314
+ 1049              		.loc 1 723 6 is_stmt 0 view .LVU315
+ 1050 0000 29B1     		cbz	r1, .L68
+ 724:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 725:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable the selected I2C ARP */
+ 726:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_CR1_ENARP;
+ 1051              		.loc 1 726 5 is_stmt 1 view .LVU316
+ 1052              		.loc 1 726 9 is_stmt 0 view .LVU317
+ 1053 0002 0388     		ldrh	r3, [r0]
+ 1054 0004 9BB2     		uxth	r3, r3
+ 1055              		.loc 1 726 15 view .LVU318
+ 1056 0006 43F01003 		orr	r3, r3, #16
+ 1057 000a 0380     		strh	r3, [r0]	@ movhi
+ 1058 000c 7047     		bx	lr
+ 1059              	.L68:
+ 727:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 728:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 729:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 730:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable the selected I2C ARP */
+ 731:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_ENARP);
+ 1060              		.loc 1 731 5 is_stmt 1 view .LVU319
+ 1061              		.loc 1 731 9 is_stmt 0 view .LVU320
+ 1062 000e 0388     		ldrh	r3, [r0]
+ 1063 0010 9BB2     		uxth	r3, r3
+ 1064              		.loc 1 731 15 view .LVU321
+ 1065 0012 23F01003 		bic	r3, r3, #16
+ 1066 0016 9BB2     		uxth	r3, r3
+ 1067 0018 0380     		strh	r3, [r0]	@ movhi
+ 732:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 733:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1068              		.loc 1 733 1 view .LVU322
+ 1069 001a 7047     		bx	lr
+ 1070              		.cfi_endproc
+ 1071              	.LFE141:
+ 1073              		.section	.text.I2C_SendData,"ax",%progbits
+ 1074              		.align	1
+ 1075              		.global	I2C_SendData
+ 1076              		.syntax unified
+ 1077              		.thumb
+ 1078              		.thumb_func
+ 1080              	I2C_SendData:
+ 1081              	.LVL72:
+ 1082              	.LFB142:
+ 734:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 735:./Libraries/src/stm32f4xx_i2c.c ****   * @}
+ 736:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 737:./Libraries/src/stm32f4xx_i2c.c **** 
+ 738:./Libraries/src/stm32f4xx_i2c.c **** /** @defgroup I2C_Group2 Data transfers functions
+ARM GAS  /tmp/ccKogwsQ.s 			page 33
+
+
+ 739:./Libraries/src/stm32f4xx_i2c.c ****  *  @brief   Data transfers functions 
+ 740:./Libraries/src/stm32f4xx_i2c.c ****  *
+ 741:./Libraries/src/stm32f4xx_i2c.c **** @verbatim   
+ 742:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================
+ 743:./Libraries/src/stm32f4xx_i2c.c ****                   ##### Data transfers functions #####
+ 744:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================  
+ 745:./Libraries/src/stm32f4xx_i2c.c **** 
+ 746:./Libraries/src/stm32f4xx_i2c.c **** @endverbatim
+ 747:./Libraries/src/stm32f4xx_i2c.c ****   * @{
+ 748:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 749:./Libraries/src/stm32f4xx_i2c.c **** 
+ 750:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 751:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Sends a data byte through the I2Cx peripheral.
+ 752:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 753:./Libraries/src/stm32f4xx_i2c.c ****   * @param  Data: Byte to be transmitted..
+ 754:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 755:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 756:./Libraries/src/stm32f4xx_i2c.c **** void I2C_SendData(I2C_TypeDef* I2Cx, uint8_t Data)
+ 757:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1083              		.loc 1 757 1 is_stmt 1 view -0
+ 1084              		.cfi_startproc
+ 1085              		@ args = 0, pretend = 0, frame = 0
+ 1086              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1087              		@ link register save eliminated.
+ 758:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 759:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1088              		.loc 1 759 3 view .LVU324
+ 760:./Libraries/src/stm32f4xx_i2c.c ****   /* Write in the DR register the data to be sent */
+ 761:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->DR = Data;
+ 1089              		.loc 1 761 3 view .LVU325
+ 1090              		.loc 1 761 12 is_stmt 0 view .LVU326
+ 1091 0000 0182     		strh	r1, [r0, #16]	@ movhi
+ 762:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1092              		.loc 1 762 1 view .LVU327
+ 1093 0002 7047     		bx	lr
+ 1094              		.cfi_endproc
+ 1095              	.LFE142:
+ 1097              		.section	.text.I2C_ReceiveData,"ax",%progbits
+ 1098              		.align	1
+ 1099              		.global	I2C_ReceiveData
+ 1100              		.syntax unified
+ 1101              		.thumb
+ 1102              		.thumb_func
+ 1104              	I2C_ReceiveData:
+ 1105              	.LVL73:
+ 1106              	.LFB143:
+ 763:./Libraries/src/stm32f4xx_i2c.c **** 
+ 764:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 765:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Returns the most recent received data by the I2Cx peripheral.
+ 766:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 767:./Libraries/src/stm32f4xx_i2c.c ****   * @retval The value of the received data.
+ 768:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 769:./Libraries/src/stm32f4xx_i2c.c **** uint8_t I2C_ReceiveData(I2C_TypeDef* I2Cx)
+ 770:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1107              		.loc 1 770 1 is_stmt 1 view -0
+ 1108              		.cfi_startproc
+ 1109              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccKogwsQ.s 			page 34
+
+
+ 1110              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1111              		@ link register save eliminated.
+ 771:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 772:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1112              		.loc 1 772 3 view .LVU329
+ 773:./Libraries/src/stm32f4xx_i2c.c ****   /* Return the data in the DR register */
+ 774:./Libraries/src/stm32f4xx_i2c.c ****   return (uint8_t)I2Cx->DR;
+ 1113              		.loc 1 774 3 view .LVU330
+ 1114              		.loc 1 774 23 is_stmt 0 view .LVU331
+ 1115 0000 008A     		ldrh	r0, [r0, #16]
+ 1116              	.LVL74:
+ 775:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1117              		.loc 1 775 1 view .LVU332
+ 1118 0002 C0B2     		uxtb	r0, r0
+ 1119 0004 7047     		bx	lr
+ 1120              		.cfi_endproc
+ 1121              	.LFE143:
+ 1123              		.section	.text.I2C_TransmitPEC,"ax",%progbits
+ 1124              		.align	1
+ 1125              		.global	I2C_TransmitPEC
+ 1126              		.syntax unified
+ 1127              		.thumb
+ 1128              		.thumb_func
+ 1130              	I2C_TransmitPEC:
+ 1131              	.LVL75:
+ 1132              	.LFB144:
+ 776:./Libraries/src/stm32f4xx_i2c.c **** 
+ 777:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 778:./Libraries/src/stm32f4xx_i2c.c ****   * @}
+ 779:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 780:./Libraries/src/stm32f4xx_i2c.c **** 
+ 781:./Libraries/src/stm32f4xx_i2c.c **** /** @defgroup I2C_Group3 PEC management functions
+ 782:./Libraries/src/stm32f4xx_i2c.c ****  *  @brief   PEC management functions 
+ 783:./Libraries/src/stm32f4xx_i2c.c ****  *
+ 784:./Libraries/src/stm32f4xx_i2c.c **** @verbatim   
+ 785:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================
+ 786:./Libraries/src/stm32f4xx_i2c.c ****                   ##### PEC management functions #####
+ 787:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================  
+ 788:./Libraries/src/stm32f4xx_i2c.c **** 
+ 789:./Libraries/src/stm32f4xx_i2c.c **** @endverbatim
+ 790:./Libraries/src/stm32f4xx_i2c.c ****   * @{
+ 791:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 792:./Libraries/src/stm32f4xx_i2c.c **** 
+ 793:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 794:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the specified I2C PEC transfer.
+ 795:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 796:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2C PEC transmission.
+ 797:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 798:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 799:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 800:./Libraries/src/stm32f4xx_i2c.c **** void I2C_TransmitPEC(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 801:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1133              		.loc 1 801 1 is_stmt 1 view -0
+ 1134              		.cfi_startproc
+ 1135              		@ args = 0, pretend = 0, frame = 0
+ 1136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1137              		@ link register save eliminated.
+ARM GAS  /tmp/ccKogwsQ.s 			page 35
+
+
+ 802:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 803:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1138              		.loc 1 803 3 view .LVU334
+ 804:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 1139              		.loc 1 804 3 view .LVU335
+ 805:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 1140              		.loc 1 805 3 view .LVU336
+ 1141              		.loc 1 805 6 is_stmt 0 view .LVU337
+ 1142 0000 29B1     		cbz	r1, .L73
+ 806:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 807:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable the selected I2C PEC transmission */
+ 808:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_CR1_PEC;
+ 1143              		.loc 1 808 5 is_stmt 1 view .LVU338
+ 1144              		.loc 1 808 9 is_stmt 0 view .LVU339
+ 1145 0002 0388     		ldrh	r3, [r0]
+ 1146 0004 9BB2     		uxth	r3, r3
+ 1147              		.loc 1 808 15 view .LVU340
+ 1148 0006 43F48053 		orr	r3, r3, #4096
+ 1149 000a 0380     		strh	r3, [r0]	@ movhi
+ 1150 000c 7047     		bx	lr
+ 1151              	.L73:
+ 809:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 810:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 811:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 812:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable the selected I2C PEC transmission */
+ 813:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_PEC);
+ 1152              		.loc 1 813 5 is_stmt 1 view .LVU341
+ 1153              		.loc 1 813 9 is_stmt 0 view .LVU342
+ 1154 000e 0388     		ldrh	r3, [r0]
+ 1155 0010 9BB2     		uxth	r3, r3
+ 1156              		.loc 1 813 15 view .LVU343
+ 1157 0012 23F48053 		bic	r3, r3, #4096
+ 1158 0016 9BB2     		uxth	r3, r3
+ 1159 0018 0380     		strh	r3, [r0]	@ movhi
+ 814:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 815:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1160              		.loc 1 815 1 view .LVU344
+ 1161 001a 7047     		bx	lr
+ 1162              		.cfi_endproc
+ 1163              	.LFE144:
+ 1165              		.section	.text.I2C_PECPositionConfig,"ax",%progbits
+ 1166              		.align	1
+ 1167              		.global	I2C_PECPositionConfig
+ 1168              		.syntax unified
+ 1169              		.thumb
+ 1170              		.thumb_func
+ 1172              	I2C_PECPositionConfig:
+ 1173              	.LVL76:
+ 1174              	.LFB145:
+ 816:./Libraries/src/stm32f4xx_i2c.c **** 
+ 817:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 818:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Selects the specified I2C PEC position.
+ 819:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 820:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_PECPosition: specifies the PEC position. 
+ 821:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be one of the following values:
+ 822:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_PECPosition_Next: indicates that the next byte is PEC
+ 823:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_PECPosition_Current: indicates that current byte is PEC
+ARM GAS  /tmp/ccKogwsQ.s 			page 36
+
+
+ 824:./Libraries/src/stm32f4xx_i2c.c ****   *       
+ 825:./Libraries/src/stm32f4xx_i2c.c ****   * @note    This function configures the same bit (POS) as I2C_NACKPositionConfig()
+ 826:./Libraries/src/stm32f4xx_i2c.c ****   *          but is intended to be used in SMBUS mode while I2C_NACKPositionConfig() 
+ 827:./Libraries/src/stm32f4xx_i2c.c ****   *          is intended to used in I2C mode.
+ 828:./Libraries/src/stm32f4xx_i2c.c ****   *                
+ 829:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 830:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 831:./Libraries/src/stm32f4xx_i2c.c **** void I2C_PECPositionConfig(I2C_TypeDef* I2Cx, uint16_t I2C_PECPosition)
+ 832:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1175              		.loc 1 832 1 is_stmt 1 view -0
+ 1176              		.cfi_startproc
+ 1177              		@ args = 0, pretend = 0, frame = 0
+ 1178              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1179              		@ link register save eliminated.
+ 833:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 834:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1180              		.loc 1 834 3 view .LVU346
+ 835:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_PEC_POSITION(I2C_PECPosition));
+ 1181              		.loc 1 835 3 view .LVU347
+ 836:./Libraries/src/stm32f4xx_i2c.c ****   if (I2C_PECPosition == I2C_PECPosition_Next)
+ 1182              		.loc 1 836 3 view .LVU348
+ 1183              		.loc 1 836 6 is_stmt 0 view .LVU349
+ 1184 0000 B1F5006F 		cmp	r1, #2048
+ 1185 0004 06D0     		beq	.L78
+ 837:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 838:./Libraries/src/stm32f4xx_i2c.c ****     /* Next byte in shift register is PEC */
+ 839:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_PECPosition_Next;
+ 840:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 841:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 842:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 843:./Libraries/src/stm32f4xx_i2c.c ****     /* Current byte in shift register is PEC */
+ 844:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= I2C_PECPosition_Current;
+ 1186              		.loc 1 844 5 is_stmt 1 view .LVU350
+ 1187              		.loc 1 844 9 is_stmt 0 view .LVU351
+ 1188 0006 0388     		ldrh	r3, [r0]
+ 1189 0008 9BB2     		uxth	r3, r3
+ 1190              		.loc 1 844 15 view .LVU352
+ 1191 000a 23F40063 		bic	r3, r3, #2048
+ 1192 000e 9BB2     		uxth	r3, r3
+ 1193 0010 0380     		strh	r3, [r0]	@ movhi
+ 845:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 846:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1194              		.loc 1 846 1 view .LVU353
+ 1195 0012 7047     		bx	lr
+ 1196              	.L78:
+ 839:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1197              		.loc 1 839 5 is_stmt 1 view .LVU354
+ 839:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1198              		.loc 1 839 9 is_stmt 0 view .LVU355
+ 1199 0014 0388     		ldrh	r3, [r0]
+ 1200 0016 9BB2     		uxth	r3, r3
+ 839:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1201              		.loc 1 839 15 view .LVU356
+ 1202 0018 43F40063 		orr	r3, r3, #2048
+ 1203 001c 0380     		strh	r3, [r0]	@ movhi
+ 1204 001e 7047     		bx	lr
+ 1205              		.cfi_endproc
+ARM GAS  /tmp/ccKogwsQ.s 			page 37
+
+
+ 1206              	.LFE145:
+ 1208              		.section	.text.I2C_CalculatePEC,"ax",%progbits
+ 1209              		.align	1
+ 1210              		.global	I2C_CalculatePEC
+ 1211              		.syntax unified
+ 1212              		.thumb
+ 1213              		.thumb_func
+ 1215              	I2C_CalculatePEC:
+ 1216              	.LVL77:
+ 1217              	.LFB146:
+ 847:./Libraries/src/stm32f4xx_i2c.c **** 
+ 848:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 849:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the PEC value calculation of the transferred bytes.
+ 850:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 851:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2Cx PEC value calculation.
+ 852:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 853:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 854:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 855:./Libraries/src/stm32f4xx_i2c.c **** void I2C_CalculatePEC(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 856:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1218              		.loc 1 856 1 is_stmt 1 view -0
+ 1219              		.cfi_startproc
+ 1220              		@ args = 0, pretend = 0, frame = 0
+ 1221              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1222              		@ link register save eliminated.
+ 857:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 858:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1223              		.loc 1 858 3 view .LVU358
+ 859:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 1224              		.loc 1 859 3 view .LVU359
+ 860:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 1225              		.loc 1 860 3 view .LVU360
+ 1226              		.loc 1 860 6 is_stmt 0 view .LVU361
+ 1227 0000 29B1     		cbz	r1, .L80
+ 861:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 862:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable the selected I2C PEC calculation */
+ 863:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 |= I2C_CR1_ENPEC;
+ 1228              		.loc 1 863 5 is_stmt 1 view .LVU362
+ 1229              		.loc 1 863 9 is_stmt 0 view .LVU363
+ 1230 0002 0388     		ldrh	r3, [r0]
+ 1231 0004 9BB2     		uxth	r3, r3
+ 1232              		.loc 1 863 15 view .LVU364
+ 1233 0006 43F02003 		orr	r3, r3, #32
+ 1234 000a 0380     		strh	r3, [r0]	@ movhi
+ 1235 000c 7047     		bx	lr
+ 1236              	.L80:
+ 864:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 865:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 866:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 867:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable the selected I2C PEC calculation */
+ 868:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_ENPEC);
+ 1237              		.loc 1 868 5 is_stmt 1 view .LVU365
+ 1238              		.loc 1 868 9 is_stmt 0 view .LVU366
+ 1239 000e 0388     		ldrh	r3, [r0]
+ 1240 0010 9BB2     		uxth	r3, r3
+ 1241              		.loc 1 868 15 view .LVU367
+ 1242 0012 23F02003 		bic	r3, r3, #32
+ARM GAS  /tmp/ccKogwsQ.s 			page 38
+
+
+ 1243 0016 9BB2     		uxth	r3, r3
+ 1244 0018 0380     		strh	r3, [r0]	@ movhi
+ 869:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 870:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1245              		.loc 1 870 1 view .LVU368
+ 1246 001a 7047     		bx	lr
+ 1247              		.cfi_endproc
+ 1248              	.LFE146:
+ 1250              		.section	.text.I2C_GetPEC,"ax",%progbits
+ 1251              		.align	1
+ 1252              		.global	I2C_GetPEC
+ 1253              		.syntax unified
+ 1254              		.thumb
+ 1255              		.thumb_func
+ 1257              	I2C_GetPEC:
+ 1258              	.LVL78:
+ 1259              	.LFB147:
+ 871:./Libraries/src/stm32f4xx_i2c.c **** 
+ 872:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 873:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Returns the PEC value for the specified I2C.
+ 874:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 875:./Libraries/src/stm32f4xx_i2c.c ****   * @retval The PEC value.
+ 876:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 877:./Libraries/src/stm32f4xx_i2c.c **** uint8_t I2C_GetPEC(I2C_TypeDef* I2Cx)
+ 878:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1260              		.loc 1 878 1 is_stmt 1 view -0
+ 1261              		.cfi_startproc
+ 1262              		@ args = 0, pretend = 0, frame = 0
+ 1263              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1264              		@ link register save eliminated.
+ 879:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 880:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1265              		.loc 1 880 3 view .LVU370
+ 881:./Libraries/src/stm32f4xx_i2c.c ****   /* Return the selected I2C PEC value */
+ 882:./Libraries/src/stm32f4xx_i2c.c ****   return ((I2Cx->SR2) >> 8);
+ 1266              		.loc 1 882 3 view .LVU371
+ 1267              		.loc 1 882 16 is_stmt 0 view .LVU372
+ 1268 0000 008B     		ldrh	r0, [r0, #24]
+ 1269              	.LVL79:
+ 883:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1270              		.loc 1 883 1 view .LVU373
+ 1271 0002 C0F30720 		ubfx	r0, r0, #8, #8
+ 1272 0006 7047     		bx	lr
+ 1273              		.cfi_endproc
+ 1274              	.LFE147:
+ 1276              		.section	.text.I2C_DMACmd,"ax",%progbits
+ 1277              		.align	1
+ 1278              		.global	I2C_DMACmd
+ 1279              		.syntax unified
+ 1280              		.thumb
+ 1281              		.thumb_func
+ 1283              	I2C_DMACmd:
+ 1284              	.LVL80:
+ 1285              	.LFB148:
+ 884:./Libraries/src/stm32f4xx_i2c.c **** 
+ 885:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 886:./Libraries/src/stm32f4xx_i2c.c ****   * @}
+ARM GAS  /tmp/ccKogwsQ.s 			page 39
+
+
+ 887:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 888:./Libraries/src/stm32f4xx_i2c.c **** 
+ 889:./Libraries/src/stm32f4xx_i2c.c **** /** @defgroup I2C_Group4 DMA transfers management functions
+ 890:./Libraries/src/stm32f4xx_i2c.c ****  *  @brief   DMA transfers management functions 
+ 891:./Libraries/src/stm32f4xx_i2c.c ****  *
+ 892:./Libraries/src/stm32f4xx_i2c.c **** @verbatim   
+ 893:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================
+ 894:./Libraries/src/stm32f4xx_i2c.c ****                 ##### DMA transfers management functions #####
+ 895:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================  
+ 896:./Libraries/src/stm32f4xx_i2c.c ****   This section provides functions allowing to configure the I2C DMA channels 
+ 897:./Libraries/src/stm32f4xx_i2c.c ****   requests.
+ 898:./Libraries/src/stm32f4xx_i2c.c ****   
+ 899:./Libraries/src/stm32f4xx_i2c.c **** @endverbatim
+ 900:./Libraries/src/stm32f4xx_i2c.c ****   * @{
+ 901:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 902:./Libraries/src/stm32f4xx_i2c.c **** 
+ 903:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 904:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the specified I2C DMA requests.
+ 905:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 906:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2C DMA transfer.
+ 907:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 908:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 909:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 910:./Libraries/src/stm32f4xx_i2c.c **** void I2C_DMACmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 911:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1286              		.loc 1 911 1 is_stmt 1 view -0
+ 1287              		.cfi_startproc
+ 1288              		@ args = 0, pretend = 0, frame = 0
+ 1289              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1290              		@ link register save eliminated.
+ 912:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 913:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1291              		.loc 1 913 3 view .LVU375
+ 914:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 1292              		.loc 1 914 3 view .LVU376
+ 915:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 1293              		.loc 1 915 3 view .LVU377
+ 1294              		.loc 1 915 6 is_stmt 0 view .LVU378
+ 1295 0000 29B1     		cbz	r1, .L84
+ 916:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 917:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable the selected I2C DMA requests */
+ 918:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR2 |= I2C_CR2_DMAEN;
+ 1296              		.loc 1 918 5 is_stmt 1 view .LVU379
+ 1297              		.loc 1 918 9 is_stmt 0 view .LVU380
+ 1298 0002 8388     		ldrh	r3, [r0, #4]
+ 1299 0004 9BB2     		uxth	r3, r3
+ 1300              		.loc 1 918 15 view .LVU381
+ 1301 0006 43F40063 		orr	r3, r3, #2048
+ 1302 000a 8380     		strh	r3, [r0, #4]	@ movhi
+ 1303 000c 7047     		bx	lr
+ 1304              	.L84:
+ 919:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 920:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 921:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 922:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable the selected I2C DMA requests */
+ 923:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR2 &= (uint16_t)~((uint16_t)I2C_CR2_DMAEN);
+ 1305              		.loc 1 923 5 is_stmt 1 view .LVU382
+ARM GAS  /tmp/ccKogwsQ.s 			page 40
+
+
+ 1306              		.loc 1 923 9 is_stmt 0 view .LVU383
+ 1307 000e 8388     		ldrh	r3, [r0, #4]
+ 1308 0010 9BB2     		uxth	r3, r3
+ 1309              		.loc 1 923 15 view .LVU384
+ 1310 0012 23F40063 		bic	r3, r3, #2048
+ 1311 0016 9BB2     		uxth	r3, r3
+ 1312 0018 8380     		strh	r3, [r0, #4]	@ movhi
+ 924:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 925:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1313              		.loc 1 925 1 view .LVU385
+ 1314 001a 7047     		bx	lr
+ 1315              		.cfi_endproc
+ 1316              	.LFE148:
+ 1318              		.section	.text.I2C_DMALastTransferCmd,"ax",%progbits
+ 1319              		.align	1
+ 1320              		.global	I2C_DMALastTransferCmd
+ 1321              		.syntax unified
+ 1322              		.thumb
+ 1323              		.thumb_func
+ 1325              	I2C_DMALastTransferCmd:
+ 1326              	.LVL81:
+ 1327              	.LFB149:
+ 926:./Libraries/src/stm32f4xx_i2c.c **** 
+ 927:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 928:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Specifies that the next DMA transfer is the last one.
+ 929:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+ 930:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the I2C DMA last transfer.
+ 931:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 932:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+ 933:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 934:./Libraries/src/stm32f4xx_i2c.c **** void I2C_DMALastTransferCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 935:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1328              		.loc 1 935 1 is_stmt 1 view -0
+ 1329              		.cfi_startproc
+ 1330              		@ args = 0, pretend = 0, frame = 0
+ 1331              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1332              		@ link register save eliminated.
+ 936:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+ 937:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1333              		.loc 1 937 3 view .LVU387
+ 938:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 1334              		.loc 1 938 3 view .LVU388
+ 939:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 1335              		.loc 1 939 3 view .LVU389
+ 1336              		.loc 1 939 6 is_stmt 0 view .LVU390
+ 1337 0000 29B1     		cbz	r1, .L87
+ 940:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 941:./Libraries/src/stm32f4xx_i2c.c ****     /* Next DMA transfer is the last transfer */
+ 942:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR2 |= I2C_CR2_LAST;
+ 1338              		.loc 1 942 5 is_stmt 1 view .LVU391
+ 1339              		.loc 1 942 9 is_stmt 0 view .LVU392
+ 1340 0002 8388     		ldrh	r3, [r0, #4]
+ 1341 0004 9BB2     		uxth	r3, r3
+ 1342              		.loc 1 942 15 view .LVU393
+ 1343 0006 43F48053 		orr	r3, r3, #4096
+ 1344 000a 8380     		strh	r3, [r0, #4]	@ movhi
+ 1345 000c 7047     		bx	lr
+ARM GAS  /tmp/ccKogwsQ.s 			page 41
+
+
+ 1346              	.L87:
+ 943:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 944:./Libraries/src/stm32f4xx_i2c.c ****   else
+ 945:./Libraries/src/stm32f4xx_i2c.c ****   {
+ 946:./Libraries/src/stm32f4xx_i2c.c ****     /* Next DMA transfer is not the last transfer */
+ 947:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR2 &= (uint16_t)~((uint16_t)I2C_CR2_LAST);
+ 1347              		.loc 1 947 5 is_stmt 1 view .LVU394
+ 1348              		.loc 1 947 9 is_stmt 0 view .LVU395
+ 1349 000e 8388     		ldrh	r3, [r0, #4]
+ 1350 0010 9BB2     		uxth	r3, r3
+ 1351              		.loc 1 947 15 view .LVU396
+ 1352 0012 23F48053 		bic	r3, r3, #4096
+ 1353 0016 9BB2     		uxth	r3, r3
+ 1354 0018 8380     		strh	r3, [r0, #4]	@ movhi
+ 948:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 949:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1355              		.loc 1 949 1 view .LVU397
+ 1356 001a 7047     		bx	lr
+ 1357              		.cfi_endproc
+ 1358              	.LFE149:
+ 1360              		.section	.text.I2C_ReadRegister,"ax",%progbits
+ 1361              		.align	1
+ 1362              		.global	I2C_ReadRegister
+ 1363              		.syntax unified
+ 1364              		.thumb
+ 1365              		.thumb_func
+ 1367              	I2C_ReadRegister:
+ 1368              	.LVL82:
+ 1369              	.LFB150:
+ 950:./Libraries/src/stm32f4xx_i2c.c **** 
+ 951:./Libraries/src/stm32f4xx_i2c.c **** /**
+ 952:./Libraries/src/stm32f4xx_i2c.c ****   * @}
+ 953:./Libraries/src/stm32f4xx_i2c.c ****   */
+ 954:./Libraries/src/stm32f4xx_i2c.c **** 
+ 955:./Libraries/src/stm32f4xx_i2c.c **** /** @defgroup I2C_Group5 Interrupts events and flags management functions
+ 956:./Libraries/src/stm32f4xx_i2c.c ****  *  @brief   Interrupts, events and flags management functions
+ 957:./Libraries/src/stm32f4xx_i2c.c ****  *
+ 958:./Libraries/src/stm32f4xx_i2c.c **** @verbatim   
+ 959:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================
+ 960:./Libraries/src/stm32f4xx_i2c.c ****           ##### Interrupts, events and flags management functions #####
+ 961:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================
+ 962:./Libraries/src/stm32f4xx_i2c.c ****     [..]
+ 963:./Libraries/src/stm32f4xx_i2c.c ****     This section provides functions allowing to configure the I2C Interrupts 
+ 964:./Libraries/src/stm32f4xx_i2c.c ****     sources and check or clear the flags or pending bits status.
+ 965:./Libraries/src/stm32f4xx_i2c.c ****     The user should identify which mode will be used in his application to manage 
+ 966:./Libraries/src/stm32f4xx_i2c.c ****     the communication: Polling mode, Interrupt mode or DMA mode. 
+ 967:./Libraries/src/stm32f4xx_i2c.c **** 
+ 968:./Libraries/src/stm32f4xx_i2c.c **** 
+ 969:./Libraries/src/stm32f4xx_i2c.c ****                 ##### I2C State Monitoring Functions #####                   
+ 970:./Libraries/src/stm32f4xx_i2c.c ****  =============================================================================== 
+ 971:./Libraries/src/stm32f4xx_i2c.c ****     [..]  
+ 972:./Libraries/src/stm32f4xx_i2c.c ****     This I2C driver provides three different ways for I2C state monitoring
+ 973:./Libraries/src/stm32f4xx_i2c.c ****     depending on the application requirements and constraints:
+ 974:./Libraries/src/stm32f4xx_i2c.c ****          
+ 975:./Libraries/src/stm32f4xx_i2c.c ****    
+ 976:./Libraries/src/stm32f4xx_i2c.c ****      (#) Basic state monitoring (Using I2C_CheckEvent() function)
+ 977:./Libraries/src/stm32f4xx_i2c.c ****      
+ARM GAS  /tmp/ccKogwsQ.s 			page 42
+
+
+ 978:./Libraries/src/stm32f4xx_i2c.c ****         It compares the status registers (SR1 and SR2) content to a given event
+ 979:./Libraries/src/stm32f4xx_i2c.c ****         (can be the combination of one or more flags).
+ 980:./Libraries/src/stm32f4xx_i2c.c ****         It returns SUCCESS if the current status includes the given flags 
+ 981:./Libraries/src/stm32f4xx_i2c.c ****         and returns ERROR if one or more flags are missing in the current status.
+ 982:./Libraries/src/stm32f4xx_i2c.c **** 
+ 983:./Libraries/src/stm32f4xx_i2c.c ****           (++) When to use
+ 984:./Libraries/src/stm32f4xx_i2c.c ****              (+++) This function is suitable for most applications as well as for startup 
+ 985:./Libraries/src/stm32f4xx_i2c.c ****                activity since the events are fully described in the product reference 
+ 986:./Libraries/src/stm32f4xx_i2c.c ****                manual (RM0090).
+ 987:./Libraries/src/stm32f4xx_i2c.c ****              (+++) It is also suitable for users who need to define their own events.
+ 988:./Libraries/src/stm32f4xx_i2c.c **** 
+ 989:./Libraries/src/stm32f4xx_i2c.c ****           (++) Limitations
+ 990:./Libraries/src/stm32f4xx_i2c.c ****                If an error occurs (ie. error flags are set besides to the monitored 
+ 991:./Libraries/src/stm32f4xx_i2c.c ****                flags), the I2C_CheckEvent() function may return SUCCESS despite 
+ 992:./Libraries/src/stm32f4xx_i2c.c ****                the communication hold or corrupted real state. 
+ 993:./Libraries/src/stm32f4xx_i2c.c ****                In this case, it is advised to use error interrupts to monitor 
+ 994:./Libraries/src/stm32f4xx_i2c.c ****                the error events and handle them in the interrupt IRQ handler.
+ 995:./Libraries/src/stm32f4xx_i2c.c ****          
+ 996:./Libraries/src/stm32f4xx_i2c.c ****      -@@- For error management, it is advised to use the following functions:
+ 997:./Libraries/src/stm32f4xx_i2c.c ****         (+@@) I2C_ITConfig() to configure and enable the error interrupts (I2C_IT_ERR).
+ 998:./Libraries/src/stm32f4xx_i2c.c ****         (+@@) I2Cx_ER_IRQHandler() which is called when the error interrupt occurs.
+ 999:./Libraries/src/stm32f4xx_i2c.c ****               Where x is the peripheral instance (I2C1, I2C2 ...)
+1000:./Libraries/src/stm32f4xx_i2c.c ****         (+@@) I2C_GetFlagStatus() or I2C_GetITStatus()  to be called into the 
+1001:./Libraries/src/stm32f4xx_i2c.c ****               I2Cx_ER_IRQHandler() function in order to determine which error occurred.
+1002:./Libraries/src/stm32f4xx_i2c.c ****         (+@@) I2C_ClearFlag() or I2C_ClearITPendingBit() and/or I2C_SoftwareResetCmd() 
+1003:./Libraries/src/stm32f4xx_i2c.c ****               and/or I2C_GenerateStop() in order to clear the error flag and source 
+1004:./Libraries/src/stm32f4xx_i2c.c ****               and return to correct  communication status.
+1005:./Libraries/src/stm32f4xx_i2c.c ****              
+1006:./Libraries/src/stm32f4xx_i2c.c ****  
+1007:./Libraries/src/stm32f4xx_i2c.c ****      (#) Advanced state monitoring (Using the function I2C_GetLastEvent())
+1008:./Libraries/src/stm32f4xx_i2c.c **** 
+1009:./Libraries/src/stm32f4xx_i2c.c ****         Using the function I2C_GetLastEvent() which returns the image of both status 
+1010:./Libraries/src/stm32f4xx_i2c.c ****         registers in a single word (uint32_t) (Status Register 2 value is shifted left 
+1011:./Libraries/src/stm32f4xx_i2c.c ****         by 16 bits and concatenated to Status Register 1).
+1012:./Libraries/src/stm32f4xx_i2c.c **** 
+1013:./Libraries/src/stm32f4xx_i2c.c ****           (++) When to use
+1014:./Libraries/src/stm32f4xx_i2c.c ****              (+++) This function is suitable for the same applications above but it 
+1015:./Libraries/src/stm32f4xx_i2c.c ****                allows to overcome the mentioned limitation of I2C_GetFlagStatus() 
+1016:./Libraries/src/stm32f4xx_i2c.c ****                function.
+1017:./Libraries/src/stm32f4xx_i2c.c ****              (+++) The returned value could be compared to events already defined in 
+1018:./Libraries/src/stm32f4xx_i2c.c ****                the library (stm32f4xx_i2c.h) or to custom values defined by user.
+1019:./Libraries/src/stm32f4xx_i2c.c ****                This function is suitable when multiple flags are monitored at the 
+1020:./Libraries/src/stm32f4xx_i2c.c ****                same time.
+1021:./Libraries/src/stm32f4xx_i2c.c ****              (+++) At the opposite of I2C_CheckEvent() function, this function allows 
+1022:./Libraries/src/stm32f4xx_i2c.c ****                user to choose when an event is accepted (when all events flags are 
+1023:./Libraries/src/stm32f4xx_i2c.c ****                set and no other flags are set or just when the needed flags are set 
+1024:./Libraries/src/stm32f4xx_i2c.c ****                like I2C_CheckEvent() function.
+1025:./Libraries/src/stm32f4xx_i2c.c **** 
+1026:./Libraries/src/stm32f4xx_i2c.c ****           (++) Limitations
+1027:./Libraries/src/stm32f4xx_i2c.c ****              (+++) User may need to define his own events.
+1028:./Libraries/src/stm32f4xx_i2c.c ****              (+++) Same remark concerning the error management is applicable for this 
+1029:./Libraries/src/stm32f4xx_i2c.c ****                function if user decides to check only regular communication flags 
+1030:./Libraries/src/stm32f4xx_i2c.c ****                (and ignores error flags).
+1031:./Libraries/src/stm32f4xx_i2c.c ****       
+1032:./Libraries/src/stm32f4xx_i2c.c ****  
+1033:./Libraries/src/stm32f4xx_i2c.c ****      (#) Flag-based state monitoring (Using the function I2C_GetFlagStatus())
+1034:./Libraries/src/stm32f4xx_i2c.c ****      
+ARM GAS  /tmp/ccKogwsQ.s 			page 43
+
+
+1035:./Libraries/src/stm32f4xx_i2c.c ****       Using the function I2C_GetFlagStatus() which simply returns the status of 
+1036:./Libraries/src/stm32f4xx_i2c.c ****       one single flag (ie. I2C_FLAG_RXNE ...). 
+1037:./Libraries/src/stm32f4xx_i2c.c **** 
+1038:./Libraries/src/stm32f4xx_i2c.c ****           (++) When to use
+1039:./Libraries/src/stm32f4xx_i2c.c ****              (+++) This function could be used for specific applications or in debug 
+1040:./Libraries/src/stm32f4xx_i2c.c ****                phase.
+1041:./Libraries/src/stm32f4xx_i2c.c ****              (+++) It is suitable when only one flag checking is needed (most I2C 
+1042:./Libraries/src/stm32f4xx_i2c.c ****                events are monitored through multiple flags).
+1043:./Libraries/src/stm32f4xx_i2c.c ****           (++) Limitations: 
+1044:./Libraries/src/stm32f4xx_i2c.c ****              (+++) When calling this function, the Status register is accessed. 
+1045:./Libraries/src/stm32f4xx_i2c.c ****                Some flags are cleared when the status register is accessed. 
+1046:./Libraries/src/stm32f4xx_i2c.c ****                So checking the status of one Flag, may clear other ones.
+1047:./Libraries/src/stm32f4xx_i2c.c ****              (+++) Function may need to be called twice or more in order to monitor 
+1048:./Libraries/src/stm32f4xx_i2c.c ****                one single event.
+1049:./Libraries/src/stm32f4xx_i2c.c ****  
+1050:./Libraries/src/stm32f4xx_i2c.c ****    For detailed description of Events, please refer to section I2C_Events in 
+1051:./Libraries/src/stm32f4xx_i2c.c ****    stm32f4xx_i2c.h file.
+1052:./Libraries/src/stm32f4xx_i2c.c ****        
+1053:./Libraries/src/stm32f4xx_i2c.c **** @endverbatim
+1054:./Libraries/src/stm32f4xx_i2c.c ****   * @{
+1055:./Libraries/src/stm32f4xx_i2c.c ****   */
+1056:./Libraries/src/stm32f4xx_i2c.c ****    
+1057:./Libraries/src/stm32f4xx_i2c.c **** /**
+1058:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Reads the specified I2C register and returns its value.
+1059:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_Register: specifies the register to read.
+1060:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be one of the following values:
+1061:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_Register_CR1:  CR1 register.
+1062:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_Register_CR2:   CR2 register.
+1063:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_Register_OAR1:  OAR1 register.
+1064:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_Register_OAR2:  OAR2 register.
+1065:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_Register_DR:    DR register.
+1066:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_Register_SR1:   SR1 register.
+1067:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_Register_SR2:   SR2 register.
+1068:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_Register_CCR:   CCR register.
+1069:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_Register_TRISE: TRISE register.
+1070:./Libraries/src/stm32f4xx_i2c.c ****   * @retval The value of the read register.
+1071:./Libraries/src/stm32f4xx_i2c.c ****   */
+1072:./Libraries/src/stm32f4xx_i2c.c **** uint16_t I2C_ReadRegister(I2C_TypeDef* I2Cx, uint8_t I2C_Register)
+1073:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1370              		.loc 1 1073 1 is_stmt 1 view -0
+ 1371              		.cfi_startproc
+ 1372              		@ args = 0, pretend = 0, frame = 8
+ 1373              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1374              		@ link register save eliminated.
+ 1375              		.loc 1 1073 1 is_stmt 0 view .LVU399
+ 1376 0000 82B0     		sub	sp, sp, #8
+ 1377              	.LCFI5:
+ 1378              		.cfi_def_cfa_offset 8
+1074:./Libraries/src/stm32f4xx_i2c.c ****   __IO uint32_t tmp = 0;
+ 1379              		.loc 1 1074 3 is_stmt 1 view .LVU400
+ 1380              		.loc 1 1074 17 is_stmt 0 view .LVU401
+ 1381 0002 0023     		movs	r3, #0
+ 1382 0004 0193     		str	r3, [sp, #4]
+1075:./Libraries/src/stm32f4xx_i2c.c **** 
+1076:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+1077:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1383              		.loc 1 1077 3 is_stmt 1 view .LVU402
+ARM GAS  /tmp/ccKogwsQ.s 			page 44
+
+
+1078:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_REGISTER(I2C_Register));
+ 1384              		.loc 1 1078 3 view .LVU403
+1079:./Libraries/src/stm32f4xx_i2c.c **** 
+1080:./Libraries/src/stm32f4xx_i2c.c ****   tmp = (uint32_t) I2Cx;
+ 1385              		.loc 1 1080 3 view .LVU404
+ 1386              		.loc 1 1080 7 is_stmt 0 view .LVU405
+ 1387 0006 0190     		str	r0, [sp, #4]
+1081:./Libraries/src/stm32f4xx_i2c.c ****   tmp += I2C_Register;
+ 1388              		.loc 1 1081 3 is_stmt 1 view .LVU406
+ 1389              		.loc 1 1081 7 is_stmt 0 view .LVU407
+ 1390 0008 019B     		ldr	r3, [sp, #4]
+ 1391 000a 1944     		add	r1, r1, r3
+ 1392              	.LVL83:
+ 1393              		.loc 1 1081 7 view .LVU408
+ 1394 000c 0191     		str	r1, [sp, #4]
+1082:./Libraries/src/stm32f4xx_i2c.c **** 
+1083:./Libraries/src/stm32f4xx_i2c.c ****   /* Return the selected register value */
+1084:./Libraries/src/stm32f4xx_i2c.c ****   return (*(__IO uint16_t *) tmp);
+ 1395              		.loc 1 1084 3 is_stmt 1 view .LVU409
+ 1396              		.loc 1 1084 12 is_stmt 0 view .LVU410
+ 1397 000e 019B     		ldr	r3, [sp, #4]
+ 1398              		.loc 1 1084 11 view .LVU411
+ 1399 0010 1888     		ldrh	r0, [r3]
+ 1400              	.LVL84:
+1085:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1401              		.loc 1 1085 1 view .LVU412
+ 1402 0012 80B2     		uxth	r0, r0
+ 1403 0014 02B0     		add	sp, sp, #8
+ 1404              	.LCFI6:
+ 1405              		.cfi_def_cfa_offset 0
+ 1406              		@ sp needed
+ 1407 0016 7047     		bx	lr
+ 1408              		.cfi_endproc
+ 1409              	.LFE150:
+ 1411              		.section	.text.I2C_ITConfig,"ax",%progbits
+ 1412              		.align	1
+ 1413              		.global	I2C_ITConfig
+ 1414              		.syntax unified
+ 1415              		.thumb
+ 1416              		.thumb_func
+ 1418              	I2C_ITConfig:
+ 1419              	.LVL85:
+ 1420              	.LFB151:
+1086:./Libraries/src/stm32f4xx_i2c.c **** 
+1087:./Libraries/src/stm32f4xx_i2c.c **** /**
+1088:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Enables or disables the specified I2C interrupts.
+1089:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+1090:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_IT: specifies the I2C interrupts sources to be enabled or disabled. 
+1091:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be any combination of the following values:
+1092:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_BUF: Buffer interrupt mask
+1093:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_EVT: Event interrupt mask
+1094:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_ERR: Error interrupt mask
+1095:./Libraries/src/stm32f4xx_i2c.c ****   * @param  NewState: new state of the specified I2C interrupts.
+1096:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be: ENABLE or DISABLE.
+1097:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+1098:./Libraries/src/stm32f4xx_i2c.c ****   */
+1099:./Libraries/src/stm32f4xx_i2c.c **** void I2C_ITConfig(I2C_TypeDef* I2Cx, uint16_t I2C_IT, FunctionalState NewState)
+ARM GAS  /tmp/ccKogwsQ.s 			page 45
+
+
+1100:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1421              		.loc 1 1100 1 is_stmt 1 view -0
+ 1422              		.cfi_startproc
+ 1423              		@ args = 0, pretend = 0, frame = 0
+ 1424              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1425              		@ link register save eliminated.
+1101:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+1102:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1426              		.loc 1 1102 3 view .LVU414
+1103:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 1427              		.loc 1 1103 3 view .LVU415
+1104:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_CONFIG_IT(I2C_IT));
+ 1428              		.loc 1 1104 3 view .LVU416
+1105:./Libraries/src/stm32f4xx_i2c.c ****   
+1106:./Libraries/src/stm32f4xx_i2c.c ****   if (NewState != DISABLE)
+ 1429              		.loc 1 1106 3 view .LVU417
+ 1430              		.loc 1 1106 6 is_stmt 0 view .LVU418
+ 1431 0000 22B1     		cbz	r2, .L92
+1107:./Libraries/src/stm32f4xx_i2c.c ****   {
+1108:./Libraries/src/stm32f4xx_i2c.c ****     /* Enable the selected I2C interrupts */
+1109:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR2 |= I2C_IT;
+ 1432              		.loc 1 1109 5 is_stmt 1 view .LVU419
+ 1433              		.loc 1 1109 9 is_stmt 0 view .LVU420
+ 1434 0002 8388     		ldrh	r3, [r0, #4]
+ 1435 0004 9BB2     		uxth	r3, r3
+ 1436              		.loc 1 1109 15 view .LVU421
+ 1437 0006 0B43     		orrs	r3, r3, r1
+ 1438 0008 8380     		strh	r3, [r0, #4]	@ movhi
+ 1439 000a 7047     		bx	lr
+ 1440              	.L92:
+1110:./Libraries/src/stm32f4xx_i2c.c ****   }
+1111:./Libraries/src/stm32f4xx_i2c.c ****   else
+1112:./Libraries/src/stm32f4xx_i2c.c ****   {
+1113:./Libraries/src/stm32f4xx_i2c.c ****     /* Disable the selected I2C interrupts */
+1114:./Libraries/src/stm32f4xx_i2c.c ****     I2Cx->CR2 &= (uint16_t)~I2C_IT;
+ 1441              		.loc 1 1114 5 is_stmt 1 view .LVU422
+ 1442              		.loc 1 1114 9 is_stmt 0 view .LVU423
+ 1443 000c 8388     		ldrh	r3, [r0, #4]
+ 1444              		.loc 1 1114 18 view .LVU424
+ 1445 000e C943     		mvns	r1, r1
+ 1446              	.LVL86:
+ 1447              		.loc 1 1114 18 view .LVU425
+ 1448 0010 89B2     		uxth	r1, r1
+ 1449              		.loc 1 1114 15 view .LVU426
+ 1450 0012 1940     		ands	r1, r1, r3
+ 1451 0014 8180     		strh	r1, [r0, #4]	@ movhi
+1115:./Libraries/src/stm32f4xx_i2c.c ****   }
+1116:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1452              		.loc 1 1116 1 view .LVU427
+ 1453 0016 7047     		bx	lr
+ 1454              		.cfi_endproc
+ 1455              	.LFE151:
+ 1457              		.section	.text.I2C_CheckEvent,"ax",%progbits
+ 1458              		.align	1
+ 1459              		.global	I2C_CheckEvent
+ 1460              		.syntax unified
+ 1461              		.thumb
+ARM GAS  /tmp/ccKogwsQ.s 			page 46
+
+
+ 1462              		.thumb_func
+ 1464              	I2C_CheckEvent:
+ 1465              	.LVL87:
+ 1466              	.LFB152:
+1117:./Libraries/src/stm32f4xx_i2c.c **** 
+1118:./Libraries/src/stm32f4xx_i2c.c **** /*
+1119:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================
+1120:./Libraries/src/stm32f4xx_i2c.c ****                           1. Basic state monitoring                    
+1121:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================  
+1122:./Libraries/src/stm32f4xx_i2c.c ****  */
+1123:./Libraries/src/stm32f4xx_i2c.c **** 
+1124:./Libraries/src/stm32f4xx_i2c.c **** /**
+1125:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Checks whether the last I2Cx Event is equal to the one passed
+1126:./Libraries/src/stm32f4xx_i2c.c ****   *         as parameter.
+1127:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+1128:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_EVENT: specifies the event to be checked. 
+1129:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be one of the following values:
+1130:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_SLAVE_TRANSMITTER_ADDRESS_MATCHED: EV1
+1131:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_SLAVE_RECEIVER_ADDRESS_MATCHED: EV1
+1132:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_SLAVE_TRANSMITTER_SECONDADDRESS_MATCHED: EV1
+1133:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_SLAVE_RECEIVER_SECONDADDRESS_MATCHED: EV1
+1134:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_SLAVE_GENERALCALLADDRESS_MATCHED: EV1
+1135:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_SLAVE_BYTE_RECEIVED: EV2
+1136:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg (I2C_EVENT_SLAVE_BYTE_RECEIVED | I2C_FLAG_DUALF): EV2
+1137:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg (I2C_EVENT_SLAVE_BYTE_RECEIVED | I2C_FLAG_GENCALL): EV2
+1138:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_SLAVE_BYTE_TRANSMITTED: EV3
+1139:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg (I2C_EVENT_SLAVE_BYTE_TRANSMITTED | I2C_FLAG_DUALF): EV3
+1140:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg (I2C_EVENT_SLAVE_BYTE_TRANSMITTED | I2C_FLAG_GENCALL): EV3
+1141:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_SLAVE_ACK_FAILURE: EV3_2
+1142:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_SLAVE_STOP_DETECTED: EV4
+1143:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_MASTER_MODE_SELECT: EV5
+1144:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED: EV6     
+1145:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED: EV6
+1146:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_MASTER_BYTE_RECEIVED: EV7
+1147:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_MASTER_BYTE_TRANSMITTING: EV8
+1148:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_MASTER_BYTE_TRANSMITTED: EV8_2
+1149:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_EVENT_MASTER_MODE_ADDRESS10: EV9
+1150:./Libraries/src/stm32f4xx_i2c.c ****   *     
+1151:./Libraries/src/stm32f4xx_i2c.c ****   * @note   For detailed description of Events, please refer to section I2C_Events
+1152:./Libraries/src/stm32f4xx_i2c.c ****   *         in stm32f4xx_i2c.h file.
+1153:./Libraries/src/stm32f4xx_i2c.c ****   *    
+1154:./Libraries/src/stm32f4xx_i2c.c ****   * @retval An ErrorStatus enumeration value:
+1155:./Libraries/src/stm32f4xx_i2c.c ****   *           - SUCCESS: Last event is equal to the I2C_EVENT
+1156:./Libraries/src/stm32f4xx_i2c.c ****   *           - ERROR: Last event is different from the I2C_EVENT
+1157:./Libraries/src/stm32f4xx_i2c.c ****   */
+1158:./Libraries/src/stm32f4xx_i2c.c **** ErrorStatus I2C_CheckEvent(I2C_TypeDef* I2Cx, uint32_t I2C_EVENT)
+1159:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1467              		.loc 1 1159 1 is_stmt 1 view -0
+ 1468              		.cfi_startproc
+ 1469              		@ args = 0, pretend = 0, frame = 0
+ 1470              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1471              		@ link register save eliminated.
+1160:./Libraries/src/stm32f4xx_i2c.c ****   uint32_t lastevent = 0;
+ 1472              		.loc 1 1160 3 view .LVU429
+1161:./Libraries/src/stm32f4xx_i2c.c ****   uint32_t flag1 = 0, flag2 = 0;
+ 1473              		.loc 1 1161 3 view .LVU430
+1162:./Libraries/src/stm32f4xx_i2c.c ****   ErrorStatus status = ERROR;
+ARM GAS  /tmp/ccKogwsQ.s 			page 47
+
+
+ 1474              		.loc 1 1162 3 view .LVU431
+1163:./Libraries/src/stm32f4xx_i2c.c **** 
+1164:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+1165:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1475              		.loc 1 1165 3 view .LVU432
+1166:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_EVENT(I2C_EVENT));
+ 1476              		.loc 1 1166 3 view .LVU433
+1167:./Libraries/src/stm32f4xx_i2c.c **** 
+1168:./Libraries/src/stm32f4xx_i2c.c ****   /* Read the I2Cx status register */
+1169:./Libraries/src/stm32f4xx_i2c.c ****   flag1 = I2Cx->SR1;
+ 1477              		.loc 1 1169 3 view .LVU434
+ 1478              		.loc 1 1169 15 is_stmt 0 view .LVU435
+ 1479 0000 838A     		ldrh	r3, [r0, #20]
+ 1480 0002 9BB2     		uxth	r3, r3
+ 1481              	.LVL88:
+1170:./Libraries/src/stm32f4xx_i2c.c ****   flag2 = I2Cx->SR2;
+ 1482              		.loc 1 1170 3 is_stmt 1 view .LVU436
+ 1483              		.loc 1 1170 15 is_stmt 0 view .LVU437
+ 1484 0004 028B     		ldrh	r2, [r0, #24]
+ 1485              	.LVL89:
+1171:./Libraries/src/stm32f4xx_i2c.c ****   flag2 = flag2 << 16;
+ 1486              		.loc 1 1171 3 is_stmt 1 view .LVU438
+1172:./Libraries/src/stm32f4xx_i2c.c **** 
+1173:./Libraries/src/stm32f4xx_i2c.c ****   /* Get the last event value from I2C status register */
+1174:./Libraries/src/stm32f4xx_i2c.c ****   lastevent = (flag1 | flag2) & FLAG_MASK;
+ 1487              		.loc 1 1174 3 view .LVU439
+ 1488              		.loc 1 1174 22 is_stmt 0 view .LVU440
+ 1489 0006 43EA0243 		orr	r3, r3, r2, lsl #16
+ 1490              	.LVL90:
+ 1491              		.loc 1 1174 13 view .LVU441
+ 1492 000a 23F07F43 		bic	r3, r3, #-16777216
+ 1493              	.LVL91:
+1175:./Libraries/src/stm32f4xx_i2c.c **** 
+1176:./Libraries/src/stm32f4xx_i2c.c ****   /* Check whether the last event contains the I2C_EVENT */
+1177:./Libraries/src/stm32f4xx_i2c.c ****   if ((lastevent & I2C_EVENT) == I2C_EVENT)
+ 1494              		.loc 1 1177 3 is_stmt 1 view .LVU442
+ 1495              		.loc 1 1177 6 is_stmt 0 view .LVU443
+ 1496 000e 9943     		bics	r1, r1, r3
+ 1497              	.LVL92:
+ 1498              		.loc 1 1177 6 view .LVU444
+ 1499 0010 01D0     		beq	.L97
+1178:./Libraries/src/stm32f4xx_i2c.c ****   {
+1179:./Libraries/src/stm32f4xx_i2c.c ****     /* SUCCESS: last event is equal to I2C_EVENT */
+1180:./Libraries/src/stm32f4xx_i2c.c ****     status = SUCCESS;
+1181:./Libraries/src/stm32f4xx_i2c.c ****   }
+1182:./Libraries/src/stm32f4xx_i2c.c ****   else
+1183:./Libraries/src/stm32f4xx_i2c.c ****   {
+1184:./Libraries/src/stm32f4xx_i2c.c ****     /* ERROR: last event is different from I2C_EVENT */
+1185:./Libraries/src/stm32f4xx_i2c.c ****     status = ERROR;
+ 1500              		.loc 1 1185 12 view .LVU445
+ 1501 0012 0020     		movs	r0, #0
+ 1502              	.LVL93:
+1186:./Libraries/src/stm32f4xx_i2c.c ****   }
+1187:./Libraries/src/stm32f4xx_i2c.c ****   /* Return status */
+1188:./Libraries/src/stm32f4xx_i2c.c ****   return status;
+ 1503              		.loc 1 1188 3 is_stmt 1 view .LVU446
+1189:./Libraries/src/stm32f4xx_i2c.c **** }
+ARM GAS  /tmp/ccKogwsQ.s 			page 48
+
+
+ 1504              		.loc 1 1189 1 is_stmt 0 view .LVU447
+ 1505 0014 7047     		bx	lr
+ 1506              	.LVL94:
+ 1507              	.L97:
+1180:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1508              		.loc 1 1180 12 view .LVU448
+ 1509 0016 0120     		movs	r0, #1
+ 1510              	.LVL95:
+1180:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1511              		.loc 1 1180 12 view .LVU449
+ 1512 0018 7047     		bx	lr
+ 1513              		.cfi_endproc
+ 1514              	.LFE152:
+ 1516              		.section	.text.I2C_GetLastEvent,"ax",%progbits
+ 1517              		.align	1
+ 1518              		.global	I2C_GetLastEvent
+ 1519              		.syntax unified
+ 1520              		.thumb
+ 1521              		.thumb_func
+ 1523              	I2C_GetLastEvent:
+ 1524              	.LVL96:
+ 1525              	.LFB153:
+1190:./Libraries/src/stm32f4xx_i2c.c **** 
+1191:./Libraries/src/stm32f4xx_i2c.c **** /*
+1192:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================
+1193:./Libraries/src/stm32f4xx_i2c.c ****                           2. Advanced state monitoring                   
+1194:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================  
+1195:./Libraries/src/stm32f4xx_i2c.c ****  */
+1196:./Libraries/src/stm32f4xx_i2c.c **** 
+1197:./Libraries/src/stm32f4xx_i2c.c **** /**
+1198:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Returns the last I2Cx Event.
+1199:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+1200:./Libraries/src/stm32f4xx_i2c.c ****   *     
+1201:./Libraries/src/stm32f4xx_i2c.c ****   * @note   For detailed description of Events, please refer to section I2C_Events
+1202:./Libraries/src/stm32f4xx_i2c.c ****   *         in stm32f4xx_i2c.h file.
+1203:./Libraries/src/stm32f4xx_i2c.c ****   *    
+1204:./Libraries/src/stm32f4xx_i2c.c ****   * @retval The last event
+1205:./Libraries/src/stm32f4xx_i2c.c ****   */
+1206:./Libraries/src/stm32f4xx_i2c.c **** uint32_t I2C_GetLastEvent(I2C_TypeDef* I2Cx)
+1207:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1526              		.loc 1 1207 1 is_stmt 1 view -0
+ 1527              		.cfi_startproc
+ 1528              		@ args = 0, pretend = 0, frame = 0
+ 1529              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1530              		@ link register save eliminated.
+1208:./Libraries/src/stm32f4xx_i2c.c ****   uint32_t lastevent = 0;
+ 1531              		.loc 1 1208 3 view .LVU451
+1209:./Libraries/src/stm32f4xx_i2c.c ****   uint32_t flag1 = 0, flag2 = 0;
+ 1532              		.loc 1 1209 3 view .LVU452
+1210:./Libraries/src/stm32f4xx_i2c.c **** 
+1211:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+1212:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1533              		.loc 1 1212 3 view .LVU453
+1213:./Libraries/src/stm32f4xx_i2c.c **** 
+1214:./Libraries/src/stm32f4xx_i2c.c ****   /* Read the I2Cx status register */
+1215:./Libraries/src/stm32f4xx_i2c.c ****   flag1 = I2Cx->SR1;
+ 1534              		.loc 1 1215 3 view .LVU454
+ARM GAS  /tmp/ccKogwsQ.s 			page 49
+
+
+ 1535              		.loc 1 1215 15 is_stmt 0 view .LVU455
+ 1536 0000 838A     		ldrh	r3, [r0, #20]
+ 1537 0002 9BB2     		uxth	r3, r3
+ 1538              	.LVL97:
+1216:./Libraries/src/stm32f4xx_i2c.c ****   flag2 = I2Cx->SR2;
+ 1539              		.loc 1 1216 3 is_stmt 1 view .LVU456
+ 1540              		.loc 1 1216 15 is_stmt 0 view .LVU457
+ 1541 0004 028B     		ldrh	r2, [r0, #24]
+ 1542              	.LVL98:
+1217:./Libraries/src/stm32f4xx_i2c.c ****   flag2 = flag2 << 16;
+ 1543              		.loc 1 1217 3 is_stmt 1 view .LVU458
+1218:./Libraries/src/stm32f4xx_i2c.c **** 
+1219:./Libraries/src/stm32f4xx_i2c.c ****   /* Get the last event value from I2C status register */
+1220:./Libraries/src/stm32f4xx_i2c.c ****   lastevent = (flag1 | flag2) & FLAG_MASK;
+ 1544              		.loc 1 1220 3 view .LVU459
+ 1545              		.loc 1 1220 22 is_stmt 0 view .LVU460
+ 1546 0006 43EA0240 		orr	r0, r3, r2, lsl #16
+ 1547              	.LVL99:
+1221:./Libraries/src/stm32f4xx_i2c.c **** 
+1222:./Libraries/src/stm32f4xx_i2c.c ****   /* Return status */
+1223:./Libraries/src/stm32f4xx_i2c.c ****   return lastevent;
+ 1548              		.loc 1 1223 3 is_stmt 1 view .LVU461
+1224:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1549              		.loc 1 1224 1 is_stmt 0 view .LVU462
+ 1550 000a 20F07F40 		bic	r0, r0, #-16777216
+ 1551              	.LVL100:
+ 1552              		.loc 1 1224 1 view .LVU463
+ 1553 000e 7047     		bx	lr
+ 1554              		.cfi_endproc
+ 1555              	.LFE153:
+ 1557              		.section	.text.I2C_GetFlagStatus,"ax",%progbits
+ 1558              		.align	1
+ 1559              		.global	I2C_GetFlagStatus
+ 1560              		.syntax unified
+ 1561              		.thumb
+ 1562              		.thumb_func
+ 1564              	I2C_GetFlagStatus:
+ 1565              	.LVL101:
+ 1566              	.LFB154:
+1225:./Libraries/src/stm32f4xx_i2c.c **** 
+1226:./Libraries/src/stm32f4xx_i2c.c **** /*
+1227:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================
+1228:./Libraries/src/stm32f4xx_i2c.c ****                           3. Flag-based state monitoring                   
+1229:./Libraries/src/stm32f4xx_i2c.c ****  ===============================================================================  
+1230:./Libraries/src/stm32f4xx_i2c.c ****  */
+1231:./Libraries/src/stm32f4xx_i2c.c **** 
+1232:./Libraries/src/stm32f4xx_i2c.c **** /**
+1233:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Checks whether the specified I2C flag is set or not.
+1234:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+1235:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_FLAG: specifies the flag to check. 
+1236:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be one of the following values:
+1237:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_DUALF: Dual flag (Slave mode)
+1238:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_SMBHOST: SMBus host header (Slave mode)
+1239:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_SMBDEFAULT: SMBus default header (Slave mode)
+1240:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_GENCALL: General call header flag (Slave mode)
+1241:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_TRA: Transmitter/Receiver flag
+1242:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_BUSY: Bus busy flag
+ARM GAS  /tmp/ccKogwsQ.s 			page 50
+
+
+1243:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_MSL: Master/Slave flag
+1244:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_SMBALERT: SMBus Alert flag
+1245:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_TIMEOUT: Timeout or Tlow error flag
+1246:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_PECERR: PEC error in reception flag
+1247:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_OVR: Overrun/Underrun flag (Slave mode)
+1248:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_AF: Acknowledge failure flag
+1249:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_ARLO: Arbitration lost flag (Master mode)
+1250:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_BERR: Bus error flag
+1251:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_TXE: Data register empty flag (Transmitter)
+1252:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_RXNE: Data register not empty (Receiver) flag
+1253:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_STOPF: Stop detection flag (Slave mode)
+1254:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_ADD10: 10-bit header sent flag (Master mode)
+1255:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_BTF: Byte transfer finished flag
+1256:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_ADDR: Address sent flag (Master mode) "ADSL"
+1257:./Libraries/src/stm32f4xx_i2c.c ****   *                                Address matched flag (Slave mode)"ENDAD"
+1258:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_SB: Start bit flag (Master mode)
+1259:./Libraries/src/stm32f4xx_i2c.c ****   * @retval The new state of I2C_FLAG (SET or RESET).
+1260:./Libraries/src/stm32f4xx_i2c.c ****   */
+1261:./Libraries/src/stm32f4xx_i2c.c **** FlagStatus I2C_GetFlagStatus(I2C_TypeDef* I2Cx, uint32_t I2C_FLAG)
+1262:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1567              		.loc 1 1262 1 is_stmt 1 view -0
+ 1568              		.cfi_startproc
+ 1569              		@ args = 0, pretend = 0, frame = 8
+ 1570              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1571              		@ link register save eliminated.
+ 1572              		.loc 1 1262 1 is_stmt 0 view .LVU465
+ 1573 0000 82B0     		sub	sp, sp, #8
+ 1574              	.LCFI7:
+ 1575              		.cfi_def_cfa_offset 8
+1263:./Libraries/src/stm32f4xx_i2c.c ****   FlagStatus bitstatus = RESET;
+ 1576              		.loc 1 1263 3 is_stmt 1 view .LVU466
+ 1577              	.LVL102:
+1264:./Libraries/src/stm32f4xx_i2c.c ****   __IO uint32_t i2creg = 0, i2cxbase = 0;
+ 1578              		.loc 1 1264 3 view .LVU467
+ 1579              		.loc 1 1264 17 is_stmt 0 view .LVU468
+ 1580 0002 0023     		movs	r3, #0
+ 1581 0004 0193     		str	r3, [sp, #4]
+ 1582              		.loc 1 1264 29 view .LVU469
+ 1583 0006 0093     		str	r3, [sp]
+1265:./Libraries/src/stm32f4xx_i2c.c **** 
+1266:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+1267:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1584              		.loc 1 1267 3 is_stmt 1 view .LVU470
+1268:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_GET_FLAG(I2C_FLAG));
+ 1585              		.loc 1 1268 3 view .LVU471
+1269:./Libraries/src/stm32f4xx_i2c.c **** 
+1270:./Libraries/src/stm32f4xx_i2c.c ****   /* Get the I2Cx peripheral base address */
+1271:./Libraries/src/stm32f4xx_i2c.c ****   i2cxbase = (uint32_t)I2Cx;
+ 1586              		.loc 1 1271 3 view .LVU472
+ 1587              		.loc 1 1271 12 is_stmt 0 view .LVU473
+ 1588 0008 0090     		str	r0, [sp]
+1272:./Libraries/src/stm32f4xx_i2c.c ****   
+1273:./Libraries/src/stm32f4xx_i2c.c ****   /* Read flag register index */
+1274:./Libraries/src/stm32f4xx_i2c.c ****   i2creg = I2C_FLAG >> 28;
+ 1589              		.loc 1 1274 3 is_stmt 1 view .LVU474
+ 1590              		.loc 1 1274 21 is_stmt 0 view .LVU475
+ 1591 000a 0B0F     		lsrs	r3, r1, #28
+ARM GAS  /tmp/ccKogwsQ.s 			page 51
+
+
+ 1592              		.loc 1 1274 10 view .LVU476
+ 1593 000c 0193     		str	r3, [sp, #4]
+1275:./Libraries/src/stm32f4xx_i2c.c ****   
+1276:./Libraries/src/stm32f4xx_i2c.c ****   /* Get bit[23:0] of the flag */
+1277:./Libraries/src/stm32f4xx_i2c.c ****   I2C_FLAG &= FLAG_MASK;
+ 1594              		.loc 1 1277 3 is_stmt 1 view .LVU477
+ 1595              		.loc 1 1277 12 is_stmt 0 view .LVU478
+ 1596 000e 21F07F41 		bic	r1, r1, #-16777216
+ 1597              	.LVL103:
+1278:./Libraries/src/stm32f4xx_i2c.c ****   
+1279:./Libraries/src/stm32f4xx_i2c.c ****   if(i2creg != 0)
+ 1598              		.loc 1 1279 3 is_stmt 1 view .LVU479
+ 1599              		.loc 1 1279 13 is_stmt 0 view .LVU480
+ 1600 0012 019B     		ldr	r3, [sp, #4]
+ 1601              		.loc 1 1279 5 view .LVU481
+ 1602 0014 4BB1     		cbz	r3, .L100
+1280:./Libraries/src/stm32f4xx_i2c.c ****   {
+1281:./Libraries/src/stm32f4xx_i2c.c ****     /* Get the I2Cx SR1 register address */
+1282:./Libraries/src/stm32f4xx_i2c.c ****     i2cxbase += 0x14;
+ 1603              		.loc 1 1282 5 is_stmt 1 view .LVU482
+ 1604              		.loc 1 1282 14 is_stmt 0 view .LVU483
+ 1605 0016 009B     		ldr	r3, [sp]
+ 1606 0018 1433     		adds	r3, r3, #20
+ 1607 001a 0093     		str	r3, [sp]
+ 1608              	.L101:
+1283:./Libraries/src/stm32f4xx_i2c.c ****   }
+1284:./Libraries/src/stm32f4xx_i2c.c ****   else
+1285:./Libraries/src/stm32f4xx_i2c.c ****   {
+1286:./Libraries/src/stm32f4xx_i2c.c ****     /* Flag in I2Cx SR2 Register */
+1287:./Libraries/src/stm32f4xx_i2c.c ****     I2C_FLAG = (uint32_t)(I2C_FLAG >> 16);
+1288:./Libraries/src/stm32f4xx_i2c.c ****     /* Get the I2Cx SR2 register address */
+1289:./Libraries/src/stm32f4xx_i2c.c ****     i2cxbase += 0x18;
+1290:./Libraries/src/stm32f4xx_i2c.c ****   }
+1291:./Libraries/src/stm32f4xx_i2c.c ****   
+1292:./Libraries/src/stm32f4xx_i2c.c ****   if(((*(__IO uint32_t *)i2cxbase) & I2C_FLAG) != (uint32_t)RESET)
+ 1609              		.loc 1 1292 3 is_stmt 1 view .LVU484
+ 1610              		.loc 1 1292 9 is_stmt 0 view .LVU485
+ 1611 001c 009B     		ldr	r3, [sp]
+ 1612              		.loc 1 1292 8 view .LVU486
+ 1613 001e 1B68     		ldr	r3, [r3]
+ 1614              		.loc 1 1292 5 view .LVU487
+ 1615 0020 0B42     		tst	r3, r1
+ 1616 0022 07D0     		beq	.L103
+1293:./Libraries/src/stm32f4xx_i2c.c ****   {
+1294:./Libraries/src/stm32f4xx_i2c.c ****     /* I2C_FLAG is set */
+1295:./Libraries/src/stm32f4xx_i2c.c ****     bitstatus = SET;
+ 1617              		.loc 1 1295 15 view .LVU488
+ 1618 0024 0120     		movs	r0, #1
+ 1619              	.LVL104:
+ 1620              	.L102:
+1296:./Libraries/src/stm32f4xx_i2c.c ****   }
+1297:./Libraries/src/stm32f4xx_i2c.c ****   else
+1298:./Libraries/src/stm32f4xx_i2c.c ****   {
+1299:./Libraries/src/stm32f4xx_i2c.c ****     /* I2C_FLAG is reset */
+1300:./Libraries/src/stm32f4xx_i2c.c ****     bitstatus = RESET;
+1301:./Libraries/src/stm32f4xx_i2c.c ****   }
+1302:./Libraries/src/stm32f4xx_i2c.c ****   
+ARM GAS  /tmp/ccKogwsQ.s 			page 52
+
+
+1303:./Libraries/src/stm32f4xx_i2c.c ****   /* Return the I2C_FLAG status */
+1304:./Libraries/src/stm32f4xx_i2c.c ****   return  bitstatus;
+ 1621              		.loc 1 1304 3 is_stmt 1 view .LVU489
+1305:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1622              		.loc 1 1305 1 is_stmt 0 view .LVU490
+ 1623 0026 02B0     		add	sp, sp, #8
+ 1624              	.LCFI8:
+ 1625              		.cfi_remember_state
+ 1626              		.cfi_def_cfa_offset 0
+ 1627              		@ sp needed
+ 1628 0028 7047     		bx	lr
+ 1629              	.LVL105:
+ 1630              	.L100:
+ 1631              	.LCFI9:
+ 1632              		.cfi_restore_state
+1287:./Libraries/src/stm32f4xx_i2c.c ****     /* Get the I2Cx SR2 register address */
+ 1633              		.loc 1 1287 5 is_stmt 1 view .LVU491
+1287:./Libraries/src/stm32f4xx_i2c.c ****     /* Get the I2Cx SR2 register address */
+ 1634              		.loc 1 1287 14 is_stmt 0 view .LVU492
+ 1635 002a 090C     		lsrs	r1, r1, #16
+ 1636              	.LVL106:
+1289:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1637              		.loc 1 1289 5 is_stmt 1 view .LVU493
+1289:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1638              		.loc 1 1289 14 is_stmt 0 view .LVU494
+ 1639 002c 009B     		ldr	r3, [sp]
+ 1640 002e 1833     		adds	r3, r3, #24
+ 1641 0030 0093     		str	r3, [sp]
+ 1642 0032 F3E7     		b	.L101
+ 1643              	.L103:
+1300:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1644              		.loc 1 1300 15 view .LVU495
+ 1645 0034 0020     		movs	r0, #0
+ 1646              	.LVL107:
+1300:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1647              		.loc 1 1300 15 view .LVU496
+ 1648 0036 F6E7     		b	.L102
+ 1649              		.cfi_endproc
+ 1650              	.LFE154:
+ 1652              		.section	.text.I2C_ClearFlag,"ax",%progbits
+ 1653              		.align	1
+ 1654              		.global	I2C_ClearFlag
+ 1655              		.syntax unified
+ 1656              		.thumb
+ 1657              		.thumb_func
+ 1659              	I2C_ClearFlag:
+ 1660              	.LVL108:
+ 1661              	.LFB155:
+1306:./Libraries/src/stm32f4xx_i2c.c **** 
+1307:./Libraries/src/stm32f4xx_i2c.c **** /**
+1308:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Clears the I2Cx's pending flags.
+1309:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+1310:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_FLAG: specifies the flag to clear. 
+1311:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be any combination of the following values:
+1312:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_SMBALERT: SMBus Alert flag
+1313:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_TIMEOUT: Timeout or Tlow error flag
+1314:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_PECERR: PEC error in reception flag
+ARM GAS  /tmp/ccKogwsQ.s 			page 53
+
+
+1315:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_OVR: Overrun/Underrun flag (Slave mode)
+1316:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_AF: Acknowledge failure flag
+1317:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_ARLO: Arbitration lost flag (Master mode)
+1318:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_FLAG_BERR: Bus error flag
+1319:./Libraries/src/stm32f4xx_i2c.c ****   *   
+1320:./Libraries/src/stm32f4xx_i2c.c ****   * @note   STOPF (STOP detection) is cleared by software sequence: a read operation 
+1321:./Libraries/src/stm32f4xx_i2c.c ****   *          to I2C_SR1 register (I2C_GetFlagStatus()) followed by a write operation 
+1322:./Libraries/src/stm32f4xx_i2c.c ****   *          to I2C_CR1 register (I2C_Cmd() to re-enable the I2C peripheral).
+1323:./Libraries/src/stm32f4xx_i2c.c ****   * @note   ADD10 (10-bit header sent) is cleared by software sequence: a read 
+1324:./Libraries/src/stm32f4xx_i2c.c ****   *          operation to I2C_SR1 (I2C_GetFlagStatus()) followed by writing the 
+1325:./Libraries/src/stm32f4xx_i2c.c ****   *          second byte of the address in DR register.
+1326:./Libraries/src/stm32f4xx_i2c.c ****   * @note   BTF (Byte Transfer Finished) is cleared by software sequence: a read 
+1327:./Libraries/src/stm32f4xx_i2c.c ****   *          operation to I2C_SR1 register (I2C_GetFlagStatus()) followed by a 
+1328:./Libraries/src/stm32f4xx_i2c.c ****   *          read/write to I2C_DR register (I2C_SendData()).
+1329:./Libraries/src/stm32f4xx_i2c.c ****   * @note   ADDR (Address sent) is cleared by software sequence: a read operation to 
+1330:./Libraries/src/stm32f4xx_i2c.c ****   *          I2C_SR1 register (I2C_GetFlagStatus()) followed by a read operation to 
+1331:./Libraries/src/stm32f4xx_i2c.c ****   *          I2C_SR2 register ((void)(I2Cx->SR2)).
+1332:./Libraries/src/stm32f4xx_i2c.c ****   * @note   SB (Start Bit) is cleared software sequence: a read operation to I2C_SR1
+1333:./Libraries/src/stm32f4xx_i2c.c ****   *          register (I2C_GetFlagStatus()) followed by a write operation to I2C_DR
+1334:./Libraries/src/stm32f4xx_i2c.c ****   *          register (I2C_SendData()).
+1335:./Libraries/src/stm32f4xx_i2c.c ****   *  
+1336:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+1337:./Libraries/src/stm32f4xx_i2c.c ****   */
+1338:./Libraries/src/stm32f4xx_i2c.c **** void I2C_ClearFlag(I2C_TypeDef* I2Cx, uint32_t I2C_FLAG)
+1339:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1662              		.loc 1 1339 1 is_stmt 1 view -0
+ 1663              		.cfi_startproc
+ 1664              		@ args = 0, pretend = 0, frame = 0
+ 1665              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1666              		@ link register save eliminated.
+1340:./Libraries/src/stm32f4xx_i2c.c ****   uint32_t flagpos = 0;
+ 1667              		.loc 1 1340 3 view .LVU498
+1341:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+1342:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1668              		.loc 1 1342 3 view .LVU499
+1343:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_CLEAR_FLAG(I2C_FLAG));
+ 1669              		.loc 1 1343 3 view .LVU500
+1344:./Libraries/src/stm32f4xx_i2c.c ****   /* Get the I2C flag position */
+1345:./Libraries/src/stm32f4xx_i2c.c ****   flagpos = I2C_FLAG & FLAG_MASK;
+ 1670              		.loc 1 1345 3 view .LVU501
+ 1671              		.loc 1 1345 11 is_stmt 0 view .LVU502
+ 1672 0000 21F07F41 		bic	r1, r1, #-16777216
+ 1673              	.LVL109:
+1346:./Libraries/src/stm32f4xx_i2c.c ****   /* Clear the selected I2C flag */
+1347:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->SR1 = (uint16_t)~flagpos;
+ 1674              		.loc 1 1347 3 is_stmt 1 view .LVU503
+ 1675              		.loc 1 1347 15 is_stmt 0 view .LVU504
+ 1676 0004 C943     		mvns	r1, r1
+ 1677              	.LVL110:
+ 1678              		.loc 1 1347 15 view .LVU505
+ 1679 0006 89B2     		uxth	r1, r1
+ 1680              	.LVL111:
+ 1681              		.loc 1 1347 13 view .LVU506
+ 1682 0008 8182     		strh	r1, [r0, #20]	@ movhi
+1348:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1683              		.loc 1 1348 1 view .LVU507
+ 1684 000a 7047     		bx	lr
+ARM GAS  /tmp/ccKogwsQ.s 			page 54
+
+
+ 1685              		.cfi_endproc
+ 1686              	.LFE155:
+ 1688              		.section	.text.I2C_GetITStatus,"ax",%progbits
+ 1689              		.align	1
+ 1690              		.global	I2C_GetITStatus
+ 1691              		.syntax unified
+ 1692              		.thumb
+ 1693              		.thumb_func
+ 1695              	I2C_GetITStatus:
+ 1696              	.LVL112:
+ 1697              	.LFB156:
+1349:./Libraries/src/stm32f4xx_i2c.c **** 
+1350:./Libraries/src/stm32f4xx_i2c.c **** /**
+1351:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Checks whether the specified I2C interrupt has occurred or not.
+1352:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+1353:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_IT: specifies the interrupt source to check. 
+1354:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be one of the following values:
+1355:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_SMBALERT: SMBus Alert flag
+1356:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_TIMEOUT: Timeout or Tlow error flag
+1357:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_PECERR: PEC error in reception flag
+1358:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_OVR: Overrun/Underrun flag (Slave mode)
+1359:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_AF: Acknowledge failure flag
+1360:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_ARLO: Arbitration lost flag (Master mode)
+1361:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_BERR: Bus error flag
+1362:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_TXE: Data register empty flag (Transmitter)
+1363:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_RXNE: Data register not empty (Receiver) flag
+1364:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_STOPF: Stop detection flag (Slave mode)
+1365:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_ADD10: 10-bit header sent flag (Master mode)
+1366:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_BTF: Byte transfer finished flag
+1367:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_ADDR: Address sent flag (Master mode) "ADSL"
+1368:./Libraries/src/stm32f4xx_i2c.c ****   *                              Address matched flag (Slave mode)"ENDAD"
+1369:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_SB: Start bit flag (Master mode)
+1370:./Libraries/src/stm32f4xx_i2c.c ****   * @retval The new state of I2C_IT (SET or RESET).
+1371:./Libraries/src/stm32f4xx_i2c.c ****   */
+1372:./Libraries/src/stm32f4xx_i2c.c **** ITStatus I2C_GetITStatus(I2C_TypeDef* I2Cx, uint32_t I2C_IT)
+1373:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1698              		.loc 1 1373 1 is_stmt 1 view -0
+ 1699              		.cfi_startproc
+ 1700              		@ args = 0, pretend = 0, frame = 0
+ 1701              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1702              		@ link register save eliminated.
+1374:./Libraries/src/stm32f4xx_i2c.c ****   ITStatus bitstatus = RESET;
+ 1703              		.loc 1 1374 3 view .LVU509
+1375:./Libraries/src/stm32f4xx_i2c.c ****   uint32_t enablestatus = 0;
+ 1704              		.loc 1 1375 3 view .LVU510
+1376:./Libraries/src/stm32f4xx_i2c.c **** 
+1377:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+1378:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1705              		.loc 1 1378 3 view .LVU511
+1379:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_GET_IT(I2C_IT));
+ 1706              		.loc 1 1379 3 view .LVU512
+1380:./Libraries/src/stm32f4xx_i2c.c **** 
+1381:./Libraries/src/stm32f4xx_i2c.c ****   /* Check if the interrupt source is enabled or not */
+1382:./Libraries/src/stm32f4xx_i2c.c ****   enablestatus = (uint32_t)(((I2C_IT & ITEN_MASK) >> 16) & (I2Cx->CR2)) ;
+ 1707              		.loc 1 1382 3 view .LVU513
+ 1708              		.loc 1 1382 65 is_stmt 0 view .LVU514
+ 1709 0000 8388     		ldrh	r3, [r0, #4]
+ARM GAS  /tmp/ccKogwsQ.s 			page 55
+
+
+ 1710              		.loc 1 1382 18 view .LVU515
+ 1711 0002 03EA1143 		and	r3, r3, r1, lsr #16
+ 1712              		.loc 1 1382 16 view .LVU516
+ 1713 0006 03F4E063 		and	r3, r3, #1792
+ 1714              	.LVL113:
+1383:./Libraries/src/stm32f4xx_i2c.c ****   
+1384:./Libraries/src/stm32f4xx_i2c.c ****   /* Get bit[23:0] of the flag */
+1385:./Libraries/src/stm32f4xx_i2c.c ****   I2C_IT &= FLAG_MASK;
+ 1715              		.loc 1 1385 3 is_stmt 1 view .LVU517
+1386:./Libraries/src/stm32f4xx_i2c.c **** 
+1387:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the status of the specified I2C flag */
+1388:./Libraries/src/stm32f4xx_i2c.c ****   if (((I2Cx->SR1 & I2C_IT) != (uint32_t)RESET) && enablestatus)
+ 1716              		.loc 1 1388 3 view .LVU518
+ 1717              		.loc 1 1388 13 is_stmt 0 view .LVU519
+ 1718 000a 828A     		ldrh	r2, [r0, #20]
+ 1719 000c 92B2     		uxth	r2, r2
+ 1720              		.loc 1 1388 6 view .LVU520
+ 1721 000e 1142     		tst	r1, r2
+ 1722 0010 02D0     		beq	.L108
+ 1723              		.loc 1 1388 49 discriminator 1 view .LVU521
+ 1724 0012 1BB9     		cbnz	r3, .L109
+1389:./Libraries/src/stm32f4xx_i2c.c ****   {
+1390:./Libraries/src/stm32f4xx_i2c.c ****     /* I2C_IT is set */
+1391:./Libraries/src/stm32f4xx_i2c.c ****     bitstatus = SET;
+1392:./Libraries/src/stm32f4xx_i2c.c ****   }
+1393:./Libraries/src/stm32f4xx_i2c.c ****   else
+1394:./Libraries/src/stm32f4xx_i2c.c ****   {
+1395:./Libraries/src/stm32f4xx_i2c.c ****     /* I2C_IT is reset */
+1396:./Libraries/src/stm32f4xx_i2c.c ****     bitstatus = RESET;
+ 1725              		.loc 1 1396 15 view .LVU522
+ 1726 0014 0020     		movs	r0, #0
+ 1727              	.LVL114:
+ 1728              		.loc 1 1396 15 view .LVU523
+ 1729 0016 7047     		bx	lr
+ 1730              	.LVL115:
+ 1731              	.L108:
+ 1732              		.loc 1 1396 15 view .LVU524
+ 1733 0018 0020     		movs	r0, #0
+ 1734              	.LVL116:
+ 1735              		.loc 1 1396 15 view .LVU525
+ 1736 001a 7047     		bx	lr
+ 1737              	.LVL117:
+ 1738              	.L109:
+1391:./Libraries/src/stm32f4xx_i2c.c ****   }
+ 1739              		.loc 1 1391 15 view .LVU526
+ 1740 001c 0120     		movs	r0, #1
+ 1741              	.LVL118:
+1397:./Libraries/src/stm32f4xx_i2c.c ****   }
+1398:./Libraries/src/stm32f4xx_i2c.c ****   /* Return the I2C_IT status */
+1399:./Libraries/src/stm32f4xx_i2c.c ****   return  bitstatus;
+ 1742              		.loc 1 1399 3 is_stmt 1 view .LVU527
+1400:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1743              		.loc 1 1400 1 is_stmt 0 view .LVU528
+ 1744 001e 7047     		bx	lr
+ 1745              		.cfi_endproc
+ 1746              	.LFE156:
+ 1748              		.section	.text.I2C_ClearITPendingBit,"ax",%progbits
+ARM GAS  /tmp/ccKogwsQ.s 			page 56
+
+
+ 1749              		.align	1
+ 1750              		.global	I2C_ClearITPendingBit
+ 1751              		.syntax unified
+ 1752              		.thumb
+ 1753              		.thumb_func
+ 1755              	I2C_ClearITPendingBit:
+ 1756              	.LVL119:
+ 1757              	.LFB157:
+1401:./Libraries/src/stm32f4xx_i2c.c **** 
+1402:./Libraries/src/stm32f4xx_i2c.c **** /**
+1403:./Libraries/src/stm32f4xx_i2c.c ****   * @brief  Clears the I2Cx's interrupt pending bits.
+1404:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+1405:./Libraries/src/stm32f4xx_i2c.c ****   * @param  I2C_IT: specifies the interrupt pending bit to clear. 
+1406:./Libraries/src/stm32f4xx_i2c.c ****   *          This parameter can be any combination of the following values:
+1407:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_SMBALERT: SMBus Alert interrupt
+1408:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_TIMEOUT: Timeout or Tlow error interrupt
+1409:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_PECERR: PEC error in reception  interrupt
+1410:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_OVR: Overrun/Underrun interrupt (Slave mode)
+1411:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_AF: Acknowledge failure interrupt
+1412:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_ARLO: Arbitration lost interrupt (Master mode)
+1413:./Libraries/src/stm32f4xx_i2c.c ****   *            @arg I2C_IT_BERR: Bus error interrupt
+1414:./Libraries/src/stm32f4xx_i2c.c ****   * 
+1415:./Libraries/src/stm32f4xx_i2c.c ****   * @note   STOPF (STOP detection) is cleared by software sequence: a read operation 
+1416:./Libraries/src/stm32f4xx_i2c.c ****   *          to I2C_SR1 register (I2C_GetITStatus()) followed by a write operation to 
+1417:./Libraries/src/stm32f4xx_i2c.c ****   *          I2C_CR1 register (I2C_Cmd() to re-enable the I2C peripheral).
+1418:./Libraries/src/stm32f4xx_i2c.c ****   * @note   ADD10 (10-bit header sent) is cleared by software sequence: a read 
+1419:./Libraries/src/stm32f4xx_i2c.c ****   *          operation to I2C_SR1 (I2C_GetITStatus()) followed by writing the second 
+1420:./Libraries/src/stm32f4xx_i2c.c ****   *          byte of the address in I2C_DR register.
+1421:./Libraries/src/stm32f4xx_i2c.c ****   * @note   BTF (Byte Transfer Finished) is cleared by software sequence: a read 
+1422:./Libraries/src/stm32f4xx_i2c.c ****   *          operation to I2C_SR1 register (I2C_GetITStatus()) followed by a 
+1423:./Libraries/src/stm32f4xx_i2c.c ****   *          read/write to I2C_DR register (I2C_SendData()).
+1424:./Libraries/src/stm32f4xx_i2c.c ****   * @note   ADDR (Address sent) is cleared by software sequence: a read operation to 
+1425:./Libraries/src/stm32f4xx_i2c.c ****   *          I2C_SR1 register (I2C_GetITStatus()) followed by a read operation to 
+1426:./Libraries/src/stm32f4xx_i2c.c ****   *          I2C_SR2 register ((void)(I2Cx->SR2)).
+1427:./Libraries/src/stm32f4xx_i2c.c ****   * @note   SB (Start Bit) is cleared by software sequence: a read operation to 
+1428:./Libraries/src/stm32f4xx_i2c.c ****   *          I2C_SR1 register (I2C_GetITStatus()) followed by a write operation to 
+1429:./Libraries/src/stm32f4xx_i2c.c ****   *          I2C_DR register (I2C_SendData()).
+1430:./Libraries/src/stm32f4xx_i2c.c ****   * @retval None
+1431:./Libraries/src/stm32f4xx_i2c.c ****   */
+1432:./Libraries/src/stm32f4xx_i2c.c **** void I2C_ClearITPendingBit(I2C_TypeDef* I2Cx, uint32_t I2C_IT)
+1433:./Libraries/src/stm32f4xx_i2c.c **** {
+ 1758              		.loc 1 1433 1 is_stmt 1 view -0
+ 1759              		.cfi_startproc
+ 1760              		@ args = 0, pretend = 0, frame = 0
+ 1761              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1762              		@ link register save eliminated.
+1434:./Libraries/src/stm32f4xx_i2c.c ****   uint32_t flagpos = 0;
+ 1763              		.loc 1 1434 3 view .LVU530
+1435:./Libraries/src/stm32f4xx_i2c.c ****   /* Check the parameters */
+1436:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 1764              		.loc 1 1436 3 view .LVU531
+1437:./Libraries/src/stm32f4xx_i2c.c ****   assert_param(IS_I2C_CLEAR_IT(I2C_IT));
+ 1765              		.loc 1 1437 3 view .LVU532
+1438:./Libraries/src/stm32f4xx_i2c.c **** 
+1439:./Libraries/src/stm32f4xx_i2c.c ****   /* Get the I2C flag position */
+1440:./Libraries/src/stm32f4xx_i2c.c ****   flagpos = I2C_IT & FLAG_MASK;
+ 1766              		.loc 1 1440 3 view .LVU533
+ARM GAS  /tmp/ccKogwsQ.s 			page 57
+
+
+ 1767              		.loc 1 1440 11 is_stmt 0 view .LVU534
+ 1768 0000 21F07F41 		bic	r1, r1, #-16777216
+ 1769              	.LVL120:
+1441:./Libraries/src/stm32f4xx_i2c.c **** 
+1442:./Libraries/src/stm32f4xx_i2c.c ****   /* Clear the selected I2C flag */
+1443:./Libraries/src/stm32f4xx_i2c.c ****   I2Cx->SR1 = (uint16_t)~flagpos;
+ 1770              		.loc 1 1443 3 is_stmt 1 view .LVU535
+ 1771              		.loc 1 1443 15 is_stmt 0 view .LVU536
+ 1772 0004 C943     		mvns	r1, r1
+ 1773              	.LVL121:
+ 1774              		.loc 1 1443 15 view .LVU537
+ 1775 0006 89B2     		uxth	r1, r1
+ 1776              	.LVL122:
+ 1777              		.loc 1 1443 13 view .LVU538
+ 1778 0008 8182     		strh	r1, [r0, #20]	@ movhi
+1444:./Libraries/src/stm32f4xx_i2c.c **** }
+ 1779              		.loc 1 1444 1 view .LVU539
+ 1780 000a 7047     		bx	lr
+ 1781              		.cfi_endproc
+ 1782              	.LFE157:
+ 1784              		.text
+ 1785              	.Letext0:
+ 1786              		.file 2 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 1787              		.file 3 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 1788              		.file 4 "./system/stm32f4xx.h"
+ 1789              		.file 5 "./Libraries/inc/stm32f4xx_rcc.h"
+ 1790              		.file 6 "./Libraries/inc/stm32f4xx_i2c.h"
+ARM GAS  /tmp/ccKogwsQ.s 			page 58
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f4xx_i2c.c
+     /tmp/ccKogwsQ.s:21     .text.I2C_DeInit:00000000 $t
+     /tmp/ccKogwsQ.s:27     .text.I2C_DeInit:00000000 I2C_DeInit
+     /tmp/ccKogwsQ.s:109    .text.I2C_DeInit:00000058 $d
+     /tmp/ccKogwsQ.s:116    .text.I2C_Init:00000000 $t
+     /tmp/ccKogwsQ.s:122    .text.I2C_Init:00000000 I2C_Init
+     /tmp/ccKogwsQ.s:355    .text.I2C_Init:000000cc $d
+     /tmp/ccKogwsQ.s:362    .text.I2C_StructInit:00000000 $t
+     /tmp/ccKogwsQ.s:368    .text.I2C_StructInit:00000000 I2C_StructInit
+     /tmp/ccKogwsQ.s:404    .text.I2C_Cmd:00000000 $t
+     /tmp/ccKogwsQ.s:410    .text.I2C_Cmd:00000000 I2C_Cmd
+     /tmp/ccKogwsQ.s:446    .text.I2C_AnalogFilterCmd:00000000 $t
+     /tmp/ccKogwsQ.s:452    .text.I2C_AnalogFilterCmd:00000000 I2C_AnalogFilterCmd
+     /tmp/ccKogwsQ.s:488    .text.I2C_DigitalFilterConfig:00000000 $t
+     /tmp/ccKogwsQ.s:494    .text.I2C_DigitalFilterConfig:00000000 I2C_DigitalFilterConfig
+     /tmp/ccKogwsQ.s:529    .text.I2C_GenerateSTART:00000000 $t
+     /tmp/ccKogwsQ.s:535    .text.I2C_GenerateSTART:00000000 I2C_GenerateSTART
+     /tmp/ccKogwsQ.s:571    .text.I2C_GenerateSTOP:00000000 $t
+     /tmp/ccKogwsQ.s:577    .text.I2C_GenerateSTOP:00000000 I2C_GenerateSTOP
+     /tmp/ccKogwsQ.s:613    .text.I2C_Send7bitAddress:00000000 $t
+     /tmp/ccKogwsQ.s:619    .text.I2C_Send7bitAddress:00000000 I2C_Send7bitAddress
+     /tmp/ccKogwsQ.s:653    .text.I2C_AcknowledgeConfig:00000000 $t
+     /tmp/ccKogwsQ.s:659    .text.I2C_AcknowledgeConfig:00000000 I2C_AcknowledgeConfig
+     /tmp/ccKogwsQ.s:695    .text.I2C_OwnAddress2Config:00000000 $t
+     /tmp/ccKogwsQ.s:701    .text.I2C_OwnAddress2Config:00000000 I2C_OwnAddress2Config
+     /tmp/ccKogwsQ.s:736    .text.I2C_DualAddressCmd:00000000 $t
+     /tmp/ccKogwsQ.s:742    .text.I2C_DualAddressCmd:00000000 I2C_DualAddressCmd
+     /tmp/ccKogwsQ.s:778    .text.I2C_GeneralCallCmd:00000000 $t
+     /tmp/ccKogwsQ.s:784    .text.I2C_GeneralCallCmd:00000000 I2C_GeneralCallCmd
+     /tmp/ccKogwsQ.s:820    .text.I2C_SoftwareResetCmd:00000000 $t
+     /tmp/ccKogwsQ.s:826    .text.I2C_SoftwareResetCmd:00000000 I2C_SoftwareResetCmd
+     /tmp/ccKogwsQ.s:861    .text.I2C_StretchClockCmd:00000000 $t
+     /tmp/ccKogwsQ.s:867    .text.I2C_StretchClockCmd:00000000 I2C_StretchClockCmd
+     /tmp/ccKogwsQ.s:903    .text.I2C_FastModeDutyCycleConfig:00000000 $t
+     /tmp/ccKogwsQ.s:909    .text.I2C_FastModeDutyCycleConfig:00000000 I2C_FastModeDutyCycleConfig
+     /tmp/ccKogwsQ.s:946    .text.I2C_NACKPositionConfig:00000000 $t
+     /tmp/ccKogwsQ.s:952    .text.I2C_NACKPositionConfig:00000000 I2C_NACKPositionConfig
+     /tmp/ccKogwsQ.s:989    .text.I2C_SMBusAlertConfig:00000000 $t
+     /tmp/ccKogwsQ.s:995    .text.I2C_SMBusAlertConfig:00000000 I2C_SMBusAlertConfig
+     /tmp/ccKogwsQ.s:1032   .text.I2C_ARPCmd:00000000 $t
+     /tmp/ccKogwsQ.s:1038   .text.I2C_ARPCmd:00000000 I2C_ARPCmd
+     /tmp/ccKogwsQ.s:1074   .text.I2C_SendData:00000000 $t
+     /tmp/ccKogwsQ.s:1080   .text.I2C_SendData:00000000 I2C_SendData
+     /tmp/ccKogwsQ.s:1098   .text.I2C_ReceiveData:00000000 $t
+     /tmp/ccKogwsQ.s:1104   .text.I2C_ReceiveData:00000000 I2C_ReceiveData
+     /tmp/ccKogwsQ.s:1124   .text.I2C_TransmitPEC:00000000 $t
+     /tmp/ccKogwsQ.s:1130   .text.I2C_TransmitPEC:00000000 I2C_TransmitPEC
+     /tmp/ccKogwsQ.s:1166   .text.I2C_PECPositionConfig:00000000 $t
+     /tmp/ccKogwsQ.s:1172   .text.I2C_PECPositionConfig:00000000 I2C_PECPositionConfig
+     /tmp/ccKogwsQ.s:1209   .text.I2C_CalculatePEC:00000000 $t
+     /tmp/ccKogwsQ.s:1215   .text.I2C_CalculatePEC:00000000 I2C_CalculatePEC
+     /tmp/ccKogwsQ.s:1251   .text.I2C_GetPEC:00000000 $t
+     /tmp/ccKogwsQ.s:1257   .text.I2C_GetPEC:00000000 I2C_GetPEC
+     /tmp/ccKogwsQ.s:1277   .text.I2C_DMACmd:00000000 $t
+     /tmp/ccKogwsQ.s:1283   .text.I2C_DMACmd:00000000 I2C_DMACmd
+     /tmp/ccKogwsQ.s:1319   .text.I2C_DMALastTransferCmd:00000000 $t
+ARM GAS  /tmp/ccKogwsQ.s 			page 59
+
+
+     /tmp/ccKogwsQ.s:1325   .text.I2C_DMALastTransferCmd:00000000 I2C_DMALastTransferCmd
+     /tmp/ccKogwsQ.s:1361   .text.I2C_ReadRegister:00000000 $t
+     /tmp/ccKogwsQ.s:1367   .text.I2C_ReadRegister:00000000 I2C_ReadRegister
+     /tmp/ccKogwsQ.s:1412   .text.I2C_ITConfig:00000000 $t
+     /tmp/ccKogwsQ.s:1418   .text.I2C_ITConfig:00000000 I2C_ITConfig
+     /tmp/ccKogwsQ.s:1458   .text.I2C_CheckEvent:00000000 $t
+     /tmp/ccKogwsQ.s:1464   .text.I2C_CheckEvent:00000000 I2C_CheckEvent
+     /tmp/ccKogwsQ.s:1517   .text.I2C_GetLastEvent:00000000 $t
+     /tmp/ccKogwsQ.s:1523   .text.I2C_GetLastEvent:00000000 I2C_GetLastEvent
+     /tmp/ccKogwsQ.s:1558   .text.I2C_GetFlagStatus:00000000 $t
+     /tmp/ccKogwsQ.s:1564   .text.I2C_GetFlagStatus:00000000 I2C_GetFlagStatus
+     /tmp/ccKogwsQ.s:1653   .text.I2C_ClearFlag:00000000 $t
+     /tmp/ccKogwsQ.s:1659   .text.I2C_ClearFlag:00000000 I2C_ClearFlag
+     /tmp/ccKogwsQ.s:1689   .text.I2C_GetITStatus:00000000 $t
+     /tmp/ccKogwsQ.s:1695   .text.I2C_GetITStatus:00000000 I2C_GetITStatus
+     /tmp/ccKogwsQ.s:1749   .text.I2C_ClearITPendingBit:00000000 $t
+     /tmp/ccKogwsQ.s:1755   .text.I2C_ClearITPendingBit:00000000 I2C_ClearITPendingBit
+
+UNDEFINED SYMBOLS
+RCC_APB1PeriphResetCmd
+RCC_GetClocksFreq

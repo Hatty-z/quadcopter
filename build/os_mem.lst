@@ -1,0 +1,1603 @@
+ARM GAS  /tmp/ccIzbxsq.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"os_mem.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./ucos/Core/os_mem.c"
+  20              		.section	.rodata.OSMemCreate.str1.4,"aMS",%progbits,1
+  21              		.align	2
+  22              	.LC0:
+  23 0000 4D656D20 		.ascii	"Mem Block\000"
+  23      426C6F63 
+  23      6B00
+  24              		.section	.text.OSMemCreate,"ax",%progbits
+  25              		.align	1
+  26              		.global	OSMemCreate
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  31              	OSMemCreate:
+  32              	.LVL0:
+  33              	.LFB0:
+   1:./ucos/Core/os_mem.c **** /*
+   2:./ucos/Core/os_mem.c **** ***************************************************************************************************
+   3:./ucos/Core/os_mem.c **** *                                              uC/OS-II
+   4:./ucos/Core/os_mem.c **** *                                        The Real-Time Kernel
+   5:./ucos/Core/os_mem.c **** *
+   6:./ucos/Core/os_mem.c **** *                    Copyright 1992-2021 Silicon Laboratories Inc. www.silabs.com
+   7:./ucos/Core/os_mem.c **** *
+   8:./ucos/Core/os_mem.c **** *                                 SPDX-License-Identifier: APACHE-2.0
+   9:./ucos/Core/os_mem.c **** *
+  10:./ucos/Core/os_mem.c **** *               This software is subject to an open source license and is distributed by
+  11:./ucos/Core/os_mem.c **** *                Silicon Laboratories Inc. pursuant to the terms of the Apache License,
+  12:./ucos/Core/os_mem.c **** *                    Version 2.0 available at www.apache.org/licenses/LICENSE-2.0.
+  13:./ucos/Core/os_mem.c **** *
+  14:./ucos/Core/os_mem.c **** ***************************************************************************************************
+  15:./ucos/Core/os_mem.c **** */
+  16:./ucos/Core/os_mem.c **** 
+  17:./ucos/Core/os_mem.c **** 
+  18:./ucos/Core/os_mem.c **** /*
+  19:./ucos/Core/os_mem.c **** ***************************************************************************************************
+  20:./ucos/Core/os_mem.c **** *
+  21:./ucos/Core/os_mem.c **** *                                           MEMORY MANAGEMENT
+  22:./ucos/Core/os_mem.c **** *
+  23:./ucos/Core/os_mem.c **** * Filename : os_mem.c
+ARM GAS  /tmp/ccIzbxsq.s 			page 2
+
+
+  24:./ucos/Core/os_mem.c **** * Version  : V2.93.01
+  25:./ucos/Core/os_mem.c **** ***************************************************************************************************
+  26:./ucos/Core/os_mem.c **** */
+  27:./ucos/Core/os_mem.c **** 
+  28:./ucos/Core/os_mem.c **** #ifndef  OS_MEM_C
+  29:./ucos/Core/os_mem.c **** #define  OS_MEM_C
+  30:./ucos/Core/os_mem.c **** 
+  31:./ucos/Core/os_mem.c **** #define  MICRIUM_SOURCE
+  32:./ucos/Core/os_mem.c **** 
+  33:./ucos/Core/os_mem.c **** #ifndef  OS_MASTER_FILE
+  34:./ucos/Core/os_mem.c **** #include <ucos_ii.h>
+  35:./ucos/Core/os_mem.c **** #endif
+  36:./ucos/Core/os_mem.c **** 
+  37:./ucos/Core/os_mem.c **** #if (OS_MEM_EN > 0u) && (OS_MAX_MEM_PART > 0u)
+  38:./ucos/Core/os_mem.c **** /*
+  39:./ucos/Core/os_mem.c **** ***************************************************************************************************
+  40:./ucos/Core/os_mem.c **** *                                      CREATE A MEMORY PARTITION
+  41:./ucos/Core/os_mem.c **** *
+  42:./ucos/Core/os_mem.c **** * Description : Create a fixed-sized memory partition that will be managed by uC/OS-II.
+  43:./ucos/Core/os_mem.c **** *
+  44:./ucos/Core/os_mem.c **** * Arguments   : addr     is the starting address of the memory partition
+  45:./ucos/Core/os_mem.c **** *
+  46:./ucos/Core/os_mem.c **** *               nblks    is the number of memory blocks to create from the partition.
+  47:./ucos/Core/os_mem.c **** *
+  48:./ucos/Core/os_mem.c **** *               blksize  is the size (in bytes) of each block in the memory partition.
+  49:./ucos/Core/os_mem.c **** *
+  50:./ucos/Core/os_mem.c **** *               perr     is a pointer to a variable containing an error message which will be set b
+  51:./ucos/Core/os_mem.c **** *                        this function to either:
+  52:./ucos/Core/os_mem.c **** *
+  53:./ucos/Core/os_mem.c **** *                        OS_ERR_NONE                     if the memory partition has been created c
+  54:./ucos/Core/os_mem.c **** *                        OS_ERR_ILLEGAL_CREATE_RUN_TIME  if you tried to create a memory partition 
+  55:./ucos/Core/os_mem.c **** *                                                        safety critical operation started.
+  56:./ucos/Core/os_mem.c **** *                        OS_ERR_MEM_INVALID_ADDR         if you are specifying an invalid address f
+  57:./ucos/Core/os_mem.c **** *                                                        storage of the partition or, the block doe
+  58:./ucos/Core/os_mem.c **** *                                                        on a pointer boundary
+  59:./ucos/Core/os_mem.c **** *                        OS_ERR_MEM_INVALID_PART         no free partitions available
+  60:./ucos/Core/os_mem.c **** *                        OS_ERR_MEM_INVALID_BLKS         user specified an invalid number of blocks
+  61:./ucos/Core/os_mem.c **** *                        OS_ERR_MEM_INVALID_SIZE         user specified an invalid block size
+  62:./ucos/Core/os_mem.c **** *                                                          - must be greater than the size of a poi
+  63:./ucos/Core/os_mem.c **** *                                                          - must be able to hold an integral numbe
+  64:./ucos/Core/os_mem.c **** * Returns    : != (OS_MEM *)0  is the partition was created
+  65:./ucos/Core/os_mem.c **** *              == (OS_MEM *)0  if the partition was not created because of invalid arguments or, no
+  66:./ucos/Core/os_mem.c **** *                              free partition is available.
+  67:./ucos/Core/os_mem.c **** ***************************************************************************************************
+  68:./ucos/Core/os_mem.c **** */
+  69:./ucos/Core/os_mem.c **** 
+  70:./ucos/Core/os_mem.c **** OS_MEM  *OSMemCreate (void   *addr,
+  71:./ucos/Core/os_mem.c ****                       INT32U  nblks,
+  72:./ucos/Core/os_mem.c ****                       INT32U  blksize,
+  73:./ucos/Core/os_mem.c ****                       INT8U  *perr)
+  74:./ucos/Core/os_mem.c **** {
+  34              		.loc 1 74 1 view -0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 0
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  38              		.loc 1 74 1 is_stmt 0 view .LVU1
+  39 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ARM GAS  /tmp/ccIzbxsq.s 			page 3
+
+
+  40              	.LCFI0:
+  41              		.cfi_def_cfa_offset 32
+  42              		.cfi_offset 4, -32
+  43              		.cfi_offset 5, -28
+  44              		.cfi_offset 6, -24
+  45              		.cfi_offset 7, -20
+  46              		.cfi_offset 8, -16
+  47              		.cfi_offset 9, -12
+  48              		.cfi_offset 10, -8
+  49              		.cfi_offset 14, -4
+  50 0004 9A46     		mov	r10, r3
+  75:./ucos/Core/os_mem.c ****     OS_MEM    *pmem;
+  51              		.loc 1 75 5 is_stmt 1 view .LVU2
+  76:./ucos/Core/os_mem.c ****     INT8U     *pblk;
+  52              		.loc 1 76 5 view .LVU3
+  77:./ucos/Core/os_mem.c ****     void     **plink;
+  53              		.loc 1 77 5 view .LVU4
+  78:./ucos/Core/os_mem.c ****     INT32U     loops;
+  54              		.loc 1 78 5 view .LVU5
+  79:./ucos/Core/os_mem.c ****     INT32U     i;
+  55              		.loc 1 79 5 view .LVU6
+  80:./ucos/Core/os_mem.c **** #if OS_CRITICAL_METHOD == 3u                          /* Allocate storage for CPU status register  
+  81:./ucos/Core/os_mem.c ****     OS_CPU_SR  cpu_sr = 0u;
+  56              		.loc 1 81 5 view .LVU7
+  57              	.LVL1:
+  82:./ucos/Core/os_mem.c **** #endif
+  83:./ucos/Core/os_mem.c **** 
+  84:./ucos/Core/os_mem.c **** 
+  85:./ucos/Core/os_mem.c **** 
+  86:./ucos/Core/os_mem.c **** #ifdef OS_SAFETY_CRITICAL
+  87:./ucos/Core/os_mem.c ****     if (perr == (INT8U *)0) {
+  88:./ucos/Core/os_mem.c ****         OS_SAFETY_CRITICAL_EXCEPTION();
+  89:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+  90:./ucos/Core/os_mem.c ****     }
+  91:./ucos/Core/os_mem.c **** #endif
+  92:./ucos/Core/os_mem.c **** 
+  93:./ucos/Core/os_mem.c **** #ifdef OS_SAFETY_CRITICAL_IEC61508
+  94:./ucos/Core/os_mem.c ****     if (OSSafetyCriticalStartFlag == OS_TRUE) {
+  95:./ucos/Core/os_mem.c ****         OS_SAFETY_CRITICAL_EXCEPTION();
+  96:./ucos/Core/os_mem.c ****         *perr = OS_ERR_ILLEGAL_CREATE_RUN_TIME;
+  97:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+  98:./ucos/Core/os_mem.c ****     }
+  99:./ucos/Core/os_mem.c **** #endif
+ 100:./ucos/Core/os_mem.c **** 
+ 101:./ucos/Core/os_mem.c **** #if OS_ARG_CHK_EN > 0u
+ 102:./ucos/Core/os_mem.c ****     if (addr == (void *)0) {                          /* Must pass a valid address for the memory p
+  58              		.loc 1 102 5 view .LVU8
+  59              		.loc 1 102 8 is_stmt 0 view .LVU9
+  60 0006 8146     		mov	r9, r0
+  61 0008 B0B1     		cbz	r0, .L12
+  62 000a 8846     		mov	r8, r1
+  63 000c 1646     		mov	r6, r2
+ 103:./ucos/Core/os_mem.c ****         *perr = OS_ERR_MEM_INVALID_ADDR;
+ 104:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 105:./ucos/Core/os_mem.c ****     }
+ 106:./ucos/Core/os_mem.c ****     if (((INT32U)addr & (sizeof(void *) - 1u)) != 0u){  /* Must be pointer size aligned            
+  64              		.loc 1 106 5 is_stmt 1 view .LVU10
+ARM GAS  /tmp/ccIzbxsq.s 			page 4
+
+
+  65              		.loc 1 106 8 is_stmt 0 view .LVU11
+  66 000e 10F00304 		ands	r4, r0, #3
+  67 0012 16D1     		bne	.L13
+ 107:./ucos/Core/os_mem.c ****         *perr = OS_ERR_MEM_INVALID_ADDR;
+ 108:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 109:./ucos/Core/os_mem.c ****     }
+ 110:./ucos/Core/os_mem.c ****     if (nblks < 2u) {                                 /* Must have at least 2 blocks per partition 
+  68              		.loc 1 110 5 is_stmt 1 view .LVU12
+  69              		.loc 1 110 8 is_stmt 0 view .LVU13
+  70 0014 0129     		cmp	r1, #1
+  71 0016 19D9     		bls	.L14
+ 111:./ucos/Core/os_mem.c ****         *perr = OS_ERR_MEM_INVALID_BLKS;
+ 112:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 113:./ucos/Core/os_mem.c ****     }
+ 114:./ucos/Core/os_mem.c ****     if (blksize < sizeof(void *)) {                   /* Must contain space for at least a pointer 
+  72              		.loc 1 114 5 is_stmt 1 view .LVU14
+  73              		.loc 1 114 8 is_stmt 0 view .LVU15
+  74 0018 032A     		cmp	r2, #3
+  75 001a 1CD9     		bls	.L15
+ 115:./ucos/Core/os_mem.c ****         *perr = OS_ERR_MEM_INVALID_SIZE;
+ 116:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 117:./ucos/Core/os_mem.c ****     }
+ 118:./ucos/Core/os_mem.c **** #endif
+ 119:./ucos/Core/os_mem.c ****     OS_ENTER_CRITICAL();
+  76              		.loc 1 119 5 is_stmt 1 view .LVU16
+  77              		.loc 1 119 5 view .LVU17
+  78 001c FFF7FEFF 		bl	OS_CPU_SR_Save
+  79              	.LVL2:
+  80              		.loc 1 119 5 discriminator 1 view .LVU18
+ 120:./ucos/Core/os_mem.c ****     pmem = OSMemFreeList;                             /* Get next free memory partition            
+  81              		.loc 1 120 5 view .LVU19
+  82              		.loc 1 120 10 is_stmt 0 view .LVU20
+  83 0020 1F4B     		ldr	r3, .L17
+  84 0022 1F68     		ldr	r7, [r3]
+  85              	.LVL3:
+ 121:./ucos/Core/os_mem.c ****     if (OSMemFreeList != (OS_MEM *)0) {               /* See if pool of free partitions was empty  
+  86              		.loc 1 121 5 is_stmt 1 view .LVU21
+  87              		.loc 1 121 8 is_stmt 0 view .LVU22
+  88 0024 0FB1     		cbz	r7, .L7
+ 122:./ucos/Core/os_mem.c ****         OSMemFreeList = (OS_MEM *)OSMemFreeList->OSMemFreeList;
+  89              		.loc 1 122 9 is_stmt 1 view .LVU23
+  90              		.loc 1 122 48 is_stmt 0 view .LVU24
+  91 0026 7A68     		ldr	r2, [r7, #4]
+  92              		.loc 1 122 23 view .LVU25
+  93 0028 1A60     		str	r2, [r3]
+  94              	.L7:
+ 123:./ucos/Core/os_mem.c ****     }
+ 124:./ucos/Core/os_mem.c ****     OS_EXIT_CRITICAL();
+  95              		.loc 1 124 5 is_stmt 1 view .LVU26
+  96              		.loc 1 124 5 view .LVU27
+  97 002a FFF7FEFF 		bl	OS_CPU_SR_Restore
+  98              	.LVL4:
+  99              		.loc 1 124 5 discriminator 1 view .LVU28
+ 125:./ucos/Core/os_mem.c ****     if (pmem == (OS_MEM *)0) {                        /* See if we have a memory partition         
+ 100              		.loc 1 125 5 view .LVU29
+ 101              		.loc 1 125 8 is_stmt 0 view .LVU30
+ 102 002e BFB1     		cbz	r7, .L16
+ARM GAS  /tmp/ccIzbxsq.s 			page 5
+
+
+ 126:./ucos/Core/os_mem.c ****         *perr = OS_ERR_MEM_INVALID_PART;
+ 127:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 128:./ucos/Core/os_mem.c ****     }
+ 129:./ucos/Core/os_mem.c ****     plink = (void **)addr;                            /* Create linked list of free memory blocks  
+ 103              		.loc 1 129 5 is_stmt 1 view .LVU31
+ 104              	.LVL5:
+ 130:./ucos/Core/os_mem.c ****     pblk  = (INT8U *)addr;
+ 105              		.loc 1 130 5 view .LVU32
+ 131:./ucos/Core/os_mem.c ****     loops  = nblks - 1u;
+ 106              		.loc 1 131 5 view .LVU33
+ 107              		.loc 1 131 12 is_stmt 0 view .LVU34
+ 108 0030 08F1FF33 		add	r3, r8, #-1
+ 109              	.LVL6:
+ 132:./ucos/Core/os_mem.c ****     for (i = 0u; i < loops; i++) {
+ 110              		.loc 1 132 5 is_stmt 1 view .LVU35
+ 130:./ucos/Core/os_mem.c ****     pblk  = (INT8U *)addr;
+ 111              		.loc 1 130 11 is_stmt 0 view .LVU36
+ 112 0034 4846     		mov	r0, r9
+ 113              		.loc 1 132 5 view .LVU37
+ 114 0036 1BE0     		b	.L9
+ 115              	.LVL7:
+ 116              	.L12:
+ 103:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 117              		.loc 1 103 9 is_stmt 1 view .LVU38
+ 103:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 118              		.loc 1 103 15 is_stmt 0 view .LVU39
+ 119 0038 6223     		movs	r3, #98
+ 120              	.LVL8:
+ 103:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 121              		.loc 1 103 15 view .LVU40
+ 122 003a 8AF80030 		strb	r3, [r10]
+ 104:./ucos/Core/os_mem.c ****     }
+ 123              		.loc 1 104 9 is_stmt 1 view .LVU41
+ 104:./ucos/Core/os_mem.c ****     }
+ 124              		.loc 1 104 16 is_stmt 0 view .LVU42
+ 125 003e 0746     		mov	r7, r0
+ 126 0040 2AE0     		b	.L1
+ 127              	.LVL9:
+ 128              	.L13:
+ 107:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 129              		.loc 1 107 9 is_stmt 1 view .LVU43
+ 107:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 130              		.loc 1 107 15 is_stmt 0 view .LVU44
+ 131 0042 6223     		movs	r3, #98
+ 132              	.LVL10:
+ 107:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 133              		.loc 1 107 15 view .LVU45
+ 134 0044 8AF80030 		strb	r3, [r10]
+ 108:./ucos/Core/os_mem.c ****     }
+ 135              		.loc 1 108 9 is_stmt 1 view .LVU46
+ 108:./ucos/Core/os_mem.c ****     }
+ 136              		.loc 1 108 16 is_stmt 0 view .LVU47
+ 137 0048 0027     		movs	r7, #0
+ 138 004a 25E0     		b	.L1
+ 139              	.LVL11:
+ 140              	.L14:
+ 111:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ARM GAS  /tmp/ccIzbxsq.s 			page 6
+
+
+ 141              		.loc 1 111 9 is_stmt 1 view .LVU48
+ 111:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 142              		.loc 1 111 15 is_stmt 0 view .LVU49
+ 143 004c 5B23     		movs	r3, #91
+ 144              	.LVL12:
+ 111:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 145              		.loc 1 111 15 view .LVU50
+ 146 004e 8AF80030 		strb	r3, [r10]
+ 112:./ucos/Core/os_mem.c ****     }
+ 147              		.loc 1 112 9 is_stmt 1 view .LVU51
+ 112:./ucos/Core/os_mem.c ****     }
+ 148              		.loc 1 112 16 is_stmt 0 view .LVU52
+ 149 0052 0027     		movs	r7, #0
+ 150 0054 20E0     		b	.L1
+ 151              	.LVL13:
+ 152              	.L15:
+ 115:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 153              		.loc 1 115 9 is_stmt 1 view .LVU53
+ 115:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 154              		.loc 1 115 15 is_stmt 0 view .LVU54
+ 155 0056 5C23     		movs	r3, #92
+ 156              	.LVL14:
+ 115:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 157              		.loc 1 115 15 view .LVU55
+ 158 0058 8AF80030 		strb	r3, [r10]
+ 116:./ucos/Core/os_mem.c ****     }
+ 159              		.loc 1 116 9 is_stmt 1 view .LVU56
+ 116:./ucos/Core/os_mem.c ****     }
+ 160              		.loc 1 116 16 is_stmt 0 view .LVU57
+ 161 005c 0027     		movs	r7, #0
+ 162 005e 1BE0     		b	.L1
+ 163              	.LVL15:
+ 164              	.L16:
+ 126:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 165              		.loc 1 126 9 is_stmt 1 view .LVU58
+ 126:./ucos/Core/os_mem.c ****         return ((OS_MEM *)0);
+ 166              		.loc 1 126 15 is_stmt 0 view .LVU59
+ 167 0060 5A23     		movs	r3, #90
+ 168 0062 8AF80030 		strb	r3, [r10]
+ 127:./ucos/Core/os_mem.c ****     }
+ 169              		.loc 1 127 9 is_stmt 1 view .LVU60
+ 127:./ucos/Core/os_mem.c ****     }
+ 170              		.loc 1 127 16 is_stmt 0 view .LVU61
+ 171 0066 17E0     		b	.L1
+ 172              	.LVL16:
+ 173              	.L10:
+ 133:./ucos/Core/os_mem.c ****         pblk +=  blksize;                             /* Point to the FOLLOWING block              
+ 174              		.loc 1 133 9 is_stmt 1 view .LVU62
+ 175              		.loc 1 133 14 is_stmt 0 view .LVU63
+ 176 0068 8519     		adds	r5, r0, r6
+ 177              	.LVL17:
+ 134:./ucos/Core/os_mem.c ****        *plink = (void  *)pblk;                        /* Save pointer to NEXT block in CURRENT bloc
+ 178              		.loc 1 134 8 is_stmt 1 view .LVU64
+ 179              		.loc 1 134 15 is_stmt 0 view .LVU65
+ 180 006a 0560     		str	r5, [r0]
+ 135:./ucos/Core/os_mem.c ****         plink = (void **)pblk;                        /* Position to  NEXT      block              
+ 181              		.loc 1 135 9 is_stmt 1 view .LVU66
+ARM GAS  /tmp/ccIzbxsq.s 			page 7
+
+
+ 182              	.LVL18:
+ 132:./ucos/Core/os_mem.c ****         pblk +=  blksize;                             /* Point to the FOLLOWING block              
+ 183              		.loc 1 132 30 discriminator 3 view .LVU67
+ 184 006c 0134     		adds	r4, r4, #1
+ 185              	.LVL19:
+ 133:./ucos/Core/os_mem.c ****        *plink = (void  *)pblk;                        /* Save pointer to NEXT block in CURRENT bloc
+ 186              		.loc 1 133 14 is_stmt 0 view .LVU68
+ 187 006e 2846     		mov	r0, r5
+ 188              	.LVL20:
+ 189              	.L9:
+ 132:./ucos/Core/os_mem.c ****         pblk +=  blksize;                             /* Point to the FOLLOWING block              
+ 190              		.loc 1 132 20 is_stmt 1 discriminator 1 view .LVU69
+ 191 0070 9C42     		cmp	r4, r3
+ 192 0072 F9D3     		bcc	.L10
+ 136:./ucos/Core/os_mem.c ****     }
+ 137:./ucos/Core/os_mem.c ****     *plink              = (void *)0;                  /* Last memory block points to NULL          
+ 193              		.loc 1 137 5 view .LVU70
+ 194              		.loc 1 137 25 is_stmt 0 view .LVU71
+ 195 0074 0024     		movs	r4, #0
+ 196              	.LVL21:
+ 197              		.loc 1 137 25 view .LVU72
+ 198 0076 0460     		str	r4, [r0]
+ 138:./ucos/Core/os_mem.c ****     pmem->OSMemAddr     = addr;                       /* Store start address of memory partition   
+ 199              		.loc 1 138 5 is_stmt 1 view .LVU73
+ 200              		.loc 1 138 25 is_stmt 0 view .LVU74
+ 201 0078 C7F80090 		str	r9, [r7]
+ 139:./ucos/Core/os_mem.c ****     pmem->OSMemFreeList = addr;                       /* Initialize pointer to pool of free blocks 
+ 202              		.loc 1 139 5 is_stmt 1 view .LVU75
+ 203              		.loc 1 139 25 is_stmt 0 view .LVU76
+ 204 007c C7F80490 		str	r9, [r7, #4]
+ 140:./ucos/Core/os_mem.c ****     pmem->OSMemNFree    = nblks;                      /* Store number of free blocks in MCB        
+ 205              		.loc 1 140 5 is_stmt 1 view .LVU77
+ 206              		.loc 1 140 25 is_stmt 0 view .LVU78
+ 207 0080 C7F81080 		str	r8, [r7, #16]
+ 141:./ucos/Core/os_mem.c ****     pmem->OSMemNBlks    = nblks;
+ 208              		.loc 1 141 5 is_stmt 1 view .LVU79
+ 209              		.loc 1 141 25 is_stmt 0 view .LVU80
+ 210 0084 C7F80C80 		str	r8, [r7, #12]
+ 142:./ucos/Core/os_mem.c ****     pmem->OSMemBlkSize  = blksize;                    /* Store block size of each memory blocks    
+ 211              		.loc 1 142 5 is_stmt 1 view .LVU81
+ 212              		.loc 1 142 25 is_stmt 0 view .LVU82
+ 213 0088 BE60     		str	r6, [r7, #8]
+ 143:./ucos/Core/os_mem.c **** 
+ 144:./ucos/Core/os_mem.c ****     OS_TRACE_MEM_CREATE(pmem);
+ 214              		.loc 1 144 5 is_stmt 1 view .LVU83
+ 215 008a 064A     		ldr	r2, .L17+4
+ 216 008c 3946     		mov	r1, r7
+ 217 008e 3C20     		movs	r0, #60
+ 218              	.LVL22:
+ 219              		.loc 1 144 5 is_stmt 0 view .LVU84
+ 220 0090 FFF7FEFF 		bl	SYSVIEW_RecordU32Register
+ 221              	.LVL23:
+ 145:./ucos/Core/os_mem.c **** 
+ 146:./ucos/Core/os_mem.c ****     *perr               = OS_ERR_NONE;
+ 222              		.loc 1 146 5 is_stmt 1 view .LVU85
+ 223              		.loc 1 146 25 is_stmt 0 view .LVU86
+ 224 0094 8AF80040 		strb	r4, [r10]
+ARM GAS  /tmp/ccIzbxsq.s 			page 8
+
+
+ 147:./ucos/Core/os_mem.c ****     return (pmem);
+ 225              		.loc 1 147 5 is_stmt 1 view .LVU87
+ 226              	.LVL24:
+ 227              	.L1:
+ 148:./ucos/Core/os_mem.c **** }
+ 228              		.loc 1 148 1 is_stmt 0 view .LVU88
+ 229 0098 3846     		mov	r0, r7
+ 230 009a BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 231              	.LVL25:
+ 232              	.L18:
+ 233              		.loc 1 148 1 view .LVU89
+ 234 009e 00BF     		.align	2
+ 235              	.L17:
+ 236 00a0 00000000 		.word	OSMemFreeList
+ 237 00a4 00000000 		.word	.LC0
+ 238              		.cfi_endproc
+ 239              	.LFE0:
+ 241              		.section	.text.OSMemGet,"ax",%progbits
+ 242              		.align	1
+ 243              		.global	OSMemGet
+ 244              		.syntax unified
+ 245              		.thumb
+ 246              		.thumb_func
+ 248              	OSMemGet:
+ 249              	.LVL26:
+ 250              	.LFB1:
+ 149:./ucos/Core/os_mem.c **** 
+ 150:./ucos/Core/os_mem.c **** 
+ 151:./ucos/Core/os_mem.c **** /*
+ 152:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 153:./ucos/Core/os_mem.c **** *                                         GET A MEMORY BLOCK
+ 154:./ucos/Core/os_mem.c **** *
+ 155:./ucos/Core/os_mem.c **** * Description : Get a memory block from a partition
+ 156:./ucos/Core/os_mem.c **** *
+ 157:./ucos/Core/os_mem.c **** * Arguments   : pmem    is a pointer to the memory partition control block
+ 158:./ucos/Core/os_mem.c **** *
+ 159:./ucos/Core/os_mem.c **** *               perr    is a pointer to a variable containing an error message which will be set by
+ 160:./ucos/Core/os_mem.c **** *                       function to either:
+ 161:./ucos/Core/os_mem.c **** *
+ 162:./ucos/Core/os_mem.c **** *                       OS_ERR_NONE             if the memory partition has been created correctly.
+ 163:./ucos/Core/os_mem.c **** *                       OS_ERR_MEM_NO_FREE_BLKS if there are no more free memory blocks to allocate
+ 164:./ucos/Core/os_mem.c **** *                       OS_ERR_MEM_INVALID_PMEM if you passed a NULL pointer for 'pmem'
+ 165:./ucos/Core/os_mem.c **** *
+ 166:./ucos/Core/os_mem.c **** * Returns     : A pointer to a memory block if no error is detected
+ 167:./ucos/Core/os_mem.c **** *               A pointer to NULL if an error is detected
+ 168:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 169:./ucos/Core/os_mem.c **** */
+ 170:./ucos/Core/os_mem.c **** 
+ 171:./ucos/Core/os_mem.c **** void  *OSMemGet (OS_MEM  *pmem,
+ 172:./ucos/Core/os_mem.c ****                  INT8U   *perr)
+ 173:./ucos/Core/os_mem.c **** {
+ 251              		.loc 1 173 1 is_stmt 1 view -0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 0
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255              		.loc 1 173 1 is_stmt 0 view .LVU91
+ 256 0000 70B5     		push	{r4, r5, r6, lr}
+ARM GAS  /tmp/ccIzbxsq.s 			page 9
+
+
+ 257              	.LCFI1:
+ 258              		.cfi_def_cfa_offset 16
+ 259              		.cfi_offset 4, -16
+ 260              		.cfi_offset 5, -12
+ 261              		.cfi_offset 6, -8
+ 262              		.cfi_offset 14, -4
+ 263 0002 0E46     		mov	r6, r1
+ 174:./ucos/Core/os_mem.c ****     void      *pblk;
+ 264              		.loc 1 174 5 is_stmt 1 view .LVU92
+ 175:./ucos/Core/os_mem.c **** #if OS_CRITICAL_METHOD == 3u                          /* Allocate storage for CPU status register  
+ 176:./ucos/Core/os_mem.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 265              		.loc 1 176 5 view .LVU93
+ 266              	.LVL27:
+ 177:./ucos/Core/os_mem.c **** #endif
+ 178:./ucos/Core/os_mem.c **** 
+ 179:./ucos/Core/os_mem.c **** 
+ 180:./ucos/Core/os_mem.c **** #ifdef OS_SAFETY_CRITICAL
+ 181:./ucos/Core/os_mem.c ****     if (perr == (INT8U *)0) {
+ 182:./ucos/Core/os_mem.c ****         OS_SAFETY_CRITICAL_EXCEPTION();
+ 183:./ucos/Core/os_mem.c ****         return ((void *)0);
+ 184:./ucos/Core/os_mem.c ****     }
+ 185:./ucos/Core/os_mem.c **** #endif
+ 186:./ucos/Core/os_mem.c **** 
+ 187:./ucos/Core/os_mem.c **** #if OS_ARG_CHK_EN > 0u
+ 188:./ucos/Core/os_mem.c ****     if (pmem == (OS_MEM *)0) {                        /* Must point to a valid memory partition    
+ 267              		.loc 1 188 5 view .LVU94
+ 268              		.loc 1 188 8 is_stmt 0 view .LVU95
+ 269 0004 0446     		mov	r4, r0
+ 270 0006 B8B1     		cbz	r0, .L24
+ 189:./ucos/Core/os_mem.c ****         *perr = OS_ERR_MEM_INVALID_PMEM;
+ 190:./ucos/Core/os_mem.c ****         return ((void *)0);
+ 191:./ucos/Core/os_mem.c ****     }
+ 192:./ucos/Core/os_mem.c **** #endif
+ 193:./ucos/Core/os_mem.c **** 
+ 194:./ucos/Core/os_mem.c ****     OS_TRACE_MEM_GET_ENTER(pmem);
+ 271              		.loc 1 194 5 is_stmt 1 view .LVU96
+ 272 0008 FFF7FEFF 		bl	SEGGER_SYSVIEW_ShrinkId
+ 273              	.LVL28:
+ 274              		.loc 1 194 5 is_stmt 0 view .LVU97
+ 275 000c 0146     		mov	r1, r0
+ 276              		.loc 1 194 5 discriminator 1 view .LVU98
+ 277 000e 3E20     		movs	r0, #62
+ 278 0010 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordU32
+ 279              	.LVL29:
+ 195:./ucos/Core/os_mem.c **** 
+ 196:./ucos/Core/os_mem.c ****     OS_ENTER_CRITICAL();
+ 280              		.loc 1 196 5 is_stmt 1 view .LVU99
+ 281              		.loc 1 196 5 view .LVU100
+ 282 0014 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 283              	.LVL30:
+ 284              		.loc 1 196 5 discriminator 1 view .LVU101
+ 197:./ucos/Core/os_mem.c ****     if (pmem->OSMemNFree > 0u) {                      /* See if there are any free memory blocks   
+ 285              		.loc 1 197 5 view .LVU102
+ 286              		.loc 1 197 13 is_stmt 0 view .LVU103
+ 287 0018 2369     		ldr	r3, [r4, #16]
+ 288              		.loc 1 197 8 view .LVU104
+ 289 001a 8BB1     		cbz	r3, .L22
+ARM GAS  /tmp/ccIzbxsq.s 			page 10
+
+
+ 198:./ucos/Core/os_mem.c ****         pblk                = pmem->OSMemFreeList;    /* Yes, point to next free memory block      
+ 290              		.loc 1 198 9 is_stmt 1 view .LVU105
+ 291              		.loc 1 198 29 is_stmt 0 view .LVU106
+ 292 001c 6568     		ldr	r5, [r4, #4]
+ 293              	.LVL31:
+ 199:./ucos/Core/os_mem.c ****         pmem->OSMemFreeList = *(void **)pblk;         /*      Adjust pointer to new free list      
+ 294              		.loc 1 199 9 is_stmt 1 view .LVU107
+ 295              		.loc 1 199 31 is_stmt 0 view .LVU108
+ 296 001e 2A68     		ldr	r2, [r5]
+ 297              		.loc 1 199 29 view .LVU109
+ 298 0020 6260     		str	r2, [r4, #4]
+ 200:./ucos/Core/os_mem.c ****         pmem->OSMemNFree--;                           /*      One less memory block in this partiti
+ 299              		.loc 1 200 9 is_stmt 1 view .LVU110
+ 300              		.loc 1 200 25 is_stmt 0 view .LVU111
+ 301 0022 013B     		subs	r3, r3, #1
+ 302 0024 2361     		str	r3, [r4, #16]
+ 201:./ucos/Core/os_mem.c ****         OS_EXIT_CRITICAL();
+ 303              		.loc 1 201 9 is_stmt 1 view .LVU112
+ 304              		.loc 1 201 9 view .LVU113
+ 305 0026 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 306              	.LVL32:
+ 307              		.loc 1 201 9 discriminator 1 view .LVU114
+ 202:./ucos/Core/os_mem.c ****         *perr = OS_ERR_NONE;                          /*      No error                             
+ 308              		.loc 1 202 9 view .LVU115
+ 309              		.loc 1 202 15 is_stmt 0 view .LVU116
+ 310 002a 0021     		movs	r1, #0
+ 311 002c 3170     		strb	r1, [r6]
+ 203:./ucos/Core/os_mem.c ****         OS_TRACE_MEM_GET_EXIT(*perr);
+ 312              		.loc 1 203 9 is_stmt 1 view .LVU117
+ 313 002e 3E20     		movs	r0, #62
+ 314 0030 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 315              	.LVL33:
+ 204:./ucos/Core/os_mem.c ****         return (pblk);                                /*      Return memory block to caller        
+ 316              		.loc 1 204 9 view .LVU118
+ 317              	.L19:
+ 205:./ucos/Core/os_mem.c ****     }
+ 206:./ucos/Core/os_mem.c ****     OS_EXIT_CRITICAL();
+ 207:./ucos/Core/os_mem.c ****     *perr = OS_ERR_MEM_NO_FREE_BLKS;                  /* No,  Notify caller of empty memory partiti
+ 208:./ucos/Core/os_mem.c ****     OS_TRACE_MEM_GET_EXIT(*perr);
+ 209:./ucos/Core/os_mem.c ****     return ((void *)0);                               /*      Return NULL pointer to caller        
+ 210:./ucos/Core/os_mem.c **** }
+ 318              		.loc 1 210 1 is_stmt 0 view .LVU119
+ 319 0034 2846     		mov	r0, r5
+ 320 0036 70BD     		pop	{r4, r5, r6, pc}
+ 321              	.LVL34:
+ 322              	.L24:
+ 189:./ucos/Core/os_mem.c ****         return ((void *)0);
+ 323              		.loc 1 189 9 is_stmt 1 view .LVU120
+ 189:./ucos/Core/os_mem.c ****         return ((void *)0);
+ 324              		.loc 1 189 15 is_stmt 0 view .LVU121
+ 325 0038 6023     		movs	r3, #96
+ 326 003a 0B70     		strb	r3, [r1]
+ 190:./ucos/Core/os_mem.c ****     }
+ 327              		.loc 1 190 9 is_stmt 1 view .LVU122
+ 190:./ucos/Core/os_mem.c ****     }
+ 328              		.loc 1 190 16 is_stmt 0 view .LVU123
+ 329 003c 0546     		mov	r5, r0
+ARM GAS  /tmp/ccIzbxsq.s 			page 11
+
+
+ 330 003e F9E7     		b	.L19
+ 331              	.LVL35:
+ 332              	.L22:
+ 206:./ucos/Core/os_mem.c ****     *perr = OS_ERR_MEM_NO_FREE_BLKS;                  /* No,  Notify caller of empty memory partiti
+ 333              		.loc 1 206 5 is_stmt 1 view .LVU124
+ 206:./ucos/Core/os_mem.c ****     *perr = OS_ERR_MEM_NO_FREE_BLKS;                  /* No,  Notify caller of empty memory partiti
+ 334              		.loc 1 206 5 view .LVU125
+ 335 0040 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 336              	.LVL36:
+ 206:./ucos/Core/os_mem.c ****     *perr = OS_ERR_MEM_NO_FREE_BLKS;                  /* No,  Notify caller of empty memory partiti
+ 337              		.loc 1 206 5 discriminator 1 view .LVU126
+ 207:./ucos/Core/os_mem.c ****     OS_TRACE_MEM_GET_EXIT(*perr);
+ 338              		.loc 1 207 5 view .LVU127
+ 207:./ucos/Core/os_mem.c ****     OS_TRACE_MEM_GET_EXIT(*perr);
+ 339              		.loc 1 207 11 is_stmt 0 view .LVU128
+ 340 0044 5D21     		movs	r1, #93
+ 341 0046 3170     		strb	r1, [r6]
+ 208:./ucos/Core/os_mem.c ****     return ((void *)0);                               /*      Return NULL pointer to caller        
+ 342              		.loc 1 208 5 is_stmt 1 view .LVU129
+ 343 0048 3E20     		movs	r0, #62
+ 344 004a FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 345              	.LVL37:
+ 209:./ucos/Core/os_mem.c **** }
+ 346              		.loc 1 209 5 view .LVU130
+ 209:./ucos/Core/os_mem.c **** }
+ 347              		.loc 1 209 12 is_stmt 0 view .LVU131
+ 348 004e 0025     		movs	r5, #0
+ 349 0050 F0E7     		b	.L19
+ 350              		.cfi_endproc
+ 351              	.LFE1:
+ 353              		.section	.text.OSMemNameGet,"ax",%progbits
+ 354              		.align	1
+ 355              		.global	OSMemNameGet
+ 356              		.syntax unified
+ 357              		.thumb
+ 358              		.thumb_func
+ 360              	OSMemNameGet:
+ 361              	.LVL38:
+ 362              	.LFB2:
+ 211:./ucos/Core/os_mem.c **** 
+ 212:./ucos/Core/os_mem.c **** 
+ 213:./ucos/Core/os_mem.c **** /*
+ 214:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 215:./ucos/Core/os_mem.c **** *                                 GET THE NAME OF A MEMORY PARTITION
+ 216:./ucos/Core/os_mem.c **** *
+ 217:./ucos/Core/os_mem.c **** * Description: This function is used to obtain the name assigned to a memory partition.
+ 218:./ucos/Core/os_mem.c **** *
+ 219:./ucos/Core/os_mem.c **** * Arguments  : pmem      is a pointer to the memory partition
+ 220:./ucos/Core/os_mem.c **** *
+ 221:./ucos/Core/os_mem.c **** *              pname     is a pointer to a pointer to an ASCII string that will receive the name of
+ 222:./ucos/Core/os_mem.c **** *
+ 223:./ucos/Core/os_mem.c **** *              perr      is a pointer to an error code that can contain one of the following values
+ 224:./ucos/Core/os_mem.c **** *
+ 225:./ucos/Core/os_mem.c **** *                        OS_ERR_NONE                if the name was copied to 'pname'
+ 226:./ucos/Core/os_mem.c **** *                        OS_ERR_MEM_INVALID_PMEM    if you passed a NULL pointer for 'pmem'
+ 227:./ucos/Core/os_mem.c **** *                        OS_ERR_PNAME_NULL          You passed a NULL pointer for 'pname'
+ 228:./ucos/Core/os_mem.c **** *                        OS_ERR_NAME_GET_ISR        You called this function from an ISR
+ARM GAS  /tmp/ccIzbxsq.s 			page 12
+
+
+ 229:./ucos/Core/os_mem.c **** *
+ 230:./ucos/Core/os_mem.c **** * Returns    : The length of the string or 0 if 'pmem' is a NULL pointer.
+ 231:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 232:./ucos/Core/os_mem.c **** */
+ 233:./ucos/Core/os_mem.c **** 
+ 234:./ucos/Core/os_mem.c **** #if OS_MEM_NAME_EN > 0u
+ 235:./ucos/Core/os_mem.c **** INT8U  OSMemNameGet (OS_MEM   *pmem,
+ 236:./ucos/Core/os_mem.c ****                      INT8U   **pname,
+ 237:./ucos/Core/os_mem.c ****                      INT8U    *perr)
+ 238:./ucos/Core/os_mem.c **** {
+ 363              		.loc 1 238 1 is_stmt 1 view -0
+ 364              		.cfi_startproc
+ 365              		@ args = 0, pretend = 0, frame = 0
+ 366              		@ frame_needed = 0, uses_anonymous_args = 0
+ 367              		.loc 1 238 1 is_stmt 0 view .LVU133
+ 368 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 369              	.LCFI2:
+ 370              		.cfi_def_cfa_offset 24
+ 371              		.cfi_offset 3, -24
+ 372              		.cfi_offset 4, -20
+ 373              		.cfi_offset 5, -16
+ 374              		.cfi_offset 6, -12
+ 375              		.cfi_offset 7, -8
+ 376              		.cfi_offset 14, -4
+ 377 0002 1546     		mov	r5, r2
+ 239:./ucos/Core/os_mem.c ****     INT8U      len;
+ 378              		.loc 1 239 5 is_stmt 1 view .LVU134
+ 240:./ucos/Core/os_mem.c **** #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register       
+ 241:./ucos/Core/os_mem.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 379              		.loc 1 241 5 view .LVU135
+ 380              	.LVL39:
+ 242:./ucos/Core/os_mem.c **** #endif
+ 243:./ucos/Core/os_mem.c **** 
+ 244:./ucos/Core/os_mem.c **** 
+ 245:./ucos/Core/os_mem.c **** 
+ 246:./ucos/Core/os_mem.c **** #ifdef OS_SAFETY_CRITICAL
+ 247:./ucos/Core/os_mem.c ****     if (perr == (INT8U *)0) {
+ 248:./ucos/Core/os_mem.c ****         OS_SAFETY_CRITICAL_EXCEPTION();
+ 249:./ucos/Core/os_mem.c ****         return (0u);
+ 250:./ucos/Core/os_mem.c ****     }
+ 251:./ucos/Core/os_mem.c **** #endif
+ 252:./ucos/Core/os_mem.c **** 
+ 253:./ucos/Core/os_mem.c **** #if OS_ARG_CHK_EN > 0u
+ 254:./ucos/Core/os_mem.c ****     if (pmem == (OS_MEM *)0) {                   /* Is 'pmem' a NULL pointer?                      
+ 381              		.loc 1 254 5 view .LVU136
+ 382              		.loc 1 254 8 is_stmt 0 view .LVU137
+ 383 0004 50B1     		cbz	r0, .L31
+ 384 0006 0C46     		mov	r4, r1
+ 385 0008 0646     		mov	r6, r0
+ 255:./ucos/Core/os_mem.c ****         *perr = OS_ERR_MEM_INVALID_PMEM;
+ 256:./ucos/Core/os_mem.c ****         return (0u);
+ 257:./ucos/Core/os_mem.c ****     }
+ 258:./ucos/Core/os_mem.c ****     if (pname == (INT8U **)0) {                  /* Is 'pname' a NULL pointer?                     
+ 386              		.loc 1 258 5 is_stmt 1 view .LVU138
+ 387              		.loc 1 258 8 is_stmt 0 view .LVU139
+ 388 000a 59B1     		cbz	r1, .L32
+ 259:./ucos/Core/os_mem.c ****         *perr = OS_ERR_PNAME_NULL;
+ARM GAS  /tmp/ccIzbxsq.s 			page 13
+
+
+ 260:./ucos/Core/os_mem.c ****         return (0u);
+ 261:./ucos/Core/os_mem.c ****     }
+ 262:./ucos/Core/os_mem.c **** #endif
+ 263:./ucos/Core/os_mem.c ****     if (OSIntNesting > 0u) {                     /* See if trying to call from an ISR              
+ 389              		.loc 1 263 5 is_stmt 1 view .LVU140
+ 390              		.loc 1 263 22 is_stmt 0 view .LVU141
+ 391 000c 0E4B     		ldr	r3, .L33
+ 392 000e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 393              		.loc 1 263 8 view .LVU142
+ 394 0010 5BB1     		cbz	r3, .L29
+ 264:./ucos/Core/os_mem.c ****         *perr = OS_ERR_NAME_GET_ISR;
+ 395              		.loc 1 264 9 is_stmt 1 view .LVU143
+ 396              		.loc 1 264 15 is_stmt 0 view .LVU144
+ 397 0012 1123     		movs	r3, #17
+ 398 0014 1370     		strb	r3, [r2]
+ 265:./ucos/Core/os_mem.c ****         return (0u);
+ 399              		.loc 1 265 9 is_stmt 1 view .LVU145
+ 400              		.loc 1 265 16 is_stmt 0 view .LVU146
+ 401 0016 0024     		movs	r4, #0
+ 402              	.LVL40:
+ 403              	.L27:
+ 266:./ucos/Core/os_mem.c ****     }
+ 267:./ucos/Core/os_mem.c ****     OS_ENTER_CRITICAL();
+ 268:./ucos/Core/os_mem.c ****     *pname = pmem->OSMemName;
+ 269:./ucos/Core/os_mem.c ****     len    = OS_StrLen(*pname);
+ 270:./ucos/Core/os_mem.c ****     OS_EXIT_CRITICAL();
+ 271:./ucos/Core/os_mem.c ****     *perr  = OS_ERR_NONE;
+ 272:./ucos/Core/os_mem.c ****     return (len);
+ 273:./ucos/Core/os_mem.c **** }
+ 404              		.loc 1 273 1 view .LVU147
+ 405 0018 2046     		mov	r0, r4
+ 406 001a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 407              	.LVL41:
+ 408              	.L31:
+ 255:./ucos/Core/os_mem.c ****         return (0u);
+ 409              		.loc 1 255 9 is_stmt 1 view .LVU148
+ 255:./ucos/Core/os_mem.c ****         return (0u);
+ 410              		.loc 1 255 15 is_stmt 0 view .LVU149
+ 411 001c 6023     		movs	r3, #96
+ 412 001e 1370     		strb	r3, [r2]
+ 256:./ucos/Core/os_mem.c ****     }
+ 413              		.loc 1 256 9 is_stmt 1 view .LVU150
+ 256:./ucos/Core/os_mem.c ****     }
+ 414              		.loc 1 256 16 is_stmt 0 view .LVU151
+ 415 0020 0024     		movs	r4, #0
+ 416 0022 F9E7     		b	.L27
+ 417              	.L32:
+ 259:./ucos/Core/os_mem.c ****         return (0u);
+ 418              		.loc 1 259 9 is_stmt 1 view .LVU152
+ 259:./ucos/Core/os_mem.c ****         return (0u);
+ 419              		.loc 1 259 15 is_stmt 0 view .LVU153
+ 420 0024 0C23     		movs	r3, #12
+ 421 0026 1370     		strb	r3, [r2]
+ 260:./ucos/Core/os_mem.c ****     }
+ 422              		.loc 1 260 9 is_stmt 1 view .LVU154
+ 260:./ucos/Core/os_mem.c ****     }
+ 423              		.loc 1 260 16 is_stmt 0 view .LVU155
+ARM GAS  /tmp/ccIzbxsq.s 			page 14
+
+
+ 424 0028 F6E7     		b	.L27
+ 425              	.L29:
+ 267:./ucos/Core/os_mem.c ****     *pname = pmem->OSMemName;
+ 426              		.loc 1 267 5 is_stmt 1 view .LVU156
+ 267:./ucos/Core/os_mem.c ****     *pname = pmem->OSMemName;
+ 427              		.loc 1 267 5 view .LVU157
+ 428 002a FFF7FEFF 		bl	OS_CPU_SR_Save
+ 429              	.LVL42:
+ 267:./ucos/Core/os_mem.c ****     *pname = pmem->OSMemName;
+ 430              		.loc 1 267 5 is_stmt 0 view .LVU158
+ 431 002e 0746     		mov	r7, r0
+ 432              	.LVL43:
+ 267:./ucos/Core/os_mem.c ****     *pname = pmem->OSMemName;
+ 433              		.loc 1 267 5 is_stmt 1 discriminator 1 view .LVU159
+ 268:./ucos/Core/os_mem.c ****     len    = OS_StrLen(*pname);
+ 434              		.loc 1 268 5 view .LVU160
+ 268:./ucos/Core/os_mem.c ****     len    = OS_StrLen(*pname);
+ 435              		.loc 1 268 18 is_stmt 0 view .LVU161
+ 436 0030 7069     		ldr	r0, [r6, #20]
+ 437              	.LVL44:
+ 268:./ucos/Core/os_mem.c ****     len    = OS_StrLen(*pname);
+ 438              		.loc 1 268 12 view .LVU162
+ 439 0032 2060     		str	r0, [r4]
+ 269:./ucos/Core/os_mem.c ****     OS_EXIT_CRITICAL();
+ 440              		.loc 1 269 5 is_stmt 1 view .LVU163
+ 269:./ucos/Core/os_mem.c ****     OS_EXIT_CRITICAL();
+ 441              		.loc 1 269 14 is_stmt 0 view .LVU164
+ 442 0034 FFF7FEFF 		bl	OS_StrLen
+ 443              	.LVL45:
+ 444 0038 0446     		mov	r4, r0
+ 445              	.LVL46:
+ 270:./ucos/Core/os_mem.c ****     *perr  = OS_ERR_NONE;
+ 446              		.loc 1 270 5 is_stmt 1 view .LVU165
+ 270:./ucos/Core/os_mem.c ****     *perr  = OS_ERR_NONE;
+ 447              		.loc 1 270 5 view .LVU166
+ 448 003a 3846     		mov	r0, r7
+ 449 003c FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 450              	.LVL47:
+ 270:./ucos/Core/os_mem.c ****     *perr  = OS_ERR_NONE;
+ 451              		.loc 1 270 5 discriminator 1 view .LVU167
+ 271:./ucos/Core/os_mem.c ****     return (len);
+ 452              		.loc 1 271 5 view .LVU168
+ 271:./ucos/Core/os_mem.c ****     return (len);
+ 453              		.loc 1 271 12 is_stmt 0 view .LVU169
+ 454 0040 0023     		movs	r3, #0
+ 455 0042 2B70     		strb	r3, [r5]
+ 272:./ucos/Core/os_mem.c **** }
+ 456              		.loc 1 272 5 is_stmt 1 view .LVU170
+ 272:./ucos/Core/os_mem.c **** }
+ 457              		.loc 1 272 12 is_stmt 0 view .LVU171
+ 458 0044 E8E7     		b	.L27
+ 459              	.L34:
+ 460 0046 00BF     		.align	2
+ 461              	.L33:
+ 462 0048 00000000 		.word	OSIntNesting
+ 463              		.cfi_endproc
+ 464              	.LFE2:
+ARM GAS  /tmp/ccIzbxsq.s 			page 15
+
+
+ 466              		.section	.text.OSMemNameSet,"ax",%progbits
+ 467              		.align	1
+ 468              		.global	OSMemNameSet
+ 469              		.syntax unified
+ 470              		.thumb
+ 471              		.thumb_func
+ 473              	OSMemNameSet:
+ 474              	.LVL48:
+ 475              	.LFB3:
+ 274:./ucos/Core/os_mem.c **** #endif
+ 275:./ucos/Core/os_mem.c **** 
+ 276:./ucos/Core/os_mem.c **** 
+ 277:./ucos/Core/os_mem.c **** /*
+ 278:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 279:./ucos/Core/os_mem.c **** *                                 ASSIGN A NAME TO A MEMORY PARTITION
+ 280:./ucos/Core/os_mem.c **** *
+ 281:./ucos/Core/os_mem.c **** * Description: This function assigns a name to a memory partition.
+ 282:./ucos/Core/os_mem.c **** *
+ 283:./ucos/Core/os_mem.c **** * Arguments  : pmem      is a pointer to the memory partition
+ 284:./ucos/Core/os_mem.c **** *
+ 285:./ucos/Core/os_mem.c **** *              pname     is a pointer to an ASCII string that contains the name of the memory parti
+ 286:./ucos/Core/os_mem.c **** *
+ 287:./ucos/Core/os_mem.c **** *              perr      is a pointer to an error code that can contain one of the following values
+ 288:./ucos/Core/os_mem.c **** *
+ 289:./ucos/Core/os_mem.c **** *                        OS_ERR_NONE                if the name was copied to 'pname'
+ 290:./ucos/Core/os_mem.c **** *                        OS_ERR_MEM_INVALID_PMEM    if you passed a NULL pointer for 'pmem'
+ 291:./ucos/Core/os_mem.c **** *                        OS_ERR_PNAME_NULL          You passed a NULL pointer for 'pname'
+ 292:./ucos/Core/os_mem.c **** *                        OS_ERR_MEM_NAME_TOO_LONG   if the name doesn't fit in the storage area
+ 293:./ucos/Core/os_mem.c **** *                        OS_ERR_NAME_SET_ISR        if you called this function from an ISR
+ 294:./ucos/Core/os_mem.c **** *
+ 295:./ucos/Core/os_mem.c **** * Returns    : None
+ 296:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 297:./ucos/Core/os_mem.c **** */
+ 298:./ucos/Core/os_mem.c **** 
+ 299:./ucos/Core/os_mem.c **** #if OS_MEM_NAME_EN > 0u
+ 300:./ucos/Core/os_mem.c **** void  OSMemNameSet (OS_MEM  *pmem,
+ 301:./ucos/Core/os_mem.c ****                     INT8U   *pname,
+ 302:./ucos/Core/os_mem.c ****                     INT8U   *perr)
+ 303:./ucos/Core/os_mem.c **** {
+ 476              		.loc 1 303 1 is_stmt 1 view -0
+ 477              		.cfi_startproc
+ 478              		@ args = 0, pretend = 0, frame = 0
+ 479              		@ frame_needed = 0, uses_anonymous_args = 0
+ 480              		.loc 1 303 1 is_stmt 0 view .LVU173
+ 481 0000 70B5     		push	{r4, r5, r6, lr}
+ 482              	.LCFI3:
+ 483              		.cfi_def_cfa_offset 16
+ 484              		.cfi_offset 4, -16
+ 485              		.cfi_offset 5, -12
+ 486              		.cfi_offset 6, -8
+ 487              		.cfi_offset 14, -4
+ 488 0002 1546     		mov	r5, r2
+ 304:./ucos/Core/os_mem.c **** #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register       
+ 305:./ucos/Core/os_mem.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 489              		.loc 1 305 5 is_stmt 1 view .LVU174
+ 490              	.LVL49:
+ 306:./ucos/Core/os_mem.c **** #endif
+ARM GAS  /tmp/ccIzbxsq.s 			page 16
+
+
+ 307:./ucos/Core/os_mem.c **** 
+ 308:./ucos/Core/os_mem.c **** 
+ 309:./ucos/Core/os_mem.c **** 
+ 310:./ucos/Core/os_mem.c **** #ifdef OS_SAFETY_CRITICAL
+ 311:./ucos/Core/os_mem.c ****     if (perr == (INT8U *)0) {
+ 312:./ucos/Core/os_mem.c ****         OS_SAFETY_CRITICAL_EXCEPTION();
+ 313:./ucos/Core/os_mem.c ****         return;
+ 314:./ucos/Core/os_mem.c ****     }
+ 315:./ucos/Core/os_mem.c **** #endif
+ 316:./ucos/Core/os_mem.c **** 
+ 317:./ucos/Core/os_mem.c **** #if OS_ARG_CHK_EN > 0u
+ 318:./ucos/Core/os_mem.c ****     if (pmem == (OS_MEM *)0) {                   /* Is 'pmem' a NULL pointer?                      
+ 491              		.loc 1 318 5 view .LVU175
+ 492              		.loc 1 318 8 is_stmt 0 view .LVU176
+ 493 0004 40B1     		cbz	r0, .L41
+ 494 0006 0C46     		mov	r4, r1
+ 495 0008 0646     		mov	r6, r0
+ 319:./ucos/Core/os_mem.c ****         *perr = OS_ERR_MEM_INVALID_PMEM;
+ 320:./ucos/Core/os_mem.c ****         return;
+ 321:./ucos/Core/os_mem.c ****     }
+ 322:./ucos/Core/os_mem.c ****     if (pname == (INT8U *)0) {                   /* Is 'pname' a NULL pointer?                     
+ 496              		.loc 1 322 5 is_stmt 1 view .LVU177
+ 497              		.loc 1 322 8 is_stmt 0 view .LVU178
+ 498 000a 41B1     		cbz	r1, .L42
+ 323:./ucos/Core/os_mem.c ****         *perr = OS_ERR_PNAME_NULL;
+ 324:./ucos/Core/os_mem.c ****         return;
+ 325:./ucos/Core/os_mem.c ****     }
+ 326:./ucos/Core/os_mem.c **** #endif
+ 327:./ucos/Core/os_mem.c ****     if (OSIntNesting > 0u) {                     /* See if trying to call from an ISR              
+ 499              		.loc 1 327 5 is_stmt 1 view .LVU179
+ 500              		.loc 1 327 22 is_stmt 0 view .LVU180
+ 501 000c 0B4B     		ldr	r3, .L43
+ 502 000e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 503              		.loc 1 327 8 view .LVU181
+ 504 0010 43B1     		cbz	r3, .L39
+ 328:./ucos/Core/os_mem.c ****         *perr = OS_ERR_NAME_SET_ISR;
+ 505              		.loc 1 328 9 is_stmt 1 view .LVU182
+ 506              		.loc 1 328 15 is_stmt 0 view .LVU183
+ 507 0012 1223     		movs	r3, #18
+ 508 0014 1370     		strb	r3, [r2]
+ 329:./ucos/Core/os_mem.c ****         return;
+ 509              		.loc 1 329 9 is_stmt 1 view .LVU184
+ 510              	.LVL50:
+ 511              	.L35:
+ 330:./ucos/Core/os_mem.c ****     }
+ 331:./ucos/Core/os_mem.c ****     OS_ENTER_CRITICAL();
+ 332:./ucos/Core/os_mem.c ****     pmem->OSMemName = pname;
+ 333:./ucos/Core/os_mem.c ****     OS_EXIT_CRITICAL();
+ 334:./ucos/Core/os_mem.c ****     OS_TRACE_EVENT_NAME_SET(pmem, pname);
+ 335:./ucos/Core/os_mem.c ****     *perr           = OS_ERR_NONE;
+ 336:./ucos/Core/os_mem.c **** }
+ 512              		.loc 1 336 1 is_stmt 0 view .LVU185
+ 513 0016 70BD     		pop	{r4, r5, r6, pc}
+ 514              	.LVL51:
+ 515              	.L41:
+ 319:./ucos/Core/os_mem.c ****         return;
+ 516              		.loc 1 319 9 is_stmt 1 view .LVU186
+ARM GAS  /tmp/ccIzbxsq.s 			page 17
+
+
+ 319:./ucos/Core/os_mem.c ****         return;
+ 517              		.loc 1 319 15 is_stmt 0 view .LVU187
+ 518 0018 6023     		movs	r3, #96
+ 519 001a 1370     		strb	r3, [r2]
+ 320:./ucos/Core/os_mem.c ****     }
+ 520              		.loc 1 320 9 is_stmt 1 view .LVU188
+ 521 001c FBE7     		b	.L35
+ 522              	.L42:
+ 323:./ucos/Core/os_mem.c ****         return;
+ 523              		.loc 1 323 9 view .LVU189
+ 323:./ucos/Core/os_mem.c ****         return;
+ 524              		.loc 1 323 15 is_stmt 0 view .LVU190
+ 525 001e 0C23     		movs	r3, #12
+ 526 0020 1370     		strb	r3, [r2]
+ 324:./ucos/Core/os_mem.c ****     }
+ 527              		.loc 1 324 9 is_stmt 1 view .LVU191
+ 528 0022 F8E7     		b	.L35
+ 529              	.L39:
+ 331:./ucos/Core/os_mem.c ****     pmem->OSMemName = pname;
+ 530              		.loc 1 331 5 view .LVU192
+ 331:./ucos/Core/os_mem.c ****     pmem->OSMemName = pname;
+ 531              		.loc 1 331 5 view .LVU193
+ 532 0024 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 533              	.LVL52:
+ 331:./ucos/Core/os_mem.c ****     pmem->OSMemName = pname;
+ 534              		.loc 1 331 5 discriminator 1 view .LVU194
+ 332:./ucos/Core/os_mem.c ****     OS_EXIT_CRITICAL();
+ 535              		.loc 1 332 5 view .LVU195
+ 332:./ucos/Core/os_mem.c ****     OS_EXIT_CRITICAL();
+ 536              		.loc 1 332 21 is_stmt 0 view .LVU196
+ 537 0028 7461     		str	r4, [r6, #20]
+ 333:./ucos/Core/os_mem.c ****     OS_TRACE_EVENT_NAME_SET(pmem, pname);
+ 538              		.loc 1 333 5 is_stmt 1 view .LVU197
+ 333:./ucos/Core/os_mem.c ****     OS_TRACE_EVENT_NAME_SET(pmem, pname);
+ 539              		.loc 1 333 5 view .LVU198
+ 540 002a FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 541              	.LVL53:
+ 333:./ucos/Core/os_mem.c ****     OS_TRACE_EVENT_NAME_SET(pmem, pname);
+ 542              		.loc 1 333 5 discriminator 1 view .LVU199
+ 334:./ucos/Core/os_mem.c ****     *perr           = OS_ERR_NONE;
+ 543              		.loc 1 334 5 view .LVU200
+ 334:./ucos/Core/os_mem.c ****     *perr           = OS_ERR_NONE;
+ 544              		.loc 1 334 5 discriminator 3 view .LVU201
+ 545 002e 2146     		mov	r1, r4
+ 546 0030 3046     		mov	r0, r6
+ 547 0032 FFF7FEFF 		bl	SYSVIEW_UpdateResource
+ 548              	.LVL54:
+ 334:./ucos/Core/os_mem.c ****     *perr           = OS_ERR_NONE;
+ 549              		.loc 1 334 41 discriminator 5 view .LVU202
+ 335:./ucos/Core/os_mem.c **** }
+ 550              		.loc 1 335 5 view .LVU203
+ 335:./ucos/Core/os_mem.c **** }
+ 551              		.loc 1 335 21 is_stmt 0 view .LVU204
+ 552 0036 0023     		movs	r3, #0
+ 553 0038 2B70     		strb	r3, [r5]
+ 554 003a ECE7     		b	.L35
+ 555              	.L44:
+ARM GAS  /tmp/ccIzbxsq.s 			page 18
+
+
+ 556              		.align	2
+ 557              	.L43:
+ 558 003c 00000000 		.word	OSIntNesting
+ 559              		.cfi_endproc
+ 560              	.LFE3:
+ 562              		.section	.text.OSMemPut,"ax",%progbits
+ 563              		.align	1
+ 564              		.global	OSMemPut
+ 565              		.syntax unified
+ 566              		.thumb
+ 567              		.thumb_func
+ 569              	OSMemPut:
+ 570              	.LVL55:
+ 571              	.LFB4:
+ 337:./ucos/Core/os_mem.c **** #endif
+ 338:./ucos/Core/os_mem.c **** 
+ 339:./ucos/Core/os_mem.c **** 
+ 340:./ucos/Core/os_mem.c **** /*
+ 341:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 342:./ucos/Core/os_mem.c **** *                                       RELEASE A MEMORY BLOCK
+ 343:./ucos/Core/os_mem.c **** *
+ 344:./ucos/Core/os_mem.c **** * Description : Returns a memory block to a partition
+ 345:./ucos/Core/os_mem.c **** *
+ 346:./ucos/Core/os_mem.c **** * Arguments   : pmem    is a pointer to the memory partition control block
+ 347:./ucos/Core/os_mem.c **** *
+ 348:./ucos/Core/os_mem.c **** *               pblk    is a pointer to the memory block being released.
+ 349:./ucos/Core/os_mem.c **** *
+ 350:./ucos/Core/os_mem.c **** * Returns     : OS_ERR_NONE              if the memory block was inserted into the partition
+ 351:./ucos/Core/os_mem.c **** *               OS_ERR_MEM_FULL          if you are returning a memory block to an already FULL mem
+ 352:./ucos/Core/os_mem.c **** *                                        partition (You freed more blocks than you allocated!)
+ 353:./ucos/Core/os_mem.c **** *               OS_ERR_MEM_INVALID_PMEM  if you passed a NULL pointer for 'pmem'
+ 354:./ucos/Core/os_mem.c **** *               OS_ERR_MEM_INVALID_PBLK  if you passed a NULL pointer for the block to release.
+ 355:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 356:./ucos/Core/os_mem.c **** */
+ 357:./ucos/Core/os_mem.c **** 
+ 358:./ucos/Core/os_mem.c **** INT8U  OSMemPut (OS_MEM  *pmem,
+ 359:./ucos/Core/os_mem.c ****                  void    *pblk)
+ 360:./ucos/Core/os_mem.c **** {
+ 572              		.loc 1 360 1 is_stmt 1 view -0
+ 573              		.cfi_startproc
+ 574              		@ args = 0, pretend = 0, frame = 0
+ 575              		@ frame_needed = 0, uses_anonymous_args = 0
+ 361:./ucos/Core/os_mem.c **** #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register       
+ 362:./ucos/Core/os_mem.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 576              		.loc 1 362 5 view .LVU206
+ 363:./ucos/Core/os_mem.c **** #endif
+ 364:./ucos/Core/os_mem.c **** 
+ 365:./ucos/Core/os_mem.c **** 
+ 366:./ucos/Core/os_mem.c **** #if OS_ARG_CHK_EN > 0u
+ 367:./ucos/Core/os_mem.c ****     if (pmem == (OS_MEM *)0) {                   /* Must point to a valid memory partition         
+ 577              		.loc 1 367 5 view .LVU207
+ 578              		.loc 1 367 8 is_stmt 0 view .LVU208
+ 579 0000 30B3     		cbz	r0, .L48
+ 360:./ucos/Core/os_mem.c **** #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register       
+ 580              		.loc 1 360 1 view .LVU209
+ 581 0002 38B5     		push	{r3, r4, r5, lr}
+ 582              	.LCFI4:
+ARM GAS  /tmp/ccIzbxsq.s 			page 19
+
+
+ 583              		.cfi_def_cfa_offset 16
+ 584              		.cfi_offset 3, -16
+ 585              		.cfi_offset 4, -12
+ 586              		.cfi_offset 5, -8
+ 587              		.cfi_offset 14, -4
+ 588 0004 0C46     		mov	r4, r1
+ 589 0006 0546     		mov	r5, r0
+ 368:./ucos/Core/os_mem.c ****         return (OS_ERR_MEM_INVALID_PMEM);
+ 369:./ucos/Core/os_mem.c ****     }
+ 370:./ucos/Core/os_mem.c ****     if (pblk == (void *)0) {                     /* Must release a valid block                     
+ 590              		.loc 1 370 5 is_stmt 1 view .LVU210
+ 591              		.loc 1 370 8 is_stmt 0 view .LVU211
+ 592 0008 21B3     		cbz	r1, .L49
+ 371:./ucos/Core/os_mem.c ****         return (OS_ERR_MEM_INVALID_PBLK);
+ 372:./ucos/Core/os_mem.c ****     }
+ 373:./ucos/Core/os_mem.c **** #endif
+ 374:./ucos/Core/os_mem.c **** 
+ 375:./ucos/Core/os_mem.c ****     OS_TRACE_MEM_PUT_ENTER(pmem, pblk);
+ 593              		.loc 1 375 5 is_stmt 1 view .LVU212
+ 594 000a FFF7FEFF 		bl	SEGGER_SYSVIEW_ShrinkId
+ 595              	.LVL56:
+ 596              		.loc 1 375 5 is_stmt 0 view .LVU213
+ 597 000e 0146     		mov	r1, r0
+ 598              		.loc 1 375 5 discriminator 1 view .LVU214
+ 599 0010 2246     		mov	r2, r4
+ 600 0012 3D20     		movs	r0, #61
+ 601 0014 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordU32x2
+ 602              	.LVL57:
+ 376:./ucos/Core/os_mem.c **** 
+ 377:./ucos/Core/os_mem.c ****     OS_ENTER_CRITICAL();
+ 603              		.loc 1 377 5 is_stmt 1 view .LVU215
+ 604              		.loc 1 377 5 view .LVU216
+ 605 0018 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 606              	.LVL58:
+ 607              		.loc 1 377 5 discriminator 1 view .LVU217
+ 378:./ucos/Core/os_mem.c ****     if (pmem->OSMemNFree >= pmem->OSMemNBlks) {  /* Make sure all blocks not already returned      
+ 608              		.loc 1 378 5 view .LVU218
+ 609              		.loc 1 378 13 is_stmt 0 view .LVU219
+ 610 001c 2A69     		ldr	r2, [r5, #16]
+ 611              		.loc 1 378 33 view .LVU220
+ 612 001e EB68     		ldr	r3, [r5, #12]
+ 613              		.loc 1 378 8 view .LVU221
+ 614 0020 9A42     		cmp	r2, r3
+ 615 0022 0DD2     		bcs	.L54
+ 379:./ucos/Core/os_mem.c ****         OS_EXIT_CRITICAL();
+ 380:./ucos/Core/os_mem.c ****         OS_TRACE_MEM_PUT_EXIT(OS_ERR_MEM_FULL);
+ 381:./ucos/Core/os_mem.c ****         return (OS_ERR_MEM_FULL);
+ 382:./ucos/Core/os_mem.c ****     }
+ 383:./ucos/Core/os_mem.c ****     *(void **)pblk      = pmem->OSMemFreeList;   /* Insert released block into free block list     
+ 616              		.loc 1 383 5 is_stmt 1 view .LVU222
+ 617              		.loc 1 383 31 is_stmt 0 view .LVU223
+ 618 0024 6B68     		ldr	r3, [r5, #4]
+ 619              		.loc 1 383 25 view .LVU224
+ 620 0026 2360     		str	r3, [r4]
+ 384:./ucos/Core/os_mem.c ****     pmem->OSMemFreeList = pblk;
+ 621              		.loc 1 384 5 is_stmt 1 view .LVU225
+ 622              		.loc 1 384 25 is_stmt 0 view .LVU226
+ARM GAS  /tmp/ccIzbxsq.s 			page 20
+
+
+ 623 0028 6C60     		str	r4, [r5, #4]
+ 385:./ucos/Core/os_mem.c ****     pmem->OSMemNFree++;                          /* One more memory block in this partition        
+ 624              		.loc 1 385 5 is_stmt 1 view .LVU227
+ 625              		.loc 1 385 9 is_stmt 0 view .LVU228
+ 626 002a 2B69     		ldr	r3, [r5, #16]
+ 627              		.loc 1 385 21 view .LVU229
+ 628 002c 0133     		adds	r3, r3, #1
+ 629 002e 2B61     		str	r3, [r5, #16]
+ 386:./ucos/Core/os_mem.c ****     OS_EXIT_CRITICAL();
+ 630              		.loc 1 386 5 is_stmt 1 view .LVU230
+ 631              		.loc 1 386 5 view .LVU231
+ 632 0030 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 633              	.LVL59:
+ 634              		.loc 1 386 5 discriminator 1 view .LVU232
+ 387:./ucos/Core/os_mem.c ****     OS_TRACE_MEM_PUT_EXIT(OS_ERR_NONE);
+ 635              		.loc 1 387 5 view .LVU233
+ 636 0034 0021     		movs	r1, #0
+ 637 0036 3D20     		movs	r0, #61
+ 638 0038 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 639              	.LVL60:
+ 388:./ucos/Core/os_mem.c ****     return (OS_ERR_NONE);                        /* Notify caller that memory block was released   
+ 640              		.loc 1 388 5 view .LVU234
+ 641              		.loc 1 388 12 is_stmt 0 view .LVU235
+ 642 003c 0020     		movs	r0, #0
+ 643              	.LVL61:
+ 644              	.L46:
+ 389:./ucos/Core/os_mem.c **** }
+ 645              		.loc 1 389 1 view .LVU236
+ 646 003e 38BD     		pop	{r3, r4, r5, pc}
+ 647              	.LVL62:
+ 648              	.L54:
+ 379:./ucos/Core/os_mem.c ****         OS_TRACE_MEM_PUT_EXIT(OS_ERR_MEM_FULL);
+ 649              		.loc 1 379 9 is_stmt 1 view .LVU237
+ 379:./ucos/Core/os_mem.c ****         OS_TRACE_MEM_PUT_EXIT(OS_ERR_MEM_FULL);
+ 650              		.loc 1 379 9 view .LVU238
+ 651 0040 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 652              	.LVL63:
+ 379:./ucos/Core/os_mem.c ****         OS_TRACE_MEM_PUT_EXIT(OS_ERR_MEM_FULL);
+ 653              		.loc 1 379 9 discriminator 1 view .LVU239
+ 380:./ucos/Core/os_mem.c ****         return (OS_ERR_MEM_FULL);
+ 654              		.loc 1 380 9 view .LVU240
+ 655 0044 5E21     		movs	r1, #94
+ 656 0046 3D20     		movs	r0, #61
+ 657 0048 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 658              	.LVL64:
+ 381:./ucos/Core/os_mem.c ****     }
+ 659              		.loc 1 381 9 view .LVU241
+ 381:./ucos/Core/os_mem.c ****     }
+ 660              		.loc 1 381 16 is_stmt 0 view .LVU242
+ 661 004c 5E20     		movs	r0, #94
+ 662 004e F6E7     		b	.L46
+ 663              	.LVL65:
+ 664              	.L48:
+ 665              	.LCFI5:
+ 666              		.cfi_def_cfa_offset 0
+ 667              		.cfi_restore 3
+ 668              		.cfi_restore 4
+ARM GAS  /tmp/ccIzbxsq.s 			page 21
+
+
+ 669              		.cfi_restore 5
+ 670              		.cfi_restore 14
+ 368:./ucos/Core/os_mem.c ****     }
+ 671              		.loc 1 368 16 view .LVU243
+ 672 0050 6020     		movs	r0, #96
+ 673              	.LVL66:
+ 674              		.loc 1 389 1 view .LVU244
+ 675 0052 7047     		bx	lr
+ 676              	.LVL67:
+ 677              	.L49:
+ 678              	.LCFI6:
+ 679              		.cfi_def_cfa_offset 16
+ 680              		.cfi_offset 3, -16
+ 681              		.cfi_offset 4, -12
+ 682              		.cfi_offset 5, -8
+ 683              		.cfi_offset 14, -4
+ 371:./ucos/Core/os_mem.c ****     }
+ 684              		.loc 1 371 16 view .LVU245
+ 685 0054 5F20     		movs	r0, #95
+ 686              	.LVL68:
+ 371:./ucos/Core/os_mem.c ****     }
+ 687              		.loc 1 371 16 view .LVU246
+ 688 0056 F2E7     		b	.L46
+ 689              		.cfi_endproc
+ 690              	.LFE4:
+ 692              		.section	.text.OSMemQuery,"ax",%progbits
+ 693              		.align	1
+ 694              		.global	OSMemQuery
+ 695              		.syntax unified
+ 696              		.thumb
+ 697              		.thumb_func
+ 699              	OSMemQuery:
+ 700              	.LVL69:
+ 701              	.LFB5:
+ 390:./ucos/Core/os_mem.c **** 
+ 391:./ucos/Core/os_mem.c **** 
+ 392:./ucos/Core/os_mem.c **** /*
+ 393:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 394:./ucos/Core/os_mem.c **** *                                       QUERY MEMORY PARTITION
+ 395:./ucos/Core/os_mem.c **** *
+ 396:./ucos/Core/os_mem.c **** * Description : This function is used to determine the number of free memory blocks and the number 
+ 397:./ucos/Core/os_mem.c **** *               used memory blocks from a memory partition.
+ 398:./ucos/Core/os_mem.c **** *
+ 399:./ucos/Core/os_mem.c **** * Arguments   : pmem        is a pointer to the memory partition control block
+ 400:./ucos/Core/os_mem.c **** *
+ 401:./ucos/Core/os_mem.c **** *               p_mem_data  is a pointer to a structure that will contain information about the mem
+ 402:./ucos/Core/os_mem.c **** *                           partition.
+ 403:./ucos/Core/os_mem.c **** *
+ 404:./ucos/Core/os_mem.c **** * Returns     : OS_ERR_NONE               if no errors were found.
+ 405:./ucos/Core/os_mem.c **** *               OS_ERR_MEM_INVALID_PMEM   if you passed a NULL pointer for 'pmem'
+ 406:./ucos/Core/os_mem.c **** *               OS_ERR_MEM_INVALID_PDATA  if you passed a NULL pointer to the data recipient.
+ 407:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 408:./ucos/Core/os_mem.c **** */
+ 409:./ucos/Core/os_mem.c **** 
+ 410:./ucos/Core/os_mem.c **** #if OS_MEM_QUERY_EN > 0u
+ 411:./ucos/Core/os_mem.c **** INT8U  OSMemQuery (OS_MEM       *pmem,
+ 412:./ucos/Core/os_mem.c ****                    OS_MEM_DATA  *p_mem_data)
+ARM GAS  /tmp/ccIzbxsq.s 			page 22
+
+
+ 413:./ucos/Core/os_mem.c **** {
+ 702              		.loc 1 413 1 is_stmt 1 view -0
+ 703              		.cfi_startproc
+ 704              		@ args = 0, pretend = 0, frame = 0
+ 705              		@ frame_needed = 0, uses_anonymous_args = 0
+ 414:./ucos/Core/os_mem.c **** #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register       
+ 415:./ucos/Core/os_mem.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 706              		.loc 1 415 5 view .LVU248
+ 416:./ucos/Core/os_mem.c **** #endif
+ 417:./ucos/Core/os_mem.c **** 
+ 418:./ucos/Core/os_mem.c **** 
+ 419:./ucos/Core/os_mem.c **** 
+ 420:./ucos/Core/os_mem.c **** #if OS_ARG_CHK_EN > 0u
+ 421:./ucos/Core/os_mem.c ****     if (pmem == (OS_MEM *)0) {                   /* Must point to a valid memory partition         
+ 707              		.loc 1 421 5 view .LVU249
+ 708              		.loc 1 421 8 is_stmt 0 view .LVU250
+ 709 0000 B8B1     		cbz	r0, .L57
+ 413:./ucos/Core/os_mem.c **** #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register       
+ 710              		.loc 1 413 1 view .LVU251
+ 711 0002 38B5     		push	{r3, r4, r5, lr}
+ 712              	.LCFI7:
+ 713              		.cfi_def_cfa_offset 16
+ 714              		.cfi_offset 3, -16
+ 715              		.cfi_offset 4, -12
+ 716              		.cfi_offset 5, -8
+ 717              		.cfi_offset 14, -4
+ 718 0004 0C46     		mov	r4, r1
+ 719 0006 0546     		mov	r5, r0
+ 422:./ucos/Core/os_mem.c ****         return (OS_ERR_MEM_INVALID_PMEM);
+ 423:./ucos/Core/os_mem.c ****     }
+ 424:./ucos/Core/os_mem.c ****     if (p_mem_data == (OS_MEM_DATA *)0) {        /* Must release a valid storage area for the data 
+ 720              		.loc 1 424 5 is_stmt 1 view .LVU252
+ 721              		.loc 1 424 8 is_stmt 0 view .LVU253
+ 722 0008 A9B1     		cbz	r1, .L58
+ 425:./ucos/Core/os_mem.c ****         return (OS_ERR_MEM_INVALID_PDATA);
+ 426:./ucos/Core/os_mem.c ****     }
+ 427:./ucos/Core/os_mem.c **** #endif
+ 428:./ucos/Core/os_mem.c ****     OS_ENTER_CRITICAL();
+ 723              		.loc 1 428 5 is_stmt 1 view .LVU254
+ 724              		.loc 1 428 5 view .LVU255
+ 725 000a FFF7FEFF 		bl	OS_CPU_SR_Save
+ 726              	.LVL70:
+ 727              		.loc 1 428 5 discriminator 1 view .LVU256
+ 429:./ucos/Core/os_mem.c ****     p_mem_data->OSAddr     = pmem->OSMemAddr;
+ 728              		.loc 1 429 5 view .LVU257
+ 729              		.loc 1 429 34 is_stmt 0 view .LVU258
+ 730 000e 2B68     		ldr	r3, [r5]
+ 731              		.loc 1 429 28 view .LVU259
+ 732 0010 2360     		str	r3, [r4]
+ 430:./ucos/Core/os_mem.c ****     p_mem_data->OSFreeList = pmem->OSMemFreeList;
+ 733              		.loc 1 430 5 is_stmt 1 view .LVU260
+ 734              		.loc 1 430 34 is_stmt 0 view .LVU261
+ 735 0012 6B68     		ldr	r3, [r5, #4]
+ 736              		.loc 1 430 28 view .LVU262
+ 737 0014 6360     		str	r3, [r4, #4]
+ 431:./ucos/Core/os_mem.c ****     p_mem_data->OSBlkSize  = pmem->OSMemBlkSize;
+ 738              		.loc 1 431 5 is_stmt 1 view .LVU263
+ARM GAS  /tmp/ccIzbxsq.s 			page 23
+
+
+ 739              		.loc 1 431 34 is_stmt 0 view .LVU264
+ 740 0016 AB68     		ldr	r3, [r5, #8]
+ 741              		.loc 1 431 28 view .LVU265
+ 742 0018 A360     		str	r3, [r4, #8]
+ 432:./ucos/Core/os_mem.c ****     p_mem_data->OSNBlks    = pmem->OSMemNBlks;
+ 743              		.loc 1 432 5 is_stmt 1 view .LVU266
+ 744              		.loc 1 432 34 is_stmt 0 view .LVU267
+ 745 001a EB68     		ldr	r3, [r5, #12]
+ 746              		.loc 1 432 28 view .LVU268
+ 747 001c E360     		str	r3, [r4, #12]
+ 433:./ucos/Core/os_mem.c ****     p_mem_data->OSNFree    = pmem->OSMemNFree;
+ 748              		.loc 1 433 5 is_stmt 1 view .LVU269
+ 749              		.loc 1 433 34 is_stmt 0 view .LVU270
+ 750 001e 2B69     		ldr	r3, [r5, #16]
+ 751              		.loc 1 433 28 view .LVU271
+ 752 0020 2361     		str	r3, [r4, #16]
+ 434:./ucos/Core/os_mem.c ****     OS_EXIT_CRITICAL();
+ 753              		.loc 1 434 5 is_stmt 1 view .LVU272
+ 754              		.loc 1 434 5 view .LVU273
+ 755 0022 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 756              	.LVL71:
+ 757              		.loc 1 434 5 discriminator 1 view .LVU274
+ 435:./ucos/Core/os_mem.c ****     p_mem_data->OSNUsed    = p_mem_data->OSNBlks - p_mem_data->OSNFree;
+ 758              		.loc 1 435 5 view .LVU275
+ 759              		.loc 1 435 40 is_stmt 0 view .LVU276
+ 760 0026 E368     		ldr	r3, [r4, #12]
+ 761              		.loc 1 435 62 view .LVU277
+ 762 0028 2269     		ldr	r2, [r4, #16]
+ 763              		.loc 1 435 50 view .LVU278
+ 764 002a 9B1A     		subs	r3, r3, r2
+ 765              		.loc 1 435 28 view .LVU279
+ 766 002c 6361     		str	r3, [r4, #20]
+ 436:./ucos/Core/os_mem.c ****     return (OS_ERR_NONE);
+ 767              		.loc 1 436 5 is_stmt 1 view .LVU280
+ 768              		.loc 1 436 12 is_stmt 0 view .LVU281
+ 769 002e 0020     		movs	r0, #0
+ 770              	.LVL72:
+ 771              	.L56:
+ 437:./ucos/Core/os_mem.c **** }
+ 772              		.loc 1 437 1 view .LVU282
+ 773 0030 38BD     		pop	{r3, r4, r5, pc}
+ 774              	.LVL73:
+ 775              	.L57:
+ 776              	.LCFI8:
+ 777              		.cfi_def_cfa_offset 0
+ 778              		.cfi_restore 3
+ 779              		.cfi_restore 4
+ 780              		.cfi_restore 5
+ 781              		.cfi_restore 14
+ 422:./ucos/Core/os_mem.c ****     }
+ 782              		.loc 1 422 16 view .LVU283
+ 783 0032 6020     		movs	r0, #96
+ 784              	.LVL74:
+ 785              		.loc 1 437 1 view .LVU284
+ 786 0034 7047     		bx	lr
+ 787              	.LVL75:
+ 788              	.L58:
+ARM GAS  /tmp/ccIzbxsq.s 			page 24
+
+
+ 789              	.LCFI9:
+ 790              		.cfi_def_cfa_offset 16
+ 791              		.cfi_offset 3, -16
+ 792              		.cfi_offset 4, -12
+ 793              		.cfi_offset 5, -8
+ 794              		.cfi_offset 14, -4
+ 425:./ucos/Core/os_mem.c ****     }
+ 795              		.loc 1 425 16 view .LVU285
+ 796 0036 6120     		movs	r0, #97
+ 797              	.LVL76:
+ 425:./ucos/Core/os_mem.c ****     }
+ 798              		.loc 1 425 16 view .LVU286
+ 799 0038 FAE7     		b	.L56
+ 800              		.cfi_endproc
+ 801              	.LFE5:
+ 803              		.section	.rodata.OS_MemInit.str1.4,"aMS",%progbits,1
+ 804              		.align	2
+ 805              	.LC1:
+ 806 0000 3F00     		.ascii	"?\000"
+ 807              		.section	.text.OS_MemInit,"ax",%progbits
+ 808              		.align	1
+ 809              		.global	OS_MemInit
+ 810              		.syntax unified
+ 811              		.thumb
+ 812              		.thumb_func
+ 814              	OS_MemInit:
+ 815              	.LFB6:
+ 438:./ucos/Core/os_mem.c **** #endif                                           /* OS_MEM_QUERY_EN                                
+ 439:./ucos/Core/os_mem.c **** 
+ 440:./ucos/Core/os_mem.c **** 
+ 441:./ucos/Core/os_mem.c **** /*
+ 442:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 443:./ucos/Core/os_mem.c **** *                                 INITIALIZE MEMORY PARTITION MANAGER
+ 444:./ucos/Core/os_mem.c **** *
+ 445:./ucos/Core/os_mem.c **** * Description : This function is called by uC/OS-II to initialize the memory partition manager.  Yo
+ 446:./ucos/Core/os_mem.c **** *               application MUST NOT call this function.
+ 447:./ucos/Core/os_mem.c **** *
+ 448:./ucos/Core/os_mem.c **** * Arguments   : none
+ 449:./ucos/Core/os_mem.c **** *
+ 450:./ucos/Core/os_mem.c **** * Returns     : none
+ 451:./ucos/Core/os_mem.c **** *
+ 452:./ucos/Core/os_mem.c **** * Note(s)    : This function is INTERNAL to uC/OS-II and your application should not call it.
+ 453:./ucos/Core/os_mem.c **** ***************************************************************************************************
+ 454:./ucos/Core/os_mem.c **** */
+ 455:./ucos/Core/os_mem.c **** 
+ 456:./ucos/Core/os_mem.c **** void  OS_MemInit (void)
+ 457:./ucos/Core/os_mem.c **** {
+ 816              		.loc 1 457 1 is_stmt 1 view -0
+ 817              		.cfi_startproc
+ 818              		@ args = 0, pretend = 0, frame = 0
+ 819              		@ frame_needed = 0, uses_anonymous_args = 0
+ 820 0000 08B5     		push	{r3, lr}
+ 821              	.LCFI10:
+ 822              		.cfi_def_cfa_offset 8
+ 823              		.cfi_offset 3, -8
+ 824              		.cfi_offset 14, -4
+ 458:./ucos/Core/os_mem.c **** #if OS_MAX_MEM_PART == 1u
+ARM GAS  /tmp/ccIzbxsq.s 			page 25
+
+
+ 459:./ucos/Core/os_mem.c ****     OS_MemClr((INT8U *)&OSMemTbl[0], sizeof(OSMemTbl));   /* Clear the memory partition table      
+ 460:./ucos/Core/os_mem.c ****     OSMemFreeList               = (OS_MEM *)&OSMemTbl[0]; /* Point to beginning of free list       
+ 461:./ucos/Core/os_mem.c **** #if OS_MEM_NAME_EN > 0u
+ 462:./ucos/Core/os_mem.c ****     OSMemFreeList->OSMemName    = (INT8U *)"?";           /* Unknown name                          
+ 463:./ucos/Core/os_mem.c **** #endif
+ 464:./ucos/Core/os_mem.c **** #endif
+ 465:./ucos/Core/os_mem.c **** 
+ 466:./ucos/Core/os_mem.c **** #if OS_MAX_MEM_PART >= 2u
+ 467:./ucos/Core/os_mem.c ****     OS_MEM  *pmem;
+ 825              		.loc 1 467 5 view .LVU288
+ 468:./ucos/Core/os_mem.c ****     INT16U   i;
+ 826              		.loc 1 468 5 view .LVU289
+ 469:./ucos/Core/os_mem.c **** 
+ 470:./ucos/Core/os_mem.c **** 
+ 471:./ucos/Core/os_mem.c ****     OS_MemClr((INT8U *)&OSMemTbl[0], sizeof(OSMemTbl));   /* Clear the memory partition table      
+ 827              		.loc 1 471 5 view .LVU290
+ 828 0002 7821     		movs	r1, #120
+ 829 0004 1548     		ldr	r0, .L67
+ 830 0006 FFF7FEFF 		bl	OS_MemClr
+ 831              	.LVL77:
+ 472:./ucos/Core/os_mem.c ****     for (i = 0u; i < (OS_MAX_MEM_PART - 1u); i++) {       /* Init. list of free memory partitions  
+ 832              		.loc 1 472 5 view .LVU291
+ 833              		.loc 1 472 12 is_stmt 0 view .LVU292
+ 834 000a 0023     		movs	r3, #0
+ 835              		.loc 1 472 5 view .LVU293
+ 836 000c 13E0     		b	.L64
+ 837              	.LVL78:
+ 838              	.L65:
+ 473:./ucos/Core/os_mem.c ****         pmem                = &OSMemTbl[i];               /* Point to memory control block (MCB)   
+ 839              		.loc 1 473 9 is_stmt 1 view .LVU294
+ 474:./ucos/Core/os_mem.c ****         pmem->OSMemFreeList = (void *)&OSMemTbl[i + 1u];  /* Chain list of free partitions         
+ 840              		.loc 1 474 9 view .LVU295
+ 841              		.loc 1 474 51 is_stmt 0 view .LVU296
+ 842 000e 03F1010C 		add	ip, r3, #1
+ 843              		.loc 1 474 39 view .LVU297
+ 844 0012 0CEB4C02 		add	r2, ip, ip, lsl #1
+ 845 0016 D100     		lsls	r1, r2, #3
+ 846 0018 104A     		ldr	r2, .L67
+ 847 001a 8818     		adds	r0, r1, r2
+ 848              		.loc 1 474 29 view .LVU298
+ 849 001c 03EB430E 		add	lr, r3, r3, lsl #1
+ 850 0020 4FEACE01 		lsl	r1, lr, #3
+ 851 0024 1144     		add	r1, r1, r2
+ 852 0026 4860     		str	r0, [r1, #4]
+ 475:./ucos/Core/os_mem.c **** #if OS_MEM_NAME_EN > 0u
+ 476:./ucos/Core/os_mem.c ****         pmem->OSMemName  = (INT8U *)(void *)"?";
+ 853              		.loc 1 476 9 is_stmt 1 view .LVU299
+ 854              		.loc 1 476 26 is_stmt 0 view .LVU300
+ 855 0028 7346     		mov	r3, lr
+ 856              	.LVL79:
+ 857              		.loc 1 476 26 view .LVU301
+ 858 002a D900     		lsls	r1, r3, #3
+ 859 002c 0A44     		add	r2, r2, r1
+ 860 002e 0C4B     		ldr	r3, .L67+4
+ 861 0030 5361     		str	r3, [r2, #20]
+ 472:./ucos/Core/os_mem.c ****         pmem                = &OSMemTbl[i];               /* Point to memory control block (MCB)   
+ 862              		.loc 1 472 47 is_stmt 1 discriminator 3 view .LVU302
+ARM GAS  /tmp/ccIzbxsq.s 			page 26
+
+
+ 863 0032 1FFA8CF3 		uxth	r3, ip
+ 864              	.LVL80:
+ 865              	.L64:
+ 472:./ucos/Core/os_mem.c ****         pmem                = &OSMemTbl[i];               /* Point to memory control block (MCB)   
+ 866              		.loc 1 472 20 discriminator 1 view .LVU303
+ 867 0036 032B     		cmp	r3, #3
+ 868 0038 E9D9     		bls	.L65
+ 477:./ucos/Core/os_mem.c **** #endif
+ 478:./ucos/Core/os_mem.c ****     }
+ 479:./ucos/Core/os_mem.c ****     pmem                = &OSMemTbl[i];
+ 869              		.loc 1 479 5 view .LVU304
+ 870              	.LVL81:
+ 480:./ucos/Core/os_mem.c ****     pmem->OSMemFreeList = (void *)0;                      /* Initialize last node                  
+ 871              		.loc 1 480 5 view .LVU305
+ 872              		.loc 1 480 25 is_stmt 0 view .LVU306
+ 873 003a 0849     		ldr	r1, .L67
+ 874 003c 03EB4300 		add	r0, r3, r3, lsl #1
+ 875 0040 C200     		lsls	r2, r0, #3
+ 876 0042 0A44     		add	r2, r2, r1
+ 877 0044 0020     		movs	r0, #0
+ 878 0046 5060     		str	r0, [r2, #4]
+ 481:./ucos/Core/os_mem.c **** #if OS_MEM_NAME_EN > 0u
+ 482:./ucos/Core/os_mem.c ****     pmem->OSMemName = (INT8U *)(void *)"?";
+ 879              		.loc 1 482 5 is_stmt 1 view .LVU307
+ 880              		.loc 1 482 21 is_stmt 0 view .LVU308
+ 881 0048 03EB4303 		add	r3, r3, r3, lsl #1
+ 882              	.LVL82:
+ 883              		.loc 1 482 21 view .LVU309
+ 884 004c DA00     		lsls	r2, r3, #3
+ 885 004e 0A44     		add	r2, r2, r1
+ 886 0050 034B     		ldr	r3, .L67+4
+ 887 0052 5361     		str	r3, [r2, #20]
+ 483:./ucos/Core/os_mem.c **** #endif
+ 484:./ucos/Core/os_mem.c **** 
+ 485:./ucos/Core/os_mem.c ****     OSMemFreeList   = &OSMemTbl[0];                       /* Point to beginning of free list       
+ 888              		.loc 1 485 5 is_stmt 1 view .LVU310
+ 889              		.loc 1 485 21 is_stmt 0 view .LVU311
+ 890 0054 034B     		ldr	r3, .L67+8
+ 891 0056 1960     		str	r1, [r3]
+ 486:./ucos/Core/os_mem.c **** #endif
+ 487:./ucos/Core/os_mem.c **** }
+ 892              		.loc 1 487 1 view .LVU312
+ 893 0058 08BD     		pop	{r3, pc}
+ 894              	.L68:
+ 895 005a 00BF     		.align	2
+ 896              	.L67:
+ 897 005c 00000000 		.word	OSMemTbl
+ 898 0060 00000000 		.word	.LC1
+ 899 0064 00000000 		.word	OSMemFreeList
+ 900              		.cfi_endproc
+ 901              	.LFE6:
+ 903              		.text
+ 904              	.Letext0:
+ 905              		.file 2 "./ucos/Ports/os_cpu.h"
+ 906              		.file 3 "./ucos/Core/ucos_ii.h"
+ 907              		.file 4 "./trace/SEGGER/SEGGER_SYSVIEW.h"
+ 908              		.file 5 "./trace/uCOS-II/os_trace_events.h"
+ARM GAS  /tmp/ccIzbxsq.s 			page 27
+
+
+ARM GAS  /tmp/ccIzbxsq.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 os_mem.c
+     /tmp/ccIzbxsq.s:21     .rodata.OSMemCreate.str1.4:00000000 $d
+     /tmp/ccIzbxsq.s:25     .text.OSMemCreate:00000000 $t
+     /tmp/ccIzbxsq.s:31     .text.OSMemCreate:00000000 OSMemCreate
+     /tmp/ccIzbxsq.s:236    .text.OSMemCreate:000000a0 $d
+     /tmp/ccIzbxsq.s:242    .text.OSMemGet:00000000 $t
+     /tmp/ccIzbxsq.s:248    .text.OSMemGet:00000000 OSMemGet
+     /tmp/ccIzbxsq.s:354    .text.OSMemNameGet:00000000 $t
+     /tmp/ccIzbxsq.s:360    .text.OSMemNameGet:00000000 OSMemNameGet
+     /tmp/ccIzbxsq.s:462    .text.OSMemNameGet:00000048 $d
+     /tmp/ccIzbxsq.s:467    .text.OSMemNameSet:00000000 $t
+     /tmp/ccIzbxsq.s:473    .text.OSMemNameSet:00000000 OSMemNameSet
+     /tmp/ccIzbxsq.s:558    .text.OSMemNameSet:0000003c $d
+     /tmp/ccIzbxsq.s:563    .text.OSMemPut:00000000 $t
+     /tmp/ccIzbxsq.s:569    .text.OSMemPut:00000000 OSMemPut
+     /tmp/ccIzbxsq.s:693    .text.OSMemQuery:00000000 $t
+     /tmp/ccIzbxsq.s:699    .text.OSMemQuery:00000000 OSMemQuery
+     /tmp/ccIzbxsq.s:804    .rodata.OS_MemInit.str1.4:00000000 $d
+     /tmp/ccIzbxsq.s:808    .text.OS_MemInit:00000000 $t
+     /tmp/ccIzbxsq.s:814    .text.OS_MemInit:00000000 OS_MemInit
+     /tmp/ccIzbxsq.s:897    .text.OS_MemInit:0000005c $d
+
+UNDEFINED SYMBOLS
+OS_CPU_SR_Save
+OS_CPU_SR_Restore
+SYSVIEW_RecordU32Register
+OSMemFreeList
+SEGGER_SYSVIEW_ShrinkId
+SEGGER_SYSVIEW_RecordU32
+SEGGER_SYSVIEW_RecordEndCallU32
+OS_StrLen
+OSIntNesting
+SYSVIEW_UpdateResource
+SEGGER_SYSVIEW_RecordU32x2
+OS_MemClr
+OSMemTbl

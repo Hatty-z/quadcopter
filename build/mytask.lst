@@ -1,0 +1,248 @@
+ARM GAS  /tmp/ccWiN7oz.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"mytask.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./User/mytask.c"
+  20              		.section	.text.Task1,"ax",%progbits
+  21              		.align	1
+  22              		.global	Task1
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	Task1:
+  28              	.LFB123:
+   1:./User/mytask.c **** #include "mytask.h"
+   2:./User/mytask.c **** #include "led.h"
+   3:./User/mytask.c **** #include "final.h"
+   4:./User/mytask.c **** #include "ucos_ii.h"
+   5:./User/mytask.c **** #include "stm32f4xx.h"
+   6:./User/mytask.c **** #include "oled.h"
+   7:./User/mytask.c **** #include "motor.h"
+   8:./User/mytask.c **** 
+   9:./User/mytask.c **** void Task1(void *p_arg)
+  10:./User/mytask.c **** {
+  29              		.loc 1 10 1 view -0
+  30              		.cfi_startproc
+  31              		@ Volatile: function does not return.
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              	.LVL0:
+  35              		.loc 1 10 1 is_stmt 0 view .LVU1
+  36 0000 08B5     		push	{r3, lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 8
+  39              		.cfi_offset 3, -8
+  40              		.cfi_offset 14, -4
+  41              	.LVL1:
+  42              	.L2:
+  11:./User/mytask.c ****     (void)p_arg;  
+  43              		.loc 1 11 5 is_stmt 1 view .LVU2
+  12:./User/mytask.c **** 
+  13:./User/mytask.c ****     while (1)
+  44              		.loc 1 13 5 view .LVU3
+  14:./User/mytask.c ****     {
+ARM GAS  /tmp/ccWiN7oz.s 			page 2
+
+
+  15:./User/mytask.c ****        led_on();
+  45              		.loc 1 15 8 view .LVU4
+  46 0002 FFF7FEFF 		bl	led_on
+  47              	.LVL2:
+  16:./User/mytask.c **** 			 OSTimeDly(1000);
+  48              		.loc 1 16 5 discriminator 1 view .LVU5
+  49 0006 4FF47A70 		mov	r0, #1000
+  50 000a FFF7FEFF 		bl	OSTimeDly
+  51              	.LVL3:
+  13:./User/mytask.c ****     {
+  52              		.loc 1 13 11 view .LVU6
+  53 000e F8E7     		b	.L2
+  54              		.cfi_endproc
+  55              	.LFE123:
+  57              		.section	.text.Task2,"ax",%progbits
+  58              		.align	1
+  59              		.global	Task2
+  60              		.syntax unified
+  61              		.thumb
+  62              		.thumb_func
+  64              	Task2:
+  65              	.LFB124:
+  17:./User/mytask.c ****     }
+  18:./User/mytask.c **** }
+  19:./User/mytask.c **** 
+  20:./User/mytask.c **** void Task2(void *p_arg)
+  21:./User/mytask.c **** {
+  66              		.loc 1 21 1 view -0
+  67              		.cfi_startproc
+  68              		@ Volatile: function does not return.
+  69              		@ args = 0, pretend = 0, frame = 0
+  70              		@ frame_needed = 0, uses_anonymous_args = 0
+  71              	.LVL4:
+  72              		.loc 1 21 1 is_stmt 0 view .LVU8
+  73 0000 08B5     		push	{r3, lr}
+  74              	.LCFI1:
+  75              		.cfi_def_cfa_offset 8
+  76              		.cfi_offset 3, -8
+  77              		.cfi_offset 14, -4
+  78              	.LVL5:
+  79              	.L5:
+  22:./User/mytask.c ****     (void)p_arg;  
+  80              		.loc 1 22 5 is_stmt 1 view .LVU9
+  23:./User/mytask.c **** 
+  24:./User/mytask.c ****     while (1)
+  81              		.loc 1 24 5 view .LVU10
+  25:./User/mytask.c ****     {
+  26:./User/mytask.c ****        led_off();
+  82              		.loc 1 26 8 view .LVU11
+  83 0002 FFF7FEFF 		bl	led_off
+  84              	.LVL6:
+  27:./User/mytask.c **** 			 OSTimeDly(1800);
+  85              		.loc 1 27 5 discriminator 1 view .LVU12
+  86 0006 4FF4E160 		mov	r0, #1800
+  87 000a FFF7FEFF 		bl	OSTimeDly
+  88              	.LVL7:
+  24:./User/mytask.c ****     {
+ARM GAS  /tmp/ccWiN7oz.s 			page 3
+
+
+  89              		.loc 1 24 11 view .LVU13
+  90 000e F8E7     		b	.L5
+  91              		.cfi_endproc
+  92              	.LFE124:
+  94              		.section	.text.Task_RCControl,"ax",%progbits
+  95              		.align	1
+  96              		.global	Task_RCControl
+  97              		.syntax unified
+  98              		.thumb
+  99              		.thumb_func
+ 101              	Task_RCControl:
+ 102              	.LFB125:
+  28:./User/mytask.c ****     }
+  29:./User/mytask.c **** }
+  30:./User/mytask.c **** 
+  31:./User/mytask.c **** 
+  32:./User/mytask.c **** 
+  33:./User/mytask.c **** void Task_RCControl(void *p_arg){
+ 103              		.loc 1 33 33 view -0
+ 104              		.cfi_startproc
+ 105              		@ Volatile: function does not return.
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108              	.LVL8:
+ 109              		.loc 1 33 33 is_stmt 0 view .LVU15
+ 110 0000 08B5     		push	{r3, lr}
+ 111              	.LCFI2:
+ 112              		.cfi_def_cfa_offset 8
+ 113              		.cfi_offset 3, -8
+ 114              		.cfi_offset 14, -4
+ 115              	.LVL9:
+ 116              	.L8:
+  34:./User/mytask.c **** 		(void)p_arg;  
+ 117              		.loc 1 34 3 is_stmt 1 view .LVU16
+  35:./User/mytask.c **** 		while(1){
+ 118              		.loc 1 35 3 view .LVU17
+  36:./User/mytask.c **** 			PWM_TEST();
+ 119              		.loc 1 36 4 view .LVU18
+ 120 0002 FFF7FEFF 		bl	PWM_TEST
+ 121              	.LVL10:
+  37:./User/mytask.c **** 			OSTimeDly(5);
+ 122              		.loc 1 37 4 discriminator 1 view .LVU19
+ 123 0006 0520     		movs	r0, #5
+ 124 0008 FFF7FEFF 		bl	OSTimeDly
+ 125              	.LVL11:
+  35:./User/mytask.c **** 		while(1){
+ 126              		.loc 1 35 8 view .LVU20
+ 127 000c F9E7     		b	.L8
+ 128              		.cfi_endproc
+ 129              	.LFE125:
+ 131              		.section	.text.Task_Attitude,"ax",%progbits
+ 132              		.align	1
+ 133              		.global	Task_Attitude
+ 134              		.syntax unified
+ 135              		.thumb
+ 136              		.thumb_func
+ 138              	Task_Attitude:
+ARM GAS  /tmp/ccWiN7oz.s 			page 4
+
+
+ 139              	.LFB126:
+  38:./User/mytask.c **** 		}
+  39:./User/mytask.c **** }
+  40:./User/mytask.c **** 
+  41:./User/mytask.c **** 
+  42:./User/mytask.c **** 
+  43:./User/mytask.c **** void Task_Attitude(void *p_arg){
+ 140              		.loc 1 43 32 view -0
+ 141              		.cfi_startproc
+ 142              		@ Volatile: function does not return.
+ 143              		@ args = 0, pretend = 0, frame = 0
+ 144              		@ frame_needed = 0, uses_anonymous_args = 0
+ 145              	.LVL12:
+ 146              		.loc 1 43 32 is_stmt 0 view .LVU22
+ 147 0000 08B5     		push	{r3, lr}
+ 148              	.LCFI3:
+ 149              		.cfi_def_cfa_offset 8
+ 150              		.cfi_offset 3, -8
+ 151              		.cfi_offset 14, -4
+ 152              	.LVL13:
+ 153              	.L11:
+  44:./User/mytask.c **** 		(void)p_arg;  
+ 154              		.loc 1 44 3 is_stmt 1 view .LVU23
+  45:./User/mytask.c **** 		while(1){
+ 155              		.loc 1 45 3 view .LVU24
+  46:./User/mytask.c **** 			GY86_Show();
+ 156              		.loc 1 46 4 view .LVU25
+ 157 0002 FFF7FEFF 		bl	GY86_Show
+ 158              	.LVL14:
+  47:./User/mytask.c **** 			OSTimeDly(5);
+ 159              		.loc 1 47 4 discriminator 1 view .LVU26
+ 160 0006 0520     		movs	r0, #5
+ 161 0008 FFF7FEFF 		bl	OSTimeDly
+ 162              	.LVL15:
+  45:./User/mytask.c **** 		while(1){
+ 163              		.loc 1 45 8 view .LVU27
+ 164 000c F9E7     		b	.L11
+ 165              		.cfi_endproc
+ 166              	.LFE126:
+ 168              		.text
+ 169              	.Letext0:
+ 170              		.file 2 "./Hardware/final.h"
+ 171              		.file 3 "./Hardware/led.h"
+ 172              		.file 4 "./ucos/Ports/os_cpu.h"
+ 173              		.file 5 "./ucos/Core/ucos_ii.h"
+ARM GAS  /tmp/ccWiN7oz.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mytask.c
+     /tmp/ccWiN7oz.s:21     .text.Task1:00000000 $t
+     /tmp/ccWiN7oz.s:27     .text.Task1:00000000 Task1
+     /tmp/ccWiN7oz.s:58     .text.Task2:00000000 $t
+     /tmp/ccWiN7oz.s:64     .text.Task2:00000000 Task2
+     /tmp/ccWiN7oz.s:95     .text.Task_RCControl:00000000 $t
+     /tmp/ccWiN7oz.s:101    .text.Task_RCControl:00000000 Task_RCControl
+     /tmp/ccWiN7oz.s:132    .text.Task_Attitude:00000000 $t
+     /tmp/ccWiN7oz.s:138    .text.Task_Attitude:00000000 Task_Attitude
+
+UNDEFINED SYMBOLS
+led_on
+OSTimeDly
+led_off
+PWM_TEST
+GY86_Show

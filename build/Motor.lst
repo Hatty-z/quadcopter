@@ -1,0 +1,787 @@
+ARM GAS  /tmp/cci8Q1vH.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"Motor.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./Hardware/Motor.c"
+  20              		.section	.text.MOTOR_GPIO_Config,"ax",%progbits
+  21              		.align	1
+  22              		.global	MOTOR_GPIO_Config
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	MOTOR_GPIO_Config:
+  28              	.LFB123:
+   1:./Hardware/Motor.c **** #include "stm32f4xx.h"
+   2:./Hardware/Motor.c **** #include "stm32f4xx_rcc.h"
+   3:./Hardware/Motor.c **** #include "stm32f4xx_gpio.h"
+   4:./Hardware/Motor.c **** #include "stm32f4xx_tim.h"
+   5:./Hardware/Motor.c **** #include "Delay.h"
+   6:./Hardware/Motor.c **** #include "ucos_ii.h"
+   7:./Hardware/Motor.c **** 
+   8:./Hardware/Motor.c **** 
+   9:./Hardware/Motor.c **** //PA8,9,10,11
+  10:./Hardware/Motor.c **** void MOTOR_GPIO_Config(void){
+  29              		.loc 1 10 29 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  11:./Hardware/Motor.c **** 	RCC->AHB1ENR |=RCC_AHB1ENR_GPIOAEN;// clock enable
+  34              		.loc 1 11 2 view .LVU1
+  35              		.loc 1 11 5 is_stmt 0 view .LVU2
+  36 0000 124A     		ldr	r2, .L2
+  37 0002 136B     		ldr	r3, [r2, #48]
+  38              		.loc 1 11 15 view .LVU3
+  39 0004 43F00103 		orr	r3, r3, #1
+  40 0008 1363     		str	r3, [r2, #48]
+  12:./Hardware/Motor.c **** 	
+  13:./Hardware/Motor.c **** 	GPIOA->MODER &=~(GPIO_MODER_MODER8|GPIO_MODER_MODER9|GPIO_MODER_MODER10|GPIO_MODER_MODER11);
+  41              		.loc 1 13 2 is_stmt 1 view .LVU4
+  42              		.loc 1 13 7 is_stmt 0 view .LVU5
+  43 000a 114B     		ldr	r3, .L2+4
+  44 000c 1A68     		ldr	r2, [r3]
+  45              		.loc 1 13 15 view .LVU6
+ARM GAS  /tmp/cci8Q1vH.s 			page 2
+
+
+  46 000e 22F47F02 		bic	r2, r2, #16711680
+  47 0012 1A60     		str	r2, [r3]
+  14:./Hardware/Motor.c **** 	GPIOA->MODER |=GPIO_MODER_MODER8_1|GPIO_MODER_MODER9_1|GPIO_MODER_MODER10_1|GPIO_MODER_MODER11_1;/
+  48              		.loc 1 14 2 is_stmt 1 view .LVU7
+  49              		.loc 1 14 7 is_stmt 0 view .LVU8
+  50 0014 1A68     		ldr	r2, [r3]
+  51              		.loc 1 14 15 view .LVU9
+  52 0016 42F42A02 		orr	r2, r2, #11141120
+  53 001a 1A60     		str	r2, [r3]
+  15:./Hardware/Motor.c **** 	GPIOA->OTYPER &=~(GPIO_OTYPER_OT_8|GPIO_OTYPER_OT_9|GPIO_OTYPER_OT_10|GPIO_OTYPER_OT_11);//PP
+  54              		.loc 1 15 2 is_stmt 1 view .LVU10
+  55              		.loc 1 15 7 is_stmt 0 view .LVU11
+  56 001c 5A68     		ldr	r2, [r3, #4]
+  57              		.loc 1 15 16 view .LVU12
+  58 001e 22F47062 		bic	r2, r2, #3840
+  59 0022 5A60     		str	r2, [r3, #4]
+  16:./Hardware/Motor.c **** 	GPIOA->OSPEEDR &= ~(GPIO_OSPEEDER_OSPEEDR8|GPIO_OSPEEDER_OSPEEDR9|GPIO_OSPEEDER_OSPEEDR10|GPIO_OSP
+  60              		.loc 1 16 2 is_stmt 1 view .LVU13
+  61              		.loc 1 16 7 is_stmt 0 view .LVU14
+  62 0024 9A68     		ldr	r2, [r3, #8]
+  63              		.loc 1 16 17 view .LVU15
+  64 0026 22F47F02 		bic	r2, r2, #16711680
+  65 002a 9A60     		str	r2, [r3, #8]
+  17:./Hardware/Motor.c ****   GPIOA->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR8_1|GPIO_OSPEEDER_OSPEEDR9_1|GPIO_OSPEEDER_OSPEEDR10_1|GPI
+  66              		.loc 1 17 3 is_stmt 1 view .LVU16
+  67              		.loc 1 17 8 is_stmt 0 view .LVU17
+  68 002c 9A68     		ldr	r2, [r3, #8]
+  69              		.loc 1 17 18 view .LVU18
+  70 002e 42F42A02 		orr	r2, r2, #11141120
+  71 0032 9A60     		str	r2, [r3, #8]
+  18:./Hardware/Motor.c **** 	GPIOA->AFR[1] &= ~((0xF << (4 * 0)) | (0xF << (4 * 1)) | (0xF << (4 * 2)) | (0xF << (4 * 3)));
+  72              		.loc 1 18 2 is_stmt 1 view .LVU19
+  73              		.loc 1 18 12 is_stmt 0 view .LVU20
+  74 0034 5A6A     		ldr	r2, [r3, #36]
+  75              		.loc 1 18 16 view .LVU21
+  76 0036 6FF30F02 		bfc	r2, #0, #16
+  77 003a 5A62     		str	r2, [r3, #36]
+  19:./Hardware/Motor.c **** 	GPIOA->AFR[1] |= (1 << (4 * 0)) | (1 << (4 * 1)) | (1 << (4 * 2)) | (1 << (4 * 3)); // AF1T:IM1
+  78              		.loc 1 19 2 is_stmt 1 view .LVU22
+  79              		.loc 1 19 12 is_stmt 0 view .LVU23
+  80 003c 5A6A     		ldr	r2, [r3, #36]
+  81              		.loc 1 19 16 view .LVU24
+  82 003e 42F48852 		orr	r2, r2, #4352
+  83 0042 42F01102 		orr	r2, r2, #17
+  84 0046 5A62     		str	r2, [r3, #36]
+  20:./Hardware/Motor.c **** }
+  85              		.loc 1 20 1 view .LVU25
+  86 0048 7047     		bx	lr
+  87              	.L3:
+  88 004a 00BF     		.align	2
+  89              	.L2:
+  90 004c 00380240 		.word	1073887232
+  91 0050 00000240 		.word	1073872896
+  92              		.cfi_endproc
+  93              	.LFE123:
+  95              		.section	.text.TIM1_Config,"ax",%progbits
+  96              		.align	1
+ARM GAS  /tmp/cci8Q1vH.s 			page 3
+
+
+  97              		.global	TIM1_Config
+  98              		.syntax unified
+  99              		.thumb
+ 100              		.thumb_func
+ 102              	TIM1_Config:
+ 103              	.LFB124:
+  21:./Hardware/Motor.c **** 
+  22:./Hardware/Motor.c **** void TIM1_Config(void){
+ 104              		.loc 1 22 23 is_stmt 1 view -0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108              		@ link register save eliminated.
+  23:./Hardware/Motor.c **** 	RCC->APB2ENR|=RCC_APB2ENR_TIM1EN;//clock enable
+ 109              		.loc 1 23 2 view .LVU27
+ 110              		.loc 1 23 5 is_stmt 0 view .LVU28
+ 111 0000 4F4A     		ldr	r2, .L5
+ 112 0002 536C     		ldr	r3, [r2, #68]
+ 113              		.loc 1 23 14 view .LVU29
+ 114 0004 43F00103 		orr	r3, r3, #1
+ 115 0008 5364     		str	r3, [r2, #68]
+  24:./Hardware/Motor.c **** 	//t=20MS		frq=50Hz
+  25:./Hardware/Motor.c **** 	TIM1->PSC=84-1;
+ 116              		.loc 1 25 2 is_stmt 1 view .LVU30
+ 117              		.loc 1 25 11 is_stmt 0 view .LVU31
+ 118 000a 4E4B     		ldr	r3, .L5+4
+ 119 000c 5322     		movs	r2, #83
+ 120 000e 1A85     		strh	r2, [r3, #40]	@ movhi
+  26:./Hardware/Motor.c **** 	TIM1->ARR=20000-1;  
+ 121              		.loc 1 26 2 is_stmt 1 view .LVU32
+ 122              		.loc 1 26 11 is_stmt 0 view .LVU33
+ 123 0010 44F61F62 		movw	r2, #19999
+ 124 0014 DA62     		str	r2, [r3, #44]
+  27:./Hardware/Motor.c **** 	TIM1->RCR=0;
+ 125              		.loc 1 27 2 is_stmt 1 view .LVU34
+ 126              		.loc 1 27 11 is_stmt 0 view .LVU35
+ 127 0016 0022     		movs	r2, #0
+ 128 0018 1A86     		strh	r2, [r3, #48]	@ movhi
+  28:./Hardware/Motor.c **** 	
+  29:./Hardware/Motor.c **** 	
+  30:./Hardware/Motor.c **** 	TIM1->CR1&=~TIM_CCER_CC1E;
+ 129              		.loc 1 30 2 is_stmt 1 view .LVU36
+ 130              		.loc 1 30 6 is_stmt 0 view .LVU37
+ 131 001a 1A88     		ldrh	r2, [r3]
+ 132 001c 92B2     		uxth	r2, r2
+ 133              		.loc 1 30 11 view .LVU38
+ 134 001e 22F00102 		bic	r2, r2, #1
+ 135 0022 92B2     		uxth	r2, r2
+ 136 0024 1A80     		strh	r2, [r3]	@ movhi
+  31:./Hardware/Motor.c **** 	TIM1->CR1&=~TIM_CR1_DIR;
+ 137              		.loc 1 31 2 is_stmt 1 view .LVU39
+ 138              		.loc 1 31 6 is_stmt 0 view .LVU40
+ 139 0026 1A88     		ldrh	r2, [r3]
+ 140 0028 92B2     		uxth	r2, r2
+ 141              		.loc 1 31 11 view .LVU41
+ 142 002a 22F01002 		bic	r2, r2, #16
+ 143 002e 92B2     		uxth	r2, r2
+ARM GAS  /tmp/cci8Q1vH.s 			page 4
+
+
+ 144 0030 1A80     		strh	r2, [r3]	@ movhi
+  32:./Hardware/Motor.c **** 	TIM1->CR1 |= TIM_CR1_ARPE;
+ 145              		.loc 1 32 2 is_stmt 1 view .LVU42
+ 146              		.loc 1 32 6 is_stmt 0 view .LVU43
+ 147 0032 1A88     		ldrh	r2, [r3]
+ 148 0034 92B2     		uxth	r2, r2
+ 149              		.loc 1 32 12 view .LVU44
+ 150 0036 42F08002 		orr	r2, r2, #128
+ 151 003a 1A80     		strh	r2, [r3]	@ movhi
+  33:./Hardware/Motor.c **** 	
+  34:./Hardware/Motor.c **** 	TIM1->CCMR1 &= ~TIM_CCMR1_CC1S;
+ 152              		.loc 1 34 2 is_stmt 1 view .LVU45
+ 153              		.loc 1 34 6 is_stmt 0 view .LVU46
+ 154 003c 1A8B     		ldrh	r2, [r3, #24]
+ 155 003e 92B2     		uxth	r2, r2
+ 156              		.loc 1 34 14 view .LVU47
+ 157 0040 22F00302 		bic	r2, r2, #3
+ 158 0044 92B2     		uxth	r2, r2
+ 159 0046 1A83     		strh	r2, [r3, #24]	@ movhi
+  35:./Hardware/Motor.c **** 	TIM1->CCMR1 |= TIM_CCMR1_OC1PE; 
+ 160              		.loc 1 35 2 is_stmt 1 view .LVU48
+ 161              		.loc 1 35 6 is_stmt 0 view .LVU49
+ 162 0048 1A8B     		ldrh	r2, [r3, #24]
+ 163 004a 92B2     		uxth	r2, r2
+ 164              		.loc 1 35 14 view .LVU50
+ 165 004c 42F00802 		orr	r2, r2, #8
+ 166 0050 1A83     		strh	r2, [r3, #24]	@ movhi
+  36:./Hardware/Motor.c **** 	TIM1->CCMR1 &= ~TIM_CCMR1_OC1M; 
+ 167              		.loc 1 36 2 is_stmt 1 view .LVU51
+ 168              		.loc 1 36 6 is_stmt 0 view .LVU52
+ 169 0052 1A8B     		ldrh	r2, [r3, #24]
+ 170 0054 92B2     		uxth	r2, r2
+ 171              		.loc 1 36 14 view .LVU53
+ 172 0056 22F07002 		bic	r2, r2, #112
+ 173 005a 92B2     		uxth	r2, r2
+ 174 005c 1A83     		strh	r2, [r3, #24]	@ movhi
+  37:./Hardware/Motor.c **** 	TIM1->CCMR1 |= TIM_CCMR1_OC1M_1|TIM_CCMR1_OC1M_2; //PWM1
+ 175              		.loc 1 37 2 is_stmt 1 view .LVU54
+ 176              		.loc 1 37 6 is_stmt 0 view .LVU55
+ 177 005e 1A8B     		ldrh	r2, [r3, #24]
+ 178 0060 92B2     		uxth	r2, r2
+ 179              		.loc 1 37 14 view .LVU56
+ 180 0062 42F06002 		orr	r2, r2, #96
+ 181 0066 1A83     		strh	r2, [r3, #24]	@ movhi
+  38:./Hardware/Motor.c **** 	
+  39:./Hardware/Motor.c **** 	TIM1->CCMR1 &= ~TIM_CCMR1_CC2S;
+ 182              		.loc 1 39 2 is_stmt 1 view .LVU57
+ 183              		.loc 1 39 6 is_stmt 0 view .LVU58
+ 184 0068 1A8B     		ldrh	r2, [r3, #24]
+ 185 006a 92B2     		uxth	r2, r2
+ 186              		.loc 1 39 14 view .LVU59
+ 187 006c 22F44072 		bic	r2, r2, #768
+ 188 0070 92B2     		uxth	r2, r2
+ 189 0072 1A83     		strh	r2, [r3, #24]	@ movhi
+  40:./Hardware/Motor.c **** 	TIM1->CCMR1 |= TIM_CCMR1_OC2PE;
+ 190              		.loc 1 40 2 is_stmt 1 view .LVU60
+ 191              		.loc 1 40 6 is_stmt 0 view .LVU61
+ARM GAS  /tmp/cci8Q1vH.s 			page 5
+
+
+ 192 0074 1A8B     		ldrh	r2, [r3, #24]
+ 193 0076 92B2     		uxth	r2, r2
+ 194              		.loc 1 40 14 view .LVU62
+ 195 0078 42F40062 		orr	r2, r2, #2048
+ 196 007c 1A83     		strh	r2, [r3, #24]	@ movhi
+  41:./Hardware/Motor.c **** 	TIM1->CCMR1 &= ~TIM_CCMR1_OC2M; 
+ 197              		.loc 1 41 2 is_stmt 1 view .LVU63
+ 198              		.loc 1 41 6 is_stmt 0 view .LVU64
+ 199 007e 1A8B     		ldrh	r2, [r3, #24]
+ 200 0080 92B2     		uxth	r2, r2
+ 201              		.loc 1 41 14 view .LVU65
+ 202 0082 22F4E042 		bic	r2, r2, #28672
+ 203 0086 92B2     		uxth	r2, r2
+ 204 0088 1A83     		strh	r2, [r3, #24]	@ movhi
+  42:./Hardware/Motor.c **** 	TIM1->CCMR1 |= TIM_CCMR1_OC2M_1|TIM_CCMR1_OC2M_2; //PWM1
+ 205              		.loc 1 42 2 is_stmt 1 view .LVU66
+ 206              		.loc 1 42 6 is_stmt 0 view .LVU67
+ 207 008a 1A8B     		ldrh	r2, [r3, #24]
+ 208 008c 92B2     		uxth	r2, r2
+ 209              		.loc 1 42 14 view .LVU68
+ 210 008e 42F4C042 		orr	r2, r2, #24576
+ 211 0092 1A83     		strh	r2, [r3, #24]	@ movhi
+  43:./Hardware/Motor.c **** 
+  44:./Hardware/Motor.c **** 	TIM1->CCMR2 &=~TIM_CCMR2_CC3S; 
+ 212              		.loc 1 44 2 is_stmt 1 view .LVU69
+ 213              		.loc 1 44 6 is_stmt 0 view .LVU70
+ 214 0094 9A8B     		ldrh	r2, [r3, #28]
+ 215 0096 92B2     		uxth	r2, r2
+ 216              		.loc 1 44 14 view .LVU71
+ 217 0098 22F00302 		bic	r2, r2, #3
+ 218 009c 92B2     		uxth	r2, r2
+ 219 009e 9A83     		strh	r2, [r3, #28]	@ movhi
+  45:./Hardware/Motor.c **** 	TIM1->CCMR2 |= TIM_CCMR2_OC3PE;
+ 220              		.loc 1 45 2 is_stmt 1 view .LVU72
+ 221              		.loc 1 45 6 is_stmt 0 view .LVU73
+ 222 00a0 9A8B     		ldrh	r2, [r3, #28]
+ 223 00a2 92B2     		uxth	r2, r2
+ 224              		.loc 1 45 14 view .LVU74
+ 225 00a4 42F00802 		orr	r2, r2, #8
+ 226 00a8 9A83     		strh	r2, [r3, #28]	@ movhi
+  46:./Hardware/Motor.c **** 	TIM1->CCMR2 &=~TIM_CCMR2_OC3M;
+ 227              		.loc 1 46 2 is_stmt 1 view .LVU75
+ 228              		.loc 1 46 6 is_stmt 0 view .LVU76
+ 229 00aa 9A8B     		ldrh	r2, [r3, #28]
+ 230 00ac 92B2     		uxth	r2, r2
+ 231              		.loc 1 46 14 view .LVU77
+ 232 00ae 22F07002 		bic	r2, r2, #112
+ 233 00b2 92B2     		uxth	r2, r2
+ 234 00b4 9A83     		strh	r2, [r3, #28]	@ movhi
+  47:./Hardware/Motor.c **** 	TIM1->CCMR2 |=TIM_CCMR2_OC3M_1|TIM_CCMR2_OC3M_2;
+ 235              		.loc 1 47 2 is_stmt 1 view .LVU78
+ 236              		.loc 1 47 6 is_stmt 0 view .LVU79
+ 237 00b6 9A8B     		ldrh	r2, [r3, #28]
+ 238 00b8 92B2     		uxth	r2, r2
+ 239              		.loc 1 47 14 view .LVU80
+ 240 00ba 42F06002 		orr	r2, r2, #96
+ 241 00be 9A83     		strh	r2, [r3, #28]	@ movhi
+ARM GAS  /tmp/cci8Q1vH.s 			page 6
+
+
+  48:./Hardware/Motor.c **** 	
+  49:./Hardware/Motor.c **** 	TIM1->CCMR2 &=~TIM_CCMR2_CC4S;
+ 242              		.loc 1 49 2 is_stmt 1 view .LVU81
+ 243              		.loc 1 49 6 is_stmt 0 view .LVU82
+ 244 00c0 9A8B     		ldrh	r2, [r3, #28]
+ 245 00c2 92B2     		uxth	r2, r2
+ 246              		.loc 1 49 14 view .LVU83
+ 247 00c4 22F44072 		bic	r2, r2, #768
+ 248 00c8 92B2     		uxth	r2, r2
+ 249 00ca 9A83     		strh	r2, [r3, #28]	@ movhi
+  50:./Hardware/Motor.c **** 	TIM1->CCMR2 |= TIM_CCMR2_OC4PE;
+ 250              		.loc 1 50 2 is_stmt 1 view .LVU84
+ 251              		.loc 1 50 6 is_stmt 0 view .LVU85
+ 252 00cc 9A8B     		ldrh	r2, [r3, #28]
+ 253 00ce 92B2     		uxth	r2, r2
+ 254              		.loc 1 50 14 view .LVU86
+ 255 00d0 42F40062 		orr	r2, r2, #2048
+ 256 00d4 9A83     		strh	r2, [r3, #28]	@ movhi
+  51:./Hardware/Motor.c **** 	TIM1->CCMR2 &=~TIM_CCMR2_OC4M;
+ 257              		.loc 1 51 2 is_stmt 1 view .LVU87
+ 258              		.loc 1 51 6 is_stmt 0 view .LVU88
+ 259 00d6 9A8B     		ldrh	r2, [r3, #28]
+ 260 00d8 92B2     		uxth	r2, r2
+ 261              		.loc 1 51 14 view .LVU89
+ 262 00da 22F4E042 		bic	r2, r2, #28672
+ 263 00de 92B2     		uxth	r2, r2
+ 264 00e0 9A83     		strh	r2, [r3, #28]	@ movhi
+  52:./Hardware/Motor.c **** 	TIM1->CCMR2 |=TIM_CCMR2_OC4M_1|TIM_CCMR2_OC4M_2;
+ 265              		.loc 1 52 2 is_stmt 1 view .LVU90
+ 266              		.loc 1 52 6 is_stmt 0 view .LVU91
+ 267 00e2 9A8B     		ldrh	r2, [r3, #28]
+ 268 00e4 92B2     		uxth	r2, r2
+ 269              		.loc 1 52 14 view .LVU92
+ 270 00e6 42F4C042 		orr	r2, r2, #24576
+ 271 00ea 9A83     		strh	r2, [r3, #28]	@ movhi
+  53:./Hardware/Motor.c **** 	
+  54:./Hardware/Motor.c **** 	TIM1->CCR1 = 1500; 
+ 272              		.loc 1 54 2 is_stmt 1 view .LVU93
+ 273              		.loc 1 54 13 is_stmt 0 view .LVU94
+ 274 00ec 40F2DC52 		movw	r2, #1500
+ 275 00f0 5A63     		str	r2, [r3, #52]
+  55:./Hardware/Motor.c **** 	TIM1->CCR2 = 1500;
+ 276              		.loc 1 55 2 is_stmt 1 view .LVU95
+ 277              		.loc 1 55 13 is_stmt 0 view .LVU96
+ 278 00f2 9A63     		str	r2, [r3, #56]
+  56:./Hardware/Motor.c **** 	TIM1->CCR3 = 1500;
+ 279              		.loc 1 56 2 is_stmt 1 view .LVU97
+ 280              		.loc 1 56 13 is_stmt 0 view .LVU98
+ 281 00f4 DA63     		str	r2, [r3, #60]
+  57:./Hardware/Motor.c **** 	TIM1->CCR4 = 1500;
+ 282              		.loc 1 57 2 is_stmt 1 view .LVU99
+ 283              		.loc 1 57 13 is_stmt 0 view .LVU100
+ 284 00f6 1A64     		str	r2, [r3, #64]
+  58:./Hardware/Motor.c **** 
+  59:./Hardware/Motor.c **** 	TIM1->CCER &=~(TIM_CCER_CC1P|TIM_CCER_CC2P|TIM_CCER_CC3P|TIM_CCER_CC4P);
+ 285              		.loc 1 59 2 is_stmt 1 view .LVU101
+ 286              		.loc 1 59 6 is_stmt 0 view .LVU102
+ARM GAS  /tmp/cci8Q1vH.s 			page 7
+
+
+ 287 00f8 1A8C     		ldrh	r2, [r3, #32]
+ 288 00fa 92B2     		uxth	r2, r2
+ 289              		.loc 1 59 13 view .LVU103
+ 290 00fc 22F40852 		bic	r2, r2, #8704
+ 291 0100 22F02202 		bic	r2, r2, #34
+ 292 0104 92B2     		uxth	r2, r2
+ 293 0106 1A84     		strh	r2, [r3, #32]	@ movhi
+  60:./Hardware/Motor.c **** 	TIM1->CCER|=TIM_CCER_CC1E|TIM_CCER_CC2E|TIM_CCER_CC3E|TIM_CCER_CC4E;//enable channel
+ 294              		.loc 1 60 2 is_stmt 1 view .LVU104
+ 295              		.loc 1 60 6 is_stmt 0 view .LVU105
+ 296 0108 1A8C     		ldrh	r2, [r3, #32]
+ 297 010a 92B2     		uxth	r2, r2
+ 298              		.loc 1 60 12 view .LVU106
+ 299 010c 42F48852 		orr	r2, r2, #4352
+ 300 0110 42F01102 		orr	r2, r2, #17
+ 301 0114 1A84     		strh	r2, [r3, #32]	@ movhi
+  61:./Hardware/Motor.c **** 	
+  62:./Hardware/Motor.c **** 	TIM1->BDTR |= TIM_BDTR_MOE;   // advanced TIM must set
+ 302              		.loc 1 62 2 is_stmt 1 view .LVU107
+ 303              		.loc 1 62 6 is_stmt 0 view .LVU108
+ 304 0116 B3F84420 		ldrh	r2, [r3, #68]
+ 305              		.loc 1 62 13 view .LVU109
+ 306 011a 6FEA4242 		mvn	r2, r2, lsl #17
+ 307 011e 6FEA5242 		mvn	r2, r2, lsr #17
+ 308 0122 92B2     		uxth	r2, r2
+ 309 0124 A3F84420 		strh	r2, [r3, #68]	@ movhi
+  63:./Hardware/Motor.c **** 	TIM1->EGR |= TIM_EGR_UG;
+ 310              		.loc 1 63 2 is_stmt 1 view .LVU110
+ 311              		.loc 1 63 6 is_stmt 0 view .LVU111
+ 312 0128 9A8A     		ldrh	r2, [r3, #20]
+ 313 012a 92B2     		uxth	r2, r2
+ 314              		.loc 1 63 12 view .LVU112
+ 315 012c 42F00102 		orr	r2, r2, #1
+ 316 0130 9A82     		strh	r2, [r3, #20]	@ movhi
+  64:./Hardware/Motor.c **** 	TIM1->CR1 |= TIM_CR1_CEN;     // start TIM1
+ 317              		.loc 1 64 2 is_stmt 1 view .LVU113
+ 318              		.loc 1 64 6 is_stmt 0 view .LVU114
+ 319 0132 1A88     		ldrh	r2, [r3]
+ 320 0134 92B2     		uxth	r2, r2
+ 321              		.loc 1 64 12 view .LVU115
+ 322 0136 42F00102 		orr	r2, r2, #1
+ 323 013a 1A80     		strh	r2, [r3]	@ movhi
+  65:./Hardware/Motor.c **** 
+  66:./Hardware/Motor.c **** }
+ 324              		.loc 1 66 1 view .LVU116
+ 325 013c 7047     		bx	lr
+ 326              	.L6:
+ 327 013e 00BF     		.align	2
+ 328              	.L5:
+ 329 0140 00380240 		.word	1073887232
+ 330 0144 00000140 		.word	1073807360
+ 331              		.cfi_endproc
+ 332              	.LFE124:
+ 334              		.section	.text.PWM_SetCompare,"ax",%progbits
+ 335              		.align	1
+ 336              		.global	PWM_SetCompare
+ 337              		.syntax unified
+ARM GAS  /tmp/cci8Q1vH.s 			page 8
+
+
+ 338              		.thumb
+ 339              		.thumb_func
+ 341              	PWM_SetCompare:
+ 342              	.LVL0:
+ 343              	.LFB125:
+  67:./Hardware/Motor.c **** 
+  68:./Hardware/Motor.c **** void PWM_SetCompare(int motor, uint16_t compare) {
+ 344              		.loc 1 68 50 is_stmt 1 view -0
+ 345              		.cfi_startproc
+ 346              		@ args = 0, pretend = 0, frame = 0
+ 347              		@ frame_needed = 0, uses_anonymous_args = 0
+ 348              		@ link register save eliminated.
+  69:./Hardware/Motor.c ****     switch (motor) {
+ 349              		.loc 1 69 5 view .LVU118
+ 350 0000 0138     		subs	r0, r0, #1
+ 351              	.LVL1:
+ 352              		.loc 1 69 5 is_stmt 0 view .LVU119
+ 353 0002 0328     		cmp	r0, #3
+ 354 0004 0ED8     		bhi	.L7
+ 355 0006 DFE800F0 		tbb	[pc, r0]
+ 356              	.L10:
+ 357 000a 02       		.byte	(.L13-.L10)/2
+ 358 000b 05       		.byte	(.L12-.L10)/2
+ 359 000c 08       		.byte	(.L11-.L10)/2
+ 360 000d 0B       		.byte	(.L9-.L10)/2
+ 361              		.p2align 1
+ 362              	.L13:
+  70:./Hardware/Motor.c ****         case 1:
+  71:./Hardware/Motor.c ****             TIM1->CCR1 = compare;
+ 363              		.loc 1 71 13 is_stmt 1 view .LVU120
+ 364              		.loc 1 71 24 is_stmt 0 view .LVU121
+ 365 000e 064B     		ldr	r3, .L15
+ 366 0010 5963     		str	r1, [r3, #52]
+  72:./Hardware/Motor.c ****             break;
+ 367              		.loc 1 72 13 is_stmt 1 view .LVU122
+ 368 0012 7047     		bx	lr
+ 369              	.L12:
+  73:./Hardware/Motor.c ****         case 2:
+  74:./Hardware/Motor.c ****             TIM1->CCR2 = compare;
+ 370              		.loc 1 74 13 view .LVU123
+ 371              		.loc 1 74 24 is_stmt 0 view .LVU124
+ 372 0014 044B     		ldr	r3, .L15
+ 373 0016 9963     		str	r1, [r3, #56]
+  75:./Hardware/Motor.c ****             break;
+ 374              		.loc 1 75 13 is_stmt 1 view .LVU125
+ 375 0018 7047     		bx	lr
+ 376              	.L11:
+  76:./Hardware/Motor.c ****         case 3:
+  77:./Hardware/Motor.c ****             TIM1->CCR3 = compare;
+ 377              		.loc 1 77 13 view .LVU126
+ 378              		.loc 1 77 24 is_stmt 0 view .LVU127
+ 379 001a 034B     		ldr	r3, .L15
+ 380 001c D963     		str	r1, [r3, #60]
+  78:./Hardware/Motor.c ****             break;
+ 381              		.loc 1 78 13 is_stmt 1 view .LVU128
+ 382 001e 7047     		bx	lr
+ 383              	.L9:
+ARM GAS  /tmp/cci8Q1vH.s 			page 9
+
+
+  79:./Hardware/Motor.c ****         case 4:
+  80:./Hardware/Motor.c ****             TIM1->CCR4 = compare;
+ 384              		.loc 1 80 13 view .LVU129
+ 385              		.loc 1 80 24 is_stmt 0 view .LVU130
+ 386 0020 014B     		ldr	r3, .L15
+ 387 0022 1964     		str	r1, [r3, #64]
+  81:./Hardware/Motor.c ****             break;
+ 388              		.loc 1 81 13 is_stmt 1 view .LVU131
+ 389              	.L7:
+  82:./Hardware/Motor.c ****         default:
+  83:./Hardware/Motor.c ****             break;
+  84:./Hardware/Motor.c ****     }
+  85:./Hardware/Motor.c **** }
+ 390              		.loc 1 85 1 is_stmt 0 view .LVU132
+ 391 0024 7047     		bx	lr
+ 392              	.L16:
+ 393 0026 00BF     		.align	2
+ 394              	.L15:
+ 395 0028 00000140 		.word	1073807360
+ 396              		.cfi_endproc
+ 397              	.LFE125:
+ 399              		.section	.text.MOTOR_Init,"ax",%progbits
+ 400              		.align	1
+ 401              		.global	MOTOR_Init
+ 402              		.syntax unified
+ 403              		.thumb
+ 404              		.thumb_func
+ 406              	MOTOR_Init:
+ 407              	.LFB126:
+  86:./Hardware/Motor.c **** 
+  87:./Hardware/Motor.c **** 
+  88:./Hardware/Motor.c **** void MOTOR_Init(void){
+ 408              		.loc 1 88 22 is_stmt 1 view -0
+ 409              		.cfi_startproc
+ 410              		@ args = 0, pretend = 0, frame = 0
+ 411              		@ frame_needed = 0, uses_anonymous_args = 0
+ 412 0000 08B5     		push	{r3, lr}
+ 413              	.LCFI0:
+ 414              		.cfi_def_cfa_offset 8
+ 415              		.cfi_offset 3, -8
+ 416              		.cfi_offset 14, -4
+  89:./Hardware/Motor.c **** 	MOTOR_GPIO_Config();
+ 417              		.loc 1 89 2 view .LVU134
+ 418 0002 FFF7FEFF 		bl	MOTOR_GPIO_Config
+ 419              	.LVL2:
+  90:./Hardware/Motor.c **** 	TIM1_Config();
+ 420              		.loc 1 90 2 view .LVU135
+ 421 0006 FFF7FEFF 		bl	TIM1_Config
+ 422              	.LVL3:
+  91:./Hardware/Motor.c **** }
+ 423              		.loc 1 91 1 is_stmt 0 view .LVU136
+ 424 000a 08BD     		pop	{r3, pc}
+ 425              		.cfi_endproc
+ 426              	.LFE126:
+ 428              		.section	.text.MOTOR_SetSpeed,"ax",%progbits
+ 429              		.align	1
+ 430              		.global	MOTOR_SetSpeed
+ARM GAS  /tmp/cci8Q1vH.s 			page 10
+
+
+ 431              		.syntax unified
+ 432              		.thumb
+ 433              		.thumb_func
+ 435              	MOTOR_SetSpeed:
+ 436              	.LVL4:
+ 437              	.LFB127:
+  92:./Hardware/Motor.c **** 
+  93:./Hardware/Motor.c **** 
+  94:./Hardware/Motor.c **** void MOTOR_SetSpeed(int moter,int8_t Speed)  
+  95:./Hardware/Motor.c **** {
+ 438              		.loc 1 95 1 is_stmt 1 view -0
+ 439              		.cfi_startproc
+ 440              		@ args = 0, pretend = 0, frame = 0
+ 441              		@ frame_needed = 0, uses_anonymous_args = 0
+ 442              		.loc 1 95 1 is_stmt 0 view .LVU138
+ 443 0000 08B5     		push	{r3, lr}
+ 444              	.LCFI1:
+ 445              		.cfi_def_cfa_offset 8
+ 446              		.cfi_offset 3, -8
+ 447              		.cfi_offset 14, -4
+  96:./Hardware/Motor.c **** 	uint16_t compare;
+ 448              		.loc 1 96 2 is_stmt 1 view .LVU139
+  97:./Hardware/Motor.c ****     
+  98:./Hardware/Motor.c ****     // 将Speed从 -100 到 100 映射到占空比范围 1000 (5%) 到 2000 (10%)
+  99:./Hardware/Motor.c ****     if (Speed > 100) Speed = 100;
+ 449              		.loc 1 99 5 view .LVU140
+ 450              		.loc 1 99 8 is_stmt 0 view .LVU141
+ 451 0002 6429     		cmp	r1, #100
+ 452 0004 03DC     		bgt	.L21
+ 100:./Hardware/Motor.c ****     if (Speed < 0) Speed = 0;
+ 453              		.loc 1 100 5 is_stmt 1 view .LVU142
+ 454              		.loc 1 100 8 is_stmt 0 view .LVU143
+ 455 0006 0029     		cmp	r1, #0
+ 456 0008 02DA     		bge	.L20
+ 457              		.loc 1 100 26 discriminator 1 view .LVU144
+ 458 000a 0021     		movs	r1, #0
+ 459              	.LVL5:
+ 460              		.loc 1 100 26 discriminator 1 view .LVU145
+ 461 000c 00E0     		b	.L20
+ 462              	.LVL6:
+ 463              	.L21:
+  99:./Hardware/Motor.c ****     if (Speed < 0) Speed = 0;
+ 464              		.loc 1 99 28 discriminator 1 view .LVU146
+ 465 000e 6421     		movs	r1, #100
+ 466              	.LVL7:
+ 467              	.L20:
+ 101:./Hardware/Motor.c **** 
+ 102:./Hardware/Motor.c ****     // 将速度范围线性映射到占空比范围
+ 103:./Hardware/Motor.c ****     compare = 1000 + (Speed * 10); // 将Speed映射到1000到2000
+ 468              		.loc 1 103 5 is_stmt 1 view .LVU147
+ 469              		.loc 1 103 29 is_stmt 0 view .LVU148
+ 470 0010 01EB8101 		add	r1, r1, r1, lsl #2
+ 471              	.LVL8:
+ 472              		.loc 1 103 29 view .LVU149
+ 473 0014 4900     		lsls	r1, r1, #1
+ 474 0016 89B2     		uxth	r1, r1
+ 475              		.loc 1 103 13 view .LVU150
+ARM GAS  /tmp/cci8Q1vH.s 			page 11
+
+
+ 476 0018 01F57A71 		add	r1, r1, #1000
+ 477 001c 89B2     		uxth	r1, r1
+ 478              	.LVL9:
+ 104:./Hardware/Motor.c **** 
+ 105:./Hardware/Motor.c ****     PWM_SetCompare(moter, compare); 
+ 479              		.loc 1 105 5 is_stmt 1 view .LVU151
+ 480 001e FFF7FEFF 		bl	PWM_SetCompare
+ 481              	.LVL10:
+ 106:./Hardware/Motor.c **** }
+ 482              		.loc 1 106 1 is_stmt 0 view .LVU152
+ 483 0022 08BD     		pop	{r3, pc}
+ 484              		.cfi_endproc
+ 485              	.LFE127:
+ 487              		.section	.text.Unlock_ESC,"ax",%progbits
+ 488              		.align	1
+ 489              		.global	Unlock_ESC
+ 490              		.syntax unified
+ 491              		.thumb
+ 492              		.thumb_func
+ 494              	Unlock_ESC:
+ 495              	.LVL11:
+ 496              	.LFB128:
+ 107:./Hardware/Motor.c **** 
+ 108:./Hardware/Motor.c **** void Unlock_ESC(int motor){
+ 497              		.loc 1 108 27 is_stmt 1 view -0
+ 498              		.cfi_startproc
+ 499              		@ args = 0, pretend = 0, frame = 0
+ 500              		@ frame_needed = 0, uses_anonymous_args = 0
+ 501              		.loc 1 108 27 is_stmt 0 view .LVU154
+ 502 0000 10B5     		push	{r4, lr}
+ 503              	.LCFI2:
+ 504              		.cfi_def_cfa_offset 8
+ 505              		.cfi_offset 4, -8
+ 506              		.cfi_offset 14, -4
+ 507 0002 0446     		mov	r4, r0
+ 109:./Hardware/Motor.c **** 	PWM_SetCompare(motor,2000);
+ 508              		.loc 1 109 2 is_stmt 1 view .LVU155
+ 509 0004 4FF4FA61 		mov	r1, #2000
+ 510 0008 FFF7FEFF 		bl	PWM_SetCompare
+ 511              	.LVL12:
+ 110:./Hardware/Motor.c **** 	Delay_s(5);
+ 512              		.loc 1 110 2 view .LVU156
+ 513 000c 0520     		movs	r0, #5
+ 514 000e FFF7FEFF 		bl	Delay_s
+ 515              	.LVL13:
+ 111:./Hardware/Motor.c **** 	PWM_SetCompare(motor,1000);
+ 516              		.loc 1 111 2 view .LVU157
+ 517 0012 4FF47A71 		mov	r1, #1000
+ 518 0016 2046     		mov	r0, r4
+ 519 0018 FFF7FEFF 		bl	PWM_SetCompare
+ 520              	.LVL14:
+ 112:./Hardware/Motor.c **** 	Delay_s(1);
+ 521              		.loc 1 112 2 view .LVU158
+ 522 001c 0120     		movs	r0, #1
+ 523 001e FFF7FEFF 		bl	Delay_s
+ 524              	.LVL15:
+ 113:./Hardware/Motor.c **** }
+ARM GAS  /tmp/cci8Q1vH.s 			page 12
+
+
+ 525              		.loc 1 113 1 is_stmt 0 view .LVU159
+ 526 0022 10BD     		pop	{r4, pc}
+ 527              		.loc 1 113 1 view .LVU160
+ 528              		.cfi_endproc
+ 529              	.LFE128:
+ 531              		.section	.text.Unlock_ALL_ESC,"ax",%progbits
+ 532              		.align	1
+ 533              		.global	Unlock_ALL_ESC
+ 534              		.syntax unified
+ 535              		.thumb
+ 536              		.thumb_func
+ 538              	Unlock_ALL_ESC:
+ 539              	.LFB129:
+ 114:./Hardware/Motor.c **** 
+ 115:./Hardware/Motor.c **** void Unlock_ALL_ESC(void)
+ 116:./Hardware/Motor.c **** {
+ 540              		.loc 1 116 1 is_stmt 1 view -0
+ 541              		.cfi_startproc
+ 542              		@ args = 0, pretend = 0, frame = 0
+ 543              		@ frame_needed = 0, uses_anonymous_args = 0
+ 544 0000 08B5     		push	{r3, lr}
+ 545              	.LCFI3:
+ 546              		.cfi_def_cfa_offset 8
+ 547              		.cfi_offset 3, -8
+ 548              		.cfi_offset 14, -4
+ 117:./Hardware/Motor.c **** 	PWM_SetCompare(1, 2000);
+ 549              		.loc 1 117 2 view .LVU162
+ 550 0002 4FF4FA61 		mov	r1, #2000
+ 551 0006 0120     		movs	r0, #1
+ 552 0008 FFF7FEFF 		bl	PWM_SetCompare
+ 553              	.LVL16:
+ 118:./Hardware/Motor.c **** 	PWM_SetCompare(2, 2000);
+ 554              		.loc 1 118 2 view .LVU163
+ 555 000c 4FF4FA61 		mov	r1, #2000
+ 556 0010 0220     		movs	r0, #2
+ 557 0012 FFF7FEFF 		bl	PWM_SetCompare
+ 558              	.LVL17:
+ 119:./Hardware/Motor.c **** 	PWM_SetCompare(3, 2000);
+ 559              		.loc 1 119 2 view .LVU164
+ 560 0016 4FF4FA61 		mov	r1, #2000
+ 561 001a 0320     		movs	r0, #3
+ 562 001c FFF7FEFF 		bl	PWM_SetCompare
+ 563              	.LVL18:
+ 120:./Hardware/Motor.c **** 	PWM_SetCompare(4, 2000);
+ 564              		.loc 1 120 2 view .LVU165
+ 565 0020 4FF4FA61 		mov	r1, #2000
+ 566 0024 0420     		movs	r0, #4
+ 567 0026 FFF7FEFF 		bl	PWM_SetCompare
+ 568              	.LVL19:
+ 121:./Hardware/Motor.c **** 	Delay_s(5);
+ 569              		.loc 1 121 2 view .LVU166
+ 570 002a 0520     		movs	r0, #5
+ 571 002c FFF7FEFF 		bl	Delay_s
+ 572              	.LVL20:
+ 122:./Hardware/Motor.c **** 	PWM_SetCompare(1, 1000);
+ 573              		.loc 1 122 2 view .LVU167
+ 574 0030 4FF47A71 		mov	r1, #1000
+ARM GAS  /tmp/cci8Q1vH.s 			page 13
+
+
+ 575 0034 0120     		movs	r0, #1
+ 576 0036 FFF7FEFF 		bl	PWM_SetCompare
+ 577              	.LVL21:
+ 123:./Hardware/Motor.c **** 	PWM_SetCompare(2, 1000);
+ 578              		.loc 1 123 2 view .LVU168
+ 579 003a 4FF47A71 		mov	r1, #1000
+ 580 003e 0220     		movs	r0, #2
+ 581 0040 FFF7FEFF 		bl	PWM_SetCompare
+ 582              	.LVL22:
+ 124:./Hardware/Motor.c **** 	PWM_SetCompare(3, 1000);
+ 583              		.loc 1 124 2 view .LVU169
+ 584 0044 4FF47A71 		mov	r1, #1000
+ 585 0048 0320     		movs	r0, #3
+ 586 004a FFF7FEFF 		bl	PWM_SetCompare
+ 587              	.LVL23:
+ 125:./Hardware/Motor.c **** 	PWM_SetCompare(4, 1000);
+ 588              		.loc 1 125 2 view .LVU170
+ 589 004e 4FF47A71 		mov	r1, #1000
+ 590 0052 0420     		movs	r0, #4
+ 591 0054 FFF7FEFF 		bl	PWM_SetCompare
+ 592              	.LVL24:
+ 126:./Hardware/Motor.c **** 	Delay_s(1);
+ 593              		.loc 1 126 2 view .LVU171
+ 594 0058 0120     		movs	r0, #1
+ 595 005a FFF7FEFF 		bl	Delay_s
+ 596              	.LVL25:
+ 127:./Hardware/Motor.c **** }
+ 597              		.loc 1 127 1 is_stmt 0 view .LVU172
+ 598 005e 08BD     		pop	{r3, pc}
+ 599              		.cfi_endproc
+ 600              	.LFE129:
+ 602              		.text
+ 603              	.Letext0:
+ 604              		.file 2 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 605              		.file 3 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 606              		.file 4 "./system/stm32f4xx.h"
+ 607              		.file 5 "./User/Delay.h"
+ARM GAS  /tmp/cci8Q1vH.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 Motor.c
+     /tmp/cci8Q1vH.s:21     .text.MOTOR_GPIO_Config:00000000 $t
+     /tmp/cci8Q1vH.s:27     .text.MOTOR_GPIO_Config:00000000 MOTOR_GPIO_Config
+     /tmp/cci8Q1vH.s:90     .text.MOTOR_GPIO_Config:0000004c $d
+     /tmp/cci8Q1vH.s:96     .text.TIM1_Config:00000000 $t
+     /tmp/cci8Q1vH.s:102    .text.TIM1_Config:00000000 TIM1_Config
+     /tmp/cci8Q1vH.s:329    .text.TIM1_Config:00000140 $d
+     /tmp/cci8Q1vH.s:335    .text.PWM_SetCompare:00000000 $t
+     /tmp/cci8Q1vH.s:341    .text.PWM_SetCompare:00000000 PWM_SetCompare
+     /tmp/cci8Q1vH.s:357    .text.PWM_SetCompare:0000000a $d
+     /tmp/cci8Q1vH.s:361    .text.PWM_SetCompare:0000000e $t
+     /tmp/cci8Q1vH.s:395    .text.PWM_SetCompare:00000028 $d
+     /tmp/cci8Q1vH.s:400    .text.MOTOR_Init:00000000 $t
+     /tmp/cci8Q1vH.s:406    .text.MOTOR_Init:00000000 MOTOR_Init
+     /tmp/cci8Q1vH.s:429    .text.MOTOR_SetSpeed:00000000 $t
+     /tmp/cci8Q1vH.s:435    .text.MOTOR_SetSpeed:00000000 MOTOR_SetSpeed
+     /tmp/cci8Q1vH.s:488    .text.Unlock_ESC:00000000 $t
+     /tmp/cci8Q1vH.s:494    .text.Unlock_ESC:00000000 Unlock_ESC
+     /tmp/cci8Q1vH.s:532    .text.Unlock_ALL_ESC:00000000 $t
+     /tmp/cci8Q1vH.s:538    .text.Unlock_ALL_ESC:00000000 Unlock_ALL_ESC
+
+UNDEFINED SYMBOLS
+Delay_s

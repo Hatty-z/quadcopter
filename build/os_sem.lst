@@ -1,0 +1,2352 @@
+ARM GAS  /tmp/ccAvEVGU.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"os_sem.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./ucos/Core/os_sem.c"
+  20              		.section	.text.OSSemAccept,"ax",%progbits
+  21              		.align	1
+  22              		.global	OSSemAccept
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	OSSemAccept:
+  28              	.LVL0:
+  29              	.LFB0:
+   1:./ucos/Core/os_sem.c **** /*
+   2:./ucos/Core/os_sem.c **** ***************************************************************************************************
+   3:./ucos/Core/os_sem.c **** *                                              uC/OS-II
+   4:./ucos/Core/os_sem.c **** *                                        The Real-Time Kernel
+   5:./ucos/Core/os_sem.c **** *
+   6:./ucos/Core/os_sem.c **** *                    Copyright 1992-2021 Silicon Laboratories Inc. www.silabs.com
+   7:./ucos/Core/os_sem.c **** *
+   8:./ucos/Core/os_sem.c **** *                                 SPDX-License-Identifier: APACHE-2.0
+   9:./ucos/Core/os_sem.c **** *
+  10:./ucos/Core/os_sem.c **** *               This software is subject to an open source license and is distributed by
+  11:./ucos/Core/os_sem.c **** *                Silicon Laboratories Inc. pursuant to the terms of the Apache License,
+  12:./ucos/Core/os_sem.c **** *                    Version 2.0 available at www.apache.org/licenses/LICENSE-2.0.
+  13:./ucos/Core/os_sem.c **** *
+  14:./ucos/Core/os_sem.c **** ***************************************************************************************************
+  15:./ucos/Core/os_sem.c **** */
+  16:./ucos/Core/os_sem.c **** 
+  17:./ucos/Core/os_sem.c **** 
+  18:./ucos/Core/os_sem.c **** /*
+  19:./ucos/Core/os_sem.c **** ***************************************************************************************************
+  20:./ucos/Core/os_sem.c **** *
+  21:./ucos/Core/os_sem.c **** *                                         SEMAPHORE MANAGEMENT
+  22:./ucos/Core/os_sem.c **** *
+  23:./ucos/Core/os_sem.c **** * Filename : os_sem.c
+  24:./ucos/Core/os_sem.c **** * Version  : V2.93.01
+  25:./ucos/Core/os_sem.c **** ***************************************************************************************************
+  26:./ucos/Core/os_sem.c **** */
+  27:./ucos/Core/os_sem.c **** 
+  28:./ucos/Core/os_sem.c **** #ifndef  OS_SEM_C
+  29:./ucos/Core/os_sem.c **** #define  OS_SEM_C
+ARM GAS  /tmp/ccAvEVGU.s 			page 2
+
+
+  30:./ucos/Core/os_sem.c **** 
+  31:./ucos/Core/os_sem.c **** #define  MICRIUM_SOURCE
+  32:./ucos/Core/os_sem.c **** 
+  33:./ucos/Core/os_sem.c **** #ifndef  OS_MASTER_FILE
+  34:./ucos/Core/os_sem.c **** #include <ucos_ii.h>
+  35:./ucos/Core/os_sem.c **** #endif
+  36:./ucos/Core/os_sem.c **** 
+  37:./ucos/Core/os_sem.c **** #if OS_SEM_EN > 0u
+  38:./ucos/Core/os_sem.c **** /*
+  39:./ucos/Core/os_sem.c **** ***************************************************************************************************
+  40:./ucos/Core/os_sem.c **** *                                          ACCEPT SEMAPHORE
+  41:./ucos/Core/os_sem.c **** *
+  42:./ucos/Core/os_sem.c **** * Description: This function checks the semaphore to see if a resource is available or, if an event
+  43:./ucos/Core/os_sem.c **** *              occurred.  Unlike OSSemPend(), OSSemAccept() does not suspend the calling task if th
+  44:./ucos/Core/os_sem.c **** *              resource is not available or the event did not occur.
+  45:./ucos/Core/os_sem.c **** *
+  46:./ucos/Core/os_sem.c **** * Arguments  : pevent     is a pointer to the event control block
+  47:./ucos/Core/os_sem.c **** *
+  48:./ucos/Core/os_sem.c **** * Returns    : >  0       if the resource is available or the event did not occur the semaphore is
+  49:./ucos/Core/os_sem.c **** *                         decremented to obtain the resource.
+  50:./ucos/Core/os_sem.c **** *              == 0       if the resource is not available or the event did not occur or,
+  51:./ucos/Core/os_sem.c **** *                         if 'pevent' is a NULL pointer or,
+  52:./ucos/Core/os_sem.c **** *                         if you didn't pass a pointer to a semaphore
+  53:./ucos/Core/os_sem.c **** ***************************************************************************************************
+  54:./ucos/Core/os_sem.c **** */
+  55:./ucos/Core/os_sem.c **** 
+  56:./ucos/Core/os_sem.c **** #if OS_SEM_ACCEPT_EN > 0u
+  57:./ucos/Core/os_sem.c **** INT16U  OSSemAccept (OS_EVENT *pevent)
+  58:./ucos/Core/os_sem.c **** {
+  30              		.loc 1 58 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 58 1 is_stmt 0 view .LVU1
+  35 0000 38B5     		push	{r3, r4, r5, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 16
+  38              		.cfi_offset 3, -16
+  39              		.cfi_offset 4, -12
+  40              		.cfi_offset 5, -8
+  41              		.cfi_offset 14, -4
+  59:./ucos/Core/os_sem.c ****     INT16U     cnt;
+  42              		.loc 1 59 5 is_stmt 1 view .LVU2
+  60:./ucos/Core/os_sem.c **** #if OS_CRITICAL_METHOD == 3u                          /* Allocate storage for CPU status register  
+  61:./ucos/Core/os_sem.c ****     OS_CPU_SR  cpu_sr = 0u;
+  43              		.loc 1 61 5 view .LVU3
+  44              	.LVL1:
+  62:./ucos/Core/os_sem.c **** #endif
+  63:./ucos/Core/os_sem.c **** 
+  64:./ucos/Core/os_sem.c **** 
+  65:./ucos/Core/os_sem.c **** 
+  66:./ucos/Core/os_sem.c **** #if OS_ARG_CHK_EN > 0u
+  67:./ucos/Core/os_sem.c ****     if (pevent == (OS_EVENT *)0) {                    /* Validate 'pevent'                         
+  45              		.loc 1 67 5 view .LVU4
+  46              		.loc 1 67 8 is_stmt 0 view .LVU5
+  47 0002 78B1     		cbz	r0, .L4
+  48 0004 0546     		mov	r5, r0
+ARM GAS  /tmp/ccAvEVGU.s 			page 3
+
+
+  68:./ucos/Core/os_sem.c ****         return (0u);
+  69:./ucos/Core/os_sem.c ****     }
+  70:./ucos/Core/os_sem.c **** #endif
+  71:./ucos/Core/os_sem.c ****     if (pevent->OSEventType != OS_EVENT_TYPE_SEM) {   /* Validate event block type                 
+  49              		.loc 1 71 5 is_stmt 1 view .LVU6
+  50              		.loc 1 71 15 is_stmt 0 view .LVU7
+  51 0006 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+  52              		.loc 1 71 8 view .LVU8
+  53 0008 032B     		cmp	r3, #3
+  54 000a 02D0     		beq	.L7
+  72:./ucos/Core/os_sem.c ****         return (0u);
+  55              		.loc 1 72 16 view .LVU9
+  56 000c 0024     		movs	r4, #0
+  57              	.LVL2:
+  58              	.L2:
+  73:./ucos/Core/os_sem.c ****     }
+  74:./ucos/Core/os_sem.c ****     OS_ENTER_CRITICAL();
+  75:./ucos/Core/os_sem.c ****     cnt = pevent->OSEventCnt;
+  76:./ucos/Core/os_sem.c ****     if (cnt > 0u) {                                   /* See if resource is available              
+  77:./ucos/Core/os_sem.c ****         pevent->OSEventCnt--;                         /* Yes, decrement semaphore and notify caller
+  78:./ucos/Core/os_sem.c ****     }
+  79:./ucos/Core/os_sem.c ****     OS_EXIT_CRITICAL();
+  80:./ucos/Core/os_sem.c ****     return (cnt);                                     /* Return semaphore count                    
+  81:./ucos/Core/os_sem.c **** }
+  59              		.loc 1 81 1 view .LVU10
+  60 000e 2046     		mov	r0, r4
+  61 0010 38BD     		pop	{r3, r4, r5, pc}
+  62              	.LVL3:
+  63              	.L7:
+  74:./ucos/Core/os_sem.c ****     cnt = pevent->OSEventCnt;
+  64              		.loc 1 74 5 is_stmt 1 view .LVU11
+  74:./ucos/Core/os_sem.c ****     cnt = pevent->OSEventCnt;
+  65              		.loc 1 74 5 view .LVU12
+  66 0012 FFF7FEFF 		bl	OS_CPU_SR_Save
+  67              	.LVL4:
+  74:./ucos/Core/os_sem.c ****     cnt = pevent->OSEventCnt;
+  68              		.loc 1 74 5 discriminator 1 view .LVU13
+  75:./ucos/Core/os_sem.c ****     if (cnt > 0u) {                                   /* See if resource is available              
+  69              		.loc 1 75 5 view .LVU14
+  75:./ucos/Core/os_sem.c ****     if (cnt > 0u) {                                   /* See if resource is available              
+  70              		.loc 1 75 9 is_stmt 0 view .LVU15
+  71 0016 2C89     		ldrh	r4, [r5, #8]
+  72              	.LVL5:
+  76:./ucos/Core/os_sem.c ****         pevent->OSEventCnt--;                         /* Yes, decrement semaphore and notify caller
+  73              		.loc 1 76 5 is_stmt 1 view .LVU16
+  76:./ucos/Core/os_sem.c ****         pevent->OSEventCnt--;                         /* Yes, decrement semaphore and notify caller
+  74              		.loc 1 76 8 is_stmt 0 view .LVU17
+  75 0018 0CB1     		cbz	r4, .L3
+  77:./ucos/Core/os_sem.c ****     }
+  76              		.loc 1 77 9 is_stmt 1 view .LVU18
+  77:./ucos/Core/os_sem.c ****     }
+  77              		.loc 1 77 27 is_stmt 0 view .LVU19
+  78 001a 631E     		subs	r3, r4, #1
+  79 001c 2B81     		strh	r3, [r5, #8]	@ movhi
+  80              	.L3:
+  79:./ucos/Core/os_sem.c ****     return (cnt);                                     /* Return semaphore count                    
+  81              		.loc 1 79 5 is_stmt 1 view .LVU20
+ARM GAS  /tmp/ccAvEVGU.s 			page 4
+
+
+  79:./ucos/Core/os_sem.c ****     return (cnt);                                     /* Return semaphore count                    
+  82              		.loc 1 79 5 view .LVU21
+  83 001e FFF7FEFF 		bl	OS_CPU_SR_Restore
+  84              	.LVL6:
+  79:./ucos/Core/os_sem.c ****     return (cnt);                                     /* Return semaphore count                    
+  85              		.loc 1 79 5 discriminator 1 view .LVU22
+  80:./ucos/Core/os_sem.c **** }
+  86              		.loc 1 80 5 view .LVU23
+  80:./ucos/Core/os_sem.c **** }
+  87              		.loc 1 80 12 is_stmt 0 view .LVU24
+  88 0022 F4E7     		b	.L2
+  89              	.LVL7:
+  90              	.L4:
+  68:./ucos/Core/os_sem.c ****     }
+  91              		.loc 1 68 16 view .LVU25
+  92 0024 0024     		movs	r4, #0
+  93 0026 F2E7     		b	.L2
+  94              		.cfi_endproc
+  95              	.LFE0:
+  97              		.section	.rodata.OSSemCreate.str1.4,"aMS",%progbits,1
+  98              		.align	2
+  99              	.LC0:
+ 100 0000 3F00     		.ascii	"?\000"
+ 101              		.section	.text.OSSemCreate,"ax",%progbits
+ 102              		.align	1
+ 103              		.global	OSSemCreate
+ 104              		.syntax unified
+ 105              		.thumb
+ 106              		.thumb_func
+ 108              	OSSemCreate:
+ 109              	.LVL8:
+ 110              	.LFB1:
+  82:./ucos/Core/os_sem.c **** #endif
+  83:./ucos/Core/os_sem.c **** 
+  84:./ucos/Core/os_sem.c **** 
+  85:./ucos/Core/os_sem.c **** /*
+  86:./ucos/Core/os_sem.c **** ***************************************************************************************************
+  87:./ucos/Core/os_sem.c **** *                                         CREATE A SEMAPHORE
+  88:./ucos/Core/os_sem.c **** *
+  89:./ucos/Core/os_sem.c **** * Description: This function creates a semaphore.
+  90:./ucos/Core/os_sem.c **** *
+  91:./ucos/Core/os_sem.c **** * Arguments  : cnt           is the initial value for the semaphore.  If the value is 0, no resourc
+  92:./ucos/Core/os_sem.c **** *                            available (or no event has occurred).  You initialize the semaphore to
+  93:./ucos/Core/os_sem.c **** *                            non-zero value to specify how many resources are available (e.g. if yo
+  94:./ucos/Core/os_sem.c **** *                            10 resources, you would initialize the semaphore to 10).
+  95:./ucos/Core/os_sem.c **** *
+  96:./ucos/Core/os_sem.c **** * Returns    : != (void *)0  is a pointer to the event control block (OS_EVENT) associated with the
+  97:./ucos/Core/os_sem.c **** *                            created semaphore
+  98:./ucos/Core/os_sem.c **** *              == (void *)0  if no event control blocks were available
+  99:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 100:./ucos/Core/os_sem.c **** */
+ 101:./ucos/Core/os_sem.c **** 
+ 102:./ucos/Core/os_sem.c **** OS_EVENT  *OSSemCreate (INT16U cnt)
+ 103:./ucos/Core/os_sem.c **** {
+ 111              		.loc 1 103 1 is_stmt 1 view -0
+ 112              		.cfi_startproc
+ 113              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccAvEVGU.s 			page 5
+
+
+ 114              		@ frame_needed = 0, uses_anonymous_args = 0
+ 115              		.loc 1 103 1 is_stmt 0 view .LVU27
+ 116 0000 38B5     		push	{r3, r4, r5, lr}
+ 117              	.LCFI1:
+ 118              		.cfi_def_cfa_offset 16
+ 119              		.cfi_offset 3, -16
+ 120              		.cfi_offset 4, -12
+ 121              		.cfi_offset 5, -8
+ 122              		.cfi_offset 14, -4
+ 104:./ucos/Core/os_sem.c ****     OS_EVENT  *pevent;
+ 123              		.loc 1 104 5 is_stmt 1 view .LVU28
+ 105:./ucos/Core/os_sem.c **** #if OS_CRITICAL_METHOD == 3u                               /* Allocate storage for CPU status regis
+ 106:./ucos/Core/os_sem.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 124              		.loc 1 106 5 view .LVU29
+ 125              	.LVL9:
+ 107:./ucos/Core/os_sem.c **** #endif
+ 108:./ucos/Core/os_sem.c **** 
+ 109:./ucos/Core/os_sem.c **** 
+ 110:./ucos/Core/os_sem.c **** #ifdef OS_SAFETY_CRITICAL_IEC61508
+ 111:./ucos/Core/os_sem.c ****     if (OSSafetyCriticalStartFlag == OS_TRUE) {
+ 112:./ucos/Core/os_sem.c ****         OS_SAFETY_CRITICAL_EXCEPTION();
+ 113:./ucos/Core/os_sem.c ****         return ((OS_EVENT *)0);
+ 114:./ucos/Core/os_sem.c ****     }
+ 115:./ucos/Core/os_sem.c **** #endif
+ 116:./ucos/Core/os_sem.c **** 
+ 117:./ucos/Core/os_sem.c ****     if (OSIntNesting > 0u) {                               /* See if called from ISR ...           
+ 126              		.loc 1 117 5 view .LVU30
+ 127              		.loc 1 117 22 is_stmt 0 view .LVU31
+ 128 0002 104B     		ldr	r3, .L13
+ 129 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 130              		.loc 1 117 8 view .LVU32
+ 131 0006 DBB9     		cbnz	r3, .L11
+ 132 0008 0546     		mov	r5, r0
+ 118:./ucos/Core/os_sem.c ****         return ((OS_EVENT *)0);                            /* ... can't CREATE from an ISR         
+ 119:./ucos/Core/os_sem.c ****     }
+ 120:./ucos/Core/os_sem.c ****     OS_ENTER_CRITICAL();
+ 133              		.loc 1 120 5 is_stmt 1 view .LVU33
+ 134              		.loc 1 120 5 view .LVU34
+ 135 000a FFF7FEFF 		bl	OS_CPU_SR_Save
+ 136              	.LVL10:
+ 137              		.loc 1 120 5 discriminator 1 view .LVU35
+ 121:./ucos/Core/os_sem.c ****     pevent = OSEventFreeList;                              /* Get next free event control block    
+ 138              		.loc 1 121 5 view .LVU36
+ 139              		.loc 1 121 12 is_stmt 0 view .LVU37
+ 140 000e 0E4B     		ldr	r3, .L13+4
+ 141 0010 1C68     		ldr	r4, [r3]
+ 142              	.LVL11:
+ 122:./ucos/Core/os_sem.c ****     if (OSEventFreeList != (OS_EVENT *)0) {                /* See if pool of free ECB pool was empt
+ 143              		.loc 1 122 5 is_stmt 1 view .LVU38
+ 144              		.loc 1 122 8 is_stmt 0 view .LVU39
+ 145 0012 0CB1     		cbz	r4, .L10
+ 123:./ucos/Core/os_sem.c ****         OSEventFreeList = (OS_EVENT *)OSEventFreeList->OSEventPtr;
+ 146              		.loc 1 123 9 is_stmt 1 view .LVU40
+ 147              		.loc 1 123 54 is_stmt 0 view .LVU41
+ 148 0014 6268     		ldr	r2, [r4, #4]
+ 149              		.loc 1 123 25 view .LVU42
+ 150 0016 1A60     		str	r2, [r3]
+ARM GAS  /tmp/ccAvEVGU.s 			page 6
+
+
+ 151              	.L10:
+ 124:./ucos/Core/os_sem.c ****     }
+ 125:./ucos/Core/os_sem.c ****     OS_EXIT_CRITICAL();
+ 152              		.loc 1 125 5 is_stmt 1 view .LVU43
+ 153              		.loc 1 125 5 view .LVU44
+ 154 0018 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 155              	.LVL12:
+ 156              		.loc 1 125 5 discriminator 1 view .LVU45
+ 126:./ucos/Core/os_sem.c ****     if (pevent != (OS_EVENT *)0) {                         /* Get an event control block           
+ 157              		.loc 1 126 5 view .LVU46
+ 158              		.loc 1 126 8 is_stmt 0 view .LVU47
+ 159 001c 74B1     		cbz	r4, .L8
+ 127:./ucos/Core/os_sem.c ****         pevent->OSEventType    = OS_EVENT_TYPE_SEM;
+ 160              		.loc 1 127 9 is_stmt 1 view .LVU48
+ 161              		.loc 1 127 32 is_stmt 0 view .LVU49
+ 162 001e 0323     		movs	r3, #3
+ 163 0020 2370     		strb	r3, [r4]
+ 128:./ucos/Core/os_sem.c ****         pevent->OSEventCnt     = cnt;                      /* Set semaphore value                  
+ 164              		.loc 1 128 9 is_stmt 1 view .LVU50
+ 165              		.loc 1 128 32 is_stmt 0 view .LVU51
+ 166 0022 2581     		strh	r5, [r4, #8]	@ movhi
+ 129:./ucos/Core/os_sem.c ****         pevent->OSEventPtr     = (void *)0;                /* Unlink from ECB free list            
+ 167              		.loc 1 129 9 is_stmt 1 view .LVU52
+ 168              		.loc 1 129 32 is_stmt 0 view .LVU53
+ 169 0024 0023     		movs	r3, #0
+ 170 0026 6360     		str	r3, [r4, #4]
+ 130:./ucos/Core/os_sem.c **** #if OS_EVENT_NAME_EN > 0u
+ 131:./ucos/Core/os_sem.c ****         pevent->OSEventName    = (INT8U *)(void *)"?";
+ 171              		.loc 1 131 9 is_stmt 1 view .LVU54
+ 172              		.loc 1 131 32 is_stmt 0 view .LVU55
+ 173 0028 084B     		ldr	r3, .L13+8
+ 174 002a 6361     		str	r3, [r4, #20]
+ 132:./ucos/Core/os_sem.c **** #endif
+ 133:./ucos/Core/os_sem.c ****         OS_EventWaitListInit(pevent);                      /* Initialize to 'nobody waiting' on sem
+ 175              		.loc 1 133 9 is_stmt 1 view .LVU56
+ 176 002c 2046     		mov	r0, r4
+ 177 002e FFF7FEFF 		bl	OS_EventWaitListInit
+ 178              	.LVL13:
+ 134:./ucos/Core/os_sem.c **** 
+ 135:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_CREATE(pevent, pevent->OSEventName);
+ 179              		.loc 1 135 9 view .LVU57
+ 180 0032 6269     		ldr	r2, [r4, #20]
+ 181 0034 2146     		mov	r1, r4
+ 182 0036 2E20     		movs	r0, #46
+ 183 0038 FFF7FEFF 		bl	SYSVIEW_RecordU32Register
+ 184              	.LVL14:
+ 185              	.L8:
+ 136:./ucos/Core/os_sem.c ****     }
+ 137:./ucos/Core/os_sem.c ****     return (pevent);
+ 138:./ucos/Core/os_sem.c **** }
+ 186              		.loc 1 138 1 is_stmt 0 view .LVU58
+ 187 003c 2046     		mov	r0, r4
+ 188 003e 38BD     		pop	{r3, r4, r5, pc}
+ 189              	.LVL15:
+ 190              	.L11:
+ 118:./ucos/Core/os_sem.c ****     }
+ 191              		.loc 1 118 16 view .LVU59
+ARM GAS  /tmp/ccAvEVGU.s 			page 7
+
+
+ 192 0040 0024     		movs	r4, #0
+ 193 0042 FBE7     		b	.L8
+ 194              	.L14:
+ 195              		.align	2
+ 196              	.L13:
+ 197 0044 00000000 		.word	OSIntNesting
+ 198 0048 00000000 		.word	OSEventFreeList
+ 199 004c 00000000 		.word	.LC0
+ 200              		.cfi_endproc
+ 201              	.LFE1:
+ 203              		.section	.text.OSSemDel,"ax",%progbits
+ 204              		.align	1
+ 205              		.global	OSSemDel
+ 206              		.syntax unified
+ 207              		.thumb
+ 208              		.thumb_func
+ 210              	OSSemDel:
+ 211              	.LVL16:
+ 212              	.LFB2:
+ 139:./ucos/Core/os_sem.c **** 
+ 140:./ucos/Core/os_sem.c **** 
+ 141:./ucos/Core/os_sem.c **** /*
+ 142:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 143:./ucos/Core/os_sem.c **** *                                         DELETE A SEMAPHORE
+ 144:./ucos/Core/os_sem.c **** *
+ 145:./ucos/Core/os_sem.c **** * Description: This function deletes a semaphore and readies all tasks pending on the semaphore.
+ 146:./ucos/Core/os_sem.c **** *
+ 147:./ucos/Core/os_sem.c **** * Arguments  : pevent        is a pointer to the event control block associated with the desired
+ 148:./ucos/Core/os_sem.c **** *                            semaphore.
+ 149:./ucos/Core/os_sem.c **** *
+ 150:./ucos/Core/os_sem.c **** *              opt           determines delete options as follows:
+ 151:./ucos/Core/os_sem.c **** *                            opt == OS_DEL_NO_PEND   Delete semaphore ONLY if no task pending
+ 152:./ucos/Core/os_sem.c **** *                            opt == OS_DEL_ALWAYS    Deletes the semaphore even if tasks are waitin
+ 153:./ucos/Core/os_sem.c **** *                                                    In this case, all the tasks pending will be re
+ 154:./ucos/Core/os_sem.c **** *
+ 155:./ucos/Core/os_sem.c **** *              perr          is a pointer to an error code that can contain one of the following va
+ 156:./ucos/Core/os_sem.c **** *                            OS_ERR_NONE                  The call was successful and the semaphore
+ 157:./ucos/Core/os_sem.c **** *                                                         deleted
+ 158:./ucos/Core/os_sem.c **** *                            OS_ERR_DEL_ISR               If you attempted to delete the semaphore 
+ 159:./ucos/Core/os_sem.c **** *                                                         ISR
+ 160:./ucos/Core/os_sem.c **** *                            OS_ERR_ILLEGAL_DEL_RUN_TIME  If you tried to delete the semaphore afte
+ 161:./ucos/Core/os_sem.c **** *                                                         safety critical operation started.
+ 162:./ucos/Core/os_sem.c **** *                            OS_ERR_INVALID_OPT           An invalid option was specified
+ 163:./ucos/Core/os_sem.c **** *                            OS_ERR_TASK_WAITING          One or more tasks were waiting on the sem
+ 164:./ucos/Core/os_sem.c **** *                            OS_ERR_EVENT_TYPE            If you didn't pass a pointer to a semapho
+ 165:./ucos/Core/os_sem.c **** *                            OS_ERR_PEVENT_NULL           If 'pevent' is a NULL pointer.
+ 166:./ucos/Core/os_sem.c **** *
+ 167:./ucos/Core/os_sem.c **** * Returns    : pevent        upon error
+ 168:./ucos/Core/os_sem.c **** *              (OS_EVENT *)0 if the semaphore was successfully deleted.
+ 169:./ucos/Core/os_sem.c **** *
+ 170:./ucos/Core/os_sem.c **** * Note(s)    : 1) This function must be used with care.  Tasks that would normally expect the prese
+ 171:./ucos/Core/os_sem.c **** *                 the semaphore MUST check the return code of OSSemPend().
+ 172:./ucos/Core/os_sem.c **** *              2) OSSemAccept() callers will not know that the intended semaphore has been deleted 
+ 173:./ucos/Core/os_sem.c **** *                 they check 'pevent' to see that it's a NULL pointer.
+ 174:./ucos/Core/os_sem.c **** *              3) This call can potentially disable interrupts for a long time.  The interrupt disa
+ 175:./ucos/Core/os_sem.c **** *                 time is directly proportional to the number of tasks waiting on the semaphore.
+ 176:./ucos/Core/os_sem.c **** *              4) Because ALL tasks pending on the semaphore will be readied, you MUST be careful i
+ARM GAS  /tmp/ccAvEVGU.s 			page 8
+
+
+ 177:./ucos/Core/os_sem.c **** *                 applications where the semaphore is used for mutual exclusion because the resourc
+ 178:./ucos/Core/os_sem.c **** *                 will no longer be guarded by the semaphore.
+ 179:./ucos/Core/os_sem.c **** *              5) All tasks that were waiting for the semaphore will be readied and returned an
+ 180:./ucos/Core/os_sem.c **** *                 OS_ERR_PEND_ABORT if OSSemDel() was called with OS_DEL_ALWAYS
+ 181:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 182:./ucos/Core/os_sem.c **** */
+ 183:./ucos/Core/os_sem.c **** 
+ 184:./ucos/Core/os_sem.c **** #if OS_SEM_DEL_EN > 0u
+ 185:./ucos/Core/os_sem.c **** OS_EVENT  *OSSemDel (OS_EVENT  *pevent,
+ 186:./ucos/Core/os_sem.c ****                      INT8U      opt,
+ 187:./ucos/Core/os_sem.c ****                      INT8U     *perr)
+ 188:./ucos/Core/os_sem.c **** {
+ 213              		.loc 1 188 1 is_stmt 1 view -0
+ 214              		.cfi_startproc
+ 215              		@ args = 0, pretend = 0, frame = 0
+ 216              		@ frame_needed = 0, uses_anonymous_args = 0
+ 217              		.loc 1 188 1 is_stmt 0 view .LVU61
+ 218 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 219              	.LCFI2:
+ 220              		.cfi_def_cfa_offset 24
+ 221              		.cfi_offset 4, -24
+ 222              		.cfi_offset 5, -20
+ 223              		.cfi_offset 6, -16
+ 224              		.cfi_offset 7, -12
+ 225              		.cfi_offset 8, -8
+ 226              		.cfi_offset 14, -4
+ 227 0004 1546     		mov	r5, r2
+ 189:./ucos/Core/os_sem.c ****     BOOLEAN    tasks_waiting;
+ 228              		.loc 1 189 5 is_stmt 1 view .LVU62
+ 190:./ucos/Core/os_sem.c ****     OS_EVENT  *pevent_return;
+ 229              		.loc 1 190 5 view .LVU63
+ 191:./ucos/Core/os_sem.c **** #if OS_CRITICAL_METHOD == 3u                               /* Allocate storage for CPU status regis
+ 192:./ucos/Core/os_sem.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 230              		.loc 1 192 5 view .LVU64
+ 231              	.LVL17:
+ 193:./ucos/Core/os_sem.c **** #endif
+ 194:./ucos/Core/os_sem.c **** 
+ 195:./ucos/Core/os_sem.c **** 
+ 196:./ucos/Core/os_sem.c **** #ifdef OS_SAFETY_CRITICAL
+ 197:./ucos/Core/os_sem.c ****     if (perr == (INT8U *)0) {
+ 198:./ucos/Core/os_sem.c ****         OS_SAFETY_CRITICAL_EXCEPTION();
+ 199:./ucos/Core/os_sem.c ****         return ((OS_EVENT *)0);
+ 200:./ucos/Core/os_sem.c ****     }
+ 201:./ucos/Core/os_sem.c **** #endif
+ 202:./ucos/Core/os_sem.c **** 
+ 203:./ucos/Core/os_sem.c **** #ifdef OS_SAFETY_CRITICAL_IEC61508
+ 204:./ucos/Core/os_sem.c ****     if (OSSafetyCriticalStartFlag == OS_TRUE) {
+ 205:./ucos/Core/os_sem.c ****         OS_SAFETY_CRITICAL_EXCEPTION();
+ 206:./ucos/Core/os_sem.c ****         *perr = OS_ERR_ILLEGAL_DEL_RUN_TIME;
+ 207:./ucos/Core/os_sem.c ****         return ((OS_EVENT *)0);
+ 208:./ucos/Core/os_sem.c ****     }
+ 209:./ucos/Core/os_sem.c **** #endif
+ 210:./ucos/Core/os_sem.c **** 
+ 211:./ucos/Core/os_sem.c **** #if OS_ARG_CHK_EN > 0u
+ 212:./ucos/Core/os_sem.c ****     if (pevent == (OS_EVENT *)0) {                         /* Validate 'pevent'                    
+ 232              		.loc 1 212 5 view .LVU65
+ 233              		.loc 1 212 8 is_stmt 0 view .LVU66
+ARM GAS  /tmp/ccAvEVGU.s 			page 9
+
+
+ 234 0006 0446     		mov	r4, r0
+ 235 0008 E0B1     		cbz	r0, .L30
+ 236 000a 0E46     		mov	r6, r1
+ 213:./ucos/Core/os_sem.c ****         *perr = OS_ERR_PEVENT_NULL;
+ 214:./ucos/Core/os_sem.c ****         return (pevent);
+ 215:./ucos/Core/os_sem.c ****     }
+ 216:./ucos/Core/os_sem.c **** #endif
+ 217:./ucos/Core/os_sem.c **** 
+ 218:./ucos/Core/os_sem.c ****     OS_TRACE_SEM_DEL_ENTER(pevent, opt);
+ 237              		.loc 1 218 5 is_stmt 1 view .LVU67
+ 238 000c FFF7FEFF 		bl	SEGGER_SYSVIEW_ShrinkId
+ 239              	.LVL18:
+ 240              		.loc 1 218 5 is_stmt 0 view .LVU68
+ 241 0010 0146     		mov	r1, r0
+ 242              		.loc 1 218 5 discriminator 1 view .LVU69
+ 243 0012 3246     		mov	r2, r6
+ 244 0014 2F20     		movs	r0, #47
+ 245 0016 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordU32x2
+ 246              	.LVL19:
+ 219:./ucos/Core/os_sem.c **** 
+ 220:./ucos/Core/os_sem.c ****     if (pevent->OSEventType != OS_EVENT_TYPE_SEM) {        /* Validate event block type            
+ 247              		.loc 1 220 5 is_stmt 1 view .LVU70
+ 248              		.loc 1 220 15 is_stmt 0 view .LVU71
+ 249 001a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 250              		.loc 1 220 8 view .LVU72
+ 251 001c 032B     		cmp	r3, #3
+ 252 001e 16D1     		bne	.L31
+ 221:./ucos/Core/os_sem.c ****         *perr = OS_ERR_EVENT_TYPE;
+ 222:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_DEL_EXIT(*perr);
+ 223:./ucos/Core/os_sem.c ****         return (pevent);
+ 224:./ucos/Core/os_sem.c ****     }
+ 225:./ucos/Core/os_sem.c ****     if (OSIntNesting > 0u) {                               /* See if called from ISR ...           
+ 253              		.loc 1 225 5 is_stmt 1 view .LVU73
+ 254              		.loc 1 225 22 is_stmt 0 view .LVU74
+ 255 0020 2C4B     		ldr	r3, .L34
+ 256 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 257              		.loc 1 225 8 view .LVU75
+ 258 0024 CBB9     		cbnz	r3, .L32
+ 226:./ucos/Core/os_sem.c ****         *perr = OS_ERR_DEL_ISR;                            /* ... can't DELETE from an ISR         
+ 227:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_DEL_EXIT(*perr);
+ 228:./ucos/Core/os_sem.c ****         return (pevent);
+ 229:./ucos/Core/os_sem.c ****     }
+ 230:./ucos/Core/os_sem.c ****     OS_ENTER_CRITICAL();
+ 259              		.loc 1 230 5 is_stmt 1 view .LVU76
+ 260              		.loc 1 230 5 view .LVU77
+ 261 0026 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 262              	.LVL20:
+ 263 002a 8046     		mov	r8, r0
+ 264              	.LVL21:
+ 265              		.loc 1 230 5 discriminator 1 view .LVU78
+ 231:./ucos/Core/os_sem.c ****     if (pevent->OSEventGrp != 0u) {                        /* See if any tasks waiting on semaphore
+ 266              		.loc 1 231 5 view .LVU79
+ 267              		.loc 1 231 15 is_stmt 0 view .LVU80
+ 268 002c A77A     		ldrb	r7, [r4, #10]	@ zero_extendqisi2
+ 269              		.loc 1 231 8 view .LVU81
+ 270 002e 07B1     		cbz	r7, .L20
+ 232:./ucos/Core/os_sem.c ****         tasks_waiting = OS_TRUE;                           /* Yes                                  
+ARM GAS  /tmp/ccAvEVGU.s 			page 10
+
+
+ 271              		.loc 1 232 23 view .LVU82
+ 272 0030 0127     		movs	r7, #1
+ 273              	.L20:
+ 274              	.LVL22:
+ 233:./ucos/Core/os_sem.c ****     } else {
+ 234:./ucos/Core/os_sem.c ****         tasks_waiting = OS_FALSE;                          /* No                                   
+ 235:./ucos/Core/os_sem.c ****     }
+ 236:./ucos/Core/os_sem.c ****     switch (opt) {
+ 275              		.loc 1 236 5 is_stmt 1 view .LVU83
+ 276 0032 C6B1     		cbz	r6, .L21
+ 277 0034 012E     		cmp	r6, #1
+ 278 0036 32D0     		beq	.L22
+ 237:./ucos/Core/os_sem.c ****         case OS_DEL_NO_PEND:                               /* Delete semaphore only if no task wait
+ 238:./ucos/Core/os_sem.c ****              if (tasks_waiting == OS_FALSE) {
+ 239:./ucos/Core/os_sem.c **** #if OS_EVENT_NAME_EN > 0u
+ 240:./ucos/Core/os_sem.c ****                  pevent->OSEventName    = (INT8U *)(void *)"?";
+ 241:./ucos/Core/os_sem.c **** #endif
+ 242:./ucos/Core/os_sem.c ****                  pevent->OSEventType    = OS_EVENT_TYPE_UNUSED;
+ 243:./ucos/Core/os_sem.c ****                  pevent->OSEventPtr     = OSEventFreeList; /* Return Event Control Block to free li
+ 244:./ucos/Core/os_sem.c ****                  pevent->OSEventCnt     = 0u;
+ 245:./ucos/Core/os_sem.c ****                  OSEventFreeList        = pevent;          /* Get next free event control block    
+ 246:./ucos/Core/os_sem.c ****                  OS_EXIT_CRITICAL();
+ 247:./ucos/Core/os_sem.c ****                  *perr                  = OS_ERR_NONE;
+ 248:./ucos/Core/os_sem.c ****                  pevent_return          = (OS_EVENT *)0;   /* Semaphore has been deleted           
+ 249:./ucos/Core/os_sem.c ****              } else {
+ 250:./ucos/Core/os_sem.c ****                  OS_EXIT_CRITICAL();
+ 251:./ucos/Core/os_sem.c ****                  *perr                  = OS_ERR_TASK_WAITING;
+ 252:./ucos/Core/os_sem.c ****                  pevent_return          = pevent;
+ 253:./ucos/Core/os_sem.c ****              }
+ 254:./ucos/Core/os_sem.c ****              break;
+ 255:./ucos/Core/os_sem.c **** 
+ 256:./ucos/Core/os_sem.c ****         case OS_DEL_ALWAYS:                                /* Always delete the semaphore          
+ 257:./ucos/Core/os_sem.c ****              while (pevent->OSEventGrp != 0u) {            /* Ready ALL tasks waiting for semaphore
+ 258:./ucos/Core/os_sem.c ****                  (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM, OS_STAT_PEND_ABORT);
+ 259:./ucos/Core/os_sem.c ****              }
+ 260:./ucos/Core/os_sem.c **** #if OS_EVENT_NAME_EN > 0u
+ 261:./ucos/Core/os_sem.c ****              pevent->OSEventName    = (INT8U *)(void *)"?";
+ 262:./ucos/Core/os_sem.c **** #endif
+ 263:./ucos/Core/os_sem.c ****              pevent->OSEventType    = OS_EVENT_TYPE_UNUSED;
+ 264:./ucos/Core/os_sem.c ****              pevent->OSEventPtr     = OSEventFreeList;     /* Return Event Control Block to free li
+ 265:./ucos/Core/os_sem.c ****              pevent->OSEventCnt     = 0u;
+ 266:./ucos/Core/os_sem.c ****              OSEventFreeList        = pevent;              /* Get next free event control block    
+ 267:./ucos/Core/os_sem.c ****              OS_EXIT_CRITICAL();
+ 268:./ucos/Core/os_sem.c ****              if (tasks_waiting == OS_TRUE) {               /* Reschedule only if task(s) were waiti
+ 269:./ucos/Core/os_sem.c ****                  OS_Sched();                               /* Find highest priority task ready to r
+ 270:./ucos/Core/os_sem.c ****              }
+ 271:./ucos/Core/os_sem.c ****              *perr                  = OS_ERR_NONE;
+ 272:./ucos/Core/os_sem.c ****              pevent_return          = (OS_EVENT *)0;       /* Semaphore has been deleted           
+ 273:./ucos/Core/os_sem.c ****              break;
+ 274:./ucos/Core/os_sem.c **** 
+ 275:./ucos/Core/os_sem.c ****         default:
+ 276:./ucos/Core/os_sem.c ****              OS_EXIT_CRITICAL();
+ 279              		.loc 1 276 14 view .LVU84
+ 280              		.loc 1 276 14 view .LVU85
+ 281 0038 4046     		mov	r0, r8
+ 282              	.LVL23:
+ 283              		.loc 1 276 14 is_stmt 0 view .LVU86
+ARM GAS  /tmp/ccAvEVGU.s 			page 11
+
+
+ 284 003a FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 285              	.LVL24:
+ 286              		.loc 1 276 14 is_stmt 1 discriminator 1 view .LVU87
+ 277:./ucos/Core/os_sem.c ****              *perr                  = OS_ERR_INVALID_OPT;
+ 287              		.loc 1 277 14 view .LVU88
+ 288              		.loc 1 277 37 is_stmt 0 view .LVU89
+ 289 003e 0723     		movs	r3, #7
+ 290 0040 2B70     		strb	r3, [r5]
+ 278:./ucos/Core/os_sem.c ****              pevent_return          = pevent;
+ 291              		.loc 1 278 14 is_stmt 1 view .LVU90
+ 292              	.LVL25:
+ 279:./ucos/Core/os_sem.c ****              break;
+ 293              		.loc 1 279 14 view .LVU91
+ 294 0042 3FE0     		b	.L25
+ 295              	.LVL26:
+ 296              	.L30:
+ 213:./ucos/Core/os_sem.c ****         return (pevent);
+ 297              		.loc 1 213 9 view .LVU92
+ 213:./ucos/Core/os_sem.c ****         return (pevent);
+ 298              		.loc 1 213 15 is_stmt 0 view .LVU93
+ 299 0044 0423     		movs	r3, #4
+ 300 0046 1370     		strb	r3, [r2]
+ 214:./ucos/Core/os_sem.c ****     }
+ 301              		.loc 1 214 9 is_stmt 1 view .LVU94
+ 302              	.LVL27:
+ 303              	.L15:
+ 280:./ucos/Core/os_sem.c ****     }
+ 281:./ucos/Core/os_sem.c **** 
+ 282:./ucos/Core/os_sem.c ****     OS_TRACE_SEM_DEL_EXIT(*perr);
+ 283:./ucos/Core/os_sem.c **** 
+ 284:./ucos/Core/os_sem.c ****     return (pevent_return);
+ 285:./ucos/Core/os_sem.c **** }
+ 304              		.loc 1 285 1 is_stmt 0 view .LVU95
+ 305 0048 2046     		mov	r0, r4
+ 306 004a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 307              	.LVL28:
+ 308              	.L31:
+ 221:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_DEL_EXIT(*perr);
+ 309              		.loc 1 221 9 is_stmt 1 view .LVU96
+ 221:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_DEL_EXIT(*perr);
+ 310              		.loc 1 221 15 is_stmt 0 view .LVU97
+ 311 004e 0121     		movs	r1, #1
+ 312 0050 2970     		strb	r1, [r5]
+ 222:./ucos/Core/os_sem.c ****         return (pevent);
+ 313              		.loc 1 222 9 is_stmt 1 view .LVU98
+ 314 0052 2F20     		movs	r0, #47
+ 315 0054 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 316              	.LVL29:
+ 223:./ucos/Core/os_sem.c ****     }
+ 317              		.loc 1 223 9 view .LVU99
+ 223:./ucos/Core/os_sem.c ****     }
+ 318              		.loc 1 223 16 is_stmt 0 view .LVU100
+ 319 0058 F6E7     		b	.L15
+ 320              	.L32:
+ 226:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_DEL_EXIT(*perr);
+ 321              		.loc 1 226 9 is_stmt 1 view .LVU101
+ 226:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_DEL_EXIT(*perr);
+ARM GAS  /tmp/ccAvEVGU.s 			page 12
+
+
+ 322              		.loc 1 226 15 is_stmt 0 view .LVU102
+ 323 005a 0F21     		movs	r1, #15
+ 324 005c 2970     		strb	r1, [r5]
+ 227:./ucos/Core/os_sem.c ****         return (pevent);
+ 325              		.loc 1 227 9 is_stmt 1 view .LVU103
+ 326 005e 2F20     		movs	r0, #47
+ 327 0060 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 328              	.LVL30:
+ 228:./ucos/Core/os_sem.c ****     }
+ 329              		.loc 1 228 9 view .LVU104
+ 228:./ucos/Core/os_sem.c ****     }
+ 330              		.loc 1 228 16 is_stmt 0 view .LVU105
+ 331 0064 F0E7     		b	.L15
+ 332              	.LVL31:
+ 333              	.L21:
+ 238:./ucos/Core/os_sem.c **** #if OS_EVENT_NAME_EN > 0u
+ 334              		.loc 1 238 14 is_stmt 1 view .LVU106
+ 238:./ucos/Core/os_sem.c **** #if OS_EVENT_NAME_EN > 0u
+ 335              		.loc 1 238 17 is_stmt 0 view .LVU107
+ 336 0066 77B9     		cbnz	r7, .L24
+ 240:./ucos/Core/os_sem.c **** #endif
+ 337              		.loc 1 240 18 is_stmt 1 view .LVU108
+ 240:./ucos/Core/os_sem.c **** #endif
+ 338              		.loc 1 240 41 is_stmt 0 view .LVU109
+ 339 0068 1B4B     		ldr	r3, .L34+4
+ 340 006a 6361     		str	r3, [r4, #20]
+ 242:./ucos/Core/os_sem.c ****                  pevent->OSEventPtr     = OSEventFreeList; /* Return Event Control Block to free li
+ 341              		.loc 1 242 18 is_stmt 1 view .LVU110
+ 242:./ucos/Core/os_sem.c ****                  pevent->OSEventPtr     = OSEventFreeList; /* Return Event Control Block to free li
+ 342              		.loc 1 242 41 is_stmt 0 view .LVU111
+ 343 006c 0026     		movs	r6, #0
+ 344 006e 2670     		strb	r6, [r4]
+ 243:./ucos/Core/os_sem.c ****                  pevent->OSEventCnt     = 0u;
+ 345              		.loc 1 243 18 is_stmt 1 view .LVU112
+ 243:./ucos/Core/os_sem.c ****                  pevent->OSEventCnt     = 0u;
+ 346              		.loc 1 243 41 is_stmt 0 view .LVU113
+ 347 0070 1A4B     		ldr	r3, .L34+8
+ 348 0072 1A68     		ldr	r2, [r3]
+ 349 0074 6260     		str	r2, [r4, #4]
+ 244:./ucos/Core/os_sem.c ****                  OSEventFreeList        = pevent;          /* Get next free event control block    
+ 350              		.loc 1 244 18 is_stmt 1 view .LVU114
+ 244:./ucos/Core/os_sem.c ****                  OSEventFreeList        = pevent;          /* Get next free event control block    
+ 351              		.loc 1 244 41 is_stmt 0 view .LVU115
+ 352 0076 2681     		strh	r6, [r4, #8]	@ movhi
+ 245:./ucos/Core/os_sem.c ****                  OS_EXIT_CRITICAL();
+ 353              		.loc 1 245 18 is_stmt 1 view .LVU116
+ 245:./ucos/Core/os_sem.c ****                  OS_EXIT_CRITICAL();
+ 354              		.loc 1 245 41 is_stmt 0 view .LVU117
+ 355 0078 1C60     		str	r4, [r3]
+ 246:./ucos/Core/os_sem.c ****                  *perr                  = OS_ERR_NONE;
+ 356              		.loc 1 246 18 is_stmt 1 view .LVU118
+ 246:./ucos/Core/os_sem.c ****                  *perr                  = OS_ERR_NONE;
+ 357              		.loc 1 246 18 view .LVU119
+ 358 007a 4046     		mov	r0, r8
+ 359              	.LVL32:
+ 246:./ucos/Core/os_sem.c ****                  *perr                  = OS_ERR_NONE;
+ 360              		.loc 1 246 18 is_stmt 0 view .LVU120
+ARM GAS  /tmp/ccAvEVGU.s 			page 13
+
+
+ 361 007c FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 362              	.LVL33:
+ 246:./ucos/Core/os_sem.c ****                  *perr                  = OS_ERR_NONE;
+ 363              		.loc 1 246 18 is_stmt 1 discriminator 1 view .LVU121
+ 247:./ucos/Core/os_sem.c ****                  pevent_return          = (OS_EVENT *)0;   /* Semaphore has been deleted           
+ 364              		.loc 1 247 18 view .LVU122
+ 247:./ucos/Core/os_sem.c ****                  pevent_return          = (OS_EVENT *)0;   /* Semaphore has been deleted           
+ 365              		.loc 1 247 41 is_stmt 0 view .LVU123
+ 366 0080 2E70     		strb	r6, [r5]
+ 248:./ucos/Core/os_sem.c ****              } else {
+ 367              		.loc 1 248 18 is_stmt 1 view .LVU124
+ 368              	.LVL34:
+ 248:./ucos/Core/os_sem.c ****              } else {
+ 369              		.loc 1 248 41 is_stmt 0 view .LVU125
+ 370 0082 3446     		mov	r4, r6
+ 371              	.LVL35:
+ 248:./ucos/Core/os_sem.c ****              } else {
+ 372              		.loc 1 248 41 view .LVU126
+ 373 0084 1EE0     		b	.L25
+ 374              	.LVL36:
+ 375              	.L24:
+ 250:./ucos/Core/os_sem.c ****                  *perr                  = OS_ERR_TASK_WAITING;
+ 376              		.loc 1 250 18 is_stmt 1 view .LVU127
+ 250:./ucos/Core/os_sem.c ****                  *perr                  = OS_ERR_TASK_WAITING;
+ 377              		.loc 1 250 18 view .LVU128
+ 378 0086 4046     		mov	r0, r8
+ 379              	.LVL37:
+ 250:./ucos/Core/os_sem.c ****                  *perr                  = OS_ERR_TASK_WAITING;
+ 380              		.loc 1 250 18 is_stmt 0 view .LVU129
+ 381 0088 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 382              	.LVL38:
+ 250:./ucos/Core/os_sem.c ****                  *perr                  = OS_ERR_TASK_WAITING;
+ 383              		.loc 1 250 18 is_stmt 1 discriminator 1 view .LVU130
+ 251:./ucos/Core/os_sem.c ****                  pevent_return          = pevent;
+ 384              		.loc 1 251 18 view .LVU131
+ 251:./ucos/Core/os_sem.c ****                  pevent_return          = pevent;
+ 385              		.loc 1 251 41 is_stmt 0 view .LVU132
+ 386 008c 4923     		movs	r3, #73
+ 387 008e 2B70     		strb	r3, [r5]
+ 252:./ucos/Core/os_sem.c ****              }
+ 388              		.loc 1 252 18 is_stmt 1 view .LVU133
+ 389              	.LVL39:
+ 252:./ucos/Core/os_sem.c ****              }
+ 390              		.loc 1 252 18 is_stmt 0 view .LVU134
+ 391 0090 18E0     		b	.L25
+ 392              	.LVL40:
+ 393              	.L26:
+ 258:./ucos/Core/os_sem.c ****              }
+ 394              		.loc 1 258 18 is_stmt 1 view .LVU135
+ 258:./ucos/Core/os_sem.c ****              }
+ 395              		.loc 1 258 24 is_stmt 0 view .LVU136
+ 396 0092 0223     		movs	r3, #2
+ 397 0094 0122     		movs	r2, #1
+ 398 0096 0021     		movs	r1, #0
+ 399 0098 2046     		mov	r0, r4
+ 400 009a FFF7FEFF 		bl	OS_EventTaskRdy
+ 401              	.LVL41:
+ARM GAS  /tmp/ccAvEVGU.s 			page 14
+
+
+ 402              	.L22:
+ 257:./ucos/Core/os_sem.c ****                  (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM, OS_STAT_PEND_ABORT);
+ 403              		.loc 1 257 40 is_stmt 1 view .LVU137
+ 257:./ucos/Core/os_sem.c ****                  (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM, OS_STAT_PEND_ABORT);
+ 404              		.loc 1 257 27 is_stmt 0 view .LVU138
+ 405 009e A37A     		ldrb	r3, [r4, #10]	@ zero_extendqisi2
+ 257:./ucos/Core/os_sem.c ****                  (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM, OS_STAT_PEND_ABORT);
+ 406              		.loc 1 257 40 view .LVU139
+ 407 00a0 002B     		cmp	r3, #0
+ 408 00a2 F6D1     		bne	.L26
+ 261:./ucos/Core/os_sem.c **** #endif
+ 409              		.loc 1 261 14 is_stmt 1 view .LVU140
+ 261:./ucos/Core/os_sem.c **** #endif
+ 410              		.loc 1 261 37 is_stmt 0 view .LVU141
+ 411 00a4 0C4B     		ldr	r3, .L34+4
+ 412 00a6 6361     		str	r3, [r4, #20]
+ 263:./ucos/Core/os_sem.c ****              pevent->OSEventPtr     = OSEventFreeList;     /* Return Event Control Block to free li
+ 413              		.loc 1 263 14 is_stmt 1 view .LVU142
+ 263:./ucos/Core/os_sem.c ****              pevent->OSEventPtr     = OSEventFreeList;     /* Return Event Control Block to free li
+ 414              		.loc 1 263 37 is_stmt 0 view .LVU143
+ 415 00a8 0022     		movs	r2, #0
+ 416 00aa 2270     		strb	r2, [r4]
+ 264:./ucos/Core/os_sem.c ****              pevent->OSEventCnt     = 0u;
+ 417              		.loc 1 264 14 is_stmt 1 view .LVU144
+ 264:./ucos/Core/os_sem.c ****              pevent->OSEventCnt     = 0u;
+ 418              		.loc 1 264 37 is_stmt 0 view .LVU145
+ 419 00ac 0B4B     		ldr	r3, .L34+8
+ 420 00ae 1968     		ldr	r1, [r3]
+ 421 00b0 6160     		str	r1, [r4, #4]
+ 265:./ucos/Core/os_sem.c ****              OSEventFreeList        = pevent;              /* Get next free event control block    
+ 422              		.loc 1 265 14 is_stmt 1 view .LVU146
+ 265:./ucos/Core/os_sem.c ****              OSEventFreeList        = pevent;              /* Get next free event control block    
+ 423              		.loc 1 265 37 is_stmt 0 view .LVU147
+ 424 00b2 2281     		strh	r2, [r4, #8]	@ movhi
+ 266:./ucos/Core/os_sem.c ****              OS_EXIT_CRITICAL();
+ 425              		.loc 1 266 14 is_stmt 1 view .LVU148
+ 266:./ucos/Core/os_sem.c ****              OS_EXIT_CRITICAL();
+ 426              		.loc 1 266 37 is_stmt 0 view .LVU149
+ 427 00b4 1C60     		str	r4, [r3]
+ 267:./ucos/Core/os_sem.c ****              if (tasks_waiting == OS_TRUE) {               /* Reschedule only if task(s) were waiti
+ 428              		.loc 1 267 14 is_stmt 1 view .LVU150
+ 267:./ucos/Core/os_sem.c ****              if (tasks_waiting == OS_TRUE) {               /* Reschedule only if task(s) were waiti
+ 429              		.loc 1 267 14 view .LVU151
+ 430 00b6 4046     		mov	r0, r8
+ 431 00b8 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 432              	.LVL42:
+ 267:./ucos/Core/os_sem.c ****              if (tasks_waiting == OS_TRUE) {               /* Reschedule only if task(s) were waiti
+ 433              		.loc 1 267 14 discriminator 1 view .LVU152
+ 268:./ucos/Core/os_sem.c ****                  OS_Sched();                               /* Find highest priority task ready to r
+ 434              		.loc 1 268 14 view .LVU153
+ 268:./ucos/Core/os_sem.c ****                  OS_Sched();                               /* Find highest priority task ready to r
+ 435              		.loc 1 268 17 is_stmt 0 view .LVU154
+ 436 00bc 012F     		cmp	r7, #1
+ 437 00be 06D0     		beq	.L33
+ 438              	.L27:
+ 271:./ucos/Core/os_sem.c ****              pevent_return          = (OS_EVENT *)0;       /* Semaphore has been deleted           
+ 439              		.loc 1 271 14 is_stmt 1 view .LVU155
+ARM GAS  /tmp/ccAvEVGU.s 			page 15
+
+
+ 271:./ucos/Core/os_sem.c ****              pevent_return          = (OS_EVENT *)0;       /* Semaphore has been deleted           
+ 440              		.loc 1 271 37 is_stmt 0 view .LVU156
+ 441 00c0 0024     		movs	r4, #0
+ 442              	.LVL43:
+ 271:./ucos/Core/os_sem.c ****              pevent_return          = (OS_EVENT *)0;       /* Semaphore has been deleted           
+ 443              		.loc 1 271 37 view .LVU157
+ 444 00c2 2C70     		strb	r4, [r5]
+ 272:./ucos/Core/os_sem.c ****              break;
+ 445              		.loc 1 272 14 is_stmt 1 view .LVU158
+ 446              	.LVL44:
+ 273:./ucos/Core/os_sem.c **** 
+ 447              		.loc 1 273 14 view .LVU159
+ 448              	.L25:
+ 282:./ucos/Core/os_sem.c **** 
+ 449              		.loc 1 282 5 view .LVU160
+ 450 00c4 2978     		ldrb	r1, [r5]	@ zero_extendqisi2
+ 451 00c6 2F20     		movs	r0, #47
+ 452 00c8 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 453              	.LVL45:
+ 284:./ucos/Core/os_sem.c **** }
+ 454              		.loc 1 284 5 view .LVU161
+ 284:./ucos/Core/os_sem.c **** }
+ 455              		.loc 1 284 12 is_stmt 0 view .LVU162
+ 456 00cc BCE7     		b	.L15
+ 457              	.LVL46:
+ 458              	.L33:
+ 269:./ucos/Core/os_sem.c ****              }
+ 459              		.loc 1 269 18 is_stmt 1 view .LVU163
+ 460 00ce FFF7FEFF 		bl	OS_Sched
+ 461              	.LVL47:
+ 462 00d2 F5E7     		b	.L27
+ 463              	.L35:
+ 464              		.align	2
+ 465              	.L34:
+ 466 00d4 00000000 		.word	OSIntNesting
+ 467 00d8 00000000 		.word	.LC0
+ 468 00dc 00000000 		.word	OSEventFreeList
+ 469              		.cfi_endproc
+ 470              	.LFE2:
+ 472              		.section	.text.OSSemPend,"ax",%progbits
+ 473              		.align	1
+ 474              		.global	OSSemPend
+ 475              		.syntax unified
+ 476              		.thumb
+ 477              		.thumb_func
+ 479              	OSSemPend:
+ 480              	.LVL48:
+ 481              	.LFB3:
+ 286:./ucos/Core/os_sem.c **** #endif
+ 287:./ucos/Core/os_sem.c **** 
+ 288:./ucos/Core/os_sem.c **** 
+ 289:./ucos/Core/os_sem.c **** /*
+ 290:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 291:./ucos/Core/os_sem.c **** *                                          PEND ON SEMAPHORE
+ 292:./ucos/Core/os_sem.c **** *
+ 293:./ucos/Core/os_sem.c **** * Description: This function waits for a semaphore.
+ 294:./ucos/Core/os_sem.c **** *
+ARM GAS  /tmp/ccAvEVGU.s 			page 16
+
+
+ 295:./ucos/Core/os_sem.c **** * Arguments  : pevent        is a pointer to the event control block associated with the desired
+ 296:./ucos/Core/os_sem.c **** *                            semaphore.
+ 297:./ucos/Core/os_sem.c **** *
+ 298:./ucos/Core/os_sem.c **** *              timeout       is an optional timeout period (in clock ticks).  If non-zero, your tas
+ 299:./ucos/Core/os_sem.c **** *                            wait for the resource up to the amount of time specified by this argum
+ 300:./ucos/Core/os_sem.c **** *                            If you specify 0, however, your task will wait forever at the specifie
+ 301:./ucos/Core/os_sem.c **** *                            semaphore or, until the resource becomes available (or the event occur
+ 302:./ucos/Core/os_sem.c **** *
+ 303:./ucos/Core/os_sem.c **** *              perr          is a pointer to where an error message will be deposited.  Possible er
+ 304:./ucos/Core/os_sem.c **** *                            messages are:
+ 305:./ucos/Core/os_sem.c **** *
+ 306:./ucos/Core/os_sem.c **** *                            OS_ERR_NONE         The call was successful and your task owns the res
+ 307:./ucos/Core/os_sem.c **** *                                                or, the event you are waiting for occurred.
+ 308:./ucos/Core/os_sem.c **** *                            OS_ERR_TIMEOUT      The semaphore was not received within the specifie
+ 309:./ucos/Core/os_sem.c **** *                                                'timeout'.
+ 310:./ucos/Core/os_sem.c **** *                            OS_ERR_PEND_ABORT   The wait on the semaphore was aborted.
+ 311:./ucos/Core/os_sem.c **** *                            OS_ERR_EVENT_TYPE   If you didn't pass a pointer to a semaphore.
+ 312:./ucos/Core/os_sem.c **** *                            OS_ERR_PEND_ISR     If you called this function from an ISR and the re
+ 313:./ucos/Core/os_sem.c **** *                                                would lead to a suspension.
+ 314:./ucos/Core/os_sem.c **** *                            OS_ERR_PEVENT_NULL  If 'pevent' is a NULL pointer.
+ 315:./ucos/Core/os_sem.c **** *                            OS_ERR_PEND_LOCKED  If you called this function when the scheduler is 
+ 316:./ucos/Core/os_sem.c **** *
+ 317:./ucos/Core/os_sem.c **** * Returns    : none
+ 318:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 319:./ucos/Core/os_sem.c **** */
+ 320:./ucos/Core/os_sem.c **** 
+ 321:./ucos/Core/os_sem.c **** void  OSSemPend (OS_EVENT  *pevent,
+ 322:./ucos/Core/os_sem.c ****                  INT32U     timeout,
+ 323:./ucos/Core/os_sem.c ****                  INT8U     *perr)
+ 324:./ucos/Core/os_sem.c **** {
+ 482              		.loc 1 324 1 view -0
+ 483              		.cfi_startproc
+ 484              		@ args = 0, pretend = 0, frame = 0
+ 485              		@ frame_needed = 0, uses_anonymous_args = 0
+ 486              		.loc 1 324 1 is_stmt 0 view .LVU165
+ 487 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 488              	.LCFI3:
+ 489              		.cfi_def_cfa_offset 24
+ 490              		.cfi_offset 4, -24
+ 491              		.cfi_offset 5, -20
+ 492              		.cfi_offset 6, -16
+ 493              		.cfi_offset 7, -12
+ 494              		.cfi_offset 8, -8
+ 495              		.cfi_offset 14, -4
+ 496 0004 1446     		mov	r4, r2
+ 325:./ucos/Core/os_sem.c **** #if OS_CRITICAL_METHOD == 3u                          /* Allocate storage for CPU status register  
+ 326:./ucos/Core/os_sem.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 497              		.loc 1 326 5 is_stmt 1 view .LVU166
+ 498              	.LVL49:
+ 327:./ucos/Core/os_sem.c **** #endif
+ 328:./ucos/Core/os_sem.c **** 
+ 329:./ucos/Core/os_sem.c **** 
+ 330:./ucos/Core/os_sem.c **** #ifdef OS_SAFETY_CRITICAL
+ 331:./ucos/Core/os_sem.c ****     if (perr == (INT8U *)0) {
+ 332:./ucos/Core/os_sem.c ****         OS_SAFETY_CRITICAL_EXCEPTION();
+ 333:./ucos/Core/os_sem.c ****         return;
+ 334:./ucos/Core/os_sem.c ****     }
+ARM GAS  /tmp/ccAvEVGU.s 			page 17
+
+
+ 335:./ucos/Core/os_sem.c **** #endif
+ 336:./ucos/Core/os_sem.c **** 
+ 337:./ucos/Core/os_sem.c **** #if OS_ARG_CHK_EN > 0u
+ 338:./ucos/Core/os_sem.c ****     if (pevent == (OS_EVENT *)0) {                    /* Validate 'pevent'                         
+ 499              		.loc 1 338 5 view .LVU167
+ 500              		.loc 1 338 8 is_stmt 0 view .LVU168
+ 501 0006 0028     		cmp	r0, #0
+ 502 0008 3CD0     		beq	.L49
+ 503 000a 0E46     		mov	r6, r1
+ 504 000c 0546     		mov	r5, r0
+ 339:./ucos/Core/os_sem.c ****         *perr = OS_ERR_PEVENT_NULL;
+ 340:./ucos/Core/os_sem.c ****         return;
+ 341:./ucos/Core/os_sem.c ****     }
+ 342:./ucos/Core/os_sem.c **** #endif
+ 343:./ucos/Core/os_sem.c **** 
+ 344:./ucos/Core/os_sem.c ****     OS_TRACE_SEM_PEND_ENTER(pevent, timeout);
+ 505              		.loc 1 344 5 is_stmt 1 view .LVU169
+ 506 000e FFF7FEFF 		bl	SEGGER_SYSVIEW_ShrinkId
+ 507              	.LVL50:
+ 508              		.loc 1 344 5 is_stmt 0 view .LVU170
+ 509 0012 0146     		mov	r1, r0
+ 510              		.loc 1 344 5 discriminator 1 view .LVU171
+ 511 0014 3246     		mov	r2, r6
+ 512 0016 3120     		movs	r0, #49
+ 513 0018 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordU32x2
+ 514              	.LVL51:
+ 345:./ucos/Core/os_sem.c **** 
+ 346:./ucos/Core/os_sem.c ****     if (pevent->OSEventType != OS_EVENT_TYPE_SEM) {   /* Validate event block type                 
+ 515              		.loc 1 346 5 is_stmt 1 view .LVU172
+ 516              		.loc 1 346 15 is_stmt 0 view .LVU173
+ 517 001c 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 518              		.loc 1 346 8 view .LVU174
+ 519 001e 032B     		cmp	r3, #3
+ 520 0020 34D1     		bne	.L50
+ 347:./ucos/Core/os_sem.c ****         *perr = OS_ERR_EVENT_TYPE;
+ 348:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 349:./ucos/Core/os_sem.c ****         return;
+ 350:./ucos/Core/os_sem.c ****     }
+ 351:./ucos/Core/os_sem.c ****     if (OSIntNesting > 0u) {                          /* See if called from ISR ...                
+ 521              		.loc 1 351 5 is_stmt 1 view .LVU175
+ 522              		.loc 1 351 22 is_stmt 0 view .LVU176
+ 523 0022 344B     		ldr	r3, .L54
+ 524 0024 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 525              		.loc 1 351 8 view .LVU177
+ 526 0026 BBBB     		cbnz	r3, .L51
+ 352:./ucos/Core/os_sem.c ****         *perr = OS_ERR_PEND_ISR;                      /* ... can't PEND from an ISR                
+ 353:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 354:./ucos/Core/os_sem.c ****         return;
+ 355:./ucos/Core/os_sem.c ****     }
+ 356:./ucos/Core/os_sem.c ****     if (OSLockNesting > 0u) {                         /* See if called with scheduler locked ...   
+ 527              		.loc 1 356 5 is_stmt 1 view .LVU178
+ 528              		.loc 1 356 23 is_stmt 0 view .LVU179
+ 529 0028 334B     		ldr	r3, .L54+4
+ 530 002a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 531              		.loc 1 356 8 view .LVU180
+ 532 002c D3BB     		cbnz	r3, .L52
+ 357:./ucos/Core/os_sem.c ****         *perr = OS_ERR_PEND_LOCKED;                   /* ... can't PEND when locked                
+ARM GAS  /tmp/ccAvEVGU.s 			page 18
+
+
+ 358:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 359:./ucos/Core/os_sem.c ****         return;
+ 360:./ucos/Core/os_sem.c ****     }
+ 361:./ucos/Core/os_sem.c ****     OS_ENTER_CRITICAL();
+ 533              		.loc 1 361 5 is_stmt 1 view .LVU181
+ 534              		.loc 1 361 5 view .LVU182
+ 535 002e FFF7FEFF 		bl	OS_CPU_SR_Save
+ 536              	.LVL52:
+ 537 0032 0746     		mov	r7, r0
+ 538              	.LVL53:
+ 539              		.loc 1 361 5 discriminator 1 view .LVU183
+ 362:./ucos/Core/os_sem.c ****     if (pevent->OSEventCnt > 0u) {                    /* If sem. is positive, resource available ..
+ 540              		.loc 1 362 5 view .LVU184
+ 541              		.loc 1 362 15 is_stmt 0 view .LVU185
+ 542 0034 2B89     		ldrh	r3, [r5, #8]
+ 543              		.loc 1 362 8 view .LVU186
+ 544 0036 DBBB     		cbnz	r3, .L53
+ 363:./ucos/Core/os_sem.c ****         pevent->OSEventCnt--;                         /* ... decrement semaphore only if positive. 
+ 364:./ucos/Core/os_sem.c ****         OS_EXIT_CRITICAL();
+ 365:./ucos/Core/os_sem.c ****         *perr = OS_ERR_NONE;
+ 366:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 367:./ucos/Core/os_sem.c ****         return;
+ 368:./ucos/Core/os_sem.c ****     }
+ 369:./ucos/Core/os_sem.c ****                                                       /* Otherwise, must wait until event occurs   
+ 370:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBStat     |= OS_STAT_SEM;           /* Resource not available, pend on semaphore 
+ 545              		.loc 1 370 5 is_stmt 1 view .LVU187
+ 546              		.loc 1 370 13 is_stmt 0 view .LVU188
+ 547 0038 DFF8C080 		ldr	r8, .L54+8
+ 548 003c D8F80030 		ldr	r3, [r8]
+ 549 0040 93F83820 		ldrb	r2, [r3, #56]	@ zero_extendqisi2
+ 550              		.loc 1 370 29 view .LVU189
+ 551 0044 42F00102 		orr	r2, r2, #1
+ 552 0048 83F83820 		strb	r2, [r3, #56]
+ 371:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBStatPend  = OS_STAT_PEND_OK;
+ 553              		.loc 1 371 5 is_stmt 1 view .LVU190
+ 554              		.loc 1 371 30 is_stmt 0 view .LVU191
+ 555 004c 0022     		movs	r2, #0
+ 556 004e 83F83920 		strb	r2, [r3, #57]
+ 372:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBDly       = timeout;               /* Store pend timeout in TCB                 
+ 557              		.loc 1 372 5 is_stmt 1 view .LVU192
+ 558              		.loc 1 372 30 is_stmt 0 view .LVU193
+ 559 0052 5E63     		str	r6, [r3, #52]
+ 373:./ucos/Core/os_sem.c ****     OS_EventTaskWait(pevent);                         /* Suspend task until event or timeout occurs
+ 560              		.loc 1 373 5 is_stmt 1 view .LVU194
+ 561 0054 2846     		mov	r0, r5
+ 562              	.LVL54:
+ 563              		.loc 1 373 5 is_stmt 0 view .LVU195
+ 564 0056 FFF7FEFF 		bl	OS_EventTaskWait
+ 565              	.LVL55:
+ 374:./ucos/Core/os_sem.c ****     OS_EXIT_CRITICAL();
+ 566              		.loc 1 374 5 is_stmt 1 view .LVU196
+ 567              		.loc 1 374 5 view .LVU197
+ 568 005a 3846     		mov	r0, r7
+ 569 005c FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 570              	.LVL56:
+ 571              		.loc 1 374 5 discriminator 1 view .LVU198
+ 375:./ucos/Core/os_sem.c ****     OS_Sched();                                       /* Find next highest priority task ready     
+ARM GAS  /tmp/ccAvEVGU.s 			page 19
+
+
+ 572              		.loc 1 375 5 view .LVU199
+ 573 0060 FFF7FEFF 		bl	OS_Sched
+ 574              	.LVL57:
+ 376:./ucos/Core/os_sem.c ****     OS_ENTER_CRITICAL();
+ 575              		.loc 1 376 5 view .LVU200
+ 576              		.loc 1 376 5 view .LVU201
+ 577 0064 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 578              	.LVL58:
+ 579 0068 0646     		mov	r6, r0
+ 580              	.LVL59:
+ 581              		.loc 1 376 5 discriminator 1 view .LVU202
+ 377:./ucos/Core/os_sem.c ****     switch (OSTCBCur->OSTCBStatPend) {                /* See if we timed-out or aborted            
+ 582              		.loc 1 377 5 view .LVU203
+ 583              		.loc 1 377 21 is_stmt 0 view .LVU204
+ 584 006a D8F80000 		ldr	r0, [r8]
+ 585              	.LVL60:
+ 586              		.loc 1 377 21 view .LVU205
+ 587 006e 90F83930 		ldrb	r3, [r0, #57]	@ zero_extendqisi2
+ 588              		.loc 1 377 5 view .LVU206
+ 589 0072 3BB3     		cbz	r3, .L43
+ 590 0074 022B     		cmp	r3, #2
+ 591 0076 39D0     		beq	.L44
+ 378:./ucos/Core/os_sem.c ****         case OS_STAT_PEND_OK:
+ 379:./ucos/Core/os_sem.c ****              *perr = OS_ERR_NONE;
+ 380:./ucos/Core/os_sem.c ****              break;
+ 381:./ucos/Core/os_sem.c **** 
+ 382:./ucos/Core/os_sem.c ****         case OS_STAT_PEND_ABORT:
+ 383:./ucos/Core/os_sem.c ****              *perr = OS_ERR_PEND_ABORT;               /* Indicate that we aborted                  
+ 384:./ucos/Core/os_sem.c ****              break;
+ 385:./ucos/Core/os_sem.c **** 
+ 386:./ucos/Core/os_sem.c ****         case OS_STAT_PEND_TO:
+ 387:./ucos/Core/os_sem.c ****         default:
+ 388:./ucos/Core/os_sem.c ****              OS_EventTaskRemove(OSTCBCur, pevent);
+ 592              		.loc 1 388 14 is_stmt 1 view .LVU207
+ 593 0078 2946     		mov	r1, r5
+ 594 007a FFF7FEFF 		bl	OS_EventTaskRemove
+ 595              	.LVL61:
+ 389:./ucos/Core/os_sem.c ****              *perr = OS_ERR_TIMEOUT;                  /* Indicate that we didn't get event within T
+ 596              		.loc 1 389 14 view .LVU208
+ 597              		.loc 1 389 20 is_stmt 0 view .LVU209
+ 598 007e 0A23     		movs	r3, #10
+ 599 0080 2370     		strb	r3, [r4]
+ 390:./ucos/Core/os_sem.c ****              break;
+ 600              		.loc 1 390 14 is_stmt 1 view .LVU210
+ 601 0082 21E0     		b	.L46
+ 602              	.LVL62:
+ 603              	.L49:
+ 339:./ucos/Core/os_sem.c ****         return;
+ 604              		.loc 1 339 9 view .LVU211
+ 339:./ucos/Core/os_sem.c ****         return;
+ 605              		.loc 1 339 15 is_stmt 0 view .LVU212
+ 606 0084 0423     		movs	r3, #4
+ 607 0086 1370     		strb	r3, [r2]
+ 340:./ucos/Core/os_sem.c ****     }
+ 608              		.loc 1 340 9 is_stmt 1 view .LVU213
+ 609              	.LVL63:
+ 610              	.L36:
+ARM GAS  /tmp/ccAvEVGU.s 			page 20
+
+
+ 391:./ucos/Core/os_sem.c ****     }
+ 392:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBStat          =  OS_STAT_RDY;      /* Set   task  status to ready               
+ 393:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBStatPend      =  OS_STAT_PEND_OK;  /* Clear pend  status                        
+ 394:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBEventPtr      = (OS_EVENT  *)0;    /* Clear event pointers                      
+ 395:./ucos/Core/os_sem.c **** #if (OS_EVENT_MULTI_EN > 0u)
+ 396:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBEventMultiPtr = (OS_EVENT **)0;
+ 397:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBEventMultiRdy = (OS_EVENT  *)0;
+ 398:./ucos/Core/os_sem.c **** #endif
+ 399:./ucos/Core/os_sem.c ****     OS_EXIT_CRITICAL();
+ 400:./ucos/Core/os_sem.c **** 
+ 401:./ucos/Core/os_sem.c ****     OS_TRACE_SEM_PEND_EXIT(*perr);
+ 402:./ucos/Core/os_sem.c **** }
+ 611              		.loc 1 402 1 is_stmt 0 view .LVU214
+ 612 0088 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 613              	.LVL64:
+ 614              	.L50:
+ 347:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 615              		.loc 1 347 9 is_stmt 1 view .LVU215
+ 347:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 616              		.loc 1 347 15 is_stmt 0 view .LVU216
+ 617 008c 0121     		movs	r1, #1
+ 618 008e 2170     		strb	r1, [r4]
+ 348:./ucos/Core/os_sem.c ****         return;
+ 619              		.loc 1 348 9 is_stmt 1 view .LVU217
+ 620 0090 3120     		movs	r0, #49
+ 621 0092 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 622              	.LVL65:
+ 349:./ucos/Core/os_sem.c ****     }
+ 623              		.loc 1 349 9 view .LVU218
+ 624 0096 F7E7     		b	.L36
+ 625              	.L51:
+ 352:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 626              		.loc 1 352 9 view .LVU219
+ 352:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 627              		.loc 1 352 15 is_stmt 0 view .LVU220
+ 628 0098 0221     		movs	r1, #2
+ 629 009a 2170     		strb	r1, [r4]
+ 353:./ucos/Core/os_sem.c ****         return;
+ 630              		.loc 1 353 9 is_stmt 1 view .LVU221
+ 631 009c 3120     		movs	r0, #49
+ 632 009e FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 633              	.LVL66:
+ 354:./ucos/Core/os_sem.c ****     }
+ 634              		.loc 1 354 9 view .LVU222
+ 635 00a2 F1E7     		b	.L36
+ 636              	.L52:
+ 357:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 637              		.loc 1 357 9 view .LVU223
+ 357:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 638              		.loc 1 357 15 is_stmt 0 view .LVU224
+ 639 00a4 0D21     		movs	r1, #13
+ 640 00a6 2170     		strb	r1, [r4]
+ 358:./ucos/Core/os_sem.c ****         return;
+ 641              		.loc 1 358 9 is_stmt 1 view .LVU225
+ 642 00a8 3120     		movs	r0, #49
+ 643 00aa FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 644              	.LVL67:
+ARM GAS  /tmp/ccAvEVGU.s 			page 21
+
+
+ 359:./ucos/Core/os_sem.c ****     }
+ 645              		.loc 1 359 9 view .LVU226
+ 646 00ae EBE7     		b	.L36
+ 647              	.LVL68:
+ 648              	.L53:
+ 363:./ucos/Core/os_sem.c ****         OS_EXIT_CRITICAL();
+ 649              		.loc 1 363 9 view .LVU227
+ 363:./ucos/Core/os_sem.c ****         OS_EXIT_CRITICAL();
+ 650              		.loc 1 363 27 is_stmt 0 view .LVU228
+ 651 00b0 013B     		subs	r3, r3, #1
+ 652 00b2 2B81     		strh	r3, [r5, #8]	@ movhi
+ 364:./ucos/Core/os_sem.c ****         *perr = OS_ERR_NONE;
+ 653              		.loc 1 364 9 is_stmt 1 view .LVU229
+ 364:./ucos/Core/os_sem.c ****         *perr = OS_ERR_NONE;
+ 654              		.loc 1 364 9 view .LVU230
+ 655 00b4 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 656              	.LVL69:
+ 364:./ucos/Core/os_sem.c ****         *perr = OS_ERR_NONE;
+ 657              		.loc 1 364 9 discriminator 1 view .LVU231
+ 365:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 658              		.loc 1 365 9 view .LVU232
+ 365:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_PEND_EXIT(*perr);
+ 659              		.loc 1 365 15 is_stmt 0 view .LVU233
+ 660 00b8 0021     		movs	r1, #0
+ 661 00ba 2170     		strb	r1, [r4]
+ 366:./ucos/Core/os_sem.c ****         return;
+ 662              		.loc 1 366 9 is_stmt 1 view .LVU234
+ 663 00bc 3120     		movs	r0, #49
+ 664 00be FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 665              	.LVL70:
+ 367:./ucos/Core/os_sem.c ****     }
+ 666              		.loc 1 367 9 view .LVU235
+ 667 00c2 E1E7     		b	.L36
+ 668              	.LVL71:
+ 669              	.L43:
+ 379:./ucos/Core/os_sem.c ****              break;
+ 670              		.loc 1 379 14 view .LVU236
+ 379:./ucos/Core/os_sem.c ****              break;
+ 671              		.loc 1 379 20 is_stmt 0 view .LVU237
+ 672 00c4 0023     		movs	r3, #0
+ 673 00c6 2370     		strb	r3, [r4]
+ 380:./ucos/Core/os_sem.c **** 
+ 674              		.loc 1 380 14 is_stmt 1 view .LVU238
+ 675              	.L46:
+ 392:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBStatPend      =  OS_STAT_PEND_OK;  /* Clear pend  status                        
+ 676              		.loc 1 392 5 view .LVU239
+ 392:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBStatPend      =  OS_STAT_PEND_OK;  /* Clear pend  status                        
+ 677              		.loc 1 392 13 is_stmt 0 view .LVU240
+ 678 00c8 0C4B     		ldr	r3, .L54+8
+ 679 00ca 1B68     		ldr	r3, [r3]
+ 392:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBStatPend      =  OS_STAT_PEND_OK;  /* Clear pend  status                        
+ 680              		.loc 1 392 34 view .LVU241
+ 681 00cc 0022     		movs	r2, #0
+ 682 00ce 83F83820 		strb	r2, [r3, #56]
+ 393:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBEventPtr      = (OS_EVENT  *)0;    /* Clear event pointers                      
+ 683              		.loc 1 393 5 is_stmt 1 view .LVU242
+ 393:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBEventPtr      = (OS_EVENT  *)0;    /* Clear event pointers                      
+ARM GAS  /tmp/ccAvEVGU.s 			page 22
+
+
+ 684              		.loc 1 393 34 is_stmt 0 view .LVU243
+ 685 00d2 83F83920 		strb	r2, [r3, #57]
+ 394:./ucos/Core/os_sem.c **** #if (OS_EVENT_MULTI_EN > 0u)
+ 686              		.loc 1 394 5 is_stmt 1 view .LVU244
+ 394:./ucos/Core/os_sem.c **** #if (OS_EVENT_MULTI_EN > 0u)
+ 687              		.loc 1 394 34 is_stmt 0 view .LVU245
+ 688 00d6 DA61     		str	r2, [r3, #28]
+ 396:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBEventMultiRdy = (OS_EVENT  *)0;
+ 689              		.loc 1 396 5 is_stmt 1 view .LVU246
+ 396:./ucos/Core/os_sem.c ****     OSTCBCur->OSTCBEventMultiRdy = (OS_EVENT  *)0;
+ 690              		.loc 1 396 34 is_stmt 0 view .LVU247
+ 691 00d8 1A62     		str	r2, [r3, #32]
+ 397:./ucos/Core/os_sem.c **** #endif
+ 692              		.loc 1 397 5 is_stmt 1 view .LVU248
+ 397:./ucos/Core/os_sem.c **** #endif
+ 693              		.loc 1 397 34 is_stmt 0 view .LVU249
+ 694 00da 5A62     		str	r2, [r3, #36]
+ 399:./ucos/Core/os_sem.c **** 
+ 695              		.loc 1 399 5 is_stmt 1 view .LVU250
+ 399:./ucos/Core/os_sem.c **** 
+ 696              		.loc 1 399 5 view .LVU251
+ 697 00dc 3046     		mov	r0, r6
+ 698 00de FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 699              	.LVL72:
+ 399:./ucos/Core/os_sem.c **** 
+ 700              		.loc 1 399 5 discriminator 1 view .LVU252
+ 401:./ucos/Core/os_sem.c **** }
+ 701              		.loc 1 401 5 view .LVU253
+ 702 00e2 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 703 00e4 3120     		movs	r0, #49
+ 704 00e6 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 705              	.LVL73:
+ 706 00ea CDE7     		b	.L36
+ 707              	.L44:
+ 383:./ucos/Core/os_sem.c ****              break;
+ 708              		.loc 1 383 14 view .LVU254
+ 383:./ucos/Core/os_sem.c ****              break;
+ 709              		.loc 1 383 20 is_stmt 0 view .LVU255
+ 710 00ec 0E23     		movs	r3, #14
+ 711 00ee 2370     		strb	r3, [r4]
+ 384:./ucos/Core/os_sem.c **** 
+ 712              		.loc 1 384 14 is_stmt 1 view .LVU256
+ 713 00f0 EAE7     		b	.L46
+ 714              	.L55:
+ 715 00f2 00BF     		.align	2
+ 716              	.L54:
+ 717 00f4 00000000 		.word	OSIntNesting
+ 718 00f8 00000000 		.word	OSLockNesting
+ 719 00fc 00000000 		.word	OSTCBCur
+ 720              		.cfi_endproc
+ 721              	.LFE3:
+ 723              		.section	.text.OSSemPendAbort,"ax",%progbits
+ 724              		.align	1
+ 725              		.global	OSSemPendAbort
+ 726              		.syntax unified
+ 727              		.thumb
+ 728              		.thumb_func
+ARM GAS  /tmp/ccAvEVGU.s 			page 23
+
+
+ 730              	OSSemPendAbort:
+ 731              	.LVL74:
+ 732              	.LFB4:
+ 403:./ucos/Core/os_sem.c **** 
+ 404:./ucos/Core/os_sem.c **** 
+ 405:./ucos/Core/os_sem.c **** /*
+ 406:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 407:./ucos/Core/os_sem.c **** *                                    ABORT WAITING ON A SEMAPHORE
+ 408:./ucos/Core/os_sem.c **** *
+ 409:./ucos/Core/os_sem.c **** * Description: This function aborts & readies any tasks currently waiting on a semaphore.  This fun
+ 410:./ucos/Core/os_sem.c **** *              should be used to fault-abort the wait on the semaphore, rather than to normally sig
+ 411:./ucos/Core/os_sem.c **** *              the semaphore via OSSemPost().
+ 412:./ucos/Core/os_sem.c **** *
+ 413:./ucos/Core/os_sem.c **** * Arguments  : pevent        is a pointer to the event control block associated with the desired
+ 414:./ucos/Core/os_sem.c **** *                            semaphore.
+ 415:./ucos/Core/os_sem.c **** *
+ 416:./ucos/Core/os_sem.c **** *              opt           determines the type of ABORT performed:
+ 417:./ucos/Core/os_sem.c **** *                            OS_PEND_OPT_NONE         ABORT wait for a single task (HPT) waiting on
+ 418:./ucos/Core/os_sem.c **** *                                                     semaphore
+ 419:./ucos/Core/os_sem.c **** *                            OS_PEND_OPT_BROADCAST    ABORT wait for ALL tasks that are  waiting on
+ 420:./ucos/Core/os_sem.c **** *                                                     semaphore
+ 421:./ucos/Core/os_sem.c **** *
+ 422:./ucos/Core/os_sem.c **** *              perr          is a pointer to where an error message will be deposited.  Possible er
+ 423:./ucos/Core/os_sem.c **** *                            messages are:
+ 424:./ucos/Core/os_sem.c **** *
+ 425:./ucos/Core/os_sem.c **** *                            OS_ERR_NONE         No tasks were     waiting on the semaphore.
+ 426:./ucos/Core/os_sem.c **** *                            OS_ERR_PEND_ABORT   At least one task waiting on the semaphore was rea
+ 427:./ucos/Core/os_sem.c **** *                                                and informed of the aborted wait; check return val
+ 428:./ucos/Core/os_sem.c **** *                                                for the number of tasks whose wait on the semaphor
+ 429:./ucos/Core/os_sem.c **** *                                                was aborted.
+ 430:./ucos/Core/os_sem.c **** *                            OS_ERR_EVENT_TYPE   If you didn't pass a pointer to a semaphore.
+ 431:./ucos/Core/os_sem.c **** *                            OS_ERR_PEVENT_NULL  If 'pevent' is a NULL pointer.
+ 432:./ucos/Core/os_sem.c **** *
+ 433:./ucos/Core/os_sem.c **** * Returns    : == 0          if no tasks were waiting on the semaphore, or upon error.
+ 434:./ucos/Core/os_sem.c **** *              >  0          if one or more tasks waiting on the semaphore are now readied and info
+ 435:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 436:./ucos/Core/os_sem.c **** */
+ 437:./ucos/Core/os_sem.c **** 
+ 438:./ucos/Core/os_sem.c **** #if OS_SEM_PEND_ABORT_EN > 0u
+ 439:./ucos/Core/os_sem.c **** INT8U  OSSemPendAbort (OS_EVENT  *pevent,
+ 440:./ucos/Core/os_sem.c ****                        INT8U      opt,
+ 441:./ucos/Core/os_sem.c ****                        INT8U     *perr)
+ 442:./ucos/Core/os_sem.c **** {
+ 733              		.loc 1 442 1 view -0
+ 734              		.cfi_startproc
+ 735              		@ args = 0, pretend = 0, frame = 0
+ 736              		@ frame_needed = 0, uses_anonymous_args = 0
+ 737              		.loc 1 442 1 is_stmt 0 view .LVU258
+ 738 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 739              	.LCFI4:
+ 740              		.cfi_def_cfa_offset 24
+ 741              		.cfi_offset 4, -24
+ 742              		.cfi_offset 5, -20
+ 743              		.cfi_offset 6, -16
+ 744              		.cfi_offset 7, -12
+ 745              		.cfi_offset 8, -8
+ 746              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccAvEVGU.s 			page 24
+
+
+ 747 0004 1646     		mov	r6, r2
+ 443:./ucos/Core/os_sem.c ****     INT8U      nbr_tasks;
+ 748              		.loc 1 443 5 is_stmt 1 view .LVU259
+ 444:./ucos/Core/os_sem.c **** #if OS_CRITICAL_METHOD == 3u                          /* Allocate storage for CPU status register  
+ 445:./ucos/Core/os_sem.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 749              		.loc 1 445 5 view .LVU260
+ 750              	.LVL75:
+ 446:./ucos/Core/os_sem.c **** #endif
+ 447:./ucos/Core/os_sem.c **** 
+ 448:./ucos/Core/os_sem.c **** 
+ 449:./ucos/Core/os_sem.c **** #ifdef OS_SAFETY_CRITICAL
+ 450:./ucos/Core/os_sem.c ****     if (perr == (INT8U *)0) {
+ 451:./ucos/Core/os_sem.c ****         OS_SAFETY_CRITICAL_EXCEPTION();
+ 452:./ucos/Core/os_sem.c ****         return (0u);
+ 453:./ucos/Core/os_sem.c ****     }
+ 454:./ucos/Core/os_sem.c **** #endif
+ 455:./ucos/Core/os_sem.c **** 
+ 456:./ucos/Core/os_sem.c **** #if OS_ARG_CHK_EN > 0u
+ 457:./ucos/Core/os_sem.c ****     if (pevent == (OS_EVENT *)0) {                    /* Validate 'pevent'                         
+ 751              		.loc 1 457 5 view .LVU261
+ 752              		.loc 1 457 8 is_stmt 0 view .LVU262
+ 753 0006 50B1     		cbz	r0, .L68
+ 754 0008 0F46     		mov	r7, r1
+ 755 000a 0546     		mov	r5, r0
+ 458:./ucos/Core/os_sem.c ****         *perr = OS_ERR_PEVENT_NULL;
+ 459:./ucos/Core/os_sem.c ****         return (0u);
+ 460:./ucos/Core/os_sem.c ****     }
+ 461:./ucos/Core/os_sem.c **** #endif
+ 462:./ucos/Core/os_sem.c ****     if (pevent->OSEventType != OS_EVENT_TYPE_SEM) {   /* Validate event block type                 
+ 756              		.loc 1 462 5 is_stmt 1 view .LVU263
+ 757              		.loc 1 462 15 is_stmt 0 view .LVU264
+ 758 000c 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 759              		.loc 1 462 8 view .LVU265
+ 760 000e 032B     		cmp	r3, #3
+ 761 0010 09D0     		beq	.L59
+ 463:./ucos/Core/os_sem.c ****         *perr = OS_ERR_EVENT_TYPE;
+ 762              		.loc 1 463 9 is_stmt 1 view .LVU266
+ 763              		.loc 1 463 15 is_stmt 0 view .LVU267
+ 764 0012 0123     		movs	r3, #1
+ 765 0014 1370     		strb	r3, [r2]
+ 464:./ucos/Core/os_sem.c ****         return (0u);
+ 766              		.loc 1 464 9 is_stmt 1 view .LVU268
+ 767              		.loc 1 464 16 is_stmt 0 view .LVU269
+ 768 0016 0024     		movs	r4, #0
+ 769              	.LVL76:
+ 770              	.L58:
+ 465:./ucos/Core/os_sem.c ****     }
+ 466:./ucos/Core/os_sem.c ****     OS_ENTER_CRITICAL();
+ 467:./ucos/Core/os_sem.c ****     if (pevent->OSEventGrp != 0u) {                   /* See if any task waiting on semaphore?     
+ 468:./ucos/Core/os_sem.c ****         nbr_tasks = 0u;
+ 469:./ucos/Core/os_sem.c ****         switch (opt) {
+ 470:./ucos/Core/os_sem.c ****             case OS_PEND_OPT_BROADCAST:               /* Do we need to abort ALL waiting tasks?    
+ 471:./ucos/Core/os_sem.c ****                  while (pevent->OSEventGrp != 0u) {   /* Yes, ready ALL tasks waiting on semaphore 
+ 472:./ucos/Core/os_sem.c ****                      (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM, OS_STAT_PEND_ABORT);
+ 473:./ucos/Core/os_sem.c ****                      nbr_tasks++;
+ 474:./ucos/Core/os_sem.c ****                  }
+ 475:./ucos/Core/os_sem.c ****                  break;
+ARM GAS  /tmp/ccAvEVGU.s 			page 25
+
+
+ 476:./ucos/Core/os_sem.c **** 
+ 477:./ucos/Core/os_sem.c ****             case OS_PEND_OPT_NONE:
+ 478:./ucos/Core/os_sem.c ****             default:                                  /* No,  ready HPT       waiting on semaphore 
+ 479:./ucos/Core/os_sem.c ****                  (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM, OS_STAT_PEND_ABORT);
+ 480:./ucos/Core/os_sem.c ****                  nbr_tasks++;
+ 481:./ucos/Core/os_sem.c ****                  break;
+ 482:./ucos/Core/os_sem.c ****         }
+ 483:./ucos/Core/os_sem.c ****         OS_EXIT_CRITICAL();
+ 484:./ucos/Core/os_sem.c ****         OS_Sched();                                   /* Find HPT ready to run                     
+ 485:./ucos/Core/os_sem.c ****         *perr = OS_ERR_PEND_ABORT;
+ 486:./ucos/Core/os_sem.c ****         return (nbr_tasks);
+ 487:./ucos/Core/os_sem.c ****     }
+ 488:./ucos/Core/os_sem.c ****     OS_EXIT_CRITICAL();
+ 489:./ucos/Core/os_sem.c ****     *perr = OS_ERR_NONE;
+ 490:./ucos/Core/os_sem.c ****     return (0u);                                      /* No tasks waiting on semaphore             
+ 491:./ucos/Core/os_sem.c **** }
+ 771              		.loc 1 491 1 view .LVU270
+ 772 0018 2046     		mov	r0, r4
+ 773 001a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 774              	.LVL77:
+ 775              	.L68:
+ 458:./ucos/Core/os_sem.c ****         return (0u);
+ 776              		.loc 1 458 9 is_stmt 1 view .LVU271
+ 458:./ucos/Core/os_sem.c ****         return (0u);
+ 777              		.loc 1 458 15 is_stmt 0 view .LVU272
+ 778 001e 0423     		movs	r3, #4
+ 779 0020 1370     		strb	r3, [r2]
+ 459:./ucos/Core/os_sem.c ****     }
+ 780              		.loc 1 459 9 is_stmt 1 view .LVU273
+ 459:./ucos/Core/os_sem.c ****     }
+ 781              		.loc 1 459 16 is_stmt 0 view .LVU274
+ 782 0022 0024     		movs	r4, #0
+ 783 0024 F8E7     		b	.L58
+ 784              	.L59:
+ 466:./ucos/Core/os_sem.c ****     if (pevent->OSEventGrp != 0u) {                   /* See if any task waiting on semaphore?     
+ 785              		.loc 1 466 5 is_stmt 1 view .LVU275
+ 466:./ucos/Core/os_sem.c ****     if (pevent->OSEventGrp != 0u) {                   /* See if any task waiting on semaphore?     
+ 786              		.loc 1 466 5 view .LVU276
+ 787 0026 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 788              	.LVL78:
+ 466:./ucos/Core/os_sem.c ****     if (pevent->OSEventGrp != 0u) {                   /* See if any task waiting on semaphore?     
+ 789              		.loc 1 466 5 is_stmt 0 view .LVU277
+ 790 002a 8046     		mov	r8, r0
+ 791              	.LVL79:
+ 466:./ucos/Core/os_sem.c ****     if (pevent->OSEventGrp != 0u) {                   /* See if any task waiting on semaphore?     
+ 792              		.loc 1 466 5 is_stmt 1 discriminator 1 view .LVU278
+ 467:./ucos/Core/os_sem.c ****         nbr_tasks = 0u;
+ 793              		.loc 1 467 5 view .LVU279
+ 467:./ucos/Core/os_sem.c ****         nbr_tasks = 0u;
+ 794              		.loc 1 467 15 is_stmt 0 view .LVU280
+ 795 002c AC7A     		ldrb	r4, [r5, #10]	@ zero_extendqisi2
+ 467:./ucos/Core/os_sem.c ****         nbr_tasks = 0u;
+ 796              		.loc 1 467 8 view .LVU281
+ 797 002e F4B1     		cbz	r4, .L60
+ 468:./ucos/Core/os_sem.c ****         switch (opt) {
+ 798              		.loc 1 468 9 is_stmt 1 view .LVU282
+ 799              	.LVL80:
+ARM GAS  /tmp/ccAvEVGU.s 			page 26
+
+
+ 469:./ucos/Core/os_sem.c ****             case OS_PEND_OPT_BROADCAST:               /* Do we need to abort ALL waiting tasks?    
+ 800              		.loc 1 469 9 view .LVU283
+ 801 0030 012F     		cmp	r7, #1
+ 802 0032 14D1     		bne	.L69
+ 468:./ucos/Core/os_sem.c ****         switch (opt) {
+ 803              		.loc 1 468 19 is_stmt 0 view .LVU284
+ 804 0034 0024     		movs	r4, #0
+ 805 0036 07E0     		b	.L61
+ 806              	.LVL81:
+ 807              	.L63:
+ 472:./ucos/Core/os_sem.c ****                      nbr_tasks++;
+ 808              		.loc 1 472 22 is_stmt 1 view .LVU285
+ 472:./ucos/Core/os_sem.c ****                      nbr_tasks++;
+ 809              		.loc 1 472 28 is_stmt 0 view .LVU286
+ 810 0038 0223     		movs	r3, #2
+ 811 003a 0122     		movs	r2, #1
+ 812 003c 0021     		movs	r1, #0
+ 813 003e 2846     		mov	r0, r5
+ 814 0040 FFF7FEFF 		bl	OS_EventTaskRdy
+ 815              	.LVL82:
+ 473:./ucos/Core/os_sem.c ****                  }
+ 816              		.loc 1 473 22 is_stmt 1 view .LVU287
+ 473:./ucos/Core/os_sem.c ****                  }
+ 817              		.loc 1 473 31 is_stmt 0 view .LVU288
+ 818 0044 0134     		adds	r4, r4, #1
+ 819              	.LVL83:
+ 473:./ucos/Core/os_sem.c ****                  }
+ 820              		.loc 1 473 31 view .LVU289
+ 821 0046 E4B2     		uxtb	r4, r4
+ 822              	.LVL84:
+ 823              	.L61:
+ 471:./ucos/Core/os_sem.c ****                      (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM, OS_STAT_PEND_ABORT);
+ 824              		.loc 1 471 44 is_stmt 1 view .LVU290
+ 471:./ucos/Core/os_sem.c ****                      (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM, OS_STAT_PEND_ABORT);
+ 825              		.loc 1 471 31 is_stmt 0 view .LVU291
+ 826 0048 AB7A     		ldrb	r3, [r5, #10]	@ zero_extendqisi2
+ 471:./ucos/Core/os_sem.c ****                      (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM, OS_STAT_PEND_ABORT);
+ 827              		.loc 1 471 44 view .LVU292
+ 828 004a 002B     		cmp	r3, #0
+ 829 004c F4D1     		bne	.L63
+ 830              	.LVL85:
+ 831              	.L64:
+ 483:./ucos/Core/os_sem.c ****         OS_Sched();                                   /* Find HPT ready to run                     
+ 832              		.loc 1 483 9 is_stmt 1 view .LVU293
+ 483:./ucos/Core/os_sem.c ****         OS_Sched();                                   /* Find HPT ready to run                     
+ 833              		.loc 1 483 9 view .LVU294
+ 834 004e 4046     		mov	r0, r8
+ 835 0050 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 836              	.LVL86:
+ 483:./ucos/Core/os_sem.c ****         OS_Sched();                                   /* Find HPT ready to run                     
+ 837              		.loc 1 483 9 discriminator 1 view .LVU295
+ 484:./ucos/Core/os_sem.c ****         *perr = OS_ERR_PEND_ABORT;
+ 838              		.loc 1 484 9 view .LVU296
+ 839 0054 FFF7FEFF 		bl	OS_Sched
+ 840              	.LVL87:
+ 485:./ucos/Core/os_sem.c ****         return (nbr_tasks);
+ 841              		.loc 1 485 9 view .LVU297
+ARM GAS  /tmp/ccAvEVGU.s 			page 27
+
+
+ 485:./ucos/Core/os_sem.c ****         return (nbr_tasks);
+ 842              		.loc 1 485 15 is_stmt 0 view .LVU298
+ 843 0058 0E23     		movs	r3, #14
+ 844 005a 3370     		strb	r3, [r6]
+ 486:./ucos/Core/os_sem.c ****     }
+ 845              		.loc 1 486 9 is_stmt 1 view .LVU299
+ 486:./ucos/Core/os_sem.c ****     }
+ 846              		.loc 1 486 16 is_stmt 0 view .LVU300
+ 847 005c DCE7     		b	.L58
+ 848              	.LVL88:
+ 849              	.L69:
+ 479:./ucos/Core/os_sem.c ****                  nbr_tasks++;
+ 850              		.loc 1 479 18 is_stmt 1 view .LVU301
+ 479:./ucos/Core/os_sem.c ****                  nbr_tasks++;
+ 851              		.loc 1 479 24 is_stmt 0 view .LVU302
+ 852 005e 0223     		movs	r3, #2
+ 853 0060 0122     		movs	r2, #1
+ 854 0062 0021     		movs	r1, #0
+ 855 0064 2846     		mov	r0, r5
+ 856              	.LVL89:
+ 479:./ucos/Core/os_sem.c ****                  nbr_tasks++;
+ 857              		.loc 1 479 24 view .LVU303
+ 858 0066 FFF7FEFF 		bl	OS_EventTaskRdy
+ 859              	.LVL90:
+ 480:./ucos/Core/os_sem.c ****                  break;
+ 860              		.loc 1 480 18 is_stmt 1 view .LVU304
+ 481:./ucos/Core/os_sem.c ****         }
+ 861              		.loc 1 481 18 view .LVU305
+ 480:./ucos/Core/os_sem.c ****                  break;
+ 862              		.loc 1 480 27 is_stmt 0 view .LVU306
+ 863 006a 0124     		movs	r4, #1
+ 481:./ucos/Core/os_sem.c ****         }
+ 864              		.loc 1 481 18 view .LVU307
+ 865 006c EFE7     		b	.L64
+ 866              	.LVL91:
+ 867              	.L60:
+ 488:./ucos/Core/os_sem.c ****     *perr = OS_ERR_NONE;
+ 868              		.loc 1 488 5 is_stmt 1 view .LVU308
+ 488:./ucos/Core/os_sem.c ****     *perr = OS_ERR_NONE;
+ 869              		.loc 1 488 5 view .LVU309
+ 870 006e FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 871              	.LVL92:
+ 488:./ucos/Core/os_sem.c ****     *perr = OS_ERR_NONE;
+ 872              		.loc 1 488 5 discriminator 1 view .LVU310
+ 489:./ucos/Core/os_sem.c ****     return (0u);                                      /* No tasks waiting on semaphore             
+ 873              		.loc 1 489 5 view .LVU311
+ 489:./ucos/Core/os_sem.c ****     return (0u);                                      /* No tasks waiting on semaphore             
+ 874              		.loc 1 489 11 is_stmt 0 view .LVU312
+ 875 0072 0023     		movs	r3, #0
+ 876 0074 3370     		strb	r3, [r6]
+ 490:./ucos/Core/os_sem.c **** }
+ 877              		.loc 1 490 5 is_stmt 1 view .LVU313
+ 490:./ucos/Core/os_sem.c **** }
+ 878              		.loc 1 490 12 is_stmt 0 view .LVU314
+ 879 0076 CFE7     		b	.L58
+ 880              		.cfi_endproc
+ 881              	.LFE4:
+ARM GAS  /tmp/ccAvEVGU.s 			page 28
+
+
+ 883              		.section	.text.OSSemPost,"ax",%progbits
+ 884              		.align	1
+ 885              		.global	OSSemPost
+ 886              		.syntax unified
+ 887              		.thumb
+ 888              		.thumb_func
+ 890              	OSSemPost:
+ 891              	.LVL93:
+ 892              	.LFB5:
+ 492:./ucos/Core/os_sem.c **** #endif
+ 493:./ucos/Core/os_sem.c **** 
+ 494:./ucos/Core/os_sem.c **** 
+ 495:./ucos/Core/os_sem.c **** /*
+ 496:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 497:./ucos/Core/os_sem.c **** *                                         POST TO A SEMAPHORE
+ 498:./ucos/Core/os_sem.c **** *
+ 499:./ucos/Core/os_sem.c **** * Description: This function signals a semaphore
+ 500:./ucos/Core/os_sem.c **** *
+ 501:./ucos/Core/os_sem.c **** * Arguments  : pevent        is a pointer to the event control block associated with the desired
+ 502:./ucos/Core/os_sem.c **** *                            semaphore.
+ 503:./ucos/Core/os_sem.c **** *
+ 504:./ucos/Core/os_sem.c **** * Returns    : OS_ERR_NONE         The call was successful and the semaphore was signaled.
+ 505:./ucos/Core/os_sem.c **** *              OS_ERR_SEM_OVF      If the semaphore count exceeded its limit. In other words, you h
+ 506:./ucos/Core/os_sem.c **** *                                  signaled the semaphore more often than you waited on it with eit
+ 507:./ucos/Core/os_sem.c **** *                                  OSSemAccept() or OSSemPend().
+ 508:./ucos/Core/os_sem.c **** *              OS_ERR_EVENT_TYPE   If you didn't pass a pointer to a semaphore
+ 509:./ucos/Core/os_sem.c **** *              OS_ERR_PEVENT_NULL  If 'pevent' is a NULL pointer.
+ 510:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 511:./ucos/Core/os_sem.c **** */
+ 512:./ucos/Core/os_sem.c **** 
+ 513:./ucos/Core/os_sem.c **** INT8U  OSSemPost (OS_EVENT *pevent)
+ 514:./ucos/Core/os_sem.c **** {
+ 893              		.loc 1 514 1 is_stmt 1 view -0
+ 894              		.cfi_startproc
+ 895              		@ args = 0, pretend = 0, frame = 0
+ 896              		@ frame_needed = 0, uses_anonymous_args = 0
+ 897              		.loc 1 514 1 is_stmt 0 view .LVU316
+ 898 0000 70B5     		push	{r4, r5, r6, lr}
+ 899              	.LCFI5:
+ 900              		.cfi_def_cfa_offset 16
+ 901              		.cfi_offset 4, -16
+ 902              		.cfi_offset 5, -12
+ 903              		.cfi_offset 6, -8
+ 904              		.cfi_offset 14, -4
+ 515:./ucos/Core/os_sem.c **** #if OS_CRITICAL_METHOD == 3u                          /* Allocate storage for CPU status register  
+ 516:./ucos/Core/os_sem.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 905              		.loc 1 516 5 is_stmt 1 view .LVU317
+ 906              	.LVL94:
+ 517:./ucos/Core/os_sem.c **** #endif
+ 518:./ucos/Core/os_sem.c **** 
+ 519:./ucos/Core/os_sem.c **** 
+ 520:./ucos/Core/os_sem.c **** #if OS_ARG_CHK_EN > 0u
+ 521:./ucos/Core/os_sem.c ****     if (pevent == (OS_EVENT *)0) {                    /* Validate 'pevent'                         
+ 907              		.loc 1 521 5 view .LVU318
+ 908              		.loc 1 521 8 is_stmt 0 view .LVU319
+ 909 0002 0028     		cmp	r0, #0
+ 910 0004 3CD0     		beq	.L75
+ARM GAS  /tmp/ccAvEVGU.s 			page 29
+
+
+ 911 0006 0446     		mov	r4, r0
+ 522:./ucos/Core/os_sem.c ****         return (OS_ERR_PEVENT_NULL);
+ 523:./ucos/Core/os_sem.c ****     }
+ 524:./ucos/Core/os_sem.c **** #endif
+ 525:./ucos/Core/os_sem.c **** 
+ 526:./ucos/Core/os_sem.c ****     OS_TRACE_SEM_POST_ENTER(pevent);
+ 912              		.loc 1 526 5 is_stmt 1 view .LVU320
+ 913 0008 FFF7FEFF 		bl	SEGGER_SYSVIEW_ShrinkId
+ 914              	.LVL95:
+ 915              		.loc 1 526 5 is_stmt 0 view .LVU321
+ 916 000c 0146     		mov	r1, r0
+ 917              		.loc 1 526 5 discriminator 1 view .LVU322
+ 918 000e 3020     		movs	r0, #48
+ 919 0010 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordU32
+ 920              	.LVL96:
+ 527:./ucos/Core/os_sem.c **** 
+ 528:./ucos/Core/os_sem.c ****     if (pevent->OSEventType != OS_EVENT_TYPE_SEM) {   /* Validate event block type                 
+ 921              		.loc 1 528 5 is_stmt 1 view .LVU323
+ 922              		.loc 1 528 15 is_stmt 0 view .LVU324
+ 923 0014 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 924              		.loc 1 528 8 view .LVU325
+ 925 0016 032B     		cmp	r3, #3
+ 926 0018 06D0     		beq	.L72
+ 529:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_POST_EXIT(OS_ERR_EVENT_TYPE);
+ 927              		.loc 1 529 9 is_stmt 1 view .LVU326
+ 928 001a 0121     		movs	r1, #1
+ 929 001c 3020     		movs	r0, #48
+ 930 001e FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 931              	.LVL97:
+ 530:./ucos/Core/os_sem.c ****         return (OS_ERR_EVENT_TYPE);
+ 932              		.loc 1 530 9 view .LVU327
+ 933              		.loc 1 530 16 is_stmt 0 view .LVU328
+ 934 0022 0125     		movs	r5, #1
+ 935              	.LVL98:
+ 936              	.L71:
+ 531:./ucos/Core/os_sem.c ****     }
+ 532:./ucos/Core/os_sem.c ****     OS_ENTER_CRITICAL();
+ 533:./ucos/Core/os_sem.c ****     if (pevent->OSEventGrp != 0u) {                   /* See if any task waiting for semaphore     
+ 534:./ucos/Core/os_sem.c ****                                                       /* Ready HPT waiting on event                
+ 535:./ucos/Core/os_sem.c ****         (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM, OS_STAT_PEND_OK);
+ 536:./ucos/Core/os_sem.c ****         OS_EXIT_CRITICAL();
+ 537:./ucos/Core/os_sem.c ****         OS_Sched();                                   /* Find HPT ready to run                     
+ 538:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_POST_EXIT(OS_ERR_NONE);
+ 539:./ucos/Core/os_sem.c ****         return (OS_ERR_NONE);
+ 540:./ucos/Core/os_sem.c ****     }
+ 541:./ucos/Core/os_sem.c ****     if (pevent->OSEventCnt < 65535u) {                /* Make sure semaphore will not overflow     
+ 542:./ucos/Core/os_sem.c ****         pevent->OSEventCnt++;                         /* Increment semaphore count to register even
+ 543:./ucos/Core/os_sem.c ****         OS_EXIT_CRITICAL();
+ 544:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_POST_EXIT(OS_ERR_NONE);
+ 545:./ucos/Core/os_sem.c ****         return (OS_ERR_NONE);
+ 546:./ucos/Core/os_sem.c ****     }
+ 547:./ucos/Core/os_sem.c ****     OS_EXIT_CRITICAL();                               /* Semaphore value has reached its maximum   
+ 548:./ucos/Core/os_sem.c ****     OS_TRACE_SEM_POST_EXIT(OS_ERR_SEM_OVF);
+ 549:./ucos/Core/os_sem.c **** 
+ 550:./ucos/Core/os_sem.c ****     return (OS_ERR_SEM_OVF);
+ 551:./ucos/Core/os_sem.c **** }
+ 937              		.loc 1 551 1 view .LVU329
+ARM GAS  /tmp/ccAvEVGU.s 			page 30
+
+
+ 938 0024 2846     		mov	r0, r5
+ 939 0026 70BD     		pop	{r4, r5, r6, pc}
+ 940              	.LVL99:
+ 941              	.L72:
+ 532:./ucos/Core/os_sem.c ****     if (pevent->OSEventGrp != 0u) {                   /* See if any task waiting for semaphore     
+ 942              		.loc 1 532 5 is_stmt 1 view .LVU330
+ 532:./ucos/Core/os_sem.c ****     if (pevent->OSEventGrp != 0u) {                   /* See if any task waiting for semaphore     
+ 943              		.loc 1 532 5 view .LVU331
+ 944 0028 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 945              	.LVL100:
+ 946 002c 0646     		mov	r6, r0
+ 947              	.LVL101:
+ 532:./ucos/Core/os_sem.c ****     if (pevent->OSEventGrp != 0u) {                   /* See if any task waiting for semaphore     
+ 948              		.loc 1 532 5 discriminator 1 view .LVU332
+ 533:./ucos/Core/os_sem.c ****                                                       /* Ready HPT waiting on event                
+ 949              		.loc 1 533 5 view .LVU333
+ 533:./ucos/Core/os_sem.c ****                                                       /* Ready HPT waiting on event                
+ 950              		.loc 1 533 15 is_stmt 0 view .LVU334
+ 951 002e A57A     		ldrb	r5, [r4, #10]	@ zero_extendqisi2
+ 533:./ucos/Core/os_sem.c ****                                                       /* Ready HPT waiting on event                
+ 952              		.loc 1 533 8 view .LVU335
+ 953 0030 6DB9     		cbnz	r5, .L77
+ 541:./ucos/Core/os_sem.c ****         pevent->OSEventCnt++;                         /* Increment semaphore count to register even
+ 954              		.loc 1 541 5 is_stmt 1 view .LVU336
+ 541:./ucos/Core/os_sem.c ****         pevent->OSEventCnt++;                         /* Increment semaphore count to register even
+ 955              		.loc 1 541 15 is_stmt 0 view .LVU337
+ 956 0032 2389     		ldrh	r3, [r4, #8]
+ 541:./ucos/Core/os_sem.c ****         pevent->OSEventCnt++;                         /* Increment semaphore count to register even
+ 957              		.loc 1 541 8 view .LVU338
+ 958 0034 4FF6FF72 		movw	r2, #65535
+ 959 0038 9342     		cmp	r3, r2
+ 960 003a 19D0     		beq	.L74
+ 542:./ucos/Core/os_sem.c ****         OS_EXIT_CRITICAL();
+ 961              		.loc 1 542 9 is_stmt 1 view .LVU339
+ 542:./ucos/Core/os_sem.c ****         OS_EXIT_CRITICAL();
+ 962              		.loc 1 542 27 is_stmt 0 view .LVU340
+ 963 003c 0133     		adds	r3, r3, #1
+ 964 003e 2381     		strh	r3, [r4, #8]	@ movhi
+ 543:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_POST_EXIT(OS_ERR_NONE);
+ 965              		.loc 1 543 9 is_stmt 1 view .LVU341
+ 543:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_POST_EXIT(OS_ERR_NONE);
+ 966              		.loc 1 543 9 view .LVU342
+ 967 0040 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 968              	.LVL102:
+ 543:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_POST_EXIT(OS_ERR_NONE);
+ 969              		.loc 1 543 9 discriminator 1 view .LVU343
+ 544:./ucos/Core/os_sem.c ****         return (OS_ERR_NONE);
+ 970              		.loc 1 544 9 view .LVU344
+ 971 0044 0021     		movs	r1, #0
+ 972 0046 3020     		movs	r0, #48
+ 973 0048 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 974              	.LVL103:
+ 545:./ucos/Core/os_sem.c ****     }
+ 975              		.loc 1 545 9 view .LVU345
+ 545:./ucos/Core/os_sem.c ****     }
+ 976              		.loc 1 545 16 is_stmt 0 view .LVU346
+ 977 004c EAE7     		b	.L71
+ARM GAS  /tmp/ccAvEVGU.s 			page 31
+
+
+ 978              	.LVL104:
+ 979              	.L77:
+ 535:./ucos/Core/os_sem.c ****         OS_EXIT_CRITICAL();
+ 980              		.loc 1 535 9 is_stmt 1 view .LVU347
+ 535:./ucos/Core/os_sem.c ****         OS_EXIT_CRITICAL();
+ 981              		.loc 1 535 15 is_stmt 0 view .LVU348
+ 982 004e 0023     		movs	r3, #0
+ 983 0050 0122     		movs	r2, #1
+ 984 0052 1946     		mov	r1, r3
+ 985 0054 2046     		mov	r0, r4
+ 986              	.LVL105:
+ 535:./ucos/Core/os_sem.c ****         OS_EXIT_CRITICAL();
+ 987              		.loc 1 535 15 view .LVU349
+ 988 0056 FFF7FEFF 		bl	OS_EventTaskRdy
+ 989              	.LVL106:
+ 536:./ucos/Core/os_sem.c ****         OS_Sched();                                   /* Find HPT ready to run                     
+ 990              		.loc 1 536 9 is_stmt 1 view .LVU350
+ 536:./ucos/Core/os_sem.c ****         OS_Sched();                                   /* Find HPT ready to run                     
+ 991              		.loc 1 536 9 view .LVU351
+ 992 005a 3046     		mov	r0, r6
+ 993 005c FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 994              	.LVL107:
+ 536:./ucos/Core/os_sem.c ****         OS_Sched();                                   /* Find HPT ready to run                     
+ 995              		.loc 1 536 9 discriminator 1 view .LVU352
+ 537:./ucos/Core/os_sem.c ****         OS_TRACE_SEM_POST_EXIT(OS_ERR_NONE);
+ 996              		.loc 1 537 9 view .LVU353
+ 997 0060 FFF7FEFF 		bl	OS_Sched
+ 998              	.LVL108:
+ 538:./ucos/Core/os_sem.c ****         return (OS_ERR_NONE);
+ 999              		.loc 1 538 9 view .LVU354
+ 1000 0064 0021     		movs	r1, #0
+ 1001 0066 3020     		movs	r0, #48
+ 1002 0068 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 1003              	.LVL109:
+ 539:./ucos/Core/os_sem.c ****     }
+ 1004              		.loc 1 539 9 view .LVU355
+ 539:./ucos/Core/os_sem.c ****     }
+ 1005              		.loc 1 539 16 is_stmt 0 view .LVU356
+ 1006 006c 0025     		movs	r5, #0
+ 1007 006e D9E7     		b	.L71
+ 1008              	.LVL110:
+ 1009              	.L74:
+ 547:./ucos/Core/os_sem.c ****     OS_TRACE_SEM_POST_EXIT(OS_ERR_SEM_OVF);
+ 1010              		.loc 1 547 5 is_stmt 1 view .LVU357
+ 547:./ucos/Core/os_sem.c ****     OS_TRACE_SEM_POST_EXIT(OS_ERR_SEM_OVF);
+ 1011              		.loc 1 547 5 view .LVU358
+ 1012 0070 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 1013              	.LVL111:
+ 547:./ucos/Core/os_sem.c ****     OS_TRACE_SEM_POST_EXIT(OS_ERR_SEM_OVF);
+ 1014              		.loc 1 547 5 discriminator 1 view .LVU359
+ 548:./ucos/Core/os_sem.c **** 
+ 1015              		.loc 1 548 5 view .LVU360
+ 1016 0074 3321     		movs	r1, #51
+ 1017 0076 3020     		movs	r0, #48
+ 1018 0078 FFF7FEFF 		bl	SEGGER_SYSVIEW_RecordEndCallU32
+ 1019              	.LVL112:
+ 550:./ucos/Core/os_sem.c **** }
+ARM GAS  /tmp/ccAvEVGU.s 			page 32
+
+
+ 1020              		.loc 1 550 5 view .LVU361
+ 550:./ucos/Core/os_sem.c **** }
+ 1021              		.loc 1 550 12 is_stmt 0 view .LVU362
+ 1022 007c 3325     		movs	r5, #51
+ 1023 007e D1E7     		b	.L71
+ 1024              	.LVL113:
+ 1025              	.L75:
+ 522:./ucos/Core/os_sem.c ****     }
+ 1026              		.loc 1 522 16 view .LVU363
+ 1027 0080 0425     		movs	r5, #4
+ 1028 0082 CFE7     		b	.L71
+ 1029              		.cfi_endproc
+ 1030              	.LFE5:
+ 1032              		.section	.text.OSSemQuery,"ax",%progbits
+ 1033              		.align	1
+ 1034              		.global	OSSemQuery
+ 1035              		.syntax unified
+ 1036              		.thumb
+ 1037              		.thumb_func
+ 1039              	OSSemQuery:
+ 1040              	.LVL114:
+ 1041              	.LFB6:
+ 552:./ucos/Core/os_sem.c **** 
+ 553:./ucos/Core/os_sem.c **** 
+ 554:./ucos/Core/os_sem.c **** /*
+ 555:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 556:./ucos/Core/os_sem.c **** *                                          QUERY A SEMAPHORE
+ 557:./ucos/Core/os_sem.c **** *
+ 558:./ucos/Core/os_sem.c **** * Description: This function obtains information about a semaphore
+ 559:./ucos/Core/os_sem.c **** *
+ 560:./ucos/Core/os_sem.c **** * Arguments  : pevent        is a pointer to the event control block associated with the desired
+ 561:./ucos/Core/os_sem.c **** *                            semaphore
+ 562:./ucos/Core/os_sem.c **** *
+ 563:./ucos/Core/os_sem.c **** *              p_sem_data    is a pointer to a structure that will contain information about the
+ 564:./ucos/Core/os_sem.c **** *                            semaphore.
+ 565:./ucos/Core/os_sem.c **** *
+ 566:./ucos/Core/os_sem.c **** * Returns    : OS_ERR_NONE         The call was successful and the message was sent
+ 567:./ucos/Core/os_sem.c **** *              OS_ERR_EVENT_TYPE   If you are attempting to obtain data from a non semaphore.
+ 568:./ucos/Core/os_sem.c **** *              OS_ERR_PEVENT_NULL  If 'pevent'     is a NULL pointer.
+ 569:./ucos/Core/os_sem.c **** *              OS_ERR_PDATA_NULL   If 'p_sem_data' is a NULL pointer
+ 570:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 571:./ucos/Core/os_sem.c **** */
+ 572:./ucos/Core/os_sem.c **** 
+ 573:./ucos/Core/os_sem.c **** #if OS_SEM_QUERY_EN > 0u
+ 574:./ucos/Core/os_sem.c **** INT8U  OSSemQuery (OS_EVENT     *pevent,
+ 575:./ucos/Core/os_sem.c ****                    OS_SEM_DATA  *p_sem_data)
+ 576:./ucos/Core/os_sem.c **** {
+ 1042              		.loc 1 576 1 is_stmt 1 view -0
+ 1043              		.cfi_startproc
+ 1044              		@ args = 0, pretend = 0, frame = 0
+ 1045              		@ frame_needed = 0, uses_anonymous_args = 0
+ 577:./ucos/Core/os_sem.c ****     INT8U       i;
+ 1046              		.loc 1 577 5 view .LVU365
+ 578:./ucos/Core/os_sem.c ****     OS_PRIO    *psrc;
+ 1047              		.loc 1 578 5 view .LVU366
+ 579:./ucos/Core/os_sem.c ****     OS_PRIO    *pdest;
+ 1048              		.loc 1 579 5 view .LVU367
+ARM GAS  /tmp/ccAvEVGU.s 			page 33
+
+
+ 580:./ucos/Core/os_sem.c **** #if OS_CRITICAL_METHOD == 3u                               /* Allocate storage for CPU status regis
+ 581:./ucos/Core/os_sem.c ****     OS_CPU_SR   cpu_sr = 0u;
+ 1049              		.loc 1 581 5 view .LVU368
+ 582:./ucos/Core/os_sem.c **** #endif
+ 583:./ucos/Core/os_sem.c **** 
+ 584:./ucos/Core/os_sem.c **** 
+ 585:./ucos/Core/os_sem.c **** 
+ 586:./ucos/Core/os_sem.c **** #if OS_ARG_CHK_EN > 0u
+ 587:./ucos/Core/os_sem.c ****     if (pevent == (OS_EVENT *)0) {                         /* Validate 'pevent'                    
+ 1050              		.loc 1 587 5 view .LVU369
+ 1051              		.loc 1 587 8 is_stmt 0 view .LVU370
+ 1052 0000 18B3     		cbz	r0, .L82
+ 576:./ucos/Core/os_sem.c ****     INT8U       i;
+ 1053              		.loc 1 576 1 view .LVU371
+ 1054 0002 38B5     		push	{r3, r4, r5, lr}
+ 1055              	.LCFI6:
+ 1056              		.cfi_def_cfa_offset 16
+ 1057              		.cfi_offset 3, -16
+ 1058              		.cfi_offset 4, -12
+ 1059              		.cfi_offset 5, -8
+ 1060              		.cfi_offset 14, -4
+ 1061 0004 0C46     		mov	r4, r1
+ 1062 0006 0546     		mov	r5, r0
+ 588:./ucos/Core/os_sem.c ****         return (OS_ERR_PEVENT_NULL);
+ 589:./ucos/Core/os_sem.c ****     }
+ 590:./ucos/Core/os_sem.c ****     if (p_sem_data == (OS_SEM_DATA *)0) {                  /* Validate 'p_sem_data'                
+ 1063              		.loc 1 590 5 is_stmt 1 view .LVU372
+ 1064              		.loc 1 590 8 is_stmt 0 view .LVU373
+ 1065 0008 09B3     		cbz	r1, .L83
+ 591:./ucos/Core/os_sem.c ****         return (OS_ERR_PDATA_NULL);
+ 592:./ucos/Core/os_sem.c ****     }
+ 593:./ucos/Core/os_sem.c **** #endif
+ 594:./ucos/Core/os_sem.c ****     if (pevent->OSEventType != OS_EVENT_TYPE_SEM) {        /* Validate event block type            
+ 1066              		.loc 1 594 5 is_stmt 1 view .LVU374
+ 1067              		.loc 1 594 15 is_stmt 0 view .LVU375
+ 1068 000a 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 1069              		.loc 1 594 8 view .LVU376
+ 1070 000c 032B     		cmp	r3, #3
+ 1071 000e 01D0     		beq	.L89
+ 595:./ucos/Core/os_sem.c ****         return (OS_ERR_EVENT_TYPE);
+ 1072              		.loc 1 595 16 view .LVU377
+ 1073 0010 0120     		movs	r0, #1
+ 1074              	.LVL115:
+ 1075              	.L79:
+ 596:./ucos/Core/os_sem.c ****     }
+ 597:./ucos/Core/os_sem.c ****     OS_ENTER_CRITICAL();
+ 598:./ucos/Core/os_sem.c ****     p_sem_data->OSEventGrp = pevent->OSEventGrp;           /* Copy message mailbox wait list       
+ 599:./ucos/Core/os_sem.c ****     psrc                   = &pevent->OSEventTbl[0];
+ 600:./ucos/Core/os_sem.c ****     pdest                  = &p_sem_data->OSEventTbl[0];
+ 601:./ucos/Core/os_sem.c ****     for (i = 0u; i < OS_EVENT_TBL_SIZE; i++) {
+ 602:./ucos/Core/os_sem.c ****         *pdest++ = *psrc++;
+ 603:./ucos/Core/os_sem.c ****     }
+ 604:./ucos/Core/os_sem.c ****     p_sem_data->OSCnt = pevent->OSEventCnt;                /* Get semaphore count                  
+ 605:./ucos/Core/os_sem.c ****     OS_EXIT_CRITICAL();
+ 606:./ucos/Core/os_sem.c ****     return (OS_ERR_NONE);
+ 607:./ucos/Core/os_sem.c **** }
+ 1076              		.loc 1 607 1 view .LVU378
+ARM GAS  /tmp/ccAvEVGU.s 			page 34
+
+
+ 1077 0012 38BD     		pop	{r3, r4, r5, pc}
+ 1078              	.LVL116:
+ 1079              	.L89:
+ 597:./ucos/Core/os_sem.c ****     p_sem_data->OSEventGrp = pevent->OSEventGrp;           /* Copy message mailbox wait list       
+ 1080              		.loc 1 597 5 is_stmt 1 view .LVU379
+ 597:./ucos/Core/os_sem.c ****     p_sem_data->OSEventGrp = pevent->OSEventGrp;           /* Copy message mailbox wait list       
+ 1081              		.loc 1 597 5 view .LVU380
+ 1082 0014 FFF7FEFF 		bl	OS_CPU_SR_Save
+ 1083              	.LVL117:
+ 597:./ucos/Core/os_sem.c ****     p_sem_data->OSEventGrp = pevent->OSEventGrp;           /* Copy message mailbox wait list       
+ 1084              		.loc 1 597 5 discriminator 1 view .LVU381
+ 598:./ucos/Core/os_sem.c ****     psrc                   = &pevent->OSEventTbl[0];
+ 1085              		.loc 1 598 5 view .LVU382
+ 598:./ucos/Core/os_sem.c ****     psrc                   = &pevent->OSEventTbl[0];
+ 1086              		.loc 1 598 36 is_stmt 0 view .LVU383
+ 1087 0018 AB7A     		ldrb	r3, [r5, #10]	@ zero_extendqisi2
+ 598:./ucos/Core/os_sem.c ****     psrc                   = &pevent->OSEventTbl[0];
+ 1088              		.loc 1 598 28 view .LVU384
+ 1089 001a A372     		strb	r3, [r4, #10]
+ 599:./ucos/Core/os_sem.c ****     pdest                  = &p_sem_data->OSEventTbl[0];
+ 1090              		.loc 1 599 5 is_stmt 1 view .LVU385
+ 599:./ucos/Core/os_sem.c ****     pdest                  = &p_sem_data->OSEventTbl[0];
+ 1091              		.loc 1 599 28 is_stmt 0 view .LVU386
+ 1092 001c 05F10B02 		add	r2, r5, #11
+ 1093              	.LVL118:
+ 600:./ucos/Core/os_sem.c ****     for (i = 0u; i < OS_EVENT_TBL_SIZE; i++) {
+ 1094              		.loc 1 600 5 is_stmt 1 view .LVU387
+ 600:./ucos/Core/os_sem.c ****     for (i = 0u; i < OS_EVENT_TBL_SIZE; i++) {
+ 1095              		.loc 1 600 28 is_stmt 0 view .LVU388
+ 1096 0020 A31C     		adds	r3, r4, #2
+ 1097              	.LVL119:
+ 601:./ucos/Core/os_sem.c ****         *pdest++ = *psrc++;
+ 1098              		.loc 1 601 5 is_stmt 1 view .LVU389
+ 601:./ucos/Core/os_sem.c ****         *pdest++ = *psrc++;
+ 1099              		.loc 1 601 12 is_stmt 0 view .LVU390
+ 1100 0022 4FF0000C 		mov	ip, #0
+ 601:./ucos/Core/os_sem.c ****         *pdest++ = *psrc++;
+ 1101              		.loc 1 601 5 view .LVU391
+ 1102 0026 07E0     		b	.L80
+ 1103              	.LVL120:
+ 1104              	.L81:
+ 602:./ucos/Core/os_sem.c ****     }
+ 1105              		.loc 1 602 9 is_stmt 1 view .LVU392
+ 602:./ucos/Core/os_sem.c ****     }
+ 1106              		.loc 1 602 20 is_stmt 0 view .LVU393
+ 1107 0028 12F8011B 		ldrb	r1, [r2], #1	@ zero_extendqisi2
+ 1108              	.LVL121:
+ 602:./ucos/Core/os_sem.c ****     }
+ 1109              		.loc 1 602 18 view .LVU394
+ 1110 002c 03F8011B 		strb	r1, [r3], #1
+ 1111              	.LVL122:
+ 601:./ucos/Core/os_sem.c ****         *pdest++ = *psrc++;
+ 1112              		.loc 1 601 42 is_stmt 1 discriminator 3 view .LVU395
+ 1113 0030 0CF1010C 		add	ip, ip, #1
+ 1114              	.LVL123:
+ 601:./ucos/Core/os_sem.c ****         *pdest++ = *psrc++;
+ 1115              		.loc 1 601 42 is_stmt 0 discriminator 3 view .LVU396
+ARM GAS  /tmp/ccAvEVGU.s 			page 35
+
+
+ 1116 0034 5FFA8CFC 		uxtb	ip, ip
+ 1117              	.LVL124:
+ 1118              	.L80:
+ 601:./ucos/Core/os_sem.c ****         *pdest++ = *psrc++;
+ 1119              		.loc 1 601 20 is_stmt 1 discriminator 1 view .LVU397
+ 1120 0038 BCF1070F 		cmp	ip, #7
+ 1121 003c F4D9     		bls	.L81
+ 604:./ucos/Core/os_sem.c ****     OS_EXIT_CRITICAL();
+ 1122              		.loc 1 604 5 view .LVU398
+ 604:./ucos/Core/os_sem.c ****     OS_EXIT_CRITICAL();
+ 1123              		.loc 1 604 31 is_stmt 0 view .LVU399
+ 1124 003e 2B89     		ldrh	r3, [r5, #8]
+ 1125              	.LVL125:
+ 604:./ucos/Core/os_sem.c ****     OS_EXIT_CRITICAL();
+ 1126              		.loc 1 604 23 view .LVU400
+ 1127 0040 2380     		strh	r3, [r4]	@ movhi
+ 605:./ucos/Core/os_sem.c ****     return (OS_ERR_NONE);
+ 1128              		.loc 1 605 5 is_stmt 1 view .LVU401
+ 605:./ucos/Core/os_sem.c ****     return (OS_ERR_NONE);
+ 1129              		.loc 1 605 5 view .LVU402
+ 1130 0042 FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 1131              	.LVL126:
+ 605:./ucos/Core/os_sem.c ****     return (OS_ERR_NONE);
+ 1132              		.loc 1 605 5 discriminator 1 view .LVU403
+ 606:./ucos/Core/os_sem.c **** }
+ 1133              		.loc 1 606 5 view .LVU404
+ 606:./ucos/Core/os_sem.c **** }
+ 1134              		.loc 1 606 12 is_stmt 0 view .LVU405
+ 1135 0046 0020     		movs	r0, #0
+ 1136 0048 E3E7     		b	.L79
+ 1137              	.LVL127:
+ 1138              	.L82:
+ 1139              	.LCFI7:
+ 1140              		.cfi_def_cfa_offset 0
+ 1141              		.cfi_restore 3
+ 1142              		.cfi_restore 4
+ 1143              		.cfi_restore 5
+ 1144              		.cfi_restore 14
+ 588:./ucos/Core/os_sem.c ****     }
+ 1145              		.loc 1 588 16 view .LVU406
+ 1146 004a 0420     		movs	r0, #4
+ 1147              	.LVL128:
+ 1148              		.loc 1 607 1 view .LVU407
+ 1149 004c 7047     		bx	lr
+ 1150              	.LVL129:
+ 1151              	.L83:
+ 1152              	.LCFI8:
+ 1153              		.cfi_def_cfa_offset 16
+ 1154              		.cfi_offset 3, -16
+ 1155              		.cfi_offset 4, -12
+ 1156              		.cfi_offset 5, -8
+ 1157              		.cfi_offset 14, -4
+ 591:./ucos/Core/os_sem.c ****     }
+ 1158              		.loc 1 591 16 view .LVU408
+ 1159 004e 0920     		movs	r0, #9
+ 1160              	.LVL130:
+ 591:./ucos/Core/os_sem.c ****     }
+ARM GAS  /tmp/ccAvEVGU.s 			page 36
+
+
+ 1161              		.loc 1 591 16 view .LVU409
+ 1162 0050 DFE7     		b	.L79
+ 1163              		.cfi_endproc
+ 1164              	.LFE6:
+ 1166              		.section	.text.OSSemSet,"ax",%progbits
+ 1167              		.align	1
+ 1168              		.global	OSSemSet
+ 1169              		.syntax unified
+ 1170              		.thumb
+ 1171              		.thumb_func
+ 1173              	OSSemSet:
+ 1174              	.LVL131:
+ 1175              	.LFB7:
+ 608:./ucos/Core/os_sem.c **** #endif                                                     /* OS_SEM_QUERY_EN                      
+ 609:./ucos/Core/os_sem.c **** 
+ 610:./ucos/Core/os_sem.c **** 
+ 611:./ucos/Core/os_sem.c **** /*
+ 612:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 613:./ucos/Core/os_sem.c **** *                                            SET SEMAPHORE
+ 614:./ucos/Core/os_sem.c **** *
+ 615:./ucos/Core/os_sem.c **** * Description: This function sets the semaphore count to the value specified as an argument.  Typic
+ 616:./ucos/Core/os_sem.c **** *              this value would be 0.
+ 617:./ucos/Core/os_sem.c **** *
+ 618:./ucos/Core/os_sem.c **** *              You would typically use this function when a semaphore is used as a signaling mechan
+ 619:./ucos/Core/os_sem.c **** *              and, you want to reset the count value.
+ 620:./ucos/Core/os_sem.c **** *
+ 621:./ucos/Core/os_sem.c **** * Arguments  : pevent     is a pointer to the event control block
+ 622:./ucos/Core/os_sem.c **** *
+ 623:./ucos/Core/os_sem.c **** *              cnt        is the new value for the semaphore count.  You would pass 0 to reset the
+ 624:./ucos/Core/os_sem.c **** *                         semaphore count.
+ 625:./ucos/Core/os_sem.c **** *
+ 626:./ucos/Core/os_sem.c **** *              perr       is a pointer to an error code returned by the function as follows:
+ 627:./ucos/Core/os_sem.c **** *
+ 628:./ucos/Core/os_sem.c **** *                            OS_ERR_NONE          The call was successful and the semaphore value w
+ 629:./ucos/Core/os_sem.c **** *                            OS_ERR_EVENT_TYPE    If you didn't pass a pointer to a semaphore.
+ 630:./ucos/Core/os_sem.c **** *                            OS_ERR_PEVENT_NULL   If 'pevent' is a NULL pointer.
+ 631:./ucos/Core/os_sem.c **** *                            OS_ERR_TASK_WAITING  If tasks are waiting on the semaphore.
+ 632:./ucos/Core/os_sem.c **** ***************************************************************************************************
+ 633:./ucos/Core/os_sem.c **** */
+ 634:./ucos/Core/os_sem.c **** 
+ 635:./ucos/Core/os_sem.c **** #if OS_SEM_SET_EN > 0u
+ 636:./ucos/Core/os_sem.c **** void  OSSemSet (OS_EVENT  *pevent,
+ 637:./ucos/Core/os_sem.c ****                 INT16U     cnt,
+ 638:./ucos/Core/os_sem.c ****                 INT8U     *perr)
+ 639:./ucos/Core/os_sem.c **** {
+ 1176              		.loc 1 639 1 is_stmt 1 view -0
+ 1177              		.cfi_startproc
+ 1178              		@ args = 0, pretend = 0, frame = 0
+ 1179              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1180              		.loc 1 639 1 is_stmt 0 view .LVU411
+ 1181 0000 70B5     		push	{r4, r5, r6, lr}
+ 1182              	.LCFI9:
+ 1183              		.cfi_def_cfa_offset 16
+ 1184              		.cfi_offset 4, -16
+ 1185              		.cfi_offset 5, -12
+ 1186              		.cfi_offset 6, -8
+ 1187              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccAvEVGU.s 			page 37
+
+
+ 1188 0002 1446     		mov	r4, r2
+ 640:./ucos/Core/os_sem.c **** #if OS_CRITICAL_METHOD == 3u                          /* Allocate storage for CPU status register  
+ 641:./ucos/Core/os_sem.c ****     OS_CPU_SR  cpu_sr = 0u;
+ 1189              		.loc 1 641 5 is_stmt 1 view .LVU412
+ 1190              	.LVL132:
+ 642:./ucos/Core/os_sem.c **** #endif
+ 643:./ucos/Core/os_sem.c **** 
+ 644:./ucos/Core/os_sem.c **** 
+ 645:./ucos/Core/os_sem.c **** 
+ 646:./ucos/Core/os_sem.c **** #ifdef OS_SAFETY_CRITICAL
+ 647:./ucos/Core/os_sem.c ****     if (perr == (INT8U *)0) {
+ 648:./ucos/Core/os_sem.c ****         OS_SAFETY_CRITICAL_EXCEPTION();
+ 649:./ucos/Core/os_sem.c ****         return;
+ 650:./ucos/Core/os_sem.c ****     }
+ 651:./ucos/Core/os_sem.c **** #endif
+ 652:./ucos/Core/os_sem.c **** 
+ 653:./ucos/Core/os_sem.c **** #if OS_ARG_CHK_EN > 0u
+ 654:./ucos/Core/os_sem.c ****     if (pevent == (OS_EVENT *)0) {                    /* Validate 'pevent'                         
+ 1191              		.loc 1 654 5 view .LVU413
+ 1192              		.loc 1 654 8 is_stmt 0 view .LVU414
+ 1193 0004 38B1     		cbz	r0, .L98
+ 1194 0006 0E46     		mov	r6, r1
+ 1195 0008 0546     		mov	r5, r0
+ 655:./ucos/Core/os_sem.c ****         *perr = OS_ERR_PEVENT_NULL;
+ 656:./ucos/Core/os_sem.c ****         return;
+ 657:./ucos/Core/os_sem.c ****     }
+ 658:./ucos/Core/os_sem.c **** #endif
+ 659:./ucos/Core/os_sem.c ****     if (pevent->OSEventType != OS_EVENT_TYPE_SEM) {   /* Validate event block type                 
+ 1196              		.loc 1 659 5 is_stmt 1 view .LVU415
+ 1197              		.loc 1 659 15 is_stmt 0 view .LVU416
+ 1198 000a 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 1199              		.loc 1 659 8 view .LVU417
+ 1200 000c 032B     		cmp	r3, #3
+ 1201 000e 05D0     		beq	.L93
+ 660:./ucos/Core/os_sem.c ****         *perr = OS_ERR_EVENT_TYPE;
+ 1202              		.loc 1 660 9 is_stmt 1 view .LVU418
+ 1203              		.loc 1 660 15 is_stmt 0 view .LVU419
+ 1204 0010 0123     		movs	r3, #1
+ 1205 0012 1370     		strb	r3, [r2]
+ 661:./ucos/Core/os_sem.c ****         return;
+ 1206              		.loc 1 661 9 is_stmt 1 view .LVU420
+ 1207              	.LVL133:
+ 1208              	.L90:
+ 662:./ucos/Core/os_sem.c ****     }
+ 663:./ucos/Core/os_sem.c ****     OS_ENTER_CRITICAL();
+ 664:./ucos/Core/os_sem.c ****     *perr = OS_ERR_NONE;
+ 665:./ucos/Core/os_sem.c ****     if (pevent->OSEventCnt > 0u) {                    /* See if semaphore already has a count      
+ 666:./ucos/Core/os_sem.c ****         pevent->OSEventCnt = cnt;                     /* Yes, set it to the new value specified.   
+ 667:./ucos/Core/os_sem.c ****     } else {                                          /* No                                        
+ 668:./ucos/Core/os_sem.c ****         if (pevent->OSEventGrp == 0u) {               /*      See if task(s) waiting?              
+ 669:./ucos/Core/os_sem.c ****             pevent->OSEventCnt = cnt;                 /*      No, OK to set the value              
+ 670:./ucos/Core/os_sem.c ****         } else {
+ 671:./ucos/Core/os_sem.c ****             *perr              = OS_ERR_TASK_WAITING;
+ 672:./ucos/Core/os_sem.c ****         }
+ 673:./ucos/Core/os_sem.c ****     }
+ 674:./ucos/Core/os_sem.c ****     OS_EXIT_CRITICAL();
+ 675:./ucos/Core/os_sem.c **** }
+ARM GAS  /tmp/ccAvEVGU.s 			page 38
+
+
+ 1209              		.loc 1 675 1 is_stmt 0 view .LVU421
+ 1210 0014 70BD     		pop	{r4, r5, r6, pc}
+ 1211              	.LVL134:
+ 1212              	.L98:
+ 655:./ucos/Core/os_sem.c ****         return;
+ 1213              		.loc 1 655 9 is_stmt 1 view .LVU422
+ 655:./ucos/Core/os_sem.c ****         return;
+ 1214              		.loc 1 655 15 is_stmt 0 view .LVU423
+ 1215 0016 0423     		movs	r3, #4
+ 1216 0018 1370     		strb	r3, [r2]
+ 656:./ucos/Core/os_sem.c ****     }
+ 1217              		.loc 1 656 9 is_stmt 1 view .LVU424
+ 1218 001a FBE7     		b	.L90
+ 1219              	.L93:
+ 663:./ucos/Core/os_sem.c ****     *perr = OS_ERR_NONE;
+ 1220              		.loc 1 663 5 view .LVU425
+ 663:./ucos/Core/os_sem.c ****     *perr = OS_ERR_NONE;
+ 1221              		.loc 1 663 5 view .LVU426
+ 1222 001c FFF7FEFF 		bl	OS_CPU_SR_Save
+ 1223              	.LVL135:
+ 663:./ucos/Core/os_sem.c ****     *perr = OS_ERR_NONE;
+ 1224              		.loc 1 663 5 discriminator 1 view .LVU427
+ 664:./ucos/Core/os_sem.c ****     if (pevent->OSEventCnt > 0u) {                    /* See if semaphore already has a count      
+ 1225              		.loc 1 664 5 view .LVU428
+ 664:./ucos/Core/os_sem.c ****     if (pevent->OSEventCnt > 0u) {                    /* See if semaphore already has a count      
+ 1226              		.loc 1 664 11 is_stmt 0 view .LVU429
+ 1227 0020 0023     		movs	r3, #0
+ 1228 0022 2370     		strb	r3, [r4]
+ 665:./ucos/Core/os_sem.c ****         pevent->OSEventCnt = cnt;                     /* Yes, set it to the new value specified.   
+ 1229              		.loc 1 665 5 is_stmt 1 view .LVU430
+ 665:./ucos/Core/os_sem.c ****         pevent->OSEventCnt = cnt;                     /* Yes, set it to the new value specified.   
+ 1230              		.loc 1 665 15 is_stmt 0 view .LVU431
+ 1231 0024 2B89     		ldrh	r3, [r5, #8]
+ 665:./ucos/Core/os_sem.c ****         pevent->OSEventCnt = cnt;                     /* Yes, set it to the new value specified.   
+ 1232              		.loc 1 665 8 view .LVU432
+ 1233 0026 1BB1     		cbz	r3, .L94
+ 666:./ucos/Core/os_sem.c ****     } else {                                          /* No                                        
+ 1234              		.loc 1 666 9 is_stmt 1 view .LVU433
+ 666:./ucos/Core/os_sem.c ****     } else {                                          /* No                                        
+ 1235              		.loc 1 666 28 is_stmt 0 view .LVU434
+ 1236 0028 2E81     		strh	r6, [r5, #8]	@ movhi
+ 1237              	.L95:
+ 674:./ucos/Core/os_sem.c **** }
+ 1238              		.loc 1 674 5 is_stmt 1 view .LVU435
+ 674:./ucos/Core/os_sem.c **** }
+ 1239              		.loc 1 674 5 view .LVU436
+ 1240 002a FFF7FEFF 		bl	OS_CPU_SR_Restore
+ 1241              	.LVL136:
+ 674:./ucos/Core/os_sem.c **** }
+ 1242              		.loc 1 674 5 discriminator 1 view .LVU437
+ 1243 002e F1E7     		b	.L90
+ 1244              	.LVL137:
+ 1245              	.L94:
+ 668:./ucos/Core/os_sem.c ****             pevent->OSEventCnt = cnt;                 /*      No, OK to set the value              
+ 1246              		.loc 1 668 9 view .LVU438
+ 668:./ucos/Core/os_sem.c ****             pevent->OSEventCnt = cnt;                 /*      No, OK to set the value              
+ 1247              		.loc 1 668 19 is_stmt 0 view .LVU439
+ARM GAS  /tmp/ccAvEVGU.s 			page 39
+
+
+ 1248 0030 AB7A     		ldrb	r3, [r5, #10]	@ zero_extendqisi2
+ 668:./ucos/Core/os_sem.c ****             pevent->OSEventCnt = cnt;                 /*      No, OK to set the value              
+ 1249              		.loc 1 668 12 view .LVU440
+ 1250 0032 0BB9     		cbnz	r3, .L96
+ 669:./ucos/Core/os_sem.c ****         } else {
+ 1251              		.loc 1 669 13 is_stmt 1 view .LVU441
+ 669:./ucos/Core/os_sem.c ****         } else {
+ 1252              		.loc 1 669 32 is_stmt 0 view .LVU442
+ 1253 0034 2E81     		strh	r6, [r5, #8]	@ movhi
+ 1254 0036 F8E7     		b	.L95
+ 1255              	.L96:
+ 671:./ucos/Core/os_sem.c ****         }
+ 1256              		.loc 1 671 13 is_stmt 1 view .LVU443
+ 671:./ucos/Core/os_sem.c ****         }
+ 1257              		.loc 1 671 32 is_stmt 0 view .LVU444
+ 1258 0038 4923     		movs	r3, #73
+ 1259 003a 2370     		strb	r3, [r4]
+ 1260 003c F5E7     		b	.L95
+ 1261              		.cfi_endproc
+ 1262              	.LFE7:
+ 1264              		.text
+ 1265              	.Letext0:
+ 1266              		.file 2 "./ucos/Ports/os_cpu.h"
+ 1267              		.file 3 "./ucos/Core/ucos_ii.h"
+ 1268              		.file 4 "./trace/SEGGER/SEGGER_SYSVIEW.h"
+ 1269              		.file 5 "./trace/uCOS-II/os_trace_events.h"
+ARM GAS  /tmp/ccAvEVGU.s 			page 40
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 os_sem.c
+     /tmp/ccAvEVGU.s:21     .text.OSSemAccept:00000000 $t
+     /tmp/ccAvEVGU.s:27     .text.OSSemAccept:00000000 OSSemAccept
+     /tmp/ccAvEVGU.s:98     .rodata.OSSemCreate.str1.4:00000000 $d
+     /tmp/ccAvEVGU.s:102    .text.OSSemCreate:00000000 $t
+     /tmp/ccAvEVGU.s:108    .text.OSSemCreate:00000000 OSSemCreate
+     /tmp/ccAvEVGU.s:197    .text.OSSemCreate:00000044 $d
+     /tmp/ccAvEVGU.s:204    .text.OSSemDel:00000000 $t
+     /tmp/ccAvEVGU.s:210    .text.OSSemDel:00000000 OSSemDel
+     /tmp/ccAvEVGU.s:466    .text.OSSemDel:000000d4 $d
+     /tmp/ccAvEVGU.s:473    .text.OSSemPend:00000000 $t
+     /tmp/ccAvEVGU.s:479    .text.OSSemPend:00000000 OSSemPend
+     /tmp/ccAvEVGU.s:717    .text.OSSemPend:000000f4 $d
+     /tmp/ccAvEVGU.s:724    .text.OSSemPendAbort:00000000 $t
+     /tmp/ccAvEVGU.s:730    .text.OSSemPendAbort:00000000 OSSemPendAbort
+     /tmp/ccAvEVGU.s:884    .text.OSSemPost:00000000 $t
+     /tmp/ccAvEVGU.s:890    .text.OSSemPost:00000000 OSSemPost
+     /tmp/ccAvEVGU.s:1033   .text.OSSemQuery:00000000 $t
+     /tmp/ccAvEVGU.s:1039   .text.OSSemQuery:00000000 OSSemQuery
+     /tmp/ccAvEVGU.s:1167   .text.OSSemSet:00000000 $t
+     /tmp/ccAvEVGU.s:1173   .text.OSSemSet:00000000 OSSemSet
+
+UNDEFINED SYMBOLS
+OS_CPU_SR_Save
+OS_CPU_SR_Restore
+OS_EventWaitListInit
+SYSVIEW_RecordU32Register
+OSIntNesting
+OSEventFreeList
+SEGGER_SYSVIEW_ShrinkId
+SEGGER_SYSVIEW_RecordU32x2
+SEGGER_SYSVIEW_RecordEndCallU32
+OS_EventTaskRdy
+OS_Sched
+OS_EventTaskWait
+OS_EventTaskRemove
+OSLockNesting
+OSTCBCur
+SEGGER_SYSVIEW_RecordU32

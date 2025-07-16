@@ -1,0 +1,261 @@
+ARM GAS  /tmp/ccwq9nSN.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"app_hooks.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./ucos/App/app_hooks.c"
+  20              		.section	.text.App_TaskCreateHook,"ax",%progbits
+  21              		.align	1
+  22              		.global	App_TaskCreateHook
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	App_TaskCreateHook:
+  28              	.LVL0:
+  29              	.LFB0:
+   1:./ucos/App/app_hooks.c **** #include  <os.h>
+   2:./ucos/App/app_hooks.c **** #if (OS_APP_HOOKS_EN > 0)
+   3:./ucos/App/app_hooks.c **** 
+   4:./ucos/App/app_hooks.c **** void  App_TaskCreateHook (OS_TCB *ptcb)
+   5:./ucos/App/app_hooks.c **** {
+  30              		.loc 1 5 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   6:./ucos/App/app_hooks.c ****     (void)ptcb;
+  35              		.loc 1 6 5 view .LVU1
+   7:./ucos/App/app_hooks.c **** }
+  36              		.loc 1 7 1 is_stmt 0 view .LVU2
+  37 0000 7047     		bx	lr
+  38              		.cfi_endproc
+  39              	.LFE0:
+  41              		.section	.text.App_TaskDelHook,"ax",%progbits
+  42              		.align	1
+  43              		.global	App_TaskDelHook
+  44              		.syntax unified
+  45              		.thumb
+  46              		.thumb_func
+  48              	App_TaskDelHook:
+  49              	.LVL1:
+  50              	.LFB1:
+   8:./ucos/App/app_hooks.c **** 
+   9:./ucos/App/app_hooks.c **** 
+  10:./ucos/App/app_hooks.c **** 
+ARM GAS  /tmp/ccwq9nSN.s 			page 2
+
+
+  11:./ucos/App/app_hooks.c **** void  App_TaskDelHook (OS_TCB *ptcb)
+  12:./ucos/App/app_hooks.c **** {
+  51              		.loc 1 12 1 is_stmt 1 view -0
+  52              		.cfi_startproc
+  53              		@ args = 0, pretend = 0, frame = 0
+  54              		@ frame_needed = 0, uses_anonymous_args = 0
+  55              		@ link register save eliminated.
+  13:./ucos/App/app_hooks.c ****     (void)ptcb;
+  56              		.loc 1 13 5 view .LVU4
+  14:./ucos/App/app_hooks.c **** }
+  57              		.loc 1 14 1 is_stmt 0 view .LVU5
+  58 0000 7047     		bx	lr
+  59              		.cfi_endproc
+  60              	.LFE1:
+  62              		.section	.text.App_TaskIdleHook,"ax",%progbits
+  63              		.align	1
+  64              		.global	App_TaskIdleHook
+  65              		.syntax unified
+  66              		.thumb
+  67              		.thumb_func
+  69              	App_TaskIdleHook:
+  70              	.LFB2:
+  15:./ucos/App/app_hooks.c **** 
+  16:./ucos/App/app_hooks.c **** 
+  17:./ucos/App/app_hooks.c **** #if OS_VERSION >= 251
+  18:./ucos/App/app_hooks.c **** void  App_TaskIdleHook (void)
+  19:./ucos/App/app_hooks.c **** {
+  71              		.loc 1 19 1 is_stmt 1 view -0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75              		@ link register save eliminated.
+  20:./ucos/App/app_hooks.c **** }
+  76              		.loc 1 20 1 view .LVU7
+  77 0000 7047     		bx	lr
+  78              		.cfi_endproc
+  79              	.LFE2:
+  81              		.section	.text.App_TaskStatHook,"ax",%progbits
+  82              		.align	1
+  83              		.global	App_TaskStatHook
+  84              		.syntax unified
+  85              		.thumb
+  86              		.thumb_func
+  88              	App_TaskStatHook:
+  89              	.LFB3:
+  21:./ucos/App/app_hooks.c **** #endif
+  22:./ucos/App/app_hooks.c **** 
+  23:./ucos/App/app_hooks.c **** 
+  24:./ucos/App/app_hooks.c **** void  App_TaskStatHook (void)
+  25:./ucos/App/app_hooks.c **** {
+  90              		.loc 1 25 1 view -0
+  91              		.cfi_startproc
+  92              		@ args = 0, pretend = 0, frame = 0
+  93              		@ frame_needed = 0, uses_anonymous_args = 0
+  94              		@ link register save eliminated.
+  26:./ucos/App/app_hooks.c **** }
+  95              		.loc 1 26 1 view .LVU9
+ARM GAS  /tmp/ccwq9nSN.s 			page 3
+
+
+  96 0000 7047     		bx	lr
+  97              		.cfi_endproc
+  98              	.LFE3:
+ 100              		.section	.text.App_TaskReturnHook,"ax",%progbits
+ 101              		.align	1
+ 102              		.global	App_TaskReturnHook
+ 103              		.syntax unified
+ 104              		.thumb
+ 105              		.thumb_func
+ 107              	App_TaskReturnHook:
+ 108              	.LVL2:
+ 109              	.LFB4:
+  27:./ucos/App/app_hooks.c **** 
+  28:./ucos/App/app_hooks.c **** 
+  29:./ucos/App/app_hooks.c **** 
+  30:./ucos/App/app_hooks.c **** #if OS_VERSION >= 289
+  31:./ucos/App/app_hooks.c **** void  App_TaskReturnHook (OS_TCB  *ptcb)
+  32:./ucos/App/app_hooks.c **** {
+ 110              		.loc 1 32 1 view -0
+ 111              		.cfi_startproc
+ 112              		@ args = 0, pretend = 0, frame = 0
+ 113              		@ frame_needed = 0, uses_anonymous_args = 0
+ 114              		@ link register save eliminated.
+  33:./ucos/App/app_hooks.c ****     (void)ptcb;
+ 115              		.loc 1 33 5 view .LVU11
+  34:./ucos/App/app_hooks.c **** }
+ 116              		.loc 1 34 1 is_stmt 0 view .LVU12
+ 117 0000 7047     		bx	lr
+ 118              		.cfi_endproc
+ 119              	.LFE4:
+ 121              		.section	.text.App_TaskSwHook,"ax",%progbits
+ 122              		.align	1
+ 123              		.global	App_TaskSwHook
+ 124              		.syntax unified
+ 125              		.thumb
+ 126              		.thumb_func
+ 128              	App_TaskSwHook:
+ 129              	.LFB5:
+  35:./ucos/App/app_hooks.c **** #endif
+  36:./ucos/App/app_hooks.c **** 
+  37:./ucos/App/app_hooks.c **** 
+  38:./ucos/App/app_hooks.c **** 
+  39:./ucos/App/app_hooks.c **** #if OS_TASK_SW_HOOK_EN > 0
+  40:./ucos/App/app_hooks.c **** void  App_TaskSwHook (void)
+  41:./ucos/App/app_hooks.c **** {
+ 130              		.loc 1 41 1 is_stmt 1 view -0
+ 131              		.cfi_startproc
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134              		@ link register save eliminated.
+  42:./ucos/App/app_hooks.c **** 
+  43:./ucos/App/app_hooks.c **** }
+ 135              		.loc 1 43 1 view .LVU14
+ 136 0000 7047     		bx	lr
+ 137              		.cfi_endproc
+ 138              	.LFE5:
+ 140              		.section	.text.App_TCBInitHook,"ax",%progbits
+ARM GAS  /tmp/ccwq9nSN.s 			page 4
+
+
+ 141              		.align	1
+ 142              		.global	App_TCBInitHook
+ 143              		.syntax unified
+ 144              		.thumb
+ 145              		.thumb_func
+ 147              	App_TCBInitHook:
+ 148              	.LVL3:
+ 149              	.LFB6:
+  44:./ucos/App/app_hooks.c **** #endif
+  45:./ucos/App/app_hooks.c **** 
+  46:./ucos/App/app_hooks.c **** 
+  47:./ucos/App/app_hooks.c **** 
+  48:./ucos/App/app_hooks.c **** #if OS_VERSION >= 204
+  49:./ucos/App/app_hooks.c **** void  App_TCBInitHook (OS_TCB *ptcb)
+  50:./ucos/App/app_hooks.c **** {
+ 150              		.loc 1 50 1 view -0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 0
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154              		@ link register save eliminated.
+  51:./ucos/App/app_hooks.c ****     (void)ptcb;
+ 155              		.loc 1 51 5 view .LVU16
+  52:./ucos/App/app_hooks.c **** }
+ 156              		.loc 1 52 1 is_stmt 0 view .LVU17
+ 157 0000 7047     		bx	lr
+ 158              		.cfi_endproc
+ 159              	.LFE6:
+ 161              		.section	.text.App_TimeTickHook,"ax",%progbits
+ 162              		.align	1
+ 163              		.global	App_TimeTickHook
+ 164              		.syntax unified
+ 165              		.thumb
+ 166              		.thumb_func
+ 168              	App_TimeTickHook:
+ 169              	.LFB7:
+  53:./ucos/App/app_hooks.c **** #endif
+  54:./ucos/App/app_hooks.c **** 
+  55:./ucos/App/app_hooks.c **** #if OS_TIME_TICK_HOOK_EN > 0
+  56:./ucos/App/app_hooks.c **** void  App_TimeTickHook (void)
+  57:./ucos/App/app_hooks.c **** {
+ 170              		.loc 1 57 1 is_stmt 1 view -0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 0
+ 173              		@ frame_needed = 0, uses_anonymous_args = 0
+ 174              		@ link register save eliminated.
+  58:./ucos/App/app_hooks.c **** 
+  59:./ucos/App/app_hooks.c **** }
+ 175              		.loc 1 59 1 view .LVU19
+ 176 0000 7047     		bx	lr
+ 177              		.cfi_endproc
+ 178              	.LFE7:
+ 180              		.text
+ 181              	.Letext0:
+ 182              		.file 2 "./ucos/Ports/os_cpu.h"
+ 183              		.file 3 "./ucos/Core/ucos_ii.h"
+ARM GAS  /tmp/ccwq9nSN.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 app_hooks.c
+     /tmp/ccwq9nSN.s:21     .text.App_TaskCreateHook:00000000 $t
+     /tmp/ccwq9nSN.s:27     .text.App_TaskCreateHook:00000000 App_TaskCreateHook
+     /tmp/ccwq9nSN.s:42     .text.App_TaskDelHook:00000000 $t
+     /tmp/ccwq9nSN.s:48     .text.App_TaskDelHook:00000000 App_TaskDelHook
+     /tmp/ccwq9nSN.s:63     .text.App_TaskIdleHook:00000000 $t
+     /tmp/ccwq9nSN.s:69     .text.App_TaskIdleHook:00000000 App_TaskIdleHook
+     /tmp/ccwq9nSN.s:82     .text.App_TaskStatHook:00000000 $t
+     /tmp/ccwq9nSN.s:88     .text.App_TaskStatHook:00000000 App_TaskStatHook
+     /tmp/ccwq9nSN.s:101    .text.App_TaskReturnHook:00000000 $t
+     /tmp/ccwq9nSN.s:107    .text.App_TaskReturnHook:00000000 App_TaskReturnHook
+     /tmp/ccwq9nSN.s:122    .text.App_TaskSwHook:00000000 $t
+     /tmp/ccwq9nSN.s:128    .text.App_TaskSwHook:00000000 App_TaskSwHook
+     /tmp/ccwq9nSN.s:141    .text.App_TCBInitHook:00000000 $t
+     /tmp/ccwq9nSN.s:147    .text.App_TCBInitHook:00000000 App_TCBInitHook
+     /tmp/ccwq9nSN.s:162    .text.App_TimeTickHook:00000000 $t
+     /tmp/ccwq9nSN.s:168    .text.App_TimeTickHook:00000000 App_TimeTickHook
+
+NO UNDEFINED SYMBOLS

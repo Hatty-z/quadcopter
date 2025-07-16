@@ -1,0 +1,651 @@
+ARM GAS  /tmp/ccrFLH1I.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"stm32f4xx_wwdg.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./Libraries/src/stm32f4xx_wwdg.c"
+  20              		.section	.text.WWDG_DeInit,"ax",%progbits
+  21              		.align	1
+  22              		.global	WWDG_DeInit
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	WWDG_DeInit:
+  28              	.LFB123:
+   1:./Libraries/src/stm32f4xx_wwdg.c **** /**
+   2:./Libraries/src/stm32f4xx_wwdg.c ****   ******************************************************************************
+   3:./Libraries/src/stm32f4xx_wwdg.c ****   * @file    stm32f4xx_wwdg.c
+   4:./Libraries/src/stm32f4xx_wwdg.c ****   * @author  MCD Application Team
+   5:./Libraries/src/stm32f4xx_wwdg.c ****   * @version V1.8.0
+   6:./Libraries/src/stm32f4xx_wwdg.c ****   * @date    04-November-2016
+   7:./Libraries/src/stm32f4xx_wwdg.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:./Libraries/src/stm32f4xx_wwdg.c ****   *          functionalities of the Window watchdog (WWDG) peripheral:           
+   9:./Libraries/src/stm32f4xx_wwdg.c ****   *           + Prescaler, Refresh window and Counter configuration
+  10:./Libraries/src/stm32f4xx_wwdg.c ****   *           + WWDG activation
+  11:./Libraries/src/stm32f4xx_wwdg.c ****   *           + Interrupts and flags management
+  12:./Libraries/src/stm32f4xx_wwdg.c ****   *             
+  13:./Libraries/src/stm32f4xx_wwdg.c ****  @verbatim    
+  14:./Libraries/src/stm32f4xx_wwdg.c ****  ===============================================================================
+  15:./Libraries/src/stm32f4xx_wwdg.c ****                            ##### WWDG features #####
+  16:./Libraries/src/stm32f4xx_wwdg.c ****  ===============================================================================
+  17:./Libraries/src/stm32f4xx_wwdg.c ****     [..]                                      
+  18:./Libraries/src/stm32f4xx_wwdg.c ****         Once enabled the WWDG generates a system reset on expiry of a programmed
+  19:./Libraries/src/stm32f4xx_wwdg.c ****         time period, unless the program refreshes the counter (downcounter) 
+  20:./Libraries/src/stm32f4xx_wwdg.c ****         before to reach 0x3F value (i.e. a reset is generated when the counter
+  21:./Libraries/src/stm32f4xx_wwdg.c ****         value rolls over from 0x40 to 0x3F). 
+  22:./Libraries/src/stm32f4xx_wwdg.c ****         An MCU reset is also generated if the counter value is refreshed
+  23:./Libraries/src/stm32f4xx_wwdg.c ****         before the counter has reached the refresh window value. This 
+  24:./Libraries/src/stm32f4xx_wwdg.c ****         implies that the counter must be refreshed in a limited window.
+  25:./Libraries/src/stm32f4xx_wwdg.c ****               
+  26:./Libraries/src/stm32f4xx_wwdg.c ****         Once enabled the WWDG cannot be disabled except by a system reset.
+  27:./Libraries/src/stm32f4xx_wwdg.c ****           
+  28:./Libraries/src/stm32f4xx_wwdg.c ****         WWDGRST flag in RCC_CSR register can be used to inform when a WWDG
+  29:./Libraries/src/stm32f4xx_wwdg.c ****         reset occurs.
+  30:./Libraries/src/stm32f4xx_wwdg.c ****              
+ARM GAS  /tmp/ccrFLH1I.s 			page 2
+
+
+  31:./Libraries/src/stm32f4xx_wwdg.c ****         The WWDG counter input clock is derived from the APB clock divided 
+  32:./Libraries/src/stm32f4xx_wwdg.c ****         by a programmable prescaler.
+  33:./Libraries/src/stm32f4xx_wwdg.c ****                 
+  34:./Libraries/src/stm32f4xx_wwdg.c ****         WWDG counter clock = PCLK1 / Prescaler
+  35:./Libraries/src/stm32f4xx_wwdg.c ****         WWDG timeout = (WWDG counter clock) * (counter value)
+  36:./Libraries/src/stm32f4xx_wwdg.c ****                        
+  37:./Libraries/src/stm32f4xx_wwdg.c ****         Min-max timeout value @42 MHz(PCLK1): ~97.5 us / ~49.9 ms
+  38:./Libraries/src/stm32f4xx_wwdg.c ****                              
+  39:./Libraries/src/stm32f4xx_wwdg.c ****                       ##### How to use this driver #####
+  40:./Libraries/src/stm32f4xx_wwdg.c ****  ===============================================================================
+  41:./Libraries/src/stm32f4xx_wwdg.c ****     [..]
+  42:./Libraries/src/stm32f4xx_wwdg.c ****       (#) Enable WWDG clock using RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE) function
+  43:./Libraries/src/stm32f4xx_wwdg.c ****               
+  44:./Libraries/src/stm32f4xx_wwdg.c ****       (#) Configure the WWDG prescaler using WWDG_SetPrescaler() function
+  45:./Libraries/src/stm32f4xx_wwdg.c ****                              
+  46:./Libraries/src/stm32f4xx_wwdg.c ****       (#) Configure the WWDG refresh window using WWDG_SetWindowValue() function
+  47:./Libraries/src/stm32f4xx_wwdg.c ****               
+  48:./Libraries/src/stm32f4xx_wwdg.c ****       (#) Set the WWDG counter value and start it using WWDG_Enable() function.
+  49:./Libraries/src/stm32f4xx_wwdg.c ****           When the WWDG is enabled the counter value should be configured to 
+  50:./Libraries/src/stm32f4xx_wwdg.c ****           a value greater than 0x40 to prevent generating an immediate reset.     
+  51:./Libraries/src/stm32f4xx_wwdg.c ****               
+  52:./Libraries/src/stm32f4xx_wwdg.c ****       (#) Optionally you can enable the Early wakeup interrupt which is 
+  53:./Libraries/src/stm32f4xx_wwdg.c ****           generated when the counter reach 0x40.
+  54:./Libraries/src/stm32f4xx_wwdg.c ****           Once enabled this interrupt cannot be disabled except by a system reset.
+  55:./Libraries/src/stm32f4xx_wwdg.c ****                   
+  56:./Libraries/src/stm32f4xx_wwdg.c ****       (#) Then the application program must refresh the WWDG counter at regular
+  57:./Libraries/src/stm32f4xx_wwdg.c ****           intervals during normal operation to prevent an MCU reset, using
+  58:./Libraries/src/stm32f4xx_wwdg.c ****           WWDG_SetCounter() function. This operation must occur only when
+  59:./Libraries/src/stm32f4xx_wwdg.c ****           the counter value is lower than the refresh window value, 
+  60:./Libraries/src/stm32f4xx_wwdg.c ****           programmed using WWDG_SetWindowValue().         
+  61:./Libraries/src/stm32f4xx_wwdg.c ****   
+  62:./Libraries/src/stm32f4xx_wwdg.c ****     @endverbatim
+  63:./Libraries/src/stm32f4xx_wwdg.c ****   ******************************************************************************
+  64:./Libraries/src/stm32f4xx_wwdg.c ****   * @attention
+  65:./Libraries/src/stm32f4xx_wwdg.c ****   *
+  66:./Libraries/src/stm32f4xx_wwdg.c ****   * <h2><center>&copy; COPYRIGHT 2016 STMicroelectronics</center></h2>
+  67:./Libraries/src/stm32f4xx_wwdg.c ****   *
+  68:./Libraries/src/stm32f4xx_wwdg.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  69:./Libraries/src/stm32f4xx_wwdg.c ****   * You may not use this file except in compliance with the License.
+  70:./Libraries/src/stm32f4xx_wwdg.c ****   * You may obtain a copy of the License at:
+  71:./Libraries/src/stm32f4xx_wwdg.c ****   *
+  72:./Libraries/src/stm32f4xx_wwdg.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  73:./Libraries/src/stm32f4xx_wwdg.c ****   *
+  74:./Libraries/src/stm32f4xx_wwdg.c ****   * Unless required by applicable law or agreed to in writing, software 
+  75:./Libraries/src/stm32f4xx_wwdg.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  76:./Libraries/src/stm32f4xx_wwdg.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  77:./Libraries/src/stm32f4xx_wwdg.c ****   * See the License for the specific language governing permissions and
+  78:./Libraries/src/stm32f4xx_wwdg.c ****   * limitations under the License.
+  79:./Libraries/src/stm32f4xx_wwdg.c ****   *
+  80:./Libraries/src/stm32f4xx_wwdg.c ****   ******************************************************************************
+  81:./Libraries/src/stm32f4xx_wwdg.c ****   */
+  82:./Libraries/src/stm32f4xx_wwdg.c **** 
+  83:./Libraries/src/stm32f4xx_wwdg.c **** /* Includes ------------------------------------------------------------------*/
+  84:./Libraries/src/stm32f4xx_wwdg.c **** #include "stm32f4xx_wwdg.h"
+  85:./Libraries/src/stm32f4xx_wwdg.c **** #include "stm32f4xx_rcc.h"
+  86:./Libraries/src/stm32f4xx_wwdg.c **** 
+  87:./Libraries/src/stm32f4xx_wwdg.c **** /** @addtogroup STM32F4xx_StdPeriph_Driver
+ARM GAS  /tmp/ccrFLH1I.s 			page 3
+
+
+  88:./Libraries/src/stm32f4xx_wwdg.c ****   * @{
+  89:./Libraries/src/stm32f4xx_wwdg.c ****   */
+  90:./Libraries/src/stm32f4xx_wwdg.c **** 
+  91:./Libraries/src/stm32f4xx_wwdg.c **** /** @defgroup WWDG 
+  92:./Libraries/src/stm32f4xx_wwdg.c ****   * @brief WWDG driver modules
+  93:./Libraries/src/stm32f4xx_wwdg.c ****   * @{
+  94:./Libraries/src/stm32f4xx_wwdg.c ****   */
+  95:./Libraries/src/stm32f4xx_wwdg.c **** 
+  96:./Libraries/src/stm32f4xx_wwdg.c **** /* Private typedef -----------------------------------------------------------*/
+  97:./Libraries/src/stm32f4xx_wwdg.c **** /* Private define ------------------------------------------------------------*/
+  98:./Libraries/src/stm32f4xx_wwdg.c **** 
+  99:./Libraries/src/stm32f4xx_wwdg.c **** /* ----------- WWDG registers bit address in the alias region ----------- */
+ 100:./Libraries/src/stm32f4xx_wwdg.c **** #define WWDG_OFFSET       (WWDG_BASE - PERIPH_BASE)
+ 101:./Libraries/src/stm32f4xx_wwdg.c **** /* Alias word address of EWI bit */
+ 102:./Libraries/src/stm32f4xx_wwdg.c **** #define CFR_OFFSET        (WWDG_OFFSET + 0x04)
+ 103:./Libraries/src/stm32f4xx_wwdg.c **** #define EWI_BitNumber     0x09
+ 104:./Libraries/src/stm32f4xx_wwdg.c **** #define CFR_EWI_BB        (PERIPH_BB_BASE + (CFR_OFFSET * 32) + (EWI_BitNumber * 4))
+ 105:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 106:./Libraries/src/stm32f4xx_wwdg.c **** /* --------------------- WWDG registers bit mask ------------------------ */
+ 107:./Libraries/src/stm32f4xx_wwdg.c **** /* CFR register bit mask */
+ 108:./Libraries/src/stm32f4xx_wwdg.c **** #define CFR_WDGTB_MASK    ((uint32_t)0xFFFFFE7F)
+ 109:./Libraries/src/stm32f4xx_wwdg.c **** #define CFR_W_MASK        ((uint32_t)0xFFFFFF80)
+ 110:./Libraries/src/stm32f4xx_wwdg.c **** #define BIT_MASK          ((uint8_t)0x7F)
+ 111:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 112:./Libraries/src/stm32f4xx_wwdg.c **** /* Private macro -------------------------------------------------------------*/
+ 113:./Libraries/src/stm32f4xx_wwdg.c **** /* Private variables ---------------------------------------------------------*/
+ 114:./Libraries/src/stm32f4xx_wwdg.c **** /* Private function prototypes -----------------------------------------------*/
+ 115:./Libraries/src/stm32f4xx_wwdg.c **** /* Private functions ---------------------------------------------------------*/
+ 116:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 117:./Libraries/src/stm32f4xx_wwdg.c **** /** @defgroup WWDG_Private_Functions
+ 118:./Libraries/src/stm32f4xx_wwdg.c ****   * @{
+ 119:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 120:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 121:./Libraries/src/stm32f4xx_wwdg.c **** /** @defgroup WWDG_Group1 Prescaler, Refresh window and Counter configuration functions
+ 122:./Libraries/src/stm32f4xx_wwdg.c ****  *  @brief   Prescaler, Refresh window and Counter configuration functions 
+ 123:./Libraries/src/stm32f4xx_wwdg.c ****  *
+ 124:./Libraries/src/stm32f4xx_wwdg.c **** @verbatim   
+ 125:./Libraries/src/stm32f4xx_wwdg.c ****  ===============================================================================
+ 126:./Libraries/src/stm32f4xx_wwdg.c ****     ##### Prescaler, Refresh window and Counter configuration functions #####
+ 127:./Libraries/src/stm32f4xx_wwdg.c ****  ===============================================================================  
+ 128:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 129:./Libraries/src/stm32f4xx_wwdg.c **** @endverbatim
+ 130:./Libraries/src/stm32f4xx_wwdg.c ****   * @{
+ 131:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 132:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 133:./Libraries/src/stm32f4xx_wwdg.c **** /**
+ 134:./Libraries/src/stm32f4xx_wwdg.c ****   * @brief  Deinitializes the WWDG peripheral registers to their default reset values.
+ 135:./Libraries/src/stm32f4xx_wwdg.c ****   * @param  None
+ 136:./Libraries/src/stm32f4xx_wwdg.c ****   * @retval None
+ 137:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 138:./Libraries/src/stm32f4xx_wwdg.c **** void WWDG_DeInit(void)
+ 139:./Libraries/src/stm32f4xx_wwdg.c **** {
+  29              		.loc 1 139 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+ARM GAS  /tmp/ccrFLH1I.s 			page 4
+
+
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+ 140:./Libraries/src/stm32f4xx_wwdg.c ****   RCC_APB1PeriphResetCmd(RCC_APB1Periph_WWDG, ENABLE);
+  38              		.loc 1 140 3 view .LVU1
+  39 0002 0121     		movs	r1, #1
+  40 0004 4FF40060 		mov	r0, #2048
+  41 0008 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  42              	.LVL0:
+ 141:./Libraries/src/stm32f4xx_wwdg.c ****   RCC_APB1PeriphResetCmd(RCC_APB1Periph_WWDG, DISABLE);
+  43              		.loc 1 141 3 view .LVU2
+  44 000c 0021     		movs	r1, #0
+  45 000e 4FF40060 		mov	r0, #2048
+  46 0012 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  47              	.LVL1:
+ 142:./Libraries/src/stm32f4xx_wwdg.c **** }
+  48              		.loc 1 142 1 is_stmt 0 view .LVU3
+  49 0016 08BD     		pop	{r3, pc}
+  50              		.cfi_endproc
+  51              	.LFE123:
+  53              		.section	.text.WWDG_SetPrescaler,"ax",%progbits
+  54              		.align	1
+  55              		.global	WWDG_SetPrescaler
+  56              		.syntax unified
+  57              		.thumb
+  58              		.thumb_func
+  60              	WWDG_SetPrescaler:
+  61              	.LVL2:
+  62              	.LFB124:
+ 143:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 144:./Libraries/src/stm32f4xx_wwdg.c **** /**
+ 145:./Libraries/src/stm32f4xx_wwdg.c ****   * @brief  Sets the WWDG Prescaler.
+ 146:./Libraries/src/stm32f4xx_wwdg.c ****   * @param  WWDG_Prescaler: specifies the WWDG Prescaler.
+ 147:./Libraries/src/stm32f4xx_wwdg.c ****   *   This parameter can be one of the following values:
+ 148:./Libraries/src/stm32f4xx_wwdg.c ****   *     @arg WWDG_Prescaler_1: WWDG counter clock = (PCLK1/4096)/1
+ 149:./Libraries/src/stm32f4xx_wwdg.c ****   *     @arg WWDG_Prescaler_2: WWDG counter clock = (PCLK1/4096)/2
+ 150:./Libraries/src/stm32f4xx_wwdg.c ****   *     @arg WWDG_Prescaler_4: WWDG counter clock = (PCLK1/4096)/4
+ 151:./Libraries/src/stm32f4xx_wwdg.c ****   *     @arg WWDG_Prescaler_8: WWDG counter clock = (PCLK1/4096)/8
+ 152:./Libraries/src/stm32f4xx_wwdg.c ****   * @retval None
+ 153:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 154:./Libraries/src/stm32f4xx_wwdg.c **** void WWDG_SetPrescaler(uint32_t WWDG_Prescaler)
+ 155:./Libraries/src/stm32f4xx_wwdg.c **** {
+  63              		.loc 1 155 1 is_stmt 1 view -0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67              		@ link register save eliminated.
+ 156:./Libraries/src/stm32f4xx_wwdg.c ****   uint32_t tmpreg = 0;
+  68              		.loc 1 156 3 view .LVU5
+ 157:./Libraries/src/stm32f4xx_wwdg.c ****   /* Check the parameters */
+ 158:./Libraries/src/stm32f4xx_wwdg.c ****   assert_param(IS_WWDG_PRESCALER(WWDG_Prescaler));
+  69              		.loc 1 158 3 view .LVU6
+ 159:./Libraries/src/stm32f4xx_wwdg.c ****   /* Clear WDGTB[1:0] bits */
+ 160:./Libraries/src/stm32f4xx_wwdg.c ****   tmpreg = WWDG->CFR & CFR_WDGTB_MASK;
+  70              		.loc 1 160 3 view .LVU7
+  71              		.loc 1 160 16 is_stmt 0 view .LVU8
+ARM GAS  /tmp/ccrFLH1I.s 			page 5
+
+
+  72 0000 034A     		ldr	r2, .L4
+  73 0002 5368     		ldr	r3, [r2, #4]
+  74              		.loc 1 160 10 view .LVU9
+  75 0004 23F4C073 		bic	r3, r3, #384
+  76              	.LVL3:
+ 161:./Libraries/src/stm32f4xx_wwdg.c ****   /* Set WDGTB[1:0] bits according to WWDG_Prescaler value */
+ 162:./Libraries/src/stm32f4xx_wwdg.c ****   tmpreg |= WWDG_Prescaler;
+  77              		.loc 1 162 3 is_stmt 1 view .LVU10
+  78              		.loc 1 162 10 is_stmt 0 view .LVU11
+  79 0008 0343     		orrs	r3, r3, r0
+  80              	.LVL4:
+ 163:./Libraries/src/stm32f4xx_wwdg.c ****   /* Store the new value */
+ 164:./Libraries/src/stm32f4xx_wwdg.c ****   WWDG->CFR = tmpreg;
+  81              		.loc 1 164 3 is_stmt 1 view .LVU12
+  82              		.loc 1 164 13 is_stmt 0 view .LVU13
+  83 000a 5360     		str	r3, [r2, #4]
+ 165:./Libraries/src/stm32f4xx_wwdg.c **** }
+  84              		.loc 1 165 1 view .LVU14
+  85 000c 7047     		bx	lr
+  86              	.L5:
+  87 000e 00BF     		.align	2
+  88              	.L4:
+  89 0010 002C0040 		.word	1073753088
+  90              		.cfi_endproc
+  91              	.LFE124:
+  93              		.section	.text.WWDG_SetWindowValue,"ax",%progbits
+  94              		.align	1
+  95              		.global	WWDG_SetWindowValue
+  96              		.syntax unified
+  97              		.thumb
+  98              		.thumb_func
+ 100              	WWDG_SetWindowValue:
+ 101              	.LVL5:
+ 102              	.LFB125:
+ 166:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 167:./Libraries/src/stm32f4xx_wwdg.c **** /**
+ 168:./Libraries/src/stm32f4xx_wwdg.c ****   * @brief  Sets the WWDG window value.
+ 169:./Libraries/src/stm32f4xx_wwdg.c ****   * @param  WindowValue: specifies the window value to be compared to the downcounter.
+ 170:./Libraries/src/stm32f4xx_wwdg.c ****   *   This parameter value must be lower than 0x80.
+ 171:./Libraries/src/stm32f4xx_wwdg.c ****   * @retval None
+ 172:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 173:./Libraries/src/stm32f4xx_wwdg.c **** void WWDG_SetWindowValue(uint8_t WindowValue)
+ 174:./Libraries/src/stm32f4xx_wwdg.c **** {
+ 103              		.loc 1 174 1 is_stmt 1 view -0
+ 104              		.cfi_startproc
+ 105              		@ args = 0, pretend = 0, frame = 8
+ 106              		@ frame_needed = 0, uses_anonymous_args = 0
+ 107              		@ link register save eliminated.
+ 108              		.loc 1 174 1 is_stmt 0 view .LVU16
+ 109 0000 82B0     		sub	sp, sp, #8
+ 110              	.LCFI1:
+ 111              		.cfi_def_cfa_offset 8
+ 175:./Libraries/src/stm32f4xx_wwdg.c ****   __IO uint32_t tmpreg = 0;
+ 112              		.loc 1 175 3 is_stmt 1 view .LVU17
+ 113              		.loc 1 175 17 is_stmt 0 view .LVU18
+ 114 0002 0023     		movs	r3, #0
+ 115 0004 0193     		str	r3, [sp, #4]
+ARM GAS  /tmp/ccrFLH1I.s 			page 6
+
+
+ 176:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 177:./Libraries/src/stm32f4xx_wwdg.c ****   /* Check the parameters */
+ 178:./Libraries/src/stm32f4xx_wwdg.c ****   assert_param(IS_WWDG_WINDOW_VALUE(WindowValue));
+ 116              		.loc 1 178 3 is_stmt 1 view .LVU19
+ 179:./Libraries/src/stm32f4xx_wwdg.c ****   /* Clear W[6:0] bits */
+ 180:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 181:./Libraries/src/stm32f4xx_wwdg.c ****   tmpreg = WWDG->CFR & CFR_W_MASK;
+ 117              		.loc 1 181 3 view .LVU20
+ 118              		.loc 1 181 16 is_stmt 0 view .LVU21
+ 119 0006 074A     		ldr	r2, .L8
+ 120 0008 5368     		ldr	r3, [r2, #4]
+ 121              		.loc 1 181 22 view .LVU22
+ 122 000a 23F07F03 		bic	r3, r3, #127
+ 123              		.loc 1 181 10 view .LVU23
+ 124 000e 0193     		str	r3, [sp, #4]
+ 182:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 183:./Libraries/src/stm32f4xx_wwdg.c ****   /* Set W[6:0] bits according to WindowValue value */
+ 184:./Libraries/src/stm32f4xx_wwdg.c ****   tmpreg |= WindowValue & (uint32_t) BIT_MASK;
+ 125              		.loc 1 184 3 is_stmt 1 view .LVU24
+ 126              		.loc 1 184 25 is_stmt 0 view .LVU25
+ 127 0010 00F07F00 		and	r0, r0, #127
+ 128              	.LVL6:
+ 129              		.loc 1 184 10 view .LVU26
+ 130 0014 019B     		ldr	r3, [sp, #4]
+ 131 0016 1843     		orrs	r0, r0, r3
+ 132 0018 0190     		str	r0, [sp, #4]
+ 185:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 186:./Libraries/src/stm32f4xx_wwdg.c ****   /* Store the new value */
+ 187:./Libraries/src/stm32f4xx_wwdg.c ****   WWDG->CFR = tmpreg;
+ 133              		.loc 1 187 3 is_stmt 1 view .LVU27
+ 134              		.loc 1 187 13 is_stmt 0 view .LVU28
+ 135 001a 019B     		ldr	r3, [sp, #4]
+ 136 001c 5360     		str	r3, [r2, #4]
+ 188:./Libraries/src/stm32f4xx_wwdg.c **** }
+ 137              		.loc 1 188 1 view .LVU29
+ 138 001e 02B0     		add	sp, sp, #8
+ 139              	.LCFI2:
+ 140              		.cfi_def_cfa_offset 0
+ 141              		@ sp needed
+ 142 0020 7047     		bx	lr
+ 143              	.L9:
+ 144 0022 00BF     		.align	2
+ 145              	.L8:
+ 146 0024 002C0040 		.word	1073753088
+ 147              		.cfi_endproc
+ 148              	.LFE125:
+ 150              		.section	.text.WWDG_EnableIT,"ax",%progbits
+ 151              		.align	1
+ 152              		.global	WWDG_EnableIT
+ 153              		.syntax unified
+ 154              		.thumb
+ 155              		.thumb_func
+ 157              	WWDG_EnableIT:
+ 158              	.LFB126:
+ 189:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 190:./Libraries/src/stm32f4xx_wwdg.c **** /**
+ 191:./Libraries/src/stm32f4xx_wwdg.c ****   * @brief  Enables the WWDG Early Wakeup interrupt(EWI).
+ARM GAS  /tmp/ccrFLH1I.s 			page 7
+
+
+ 192:./Libraries/src/stm32f4xx_wwdg.c ****   * @note   Once enabled this interrupt cannot be disabled except by a system reset.
+ 193:./Libraries/src/stm32f4xx_wwdg.c ****   * @param  None
+ 194:./Libraries/src/stm32f4xx_wwdg.c ****   * @retval None
+ 195:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 196:./Libraries/src/stm32f4xx_wwdg.c **** void WWDG_EnableIT(void)
+ 197:./Libraries/src/stm32f4xx_wwdg.c **** {
+ 159              		.loc 1 197 1 is_stmt 1 view -0
+ 160              		.cfi_startproc
+ 161              		@ args = 0, pretend = 0, frame = 0
+ 162              		@ frame_needed = 0, uses_anonymous_args = 0
+ 163              		@ link register save eliminated.
+ 198:./Libraries/src/stm32f4xx_wwdg.c ****   *(__IO uint32_t *) CFR_EWI_BB = (uint32_t)ENABLE;
+ 164              		.loc 1 198 3 view .LVU31
+ 165              		.loc 1 198 33 is_stmt 0 view .LVU32
+ 166 0000 024B     		ldr	r3, .L11
+ 167 0002 0122     		movs	r2, #1
+ 168 0004 C3F8A420 		str	r2, [r3, #164]
+ 199:./Libraries/src/stm32f4xx_wwdg.c **** }
+ 169              		.loc 1 199 1 view .LVU33
+ 170 0008 7047     		bx	lr
+ 171              	.L12:
+ 172 000a 00BF     		.align	2
+ 173              	.L11:
+ 174 000c 00800542 		.word	1107656704
+ 175              		.cfi_endproc
+ 176              	.LFE126:
+ 178              		.section	.text.WWDG_SetCounter,"ax",%progbits
+ 179              		.align	1
+ 180              		.global	WWDG_SetCounter
+ 181              		.syntax unified
+ 182              		.thumb
+ 183              		.thumb_func
+ 185              	WWDG_SetCounter:
+ 186              	.LVL7:
+ 187              	.LFB127:
+ 200:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 201:./Libraries/src/stm32f4xx_wwdg.c **** /**
+ 202:./Libraries/src/stm32f4xx_wwdg.c ****   * @brief  Sets the WWDG counter value.
+ 203:./Libraries/src/stm32f4xx_wwdg.c ****   * @param  Counter: specifies the watchdog counter value.
+ 204:./Libraries/src/stm32f4xx_wwdg.c ****   *   This parameter must be a number between 0x40 and 0x7F (to prevent generating
+ 205:./Libraries/src/stm32f4xx_wwdg.c ****   *   an immediate reset) 
+ 206:./Libraries/src/stm32f4xx_wwdg.c ****   * @retval None
+ 207:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 208:./Libraries/src/stm32f4xx_wwdg.c **** void WWDG_SetCounter(uint8_t Counter)
+ 209:./Libraries/src/stm32f4xx_wwdg.c **** {
+ 188              		.loc 1 209 1 is_stmt 1 view -0
+ 189              		.cfi_startproc
+ 190              		@ args = 0, pretend = 0, frame = 0
+ 191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 192              		@ link register save eliminated.
+ 210:./Libraries/src/stm32f4xx_wwdg.c ****   /* Check the parameters */
+ 211:./Libraries/src/stm32f4xx_wwdg.c ****   assert_param(IS_WWDG_COUNTER(Counter));
+ 193              		.loc 1 211 3 view .LVU35
+ 212:./Libraries/src/stm32f4xx_wwdg.c ****   /* Write to T[6:0] bits to configure the counter value, no need to do
+ 213:./Libraries/src/stm32f4xx_wwdg.c ****      a read-modify-write; writing a 0 to WDGA bit does nothing */
+ 214:./Libraries/src/stm32f4xx_wwdg.c ****   WWDG->CR = Counter & BIT_MASK;
+ 194              		.loc 1 214 3 view .LVU36
+ARM GAS  /tmp/ccrFLH1I.s 			page 8
+
+
+ 195              		.loc 1 214 22 is_stmt 0 view .LVU37
+ 196 0000 00F07F00 		and	r0, r0, #127
+ 197              	.LVL8:
+ 198              		.loc 1 214 12 view .LVU38
+ 199 0004 014B     		ldr	r3, .L14
+ 200 0006 1860     		str	r0, [r3]
+ 215:./Libraries/src/stm32f4xx_wwdg.c **** }
+ 201              		.loc 1 215 1 view .LVU39
+ 202 0008 7047     		bx	lr
+ 203              	.L15:
+ 204 000a 00BF     		.align	2
+ 205              	.L14:
+ 206 000c 002C0040 		.word	1073753088
+ 207              		.cfi_endproc
+ 208              	.LFE127:
+ 210              		.section	.text.WWDG_Enable,"ax",%progbits
+ 211              		.align	1
+ 212              		.global	WWDG_Enable
+ 213              		.syntax unified
+ 214              		.thumb
+ 215              		.thumb_func
+ 217              	WWDG_Enable:
+ 218              	.LVL9:
+ 219              	.LFB128:
+ 216:./Libraries/src/stm32f4xx_wwdg.c **** /**
+ 217:./Libraries/src/stm32f4xx_wwdg.c ****   * @}
+ 218:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 219:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 220:./Libraries/src/stm32f4xx_wwdg.c **** /** @defgroup WWDG_Group2 WWDG activation functions
+ 221:./Libraries/src/stm32f4xx_wwdg.c ****  *  @brief   WWDG activation functions 
+ 222:./Libraries/src/stm32f4xx_wwdg.c ****  *
+ 223:./Libraries/src/stm32f4xx_wwdg.c **** @verbatim   
+ 224:./Libraries/src/stm32f4xx_wwdg.c ****  ===============================================================================
+ 225:./Libraries/src/stm32f4xx_wwdg.c ****                     ##### WWDG activation function #####
+ 226:./Libraries/src/stm32f4xx_wwdg.c ****  ===============================================================================  
+ 227:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 228:./Libraries/src/stm32f4xx_wwdg.c **** @endverbatim
+ 229:./Libraries/src/stm32f4xx_wwdg.c ****   * @{
+ 230:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 231:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 232:./Libraries/src/stm32f4xx_wwdg.c **** /**
+ 233:./Libraries/src/stm32f4xx_wwdg.c ****   * @brief  Enables WWDG and load the counter value.                  
+ 234:./Libraries/src/stm32f4xx_wwdg.c ****   * @param  Counter: specifies the watchdog counter value.
+ 235:./Libraries/src/stm32f4xx_wwdg.c ****   *   This parameter must be a number between 0x40 and 0x7F (to prevent generating
+ 236:./Libraries/src/stm32f4xx_wwdg.c ****   *   an immediate reset)
+ 237:./Libraries/src/stm32f4xx_wwdg.c ****   * @retval None
+ 238:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 239:./Libraries/src/stm32f4xx_wwdg.c **** void WWDG_Enable(uint8_t Counter)
+ 240:./Libraries/src/stm32f4xx_wwdg.c **** {
+ 220              		.loc 1 240 1 is_stmt 1 view -0
+ 221              		.cfi_startproc
+ 222              		@ args = 0, pretend = 0, frame = 0
+ 223              		@ frame_needed = 0, uses_anonymous_args = 0
+ 224              		@ link register save eliminated.
+ 241:./Libraries/src/stm32f4xx_wwdg.c ****   /* Check the parameters */
+ 242:./Libraries/src/stm32f4xx_wwdg.c ****   assert_param(IS_WWDG_COUNTER(Counter));
+ 225              		.loc 1 242 3 view .LVU41
+ARM GAS  /tmp/ccrFLH1I.s 			page 9
+
+
+ 243:./Libraries/src/stm32f4xx_wwdg.c ****   WWDG->CR = WWDG_CR_WDGA | Counter;
+ 226              		.loc 1 243 3 view .LVU42
+ 227              		.loc 1 243 27 is_stmt 0 view .LVU43
+ 228 0000 40F08000 		orr	r0, r0, #128
+ 229              	.LVL10:
+ 230              		.loc 1 243 12 view .LVU44
+ 231 0004 014B     		ldr	r3, .L17
+ 232 0006 1860     		str	r0, [r3]
+ 244:./Libraries/src/stm32f4xx_wwdg.c **** }
+ 233              		.loc 1 244 1 view .LVU45
+ 234 0008 7047     		bx	lr
+ 235              	.L18:
+ 236 000a 00BF     		.align	2
+ 237              	.L17:
+ 238 000c 002C0040 		.word	1073753088
+ 239              		.cfi_endproc
+ 240              	.LFE128:
+ 242              		.section	.text.WWDG_GetFlagStatus,"ax",%progbits
+ 243              		.align	1
+ 244              		.global	WWDG_GetFlagStatus
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 249              	WWDG_GetFlagStatus:
+ 250              	.LFB129:
+ 245:./Libraries/src/stm32f4xx_wwdg.c **** /**
+ 246:./Libraries/src/stm32f4xx_wwdg.c ****   * @}
+ 247:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 248:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 249:./Libraries/src/stm32f4xx_wwdg.c **** /** @defgroup WWDG_Group3 Interrupts and flags management functions
+ 250:./Libraries/src/stm32f4xx_wwdg.c ****  *  @brief   Interrupts and flags management functions 
+ 251:./Libraries/src/stm32f4xx_wwdg.c ****  *
+ 252:./Libraries/src/stm32f4xx_wwdg.c **** @verbatim   
+ 253:./Libraries/src/stm32f4xx_wwdg.c ****  ===============================================================================
+ 254:./Libraries/src/stm32f4xx_wwdg.c ****             ##### Interrupts and flags management functions #####
+ 255:./Libraries/src/stm32f4xx_wwdg.c ****  ===============================================================================  
+ 256:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 257:./Libraries/src/stm32f4xx_wwdg.c **** @endverbatim
+ 258:./Libraries/src/stm32f4xx_wwdg.c ****   * @{
+ 259:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 260:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 261:./Libraries/src/stm32f4xx_wwdg.c **** /**
+ 262:./Libraries/src/stm32f4xx_wwdg.c ****   * @brief  Checks whether the Early Wakeup interrupt flag is set or not.
+ 263:./Libraries/src/stm32f4xx_wwdg.c ****   * @param  None
+ 264:./Libraries/src/stm32f4xx_wwdg.c ****   * @retval The new state of the Early Wakeup interrupt flag (SET or RESET)
+ 265:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 266:./Libraries/src/stm32f4xx_wwdg.c **** FlagStatus WWDG_GetFlagStatus(void)
+ 267:./Libraries/src/stm32f4xx_wwdg.c **** {
+ 251              		.loc 1 267 1 is_stmt 1 view -0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 0
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255              		@ link register save eliminated.
+ 268:./Libraries/src/stm32f4xx_wwdg.c ****   FlagStatus bitstatus = RESET;
+ 256              		.loc 1 268 3 view .LVU47
+ 257              	.LVL11:
+ 269:./Libraries/src/stm32f4xx_wwdg.c ****     
+ARM GAS  /tmp/ccrFLH1I.s 			page 10
+
+
+ 270:./Libraries/src/stm32f4xx_wwdg.c ****   if ((WWDG->SR) != (uint32_t)RESET)
+ 258              		.loc 1 270 3 view .LVU48
+ 259              		.loc 1 270 12 is_stmt 0 view .LVU49
+ 260 0000 034B     		ldr	r3, .L22
+ 261 0002 9B68     		ldr	r3, [r3, #8]
+ 262              		.loc 1 270 6 view .LVU50
+ 263 0004 0BB1     		cbz	r3, .L21
+ 271:./Libraries/src/stm32f4xx_wwdg.c ****   {
+ 272:./Libraries/src/stm32f4xx_wwdg.c ****     bitstatus = SET;
+ 264              		.loc 1 272 15 view .LVU51
+ 265 0006 0120     		movs	r0, #1
+ 266 0008 7047     		bx	lr
+ 267              	.L21:
+ 273:./Libraries/src/stm32f4xx_wwdg.c ****   }
+ 274:./Libraries/src/stm32f4xx_wwdg.c ****   else
+ 275:./Libraries/src/stm32f4xx_wwdg.c ****   {
+ 276:./Libraries/src/stm32f4xx_wwdg.c ****     bitstatus = RESET;
+ 268              		.loc 1 276 15 view .LVU52
+ 269 000a 0020     		movs	r0, #0
+ 270              	.LVL12:
+ 277:./Libraries/src/stm32f4xx_wwdg.c ****   }
+ 278:./Libraries/src/stm32f4xx_wwdg.c ****   return bitstatus;
+ 271              		.loc 1 278 3 is_stmt 1 view .LVU53
+ 279:./Libraries/src/stm32f4xx_wwdg.c **** }
+ 272              		.loc 1 279 1 is_stmt 0 view .LVU54
+ 273 000c 7047     		bx	lr
+ 274              	.L23:
+ 275 000e 00BF     		.align	2
+ 276              	.L22:
+ 277 0010 002C0040 		.word	1073753088
+ 278              		.cfi_endproc
+ 279              	.LFE129:
+ 281              		.section	.text.WWDG_ClearFlag,"ax",%progbits
+ 282              		.align	1
+ 283              		.global	WWDG_ClearFlag
+ 284              		.syntax unified
+ 285              		.thumb
+ 286              		.thumb_func
+ 288              	WWDG_ClearFlag:
+ 289              	.LFB130:
+ 280:./Libraries/src/stm32f4xx_wwdg.c **** 
+ 281:./Libraries/src/stm32f4xx_wwdg.c **** /**
+ 282:./Libraries/src/stm32f4xx_wwdg.c ****   * @brief  Clears Early Wakeup interrupt flag.
+ 283:./Libraries/src/stm32f4xx_wwdg.c ****   * @param  None
+ 284:./Libraries/src/stm32f4xx_wwdg.c ****   * @retval None
+ 285:./Libraries/src/stm32f4xx_wwdg.c ****   */
+ 286:./Libraries/src/stm32f4xx_wwdg.c **** void WWDG_ClearFlag(void)
+ 287:./Libraries/src/stm32f4xx_wwdg.c **** {
+ 290              		.loc 1 287 1 is_stmt 1 view -0
+ 291              		.cfi_startproc
+ 292              		@ args = 0, pretend = 0, frame = 0
+ 293              		@ frame_needed = 0, uses_anonymous_args = 0
+ 294              		@ link register save eliminated.
+ 288:./Libraries/src/stm32f4xx_wwdg.c ****   WWDG->SR = (uint32_t)RESET;
+ 295              		.loc 1 288 3 view .LVU56
+ 296              		.loc 1 288 12 is_stmt 0 view .LVU57
+ 297 0000 014B     		ldr	r3, .L25
+ARM GAS  /tmp/ccrFLH1I.s 			page 11
+
+
+ 298 0002 0022     		movs	r2, #0
+ 299 0004 9A60     		str	r2, [r3, #8]
+ 289:./Libraries/src/stm32f4xx_wwdg.c **** }
+ 300              		.loc 1 289 1 view .LVU58
+ 301 0006 7047     		bx	lr
+ 302              	.L26:
+ 303              		.align	2
+ 304              	.L25:
+ 305 0008 002C0040 		.word	1073753088
+ 306              		.cfi_endproc
+ 307              	.LFE130:
+ 309              		.text
+ 310              	.Letext0:
+ 311              		.file 2 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 312              		.file 3 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 313              		.file 4 "./system/stm32f4xx.h"
+ 314              		.file 5 "./Libraries/inc/stm32f4xx_rcc.h"
+ARM GAS  /tmp/ccrFLH1I.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f4xx_wwdg.c
+     /tmp/ccrFLH1I.s:21     .text.WWDG_DeInit:00000000 $t
+     /tmp/ccrFLH1I.s:27     .text.WWDG_DeInit:00000000 WWDG_DeInit
+     /tmp/ccrFLH1I.s:54     .text.WWDG_SetPrescaler:00000000 $t
+     /tmp/ccrFLH1I.s:60     .text.WWDG_SetPrescaler:00000000 WWDG_SetPrescaler
+     /tmp/ccrFLH1I.s:89     .text.WWDG_SetPrescaler:00000010 $d
+     /tmp/ccrFLH1I.s:94     .text.WWDG_SetWindowValue:00000000 $t
+     /tmp/ccrFLH1I.s:100    .text.WWDG_SetWindowValue:00000000 WWDG_SetWindowValue
+     /tmp/ccrFLH1I.s:146    .text.WWDG_SetWindowValue:00000024 $d
+     /tmp/ccrFLH1I.s:151    .text.WWDG_EnableIT:00000000 $t
+     /tmp/ccrFLH1I.s:157    .text.WWDG_EnableIT:00000000 WWDG_EnableIT
+     /tmp/ccrFLH1I.s:174    .text.WWDG_EnableIT:0000000c $d
+     /tmp/ccrFLH1I.s:179    .text.WWDG_SetCounter:00000000 $t
+     /tmp/ccrFLH1I.s:185    .text.WWDG_SetCounter:00000000 WWDG_SetCounter
+     /tmp/ccrFLH1I.s:206    .text.WWDG_SetCounter:0000000c $d
+     /tmp/ccrFLH1I.s:211    .text.WWDG_Enable:00000000 $t
+     /tmp/ccrFLH1I.s:217    .text.WWDG_Enable:00000000 WWDG_Enable
+     /tmp/ccrFLH1I.s:238    .text.WWDG_Enable:0000000c $d
+     /tmp/ccrFLH1I.s:243    .text.WWDG_GetFlagStatus:00000000 $t
+     /tmp/ccrFLH1I.s:249    .text.WWDG_GetFlagStatus:00000000 WWDG_GetFlagStatus
+     /tmp/ccrFLH1I.s:277    .text.WWDG_GetFlagStatus:00000010 $d
+     /tmp/ccrFLH1I.s:282    .text.WWDG_ClearFlag:00000000 $t
+     /tmp/ccrFLH1I.s:288    .text.WWDG_ClearFlag:00000000 WWDG_ClearFlag
+     /tmp/ccrFLH1I.s:305    .text.WWDG_ClearFlag:00000008 $d
+
+UNDEFINED SYMBOLS
+RCC_APB1PeriphResetCmd

@@ -1,0 +1,310 @@
+ARM GAS  /tmp/cc9hPzlY.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"SEGGER_SYSVIEW_Config_uCOSII.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c"
+  20              		.section	.rodata._cbSendSystemDesc.str1.4,"aMS",%progbits,1
+  21              		.align	2
+  22              	.LC0:
+  23 0000 4E3D4152 		.ascii	"N=ARM Cortex-M Demo,D=Cortex-M Device,O=uCOS-II\000"
+  23      4D20436F 
+  23      72746578 
+  23      2D4D2044 
+  23      656D6F2C 
+  24              		.align	2
+  25              	.LC1:
+  26 0030 49233135 		.ascii	"I#15=SysTick\000"
+  26      3D537973 
+  26      5469636B 
+  26      00
+  27 003d 000000   		.align	2
+  28              	.LC2:
+  29 0040 49233134 		.ascii	"I#14=Pend_SV\000"
+  29      3D50656E 
+  29      645F5356 
+  29      00
+  30 004d 000000   		.align	2
+  31              	.LC3:
+  32 0050 49233533 		.ascii	"I#53=USART1_IRQHandler\000"
+  32      3D555341 
+  32      5254315F 
+  32      49525148 
+  32      616E646C 
+  33 0067 00       		.align	2
+  34              	.LC4:
+  35 0068 49233435 		.ascii	"I#45=TIM3_IRQHandler\000"
+  35      3D54494D 
+  35      335F4952 
+  35      5148616E 
+  35      646C6572 
+  36              		.section	.text._cbSendSystemDesc,"ax",%progbits
+  37              		.align	1
+  38              		.syntax unified
+  39              		.thumb
+ARM GAS  /tmp/cc9hPzlY.s 			page 2
+
+
+  40              		.thumb_func
+  42              	_cbSendSystemDesc:
+  43              	.LFB0:
+   1:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** /*********************************************************************
+   2:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                    SEGGER Microcontroller GmbH                     *
+   3:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                        The Embedded Experts                        *
+   4:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** **********************************************************************
+   5:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+   6:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *            (c) 1995 - 2024 SEGGER Microcontroller GmbH             *
+   7:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+   8:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *       www.segger.com     Support: support@segger.com               *
+   9:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+  10:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** **********************************************************************
+  11:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+  12:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *       SEGGER SystemView * Real-time application analysis           *
+  13:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+  14:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** **********************************************************************
+  15:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+  16:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * All rights reserved.                                               *
+  17:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+  18:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * SEGGER strongly recommends to not make any changes                 *
+  19:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * to or modify the source code of this software in order to stay     *
+  20:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * compatible with the SystemView and RTT protocol, and J-Link.       *
+  21:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+  22:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * Redistribution and use in source and binary forms, with or         *
+  23:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * without modification, are permitted provided that the following    *
+  24:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * condition is met:                                                  *
+  25:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+  26:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * o Redistributions of source code must retain the above copyright   *
+  27:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *   notice, this condition and the following disclaimer.             *
+  28:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+  29:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND             *
+  30:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,        *
+  31:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF           *
+  32:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE           *
+  33:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * DISCLAIMED. IN NO EVENT SHALL SEGGER Microcontroller BE LIABLE FOR *
+  34:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR           *
+  35:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT  *
+  36:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;    *
+  37:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF      *
+  38:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT          *
+  39:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE  *
+  40:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH   *
+  41:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** * DAMAGE.                                                            *
+  42:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+  43:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** **********************************************************************
+  44:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+  45:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *       SystemView version: 3.60d                                    *
+  46:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *                                                                    *
+  47:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** **********************************************************************
+  48:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** -------------------------- END-OF-HEADER -----------------------------
+  49:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  50:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** File    : SEGGER_SYSVIEW_Config_uCOSII.c
+  51:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** Purpose : Sample setup configuration of SystemView with Micrium
+  52:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c ****           uC/OS-II.
+  53:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** Revision: $Rev: 9599 $
+  54:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** */
+ARM GAS  /tmp/cc9hPzlY.s 			page 3
+
+
+  55:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** #include "SEGGER_SYSVIEW.h"
+  56:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** #include "os.h"
+  57:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** //#include "cpu_core.h"
+  58:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** #include "os_cpu.h"
+  59:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** typedef unsigned char CPU_ERR;
+  60:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  61:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  62:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** #if (defined(OS_TRACE_EN) && (OS_TRACE_EN > 0u))
+  63:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  64:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** extern const SEGGER_SYSVIEW_OS_API SYSVIEW_X_OS_TraceAPI;
+  65:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  66:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** CPU_ERR  local_err;
+  67:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  68:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** /*********************************************************************
+  69:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *
+  70:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *       Defines, configurable
+  71:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *
+  72:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** **********************************************************************
+  73:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** */
+  74:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** // The application name to be displayed in SystemViewer
+  75:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** #define SYSVIEW_APP_NAME        "ARM Cortex-M Demo"
+  76:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  77:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** // The target device name
+  78:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** #define SYSVIEW_DEVICE_NAME     "Cortex-M Device"
+  79:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  80:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  81:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  82:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** // Frequency of the timestamp. Must match SEGGER_SYSVIEW_GET_TIMESTAMP in SEGGER_SYSVIEW_Conf.h
+  83:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** //#define SYSVIEW_TIMESTAMP_FREQ  (CPU_TS_TmrFreqGet(&local_err))
+  84:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  85:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** // System Frequency. SystemcoreClock is used in most CMSIS compatible projects.
+  86:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** //#define SYSVIEW_CPU_FREQ        (CPU_TS_TmrFreqGet(&local_err))
+  87:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  88:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  89:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** // Frequency of the timestamp. Must match SEGGER_SYSVIEW_GET_TIMESTAMP in SEGGER_SYSVIEW_Conf.h
+  90:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** #define SYSVIEW_TIMESTAMP_FREQ (84000000u)
+  91:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** // System Frequency. SystemcoreClock is used in most CMSIS compatible projects.
+  92:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** #define SYSVIEW_CPU_FREQ (84000000u)
+  93:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  94:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** // The lowest RAM address used for IDs (pointers)
+  95:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** #define SYSVIEW_RAM_BASE        (0x20000000)
+  96:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+  97:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** /*********************************************************************
+  98:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *
+  99:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *       _cbSendSystemDesc()
+ 100:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *
+ 101:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *  Function description
+ 102:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *    Sends SystemView description strings.
+ 103:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** */
+ 104:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** static void _cbSendSystemDesc(void) {
+  44              		.loc 1 104 37 view -0
+  45              		.cfi_startproc
+  46              		@ args = 0, pretend = 0, frame = 0
+  47              		@ frame_needed = 0, uses_anonymous_args = 0
+  48 0000 08B5     		push	{r3, lr}
+  49              	.LCFI0:
+  50              		.cfi_def_cfa_offset 8
+ARM GAS  /tmp/cc9hPzlY.s 			page 4
+
+
+  51              		.cfi_offset 3, -8
+  52              		.cfi_offset 14, -4
+ 105:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c ****   SEGGER_SYSVIEW_SendSysDesc("N="SYSVIEW_APP_NAME",D="SYSVIEW_DEVICE_NAME",O=uCOS-II");
+  53              		.loc 1 105 3 view .LVU1
+  54 0002 0948     		ldr	r0, .L3
+  55 0004 FFF7FEFF 		bl	SEGGER_SYSVIEW_SendSysDesc
+  56              	.LVL0:
+ 106:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c ****   SEGGER_SYSVIEW_SendSysDesc("I#15=SysTick");
+  57              		.loc 1 106 3 view .LVU2
+  58 0008 0848     		ldr	r0, .L3+4
+  59 000a FFF7FEFF 		bl	SEGGER_SYSVIEW_SendSysDesc
+  60              	.LVL1:
+ 107:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 	SEGGER_SYSVIEW_SendSysDesc("I#14=Pend_SV");
+  61              		.loc 1 107 2 view .LVU3
+  62 000e 0848     		ldr	r0, .L3+8
+  63 0010 FFF7FEFF 		bl	SEGGER_SYSVIEW_SendSysDesc
+  64              	.LVL2:
+ 108:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 	SEGGER_SYSVIEW_SendSysDesc("I#53=USART1_IRQHandler");
+  65              		.loc 1 108 2 view .LVU4
+  66 0014 0748     		ldr	r0, .L3+12
+  67 0016 FFF7FEFF 		bl	SEGGER_SYSVIEW_SendSysDesc
+  68              	.LVL3:
+ 109:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 	SEGGER_SYSVIEW_SendSysDesc("I#45=TIM3_IRQHandler");
+  69              		.loc 1 109 2 view .LVU5
+  70 001a 0748     		ldr	r0, .L3+16
+  71 001c FFF7FEFF 		bl	SEGGER_SYSVIEW_SendSysDesc
+  72              	.LVL4:
+ 110:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c ****   //
+ 111:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c ****   SYSVIEW_SendResourceList();
+  73              		.loc 1 111 3 view .LVU6
+  74 0020 FFF7FEFF 		bl	SYSVIEW_SendResourceList
+  75              	.LVL5:
+ 112:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** }
+  76              		.loc 1 112 1 is_stmt 0 view .LVU7
+  77 0024 08BD     		pop	{r3, pc}
+  78              	.L4:
+  79 0026 00BF     		.align	2
+  80              	.L3:
+  81 0028 00000000 		.word	.LC0
+  82 002c 30000000 		.word	.LC1
+  83 0030 40000000 		.word	.LC2
+  84 0034 50000000 		.word	.LC3
+  85 0038 68000000 		.word	.LC4
+  86              		.cfi_endproc
+  87              	.LFE0:
+  89              		.section	.text.SEGGER_SYSVIEW_Conf,"ax",%progbits
+  90              		.align	1
+  91              		.global	SEGGER_SYSVIEW_Conf
+  92              		.syntax unified
+  93              		.thumb
+  94              		.thumb_func
+  96              	SEGGER_SYSVIEW_Conf:
+  97              	.LFB1:
+ 113:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** 
+ 114:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** /*********************************************************************
+ 115:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *
+ 116:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *       Global functions
+ARM GAS  /tmp/cc9hPzlY.s 			page 5
+
+
+ 117:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** *
+ 118:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** **********************************************************************
+ 119:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** */
+ 120:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** void SEGGER_SYSVIEW_Conf(void) {
+  98              		.loc 1 120 32 is_stmt 1 view -0
+  99              		.cfi_startproc
+ 100              		@ args = 0, pretend = 0, frame = 0
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102 0000 08B5     		push	{r3, lr}
+ 103              	.LCFI1:
+ 104              		.cfi_def_cfa_offset 8
+ 105              		.cfi_offset 3, -8
+ 106              		.cfi_offset 14, -4
+ 121:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c ****   SEGGER_SYSVIEW_Init(SYSVIEW_TIMESTAMP_FREQ, SYSVIEW_CPU_FREQ,
+ 107              		.loc 1 121 3 view .LVU9
+ 108 0002 0548     		ldr	r0, .L7
+ 109 0004 054B     		ldr	r3, .L7+4
+ 110 0006 064A     		ldr	r2, .L7+8
+ 111 0008 0146     		mov	r1, r0
+ 112 000a FFF7FEFF 		bl	SEGGER_SYSVIEW_Init
+ 113              	.LVL6:
+ 122:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c ****                       &SYSVIEW_X_OS_TraceAPI, _cbSendSystemDesc);
+ 123:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c ****   SEGGER_SYSVIEW_SetRAMBase(SYSVIEW_RAM_BASE);
+ 114              		.loc 1 123 3 view .LVU10
+ 115 000e 4FF00050 		mov	r0, #536870912
+ 116 0012 FFF7FEFF 		bl	SEGGER_SYSVIEW_SetRAMBase
+ 117              	.LVL7:
+ 124:./trace/uCOS-II/SEGGER_SYSVIEW_Config_uCOSII.c **** }
+ 118              		.loc 1 124 1 is_stmt 0 view .LVU11
+ 119 0016 08BD     		pop	{r3, pc}
+ 120              	.L8:
+ 121              		.align	2
+ 122              	.L7:
+ 123 0018 00BD0105 		.word	84000000
+ 124 001c 00000000 		.word	_cbSendSystemDesc
+ 125 0020 00000000 		.word	SYSVIEW_X_OS_TraceAPI
+ 126              		.cfi_endproc
+ 127              	.LFE1:
+ 129              		.global	local_err
+ 130              		.section	.bss.local_err,"aw",%nobits
+ 133              	local_err:
+ 134 0000 00       		.space	1
+ 135              		.text
+ 136              	.Letext0:
+ 137              		.file 2 "./trace/SEGGER/SEGGER_SYSVIEW.h"
+ 138              		.file 3 "./trace/uCOS-II/os_trace_events.h"
+ARM GAS  /tmp/cc9hPzlY.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 SEGGER_SYSVIEW_Config_uCOSII.c
+     /tmp/cc9hPzlY.s:21     .rodata._cbSendSystemDesc.str1.4:00000000 $d
+     /tmp/cc9hPzlY.s:37     .text._cbSendSystemDesc:00000000 $t
+     /tmp/cc9hPzlY.s:42     .text._cbSendSystemDesc:00000000 _cbSendSystemDesc
+     /tmp/cc9hPzlY.s:81     .text._cbSendSystemDesc:00000028 $d
+     /tmp/cc9hPzlY.s:90     .text.SEGGER_SYSVIEW_Conf:00000000 $t
+     /tmp/cc9hPzlY.s:96     .text.SEGGER_SYSVIEW_Conf:00000000 SEGGER_SYSVIEW_Conf
+     /tmp/cc9hPzlY.s:123    .text.SEGGER_SYSVIEW_Conf:00000018 $d
+     /tmp/cc9hPzlY.s:133    .bss.local_err:00000000 local_err
+     /tmp/cc9hPzlY.s:134    .bss.local_err:00000000 $d
+
+UNDEFINED SYMBOLS
+SEGGER_SYSVIEW_SendSysDesc
+SYSVIEW_SendResourceList
+SEGGER_SYSVIEW_Init
+SEGGER_SYSVIEW_SetRAMBase
+SYSVIEW_X_OS_TraceAPI

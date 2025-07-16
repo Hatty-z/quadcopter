@@ -1,0 +1,422 @@
+ARM GAS  /tmp/ccguNTQg.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"Final.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "./Hardware/Final.c"
+  20              		.section	.text.ALL_Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	ALL_Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	ALL_Init:
+  28              	.LFB126:
+   1:./Hardware/Final.c **** #include "stm32f4xx.h"                  // Device header
+   2:./Hardware/Final.c **** #include "GY86.h"
+   3:./Hardware/Final.c **** #include "MOTOR.h"
+   4:./Hardware/Final.c **** #include "BLUETOOTH.h"
+   5:./Hardware/Final.c **** #include "OLED.h"
+   6:./Hardware/Final.c **** #include "PPM.h"
+   7:./Hardware/Final.c **** #include "Delay.h"
+   8:./Hardware/Final.c **** #include <stdio.h>
+   9:./Hardware/Final.c **** #include <stdbool.h>
+  10:./Hardware/Final.c **** 
+  11:./Hardware/Final.c **** uint16_t PPM[8];
+  12:./Hardware/Final.c **** uint8_t RxData;
+  13:./Hardware/Final.c **** 
+  14:./Hardware/Final.c **** MPU6050_DataTypeDef MPU6050_Data;
+  15:./Hardware/Final.c **** HMC5883L_DataTypeDef HMC_Data;
+  16:./Hardware/Final.c **** 
+  17:./Hardware/Final.c **** void ALL_Init(void)
+  18:./Hardware/Final.c **** {
+  29              		.loc 1 18 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  19:./Hardware/Final.c **** 	MOTOR_Init();
+  38              		.loc 1 19 2 view .LVU1
+  39 0002 FFF7FEFF 		bl	MOTOR_Init
+ARM GAS  /tmp/ccguNTQg.s 			page 2
+
+
+  40              	.LVL0:
+  20:./Hardware/Final.c **** 	TIM_DELAY_INIT();
+  41              		.loc 1 20 2 view .LVU2
+  42 0006 FFF7FEFF 		bl	TIM_DELAY_INIT
+  43              	.LVL1:
+  21:./Hardware/Final.c **** 	Unlock_ALL_ESC();
+  44              		.loc 1 21 2 view .LVU3
+  45 000a FFF7FEFF 		bl	Unlock_ALL_ESC
+  46              	.LVL2:
+  22:./Hardware/Final.c **** 	GY86_Init();
+  47              		.loc 1 22 2 view .LVU4
+  48 000e FFF7FEFF 		bl	GY86_Init
+  49              	.LVL3:
+  23:./Hardware/Final.c **** 	OLED_Init();
+  50              		.loc 1 23 2 view .LVU5
+  51 0012 FFF7FEFF 		bl	OLED_Init
+  52              	.LVL4:
+  24:./Hardware/Final.c **** 	PPM_Init();
+  53              		.loc 1 24 2 view .LVU6
+  54 0016 FFF7FEFF 		bl	PPM_Init
+  55              	.LVL5:
+  25:./Hardware/Final.c **** 	bluetooth_Init(9600);
+  56              		.loc 1 25 2 view .LVU7
+  57 001a 4FF41650 		mov	r0, #9600
+  58 001e FFF7FEFF 		bl	bluetooth_Init
+  59              	.LVL6:
+  26:./Hardware/Final.c **** }
+  60              		.loc 1 26 1 is_stmt 0 view .LVU8
+  61 0022 08BD     		pop	{r3, pc}
+  62              		.cfi_endproc
+  63              	.LFE126:
+  65              		.section	.rodata.GY86_Show.str1.4,"aMS",%progbits,1
+  66              		.align	2
+  67              	.LC0:
+  68 0000 41583A25 		.ascii	"AX:%d AY:%d AZ:%d GX:%d GY:%d GZ:%d MX:%d MY:%d MZ:"
+  68      64204159 
+  68      3A256420 
+  68      415A3A25 
+  68      64204758 
+  69 0033 25640D0A 		.ascii	"%d\015\012\000"
+  69      00
+  70              		.section	.text.GY86_Show,"ax",%progbits
+  71              		.align	1
+  72              		.global	GY86_Show
+  73              		.syntax unified
+  74              		.thumb
+  75              		.thumb_func
+  77              	GY86_Show:
+  78              	.LFB127:
+  27:./Hardware/Final.c **** 
+  28:./Hardware/Final.c **** void GY86_Show(void)	
+  29:./Hardware/Final.c **** {
+  79              		.loc 1 29 1 is_stmt 1 view -0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 64
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ARM GAS  /tmp/ccguNTQg.s 			page 3
+
+
+  84              	.LCFI1:
+  85              		.cfi_def_cfa_offset 20
+  86              		.cfi_offset 4, -20
+  87              		.cfi_offset 5, -16
+  88              		.cfi_offset 6, -12
+  89              		.cfi_offset 7, -8
+  90              		.cfi_offset 14, -4
+  91 0002 99B0     		sub	sp, sp, #100
+  92              	.LCFI2:
+  93              		.cfi_def_cfa_offset 120
+  30:./Hardware/Final.c **** 	char txBuf[64];
+  94              		.loc 1 30 2 view .LVU10
+  31:./Hardware/Final.c **** 	MPU6050_GetData(&MPU6050_Data);
+  95              		.loc 1 31 2 view .LVU11
+  96 0004 194C     		ldr	r4, .L7
+  97 0006 2046     		mov	r0, r4
+  98 0008 FFF7FEFF 		bl	MPU6050_GetData
+  99              	.LVL7:
+  32:./Hardware/Final.c **** 	HMC5883L_GetData(&HMC_Data);
+ 100              		.loc 1 32 2 view .LVU12
+ 101 000c 184D     		ldr	r5, .L7+4
+ 102 000e 2846     		mov	r0, r5
+ 103 0010 FFF7FEFF 		bl	HMC5883L_GetData
+ 104              	.LVL8:
+  33:./Hardware/Final.c **** //	switch(RxData)
+  34:./Hardware/Final.c **** //	{
+  35:./Hardware/Final.c **** //		case 01:
+  36:./Hardware/Final.c **** //		{
+  37:./Hardware/Final.c **** //			OLED_ShowString(1, 1, "AccX: ");
+  38:./Hardware/Final.c **** //			OLED_ShowString(2, 1, "AccY: ");
+  39:./Hardware/Final.c **** //			OLED_ShowString(3, 1, "AccZ: ");
+  40:./Hardware/Final.c **** //			OLED_ShowSignedNum(1, 7, MPU6050_Data.Acc_X, 5);
+  41:./Hardware/Final.c **** //			OLED_ShowSignedNum(2, 7, MPU6050_Data.Acc_Y, 5);
+  42:./Hardware/Final.c **** //			OLED_ShowSignedNum(3, 7, MPU6050_Data.Acc_Z, 5);
+  43:./Hardware/Final.c **** //			break;
+  44:./Hardware/Final.c **** //		}
+  45:./Hardware/Final.c **** //		case 02:
+  46:./Hardware/Final.c **** //		{
+  47:./Hardware/Final.c **** //			OLED_ShowString(1, 1, "GyroX:");
+  48:./Hardware/Final.c **** //			OLED_ShowString(2, 1, "GyroY:");
+  49:./Hardware/Final.c **** //			OLED_ShowString(3, 1, "GyroZ:");
+  50:./Hardware/Final.c **** //			OLED_ShowSignedNum(1, 7, MPU6050_Data.Gyro_X, 5);
+  51:./Hardware/Final.c **** //			OLED_ShowSignedNum(2, 7, MPU6050_Data.Gyro_Y, 5);
+  52:./Hardware/Final.c **** //			OLED_ShowSignedNum(3, 7, MPU6050_Data.Gyro_Z, 5);
+  53:./Hardware/Final.c **** //			break;
+  54:./Hardware/Final.c **** //		}
+  55:./Hardware/Final.c **** //		case 03:
+  56:./Hardware/Final.c **** //		{
+  57:./Hardware/Final.c **** //			OLED_ShowString(1, 1, "MagX: ");
+  58:./Hardware/Final.c **** //			OLED_ShowString(2, 1, "MagY: ");
+  59:./Hardware/Final.c **** //			OLED_ShowString(3, 1, "MagZ: ");
+  60:./Hardware/Final.c **** //			OLED_ShowSignedNum(1, 7, HMC_Data.Mag_X, 5);
+  61:./Hardware/Final.c **** //			OLED_ShowSignedNum(2, 7, HMC_Data.Mag_Y, 5);
+  62:./Hardware/Final.c **** //			OLED_ShowSignedNum(3, 7, HMC_Data.Mag_Z, 5);
+  63:./Hardware/Final.c **** //			break;
+  64:./Hardware/Final.c **** //		}
+  65:./Hardware/Final.c **** //	}
+ARM GAS  /tmp/ccguNTQg.s 			page 4
+
+
+  66:./Hardware/Final.c **** 
+  67:./Hardware/Final.c **** 	
+  68:./Hardware/Final.c **** 	sprintf(txBuf, "AX:%d AY:%d AZ:%d GX:%d GY:%d GZ:%d MX:%d MY:%d MZ:%d\r\n",
+ 105              		.loc 1 68 2 view .LVU13
+  69:./Hardware/Final.c ****                 MPU6050_Data.Acc_X,
+  70:./Hardware/Final.c ****                 MPU6050_Data.Acc_Y,
+  71:./Hardware/Final.c ****                 MPU6050_Data.Acc_Z,
+ 106              		.loc 1 71 29 is_stmt 0 view .LVU14
+ 107 0014 B4F90430 		ldrsh	r3, [r4, #4]
+  72:./Hardware/Final.c ****                 MPU6050_Data.Gyro_X,
+ 108              		.loc 1 72 29 view .LVU15
+ 109 0018 B4F90620 		ldrsh	r2, [r4, #6]
+  73:./Hardware/Final.c ****                 MPU6050_Data.Gyro_Y,
+ 110              		.loc 1 73 29 view .LVU16
+ 111 001c B4F90810 		ldrsh	r1, [r4, #8]
+  74:./Hardware/Final.c ****                 MPU6050_Data.Gyro_Z,
+ 112              		.loc 1 74 29 view .LVU17
+ 113 0020 B4F90A00 		ldrsh	r0, [r4, #10]
+  75:./Hardware/Final.c **** 								HMC_Data.Mag_X,
+ 114              		.loc 1 75 17 view .LVU18
+ 115 0024 B5F90060 		ldrsh	r6, [r5]
+  76:./Hardware/Final.c **** 								HMC_Data.Mag_Y,
+ 116              		.loc 1 76 17 view .LVU19
+ 117 0028 B5F90270 		ldrsh	r7, [r5, #2]
+  77:./Hardware/Final.c **** 								HMC_Data.Mag_Z);
+ 118              		.loc 1 77 17 view .LVU20
+ 119 002c B5F90450 		ldrsh	r5, [r5, #4]
+  68:./Hardware/Final.c ****                 MPU6050_Data.Acc_X,
+ 120              		.loc 1 68 2 view .LVU21
+ 121 0030 0695     		str	r5, [sp, #24]
+ 122 0032 0597     		str	r7, [sp, #20]
+ 123 0034 0496     		str	r6, [sp, #16]
+ 124 0036 0390     		str	r0, [sp, #12]
+ 125 0038 0291     		str	r1, [sp, #8]
+ 126 003a 0192     		str	r2, [sp, #4]
+ 127 003c 0093     		str	r3, [sp]
+ 128 003e B4F90230 		ldrsh	r3, [r4, #2]
+ 129 0042 B4F90020 		ldrsh	r2, [r4]
+ 130 0046 0B49     		ldr	r1, .L7+8
+ 131 0048 08A8     		add	r0, sp, #32
+ 132 004a FFF7FEFF 		bl	sprintf
+ 133              	.LVL9:
+  78:./Hardware/Final.c **** 
+  79:./Hardware/Final.c **** 		for(uint8_t i = 0; txBuf[i] != '\0'; i++){
+ 134              		.loc 1 79 3 is_stmt 1 view .LVU22
+ 135              	.LBB2:
+ 136              		.loc 1 79 7 view .LVU23
+ 137              		.loc 1 79 15 is_stmt 0 view .LVU24
+ 138 004e 0024     		movs	r4, #0
+ 139              		.loc 1 79 3 view .LVU25
+ 140 0050 03E0     		b	.L4
+ 141              	.LVL10:
+ 142              	.L5:
+  80:./Hardware/Final.c **** 				USART_SendByte(txBuf[i]);
+ 143              		.loc 1 80 5 is_stmt 1 view .LVU26
+ 144 0052 FFF7FEFF 		bl	USART_SendByte
+ 145              	.LVL11:
+ARM GAS  /tmp/ccguNTQg.s 			page 5
+
+
+  79:./Hardware/Final.c **** 				USART_SendByte(txBuf[i]);
+ 146              		.loc 1 79 41 discriminator 3 view .LVU27
+ 147 0056 0134     		adds	r4, r4, #1
+ 148              	.LVL12:
+  79:./Hardware/Final.c **** 				USART_SendByte(txBuf[i]);
+ 149              		.loc 1 79 41 is_stmt 0 discriminator 3 view .LVU28
+ 150 0058 E4B2     		uxtb	r4, r4
+ 151              	.LVL13:
+ 152              	.L4:
+  79:./Hardware/Final.c **** 				USART_SendByte(txBuf[i]);
+ 153              		.loc 1 79 31 is_stmt 1 discriminator 1 view .LVU29
+  79:./Hardware/Final.c **** 				USART_SendByte(txBuf[i]);
+ 154              		.loc 1 79 27 is_stmt 0 discriminator 1 view .LVU30
+ 155 005a 04F16003 		add	r3, r4, #96
+ 156 005e 6B44     		add	r3, sp, r3
+ 157 0060 13F8400C 		ldrb	r0, [r3, #-64]	@ zero_extendqisi2
+  79:./Hardware/Final.c **** 				USART_SendByte(txBuf[i]);
+ 158              		.loc 1 79 31 discriminator 1 view .LVU31
+ 159 0064 0028     		cmp	r0, #0
+ 160 0066 F4D1     		bne	.L5
+ 161              	.LBE2:
+  81:./Hardware/Final.c **** 		}
+  82:./Hardware/Final.c **** }
+ 162              		.loc 1 82 1 view .LVU32
+ 163 0068 19B0     		add	sp, sp, #100
+ 164              	.LCFI3:
+ 165              		.cfi_def_cfa_offset 20
+ 166              		@ sp needed
+ 167 006a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 168              	.LVL14:
+ 169              	.L8:
+ 170              		.loc 1 82 1 view .LVU33
+ 171              		.align	2
+ 172              	.L7:
+ 173 006c 00000000 		.word	MPU6050_Data
+ 174 0070 00000000 		.word	HMC_Data
+ 175 0074 00000000 		.word	.LC0
+ 176              		.cfi_endproc
+ 177              	.LFE127:
+ 179              		.section	.text.PWM_TEST,"ax",%progbits
+ 180              		.align	1
+ 181              		.global	PWM_TEST
+ 182              		.syntax unified
+ 183              		.thumb
+ 184              		.thumb_func
+ 186              	PWM_TEST:
+ 187              	.LFB128:
+  83:./Hardware/Final.c **** 
+  84:./Hardware/Final.c **** //void test(void)
+  85:./Hardware/Final.c **** //{
+  86:./Hardware/Final.c **** //	GY86_Show();
+  87:./Hardware/Final.c **** //	PWM_SetCompare(1, PPM[2]);
+  88:./Hardware/Final.c **** //	PWM_SetCompare(2, PPM[2]);
+  89:./Hardware/Final.c **** //	PWM_SetCompare(3, PPM[2]);
+  90:./Hardware/Final.c **** //	PWM_SetCompare(4, PPM[2]);
+  91:./Hardware/Final.c **** //}
+  92:./Hardware/Final.c **** 
+ARM GAS  /tmp/ccguNTQg.s 			page 6
+
+
+  93:./Hardware/Final.c **** void PWM_TEST(void){
+ 188              		.loc 1 93 20 is_stmt 1 view -0
+ 189              		.cfi_startproc
+ 190              		@ args = 0, pretend = 0, frame = 0
+ 191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 192 0000 10B5     		push	{r4, lr}
+ 193              	.LCFI4:
+ 194              		.cfi_def_cfa_offset 8
+ 195              		.cfi_offset 4, -8
+ 196              		.cfi_offset 14, -4
+  94:./Hardware/Final.c **** 	PWM_SetCompare(1, PPM[2]);
+ 197              		.loc 1 94 2 view .LVU35
+ 198 0002 094C     		ldr	r4, .L11
+ 199 0004 A188     		ldrh	r1, [r4, #4]
+ 200 0006 0120     		movs	r0, #1
+ 201 0008 FFF7FEFF 		bl	PWM_SetCompare
+ 202              	.LVL15:
+  95:./Hardware/Final.c **** 	PWM_SetCompare(2, PPM[2]);
+ 203              		.loc 1 95 2 view .LVU36
+ 204 000c A188     		ldrh	r1, [r4, #4]
+ 205 000e 0220     		movs	r0, #2
+ 206 0010 FFF7FEFF 		bl	PWM_SetCompare
+ 207              	.LVL16:
+  96:./Hardware/Final.c **** 	PWM_SetCompare(3, PPM[2]);
+ 208              		.loc 1 96 2 view .LVU37
+ 209 0014 A188     		ldrh	r1, [r4, #4]
+ 210 0016 0320     		movs	r0, #3
+ 211 0018 FFF7FEFF 		bl	PWM_SetCompare
+ 212              	.LVL17:
+  97:./Hardware/Final.c **** 	PWM_SetCompare(4, PPM[2]);
+ 213              		.loc 1 97 2 view .LVU38
+ 214 001c A188     		ldrh	r1, [r4, #4]
+ 215 001e 0420     		movs	r0, #4
+ 216 0020 FFF7FEFF 		bl	PWM_SetCompare
+ 217              	.LVL18:
+  98:./Hardware/Final.c **** }
+ 218              		.loc 1 98 1 is_stmt 0 view .LVU39
+ 219 0024 10BD     		pop	{r4, pc}
+ 220              	.L12:
+ 221 0026 00BF     		.align	2
+ 222              	.L11:
+ 223 0028 00000000 		.word	PPM
+ 224              		.cfi_endproc
+ 225              	.LFE128:
+ 227              		.global	HMC_Data
+ 228              		.section	.bss.HMC_Data,"aw",%nobits
+ 229              		.align	2
+ 232              	HMC_Data:
+ 233 0000 00000000 		.space	6
+ 233      0000
+ 234              		.global	MPU6050_Data
+ 235              		.section	.bss.MPU6050_Data,"aw",%nobits
+ 236              		.align	2
+ 239              	MPU6050_Data:
+ 240 0000 00000000 		.space	12
+ 240      00000000 
+ 240      00000000 
+ARM GAS  /tmp/ccguNTQg.s 			page 7
+
+
+ 241              		.global	RxData
+ 242              		.section	.bss.RxData,"aw",%nobits
+ 245              	RxData:
+ 246 0000 00       		.space	1
+ 247              		.global	PPM
+ 248              		.section	.bss.PPM,"aw",%nobits
+ 249              		.align	2
+ 252              	PPM:
+ 253 0000 00000000 		.space	16
+ 253      00000000 
+ 253      00000000 
+ 253      00000000 
+ 254              		.text
+ 255              	.Letext0:
+ 256              		.file 2 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 257              		.file 3 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/sys/_stdint.h"
+ 258              		.file 4 "./Hardware/GY86.h"
+ 259              		.file 5 "./Hardware/BLUETOOTH.h"
+ 260              		.file 6 "./Hardware/MOTOR.h"
+ 261              		.file 7 "./Hardware/PPM.h"
+ 262              		.file 8 "./Hardware/OLED.h"
+ 263              		.file 9 "./User/Delay.h"
+ 264              		.file 10 "/opt/gcc-arm-none-eabi/arm-none-eabi/include/stdio.h"
+ARM GAS  /tmp/ccguNTQg.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 Final.c
+     /tmp/ccguNTQg.s:21     .text.ALL_Init:00000000 $t
+     /tmp/ccguNTQg.s:27     .text.ALL_Init:00000000 ALL_Init
+     /tmp/ccguNTQg.s:66     .rodata.GY86_Show.str1.4:00000000 $d
+     /tmp/ccguNTQg.s:71     .text.GY86_Show:00000000 $t
+     /tmp/ccguNTQg.s:77     .text.GY86_Show:00000000 GY86_Show
+     /tmp/ccguNTQg.s:173    .text.GY86_Show:0000006c $d
+     /tmp/ccguNTQg.s:239    .bss.MPU6050_Data:00000000 MPU6050_Data
+     /tmp/ccguNTQg.s:232    .bss.HMC_Data:00000000 HMC_Data
+     /tmp/ccguNTQg.s:180    .text.PWM_TEST:00000000 $t
+     /tmp/ccguNTQg.s:186    .text.PWM_TEST:00000000 PWM_TEST
+     /tmp/ccguNTQg.s:223    .text.PWM_TEST:00000028 $d
+     /tmp/ccguNTQg.s:252    .bss.PPM:00000000 PPM
+     /tmp/ccguNTQg.s:229    .bss.HMC_Data:00000000 $d
+     /tmp/ccguNTQg.s:236    .bss.MPU6050_Data:00000000 $d
+     /tmp/ccguNTQg.s:245    .bss.RxData:00000000 RxData
+     /tmp/ccguNTQg.s:246    .bss.RxData:00000000 $d
+     /tmp/ccguNTQg.s:249    .bss.PPM:00000000 $d
+
+UNDEFINED SYMBOLS
+MOTOR_Init
+TIM_DELAY_INIT
+Unlock_ALL_ESC
+GY86_Init
+OLED_Init
+PPM_Init
+bluetooth_Init
+MPU6050_GetData
+HMC5883L_GetData
+sprintf
+USART_SendByte
+PWM_SetCompare
