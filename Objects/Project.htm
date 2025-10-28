@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Project.elf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Project.elf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Tue Oct 28 13:59:06 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Tue Oct 28 15:20:28 2025
 <BR><P>
 <H3>Maximum Stack Usage =        344 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -517,12 +517,12 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetClocksFreq
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDA_W
-<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDA_R
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCL_W
-<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
+<BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_W_SDA
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_W_SCL
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDA_W
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDA_R
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCL_W
 </UL>
 
 <P><STRONG><a name="[84]"></a>GPIO_Config</STRONG> (Thumb, 90 bytes, Stack size 0 bytes, pwm.o(i.GPIO_Config))
@@ -532,9 +532,9 @@ Global Symbols
 <P><STRONG><a name="[8f]"></a>GPIO_Init</STRONG> (Thumb, 144 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(i.GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyI2C_Init
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PPM_Init
+<BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PPM_Init
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_I2C_Init
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyI2C_Init
 </UL>
 
 <P><STRONG><a name="[a0]"></a>GPIO_PinAFConfig</STRONG> (Thumb, 70 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(i.GPIO_PinAFConfig))
@@ -552,10 +552,10 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[9e]"></a>GPIO_WriteBit</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(i.GPIO_WriteBit))
-<BR><BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDA_W
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCL_W
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_W_SDA
+<BR><BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_W_SDA
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_W_SCL
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDA_W
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCL_W
 </UL>
 
 <P><STRONG><a name="[6c]"></a>GY86_Init</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, gy86.o(i.GY86_Init))
@@ -916,9 +916,9 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(RESET)
 </UL>
 <P><STRONG><a name="[8e]"></a>RCC_AHB1PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyI2C_Init
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PPM_Init
+<BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PPM_Init
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_I2C_Init
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyI2C_Init
 </UL>
 
 <P><STRONG><a name="[9f]"></a>RCC_APB1PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd))
