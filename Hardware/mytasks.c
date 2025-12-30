@@ -38,13 +38,13 @@ void Task_Startup(void *p_arg)
     OSTaskNameSet(TASK_STARTUP_PRIO, (INT8U *)"Task_Startup", &Task_Startup_err);
 
     Board_Init();
+	Sem_Init();
 
     OSTaskCreate(Task_Attitude, (void *)0, (OS_STK *)&Task_AttitudeStk[TASK_STK_SIZE-1], TASK_ATTITUDE_PRIO);
     OSTaskCreate(Task_Outer, (void *)0, (OS_STK *)&Task_OuterStk[TASK_STK_SIZE-1], TASK_OUTER_PRIO);
     OSTaskCreate(Task_Inner, (void *)0, (OS_STK *)&Task_InnerStk[TASK_STK_SIZE-1], TASK_INNER_PRIO);
     OSTaskCreate(Task_COM, (void *)0, (OS_STK *)&Task_COMStk[TASK_STK_SIZE-1], TASK_COM_PRIO);
 //	OSTaskCreate(Task_Display, (void *)0, (OS_STK *)&Task_DisplayStk[TASK_STK_SIZE-1], TASK_DISPLAY_PRIO);
-	Sem_Init();
 
     OSTaskDel(TASK_STARTUP_PRIO);
 }
@@ -52,6 +52,8 @@ void Task_Startup(void *p_arg)
 //姿态解算任务
 void Task_Attitude(void *p_arg)
 {
+    printf("Task_Attitude Running...\n");
+
     INT8U Task_Attitude_err;
     OSTaskNameSet(TASK_ATTITUDE_PRIO, (INT8U *)"Task_Attitude", &Task_Attitude_err);
 
@@ -81,6 +83,8 @@ void Task_Attitude(void *p_arg)
 //外环控制任务
 void Task_Outer(void *p_arg)
 {
+    printf("Task_Outer Running...\n");
+
     INT8U Task_Outer_err;
     OSTaskNameSet(TASK_OUTER_PRIO, (INT8U *)"Task_Outer", &Task_Outer_err);
     
@@ -115,6 +119,8 @@ void Task_Outer(void *p_arg)
 
 void Task_Inner(void *p_arg)
 {
+    printf("Task_Inner Running...\n");
+
     INT8U Task_Inner_err;
     OSTaskNameSet(TASK_INNER_PRIO, (INT8U *)"Task_Inner", &Task_Inner_err);
 
@@ -146,6 +152,8 @@ void Task_Inner(void *p_arg)
 //蓝牙通信任务
 void Task_COM(void *p_arg)
 {
+    printf("Task_COM Running...\n");
+
     INT8U Task_COM_err;
     OSTaskNameSet(TASK_COM_PRIO, (INT8U *)"Task_COM", &Task_COM_err);
 

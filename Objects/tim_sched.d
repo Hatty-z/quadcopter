@@ -7,10 +7,13 @@
 .\objects\tim_sched.o: .\Library\stm32f4xx_rcc.h
 .\objects\tim_sched.o: .\Library\stm32f4xx_tim.h
 .\objects\tim_sched.o: .\Library\misc.h
+.\objects\tim_sched.o: .\Hardware\usart.h
+.\objects\tim_sched.o: .\Library\stm32f4xx_gpio.h
+.\objects\tim_sched.o: .\Library\stm32f4xx_usart.h
+.\objects\tim_sched.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\tim_sched.o: .\core\ucos_ii.h
 .\objects\tim_sched.o: .\app\app_cfg.h
 .\objects\tim_sched.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdarg.h
-.\objects\tim_sched.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\tim_sched.o: .\app\os_cfg.h
 .\objects\tim_sched.o: .\ports\os_cpu.h
 .\objects\tim_sched.o: .\core\os_trace.h

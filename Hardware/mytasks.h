@@ -4,7 +4,7 @@
 #include "Final.h"
 #include "ucos_ii.h"
 
-#define  TASK_STARTUP_PRIO  8   
+#define  TASK_STARTUP_PRIO  3   
 #define  TASK_ATTITUDE_PRIO    5
 #define  TASK_COM_PRIO      7
 #define  TASK_INNER_PRIO    4

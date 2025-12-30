@@ -1,7 +1,4 @@
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\Keil5\ARM\ARMCC\Bin'
 Build target 'Target 1'
-compiling mytasks.c...
-linking...
-Program Size: Code=29828 RO-data=1272 RW-data=240 ZI-data=20816  
 ".\Objects\ucosii.axf" - 0 Error(s), 0 Warning(s).
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:05

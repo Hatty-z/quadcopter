@@ -107,56 +107,56 @@ void QuadPID_Init(Quad_TypeDef *quad)
 }
 
 // 四轴PID更新函数
-void QuadPID_Update(Quad_TypeDef *quad, float roll, float pitch, float yaw, 
-                   float rollRate, float pitchRate, float yawRate, 
-                   uint16_t *ppm, float dt)
-{
-    // 更新当前姿态数据
-    quad->roll = roll;
-    quad->pitch = pitch;
-    quad->yaw = yaw;
-    quad->rollRate = rollRate;
-    quad->pitchRate = pitchRate;
-    quad->yawRate = yawRate;
+// void QuadPID_Update(Quad_TypeDef *quad, float roll, float pitch, float yaw, 
+//                    float rollRate, float pitchRate, float yawRate, 
+//                    uint16_t *ppm, float dt)
+// {
+//     // 更新当前姿态数据
+//     quad->roll = roll;
+//     quad->pitch = pitch;
+//     quad->yaw = yaw;
+//     quad->rollRate = rollRate;
+//     quad->pitchRate = pitchRate;
+//     quad->yawRate = yawRate;
     
-    // 更新遥控器输入
-    // 直接使用PPM值，横滚俯仰偏航转换为-500到500的范围
-    quad->rcRoll = ppm[0] - 1500;
-    quad->rcPitch = ppm[1] - 1500;
-    quad->rcYaw = ppm[3] - 1500;
-    quad->rcThrottle = ppm[2]; // 油门直接使用原始PPM值(1000-2000)
+//     // 更新遥控器输入
+//     // 直接使用PPM值，横滚俯仰偏航转换为-500到500的范围
+//     quad->rcRoll = ppm[0] - 1500;
+//     quad->rcPitch = ppm[1] - 1500;
+//     quad->rcYaw = ppm[3] - 1500;
+//     quad->rcThrottle = ppm[2]; // 油门直接使用原始PPM值(1000-2000)
     
-    // 如果油门低于最低值，重置所有PID
-    if (quad->rcThrottle < 1100) {
-        PID_Reset(&quad->OuterPID.roll);
-        PID_Reset(&quad->OuterPID.pitch);
-        PID_Reset(&quad->OuterPID.yaw);
-        PID_Reset(&quad->InnerPID.roll);
-        PID_Reset(&quad->InnerPID.pitch);
-        PID_Reset(&quad->InnerPID.yaw);
-        return;
-    }
+//     // 如果油门低于最低值，重置所有PID
+//     if (quad->rcThrottle < 1100) {
+//         PID_Reset(&quad->OuterPID.roll);
+//         PID_Reset(&quad->OuterPID.pitch);
+//         PID_Reset(&quad->OuterPID.yaw);
+//         PID_Reset(&quad->InnerPID.roll);
+//         PID_Reset(&quad->InnerPID.pitch);
+//         PID_Reset(&quad->InnerPID.yaw);
+//         return;
+//     }
     
-    // 外环PID计算：将目标姿态角转换为目标角速度
-    float targetRollRate = PID_Calculate(&quad->OuterPID.roll, quad->roll, quad->rcRoll * 0.06f, dt);
-    float targetPitchRate = PID_Calculate(&quad->OuterPID.pitch, quad->pitch, quad->rcPitch * 0.06f, dt);
-    float targetYawRate = quad->rcYaw * 0.2f; // 偏航角速度直接由遥控器控制
+//     // 外环PID计算：将目标姿态角转换为目标角速度
+//     float targetRollRate = PID_Calculate(&quad->OuterPID.roll, quad->roll, quad->rcRoll * 0.06f, dt);
+//     float targetPitchRate = PID_Calculate(&quad->OuterPID.pitch, quad->pitch, quad->rcPitch * 0.06f, dt);
+//     float targetYawRate = quad->rcYaw * 0.2f; // 偏航角速度直接由遥控器控制
     
-    // 内环PID计算：将目标角速度转换为电机控制量
-    float rollOutput = PID_Calculate(&quad->InnerPID.roll, quad->rollRate, targetRollRate, dt);
-    float pitchOutput = PID_Calculate(&quad->InnerPID.pitch, quad->pitchRate, targetPitchRate, dt);
-    float yawOutput = PID_Calculate(&quad->InnerPID.yaw, quad->yawRate, targetYawRate, dt);
+//     // 内环PID计算：将目标角速度转换为电机控制量
+//     float rollOutput = PID_Calculate(&quad->InnerPID.roll, quad->rollRate, targetRollRate, dt);
+//     float pitchOutput = PID_Calculate(&quad->InnerPID.pitch, quad->pitchRate, targetPitchRate, dt);
+//     float yawOutput = PID_Calculate(&quad->InnerPID.yaw, quad->yawRate, targetYawRate, dt);
     
-    // 混合控制输出到四个电机
-    // 假设电机布局：
-    //    4   2
-    //      *
-    //    3   1
-    quad->motor1 = quad->rcThrottle - rollOutput + pitchOutput - yawOutput;
-    quad->motor2 = quad->rcThrottle + rollOutput + pitchOutput + yawOutput;
-    quad->motor3 = quad->rcThrottle - rollOutput - pitchOutput + yawOutput;
-    quad->motor4 = quad->rcThrottle + rollOutput - pitchOutput - yawOutput;
-}
+//     // 混合控制输出到四个电机
+//     // 假设电机布局：
+//     //    4   2
+//     //      *
+//     //    3   1
+//     quad->motor1 = quad->rcThrottle - rollOutput + pitchOutput - yawOutput;
+//     quad->motor2 = quad->rcThrottle + rollOutput + pitchOutput + yawOutput;
+//     quad->motor3 = quad->rcThrottle - rollOutput - pitchOutput + yawOutput;
+//     quad->motor4 = quad->rcThrottle + rollOutput - pitchOutput - yawOutput;
+// }
 
 void OuterLoop_Update(Quad_TypeDef *quad, float roll, float pitch, float yaw, uint16_t *ppm, float dt)
 {
@@ -190,7 +190,7 @@ void OuterLoop_Update(Quad_TypeDef *quad, float roll, float pitch, float yaw, ui
     // 外环PID计算：将目标姿态角转换为目标角速度
     quad->targetRollRate = PID_Calculate(&quad->OuterPID.roll, quad->roll, quad->rcRoll * 0.06f, dt);
     quad->targetPitchRate = PID_Calculate(&quad->OuterPID.pitch, quad->pitch, quad->rcPitch * 0.06f, dt);
-    quad->targetYawRate = quad->rcYaw * 0.2f; // 偏航角速度直接由遥控器控制，与QuadPID_Update保持一致
+    quad->targetYawRate = PID_Calculate(&quad->OuterPID.yaw, quad->yaw, quad->rcYaw * 0.2f, dt);
 }
 
 void InnerLoop_Update(Quad_TypeDef *quad, MPU6050_DataTypeDef *gyro, float dt)

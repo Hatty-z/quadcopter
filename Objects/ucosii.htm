@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\ucosii.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\ucosii.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Fri Nov 14 11:41:27 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Fri Nov 14 22:54:39 2025
 <BR><P>
 <H3>Maximum Stack Usage =        352 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -547,8 +547,8 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
 </UL>
 <P><STRONG><a name="[12c]"></a>__aeabi_memcpy</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, memcpya.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_RTT_WriteSkipNoLock
-<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_RTT_ReadNoLock
+<BR><BR>[Called By]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_RTT_ReadNoLock
+<LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_RTT_WriteSkipNoLock
 </UL>
 
 <P><STRONG><a name="[16f]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
@@ -585,13 +585,13 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InnerLoop_Update
-<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_frsub
+<BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_frsub
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Config
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Quaternion2Euler
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MadgwickUpdate
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InnerLoop_Update
 </UL>
 
 <P><STRONG><a name="[76]"></a>__aeabi_fsub</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, fadd.o(.text))
@@ -599,10 +599,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InnerLoop_Update
-<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Quaternion2Euler
+<BR>[Called By]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Quaternion2Euler
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MadgwickUpdate
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InnerLoop_Update
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Outer
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Inner
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Attitude
@@ -621,11 +621,11 @@ Global Symbols
 <P><STRONG><a name="[a8]"></a>__aeabi_fmul</STRONG> (Thumb, 100 bytes, Stack size 8 bytes, fmul.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_fmul
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
-<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OuterLoop_Update
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Config
+<BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Config
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Quaternion2Euler
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MadgwickUpdate
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
+<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OuterLoop_Update
 </UL>
 
 <P><STRONG><a name="[78]"></a>__aeabi_fdiv</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, fdiv.o(.text))
@@ -633,10 +633,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InnerLoop_Update
-<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DWT_GetTime
+<BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DWT_GetTime
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MadgwickUpdate
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InnerLoop_Update
 </UL>
 
 <P><STRONG><a name="[79]"></a>__aeabi_ddiv</STRONG> (Thumb, 222 bytes, Stack size 32 bytes, ddiv.o(.text))
@@ -657,9 +657,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OuterLoop_Update
+<BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MadgwickUpdate
+<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OuterLoop_Update
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InnerLoop_Update
-<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MadgwickUpdate
 </UL>
 
 <P><STRONG><a name="[7c]"></a>__aeabi_ui2f</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, ffltui.o(.text))
@@ -667,9 +667,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OuterLoop_Update
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Config
+<BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Config
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DWT_GetTime
+<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OuterLoop_Update
 </UL>
 
 <P><STRONG><a name="[7d]"></a>__aeabi_ui2d</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, dfltui.o(.text))
@@ -681,8 +681,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[122]"></a>__aeabi_f2uiz</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, ffixui.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QuadPID_MotorControl
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Config
+<BR><BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Config
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QuadPID_MotorControl
 </UL>
 
 <P><STRONG><a name="[a9]"></a>__aeabi_f2d</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, f2d.o(.text))
@@ -704,9 +704,9 @@ Global Symbols
 <P><STRONG><a name="[174]"></a>__aeabi_cfcmpeq</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, cfcmple.o(.text), UNUSED)
 
 <P><STRONG><a name="[ab]"></a>__aeabi_cfcmple</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, cfcmple.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QuadPID_MotorControl
+<BR><BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MadgwickUpdate
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QuadPID_MotorControl
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OuterLoop_Update
-<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MadgwickUpdate
 </UL>
 
 <P><STRONG><a name="[114]"></a>__aeabi_cfrcmple</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, cfrcmple.o(.text))
@@ -731,17 +731,17 @@ Global Symbols
 <P><STRONG><a name="[176]"></a>__I$use$fp</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, iusefp.o(.text), UNUSED)
 
 <P><STRONG><a name="[75]"></a>_float_round</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, fepilogue.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
-<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
+<BR><BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
 </UL>
 
 <P><STRONG><a name="[74]"></a>_float_epilogue</STRONG> (Thumb, 92 bytes, Stack size 4 bytes, fepilogue.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = _float_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
+<BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
 <LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
 </UL>
 
 <P><STRONG><a name="[7a]"></a>_double_round</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, depilogue.o(.text))
@@ -925,8 +925,8 @@ Global Symbols
 <P><STRONG><a name="[93]"></a>DWT_GetTime</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, dwt_time.o(i.DWT_GetTime))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = DWT_GetTime &rArr; __aeabi_fdiv
 </UL>
-<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
+<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
 </UL>
 <BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Outer
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Inner
@@ -1042,13 +1042,13 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[a1]"></a>InnerLoop_Update</STRONG> (Thumb, 240 bytes, Stack size 40 bytes, pid.o(i.InnerLoop_Update))
-<BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = InnerLoop_Update &rArr; PID_Calculate &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
+<BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = InnerLoop_Update &rArr; PID_Calculate &rArr; __aeabi_fadd &rArr; _float_epilogue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
+<BR>[Calls]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
-<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Inner
 </UL>
@@ -1090,15 +1090,15 @@ Global Symbols
 <P><STRONG><a name="[a7]"></a>MadgwickUpdate</STRONG> (Thumb, 3670 bytes, Stack size 280 bytes, madgwick.o(i.MadgwickUpdate))
 <BR><BR>[Stack]<UL><LI>Max Depth = 344<LI>Call Chain = MadgwickUpdate &rArr; sqrt &rArr; _dsqrt &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
-<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
-<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_frsub
+<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_frsub
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
 <LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sqrt
 </UL>
 <BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Attitude
@@ -1850,27 +1850,27 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskCreateExt
 </UL>
 
-<P><STRONG><a name="[112]"></a>OuterLoop_Update</STRONG> (Thumb, 224 bytes, Stack size 32 bytes, pid.o(i.OuterLoop_Update))
-<BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = OuterLoop_Update &rArr; PID_Calculate &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
+<P><STRONG><a name="[112]"></a>OuterLoop_Update</STRONG> (Thumb, 240 bytes, Stack size 32 bytes, pid.o(i.OuterLoop_Update))
+<BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = OuterLoop_Update &rArr; PID_Calculate &rArr; __aeabi_fadd &rArr; _float_epilogue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
+<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
+<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
 <LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Reset
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calculate
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
-<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
 </UL>
 <BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Outer
 </UL>
 
 <P><STRONG><a name="[a2]"></a>PID_Calculate</STRONG> (Thumb, 194 bytes, Stack size 40 bytes, pid.o(i.PID_Calculate))
-<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = PID_Calculate &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
+<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = PID_Calculate &rArr; __aeabi_fadd &rArr; _float_epilogue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
+<BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
+<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfrcmple
-<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
-<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OuterLoop_Update
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InnerLoop_Update
@@ -1920,10 +1920,10 @@ Global Symbols
 <P><STRONG><a name="[121]"></a>QuadPID_MotorControl</STRONG> (Thumb, 236 bytes, Stack size 24 bytes, pid.o(i.QuadPID_MotorControl))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = QuadPID_MotorControl
 </UL>
-<BR>[Calls]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfrcmple
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
-<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2uiz
+<BR>[Calls]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2uiz
 <LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_SetCompare
+<LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfrcmple
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
 </UL>
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Inner
 </UL>
@@ -1931,12 +1931,12 @@ Global Symbols
 <P><STRONG><a name="[124]"></a>Quaternion2Euler</STRONG> (Thumb, 316 bytes, Stack size 72 bytes, madgwick.o(i.Quaternion2Euler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 256<LI>Call Chain = Quaternion2Euler &rArr; atan2 &rArr; atan &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
-<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_frsub
+<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_frsub
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
 <LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atan2
 <LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;asin
 </UL>
@@ -2414,7 +2414,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MOTOR_Init
 </UL>
 
-<P><STRONG><a name="[26]"></a>TIM2_IRQHandler</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, tim_sched.o(i.TIM2_IRQHandler))
+<P><STRONG><a name="[26]"></a>TIM2_IRQHandler</STRONG> (Thumb, 114 bytes, Stack size 8 bytes, tim_sched.o(i.TIM2_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 216 + Unknown Stack Size
 <LI>Call Chain = TIM2_IRQHandler &rArr; OSSemPost &rArr; OS_EventTaskRdy &rArr; SYSVIEW_TaskReady &rArr; SEGGER_SYSVIEW_OnTaskStartReady &rArr; _SendPacket &rArr; _TrySendOverflowPacket &rArr; SEGGER_RTT_WriteSkipNoLock
 </UL>
@@ -2515,22 +2515,23 @@ Global Symbols
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PPM_Init
 </UL>
 
-<P><STRONG><a name="[64]"></a>Task_Attitude</STRONG> (Thumb, 116 bytes, Stack size 8 bytes, mytasks.o(i.Task_Attitude))
+<P><STRONG><a name="[64]"></a>Task_Attitude</STRONG> (Thumb, 122 bytes, Stack size 8 bytes, mytasks.o(i.Task_Attitude))
 <BR><BR>[Stack]<UL><LI>Max Depth = 352 + Unknown Stack Size
 <LI>Call Chain = Task_Attitude &rArr; MadgwickUpdate &rArr; sqrt &rArr; _dsqrt &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
-<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MPU6050_GetData
+<BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MPU6050_GetData
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HMC5883L_GetData
 <LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskNameSet
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSSemPost
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DWT_GetTime
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MadgwickUpdate
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSSemPend
+<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> mytasks.o(i.Task_Startup)
 </UL>
-<P><STRONG><a name="[67]"></a>Task_COM</STRONG> (Thumb, 116 bytes, Stack size 32 bytes, mytasks.o(i.Task_COM))
+<P><STRONG><a name="[67]"></a>Task_COM</STRONG> (Thumb, 122 bytes, Stack size 32 bytes, mytasks.o(i.Task_COM))
 <BR><BR>[Stack]<UL><LI>Max Depth = 320 + Unknown Stack Size
 <LI>Call Chain = Task_COM &rArr; OSTaskNameSet &rArr; SYSVIEW_UpdateTask &rArr; SYSVIEW_AddTask &rArr; SYSVIEW_SendTaskInfo &rArr; SEGGER_SYSVIEW_SendTaskInfo &rArr; _SendPacket &rArr; _TrySendOverflowPacket &rArr; SEGGER_RTT_WriteSkipNoLock
 </UL>
@@ -2543,32 +2544,34 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> mytasks.o(i.Task_Startup)
 </UL>
-<P><STRONG><a name="[66]"></a>Task_Inner</STRONG> (Thumb, 124 bytes, Stack size 24 bytes, mytasks.o(i.Task_Inner))
+<P><STRONG><a name="[66]"></a>Task_Inner</STRONG> (Thumb, 130 bytes, Stack size 24 bytes, mytasks.o(i.Task_Inner))
 <BR><BR>[Stack]<UL><LI>Max Depth = 312 + Unknown Stack Size
 <LI>Call Chain = Task_Inner &rArr; OSTaskNameSet &rArr; SYSVIEW_UpdateTask &rArr; SYSVIEW_AddTask &rArr; SYSVIEW_SendTaskInfo &rArr; SEGGER_SYSVIEW_SendTaskInfo &rArr; _SendPacket &rArr; _TrySendOverflowPacket &rArr; SEGGER_RTT_WriteSkipNoLock
 </UL>
-<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
-<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QuadPID_MotorControl
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InnerLoop_Update
-<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskNameSet
+<BR>[Calls]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskNameSet
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSSemPost
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DWT_GetTime
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QuadPID_MotorControl
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InnerLoop_Update
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSSemPend
+<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> mytasks.o(i.Task_Startup)
 </UL>
-<P><STRONG><a name="[65]"></a>Task_Outer</STRONG> (Thumb, 128 bytes, Stack size 24 bytes, mytasks.o(i.Task_Outer))
+<P><STRONG><a name="[65]"></a>Task_Outer</STRONG> (Thumb, 134 bytes, Stack size 24 bytes, mytasks.o(i.Task_Outer))
 <BR><BR>[Stack]<UL><LI>Max Depth = 312 + Unknown Stack Size
 <LI>Call Chain = Task_Outer &rArr; OSTaskNameSet &rArr; SYSVIEW_UpdateTask &rArr; SYSVIEW_AddTask &rArr; SYSVIEW_SendTaskInfo &rArr; SEGGER_SYSVIEW_SendTaskInfo &rArr; _SendPacket &rArr; _TrySendOverflowPacket &rArr; SEGGER_RTT_WriteSkipNoLock
 </UL>
-<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
-<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QuadPID_Init
-<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OuterLoop_Update
-<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskNameSet
+<BR>[Calls]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskNameSet
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSSemPost
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DWT_GetTime
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Quaternion2Euler
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
+<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QuadPID_Init
+<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OuterLoop_Update
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSSemPend
+<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> mytasks.o(i.Task_Startup)
 </UL>
@@ -2626,7 +2629,10 @@ Global Symbols
 <P><STRONG><a name="[152]"></a>__2printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_COM
+<BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Outer
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Inner
+<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_COM
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Attitude
 </UL>
 
 <P><STRONG><a name="[17d]"></a>__c89printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
@@ -2929,9 +2935,10 @@ Local Symbols
 </UL>
 
 <P><STRONG><a name="[154]"></a>_HandleIncomingPacket</STRONG> (Thumb, 162 bytes, Stack size 16 bytes, segger_sysview.o(i._HandleIncomingPacket))
-<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = _HandleIncomingPacket &rArr; SEGGER_SYSVIEW_Start &rArr;  _SendPacket (Cycle)
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = _HandleIncomingPacket &rArr; SEGGER_RTT_ReadNoLock &rArr; _DoInit
 </UL>
-<BR>[Calls]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_SYSVIEW_Start
+<BR>[Calls]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_RTT_ReadNoLock
+<LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_SYSVIEW_Start
 <LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_SYSVIEW_Stop
 <LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_SYSVIEW_SendTaskList
 <LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_SYSVIEW_SendNumModules
@@ -2939,7 +2946,6 @@ Local Symbols
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_SYSVIEW_SendModule
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_SYSVIEW_RecordSystime
 <LI><a href="#[131]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_SYSVIEW_GetSysDesc
-<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SEGGER_RTT_ReadNoLock
 </UL>
 <BR>[Called By]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_SendPacket
 </UL>

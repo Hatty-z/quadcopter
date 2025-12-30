@@ -10,16 +10,27 @@ void TIM2_IRQHandler(void)
     // 进入中断服务程序
     OSIntEnter();
 
-    static uint8_t cnt = 0;
+    static uint8_t inner_cnt = 0, attitude_cnt = 0, outer_cnt = 0;
 
     // 检查TIM2更新中断是否发生
     if(TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
     {
-        OSSemPost(Sem_InnerLoop);
-        cnt++;
-        if(cnt == 10){
-            cnt = 0;
+        // 处理定时器中断
+        if(++inner_cnt == 5)
+        {
+            inner_cnt = 0;
+            OSSemPost(Sem_InnerLoop);
+        }
+
+        if(++attitude_cnt == 10)
+        {
+            attitude_cnt = 0;
             OSSemPost(Sem_Attitude);
+        }
+
+        if(++outer_cnt == 20)
+        {
+            outer_cnt = 0;
             OSSemPost(Sem_OuterLoop);
         }
 

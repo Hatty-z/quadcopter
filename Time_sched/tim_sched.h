@@ -5,6 +5,7 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_tim.h"
 #include "misc.h"
+#include "usart.h"
 #include "ucos_ii.h"
 
 void TIM2_Init(void);
