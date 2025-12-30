@@ -3,15 +3,15 @@
         {
             "name": "Target 1",
             "includePath": [
-                "d:\\四轴 III\\Project\\Madgwick AHRS\\Start",
-                "d:\\四轴 III\\Project\\Madgwick AHRS\\Library",
-                "d:\\四轴 III\\Project\\Madgwick AHRS\\User",
-                "d:\\四轴 III\\Project\\Madgwick AHRS\\Hardware",
-                "d:\\四轴 III\\Project\\Madgwick AHRS\\System",
+                "d:\\四轴 III\\Project\\PID - DWT\\Start",
+                "d:\\四轴 III\\Project\\PID - DWT\\Library",
+                "d:\\四轴 III\\Project\\PID - DWT\\User",
+                "d:\\四轴 III\\Project\\PID - DWT\\Hardware",
+                "d:\\四轴 III\\Project\\PID - DWT\\System",
                 "D:\\Keil5\\ARM\\ARMCC\\include",
                 "D:\\Keil5\\ARM\\ARMCC\\include\\rw",
                 "d:\\四轴 III\\STM32F4固件库\\STM32F4xx_DSP_StdPeriph_Lib_V1.9.0\\Project\\STM32F4xx_StdPeriph_Templates",
-                "d:\\四轴 III\\Project\\Madgwick AHRS"
+                "d:\\四轴 III\\Project\\PID - DWT"
             ],
             "defines": [
                 "USE_STDPERIPH_DRIVER",

@@ -13,14 +13,10 @@ typedef struct
 	int16_t Acc_X;
 	int16_t Acc_Y;
 	int16_t Acc_Z;
-}MPU6050_AccDataTypeDef;
-
-typedef struct
-{
 	int16_t Gyro_X;
 	int16_t Gyro_Y;
 	int16_t Gyro_Z;
-}MPU6050_GyroDataTypeDef;
+}MPU6050_DataTypeDef;
 
 typedef struct
 {
@@ -58,8 +54,7 @@ void GY86_WriteReg(uint8_t SADDR, uint8_t RegAddr, uint8_t Data);
 uint8_t GY86_ReadReg(uint8_t SADDR, uint8_t RegAddr);
 
 void MPU6050_Init(void);
-void MPU6050_GetAccData(MPU6050_AccDataTypeDef* DataStruct);
-void MPU6050_GetGyroData(MPU6050_GyroDataTypeDef* DataStruct);
+void MPU6050_GetData(MPU6050_DataTypeDef* DataStruct);
 
 void HMC5883L_Init(void);
 void HMC5883L_GetData(HMC5883L_DataTypeDef* DataStruct);

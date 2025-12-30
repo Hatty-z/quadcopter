@@ -981,6 +981,26 @@
               <FileType>5</FileType>
               <FilePath>.\System\Delay.h</FilePath>
             </File>
+            <File>
+              <FileName>tim_sched.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\System\tim_sched.c</FilePath>
+            </File>
+            <File>
+              <FileName>tim_sched.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\System\tim_sched.h</FilePath>
+            </File>
+            <File>
+              <FileName>dwt_time.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\System\dwt_time.c</FilePath>
+            </File>
+            <File>
+              <FileName>dwt_time.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\System\dwt_time.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

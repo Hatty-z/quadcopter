@@ -3,8 +3,8 @@
 #define deltaT 0.01f
 #define GYRO_LSB 65.5f
 #define DEG2RAD    (3.14159265359f/180.0f)
-#define beta_max 5.0f
-#define beta_min 0.1f
+#define beta_max 1.0f
+#define beta_min 0.001f
 #define zeta 0.05f
 
 const float mag_kx = 0.98320f, mag_ky = 1.05344f, mag_kz = 0.96968;
@@ -38,14 +38,14 @@ const float mag_bx = 34.0f, mag_by = -51.0f, mag_bz = -105.0f;
  *       7. 更新并归一化四元数
  *       8. 计算下一时刻的参考磁场
  */
-void MadgwickUpdate(MPU6050_AccDataTypeDef *accdata, MPU6050_GyroDataTypeDef *gyrodata, HMC5883L_DataTypeDef *magdata, SEQTypeDef *Q)
+void MadgwickUpdate(MPU6050_DataTypeDef *imudata, HMC5883L_DataTypeDef *magdata, SEQTypeDef *Q, float dt)
 {
     static float b_x = 1.0f, b_z = 0.0f;
     static float wBias_x = 0.0f, wBias_y = 0.0f, wBias_z = 0.0f;
     static float beta = 0.0f;
     float q1 = Q->q1, q2 = Q->q2, q3 = Q->q3, q4 = Q->q4;
-    float a_x = accdata->Acc_X, a_y = accdata->Acc_Y, a_z = accdata->Acc_Z;
-    float w_x = gyrodata->Gyro_X, w_y = gyrodata->Gyro_Y, w_z = gyrodata->Gyro_Z;
+    float a_x = imudata->Acc_X, a_y = imudata->Acc_Y, a_z = imudata->Acc_Z;
+    float w_x = imudata->Gyro_X, w_y = imudata->Gyro_Y, w_z = imudata->Gyro_Z;
     float m_x = magdata->Mag_X, m_y = magdata->Mag_Y, m_z = magdata->Mag_Z;
     float norm;
 
@@ -118,10 +118,10 @@ void MadgwickUpdate(MPU6050_AccDataTypeDef *accdata, MPU6050_GyroDataTypeDef *gy
         
     norm = sqrt(n_1 * n_1 + n_2 * n_2 + n_3 * n_3 + n_4 * n_4);
     
-    // 根据运动情况动态调整beta
-    beta = (norm / 0.5f) * beta_max;
-    if(beta > beta_max) beta = beta_max;
-    if(beta < beta_min) beta = beta_min;
+        // 根据运动情况动态调整beta
+    beta = beta_max * norm;
+//    if(beta > beta_max) beta = beta_max;
+    if(beta < 0.005f ) beta = beta_min;
 
 //	printf("Graid:%f  beta:%f\r\n", norm, beta);
     
@@ -131,9 +131,9 @@ void MadgwickUpdate(MPU6050_AccDataTypeDef *accdata, MPU6050_GyroDataTypeDef *gy
     n_4 /= norm;
 
     // compute the dynamic bias of gyro
-    wBias_x += 2 * (-q2 * n_1 + q1 * n_2 + q4 * n_3 - q3 * n_4) * deltaT;
-    wBias_y += 2 * (-q3 * n_1 - q4 * n_2 + q1 * n_3 + q2 * n_4) * deltaT;
-    wBias_z += 2 * (-q4 * n_1 + q3 * n_2 - q2 * n_3 + q1 * n_4) * deltaT;
+    wBias_x += 2 * (-q2 * n_1 + q1 * n_2 + q4 * n_3 - q3 * n_4) * dt;
+    wBias_y += 2 * (-q3 * n_1 - q4 * n_2 + q1 * n_3 + q2 * n_4) * dt;
+    wBias_z += 2 * (-q4 * n_1 + q3 * n_2 - q2 * n_3 + q1 * n_4) * dt;
 
     w_x -= zeta * wBias_x;
     w_y -= zeta * wBias_y;
@@ -146,10 +146,10 @@ void MadgwickUpdate(MPU6050_AccDataTypeDef *accdata, MPU6050_GyroDataTypeDef *gy
     float qDot4 = 0.5f * (q1 * w_z + q2 * w_y - q3 * w_x);
 
     // update and normalize the quaternion
-    q1 += deltaT * (qDot1 - beta * n_1);
-    q2 += deltaT * (qDot2 - beta * n_2);
-    q3 += deltaT * (qDot3 - beta * n_3);
-    q4 += deltaT * (qDot4 - beta * n_4);
+    q1 += dt * (qDot1 - beta * n_1);
+    q2 += dt * (qDot2 - beta * n_2);
+    q3 += dt * (qDot3 - beta * n_3);
+    q4 += dt * (qDot4 - beta * n_4);
 
     // normalise quaternion
     norm = sqrt(q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4);
@@ -183,7 +183,12 @@ void MadgwickUpdate(MPU6050_AccDataTypeDef *accdata, MPU6050_GyroDataTypeDef *gy
  */
 void Quaternion2Euler(SEQTypeDef *Q, float *roll, float *pitch, float *yaw)
 {
+    // Use atan2 for pitch to obtain full range [-PI, PI].
+    // sinp = 2*(w*y - z*x), cosp = w*w - x*x - y*y + z*z
+    float sinp = 2.0f * (Q->q1 * Q->q3 - Q->q4 * Q->q2);
+    float cosp = Q->q1 * Q->q1 - Q->q2 * Q->q2 - Q->q3 * Q->q3 + Q->q4 * Q->q4;
+    *pitch = atan2(sinp, cosp);
+
     *roll = atan2(2.0f * (Q->q1 * Q->q2 + Q->q3 * Q->q4), 1.0f - 2.0f * (Q->q2 * Q->q2 + Q->q3 * Q->q3));
-    *pitch = asin(2.0f * (Q->q1 * Q->q3 - Q->q4 * Q->q2));
     *yaw = atan2(2.0f * (Q->q1 * Q->q4 + Q->q2 * Q->q3), 1.0f - 2.0f * (Q->q3 * Q->q3 + Q->q4 * Q->q4));
 }

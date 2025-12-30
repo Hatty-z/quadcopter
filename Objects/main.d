@@ -41,4 +41,7 @@
 .\objects\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\main.o: .\Hardware\PID.h
 .\objects\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\main.o: .\System\tim_sched.h
+.\objects\main.o: .\System\dwt_time.h

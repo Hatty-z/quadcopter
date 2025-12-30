@@ -7,20 +7,20 @@
 void SCL_W(uint8_t BitValue)
 {
 	GPIO_WriteBit(GPIOB, GPIO_Pin_10, (BitAction)BitValue);
-	Delay_us(10);
+	Delay_us(1);
 }
 
 void SDA_W(uint8_t BitValue)
 {
 	GPIO_WriteBit(GPIOB, GPIO_Pin_3, (BitAction)BitValue);
-	Delay_us(10);
+	Delay_us(1);
 }
 
 BitAction SDA_R(void)
 {
 	uint8_t BitValue;
 	BitValue = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_3);
-	Delay_us(10);
+	Delay_us(1);
 	return (BitAction)BitValue;
 }
 
@@ -140,15 +140,11 @@ void MPU6050_Init(void)
 	GY86_WriteReg(MPU6050_ADDRESS, MPU6050_ACCEL_CONFIG, 0x08);		//配置加速度计量程 ±4g
 }
 
-void MPU6050_GetAccData(MPU6050_AccDataTypeDef* DataStruct)
+void MPU6050_GetData(MPU6050_DataTypeDef* DataStruct)
 {
 	DataStruct->Acc_X = GY86_ReadReg(MPU6050_ADDRESS, MPU6050_ACCEL_XOUT_H)<<8 | GY86_ReadReg(MPU6050_ADDRESS, MPU6050_ACCEL_XOUT_L);
 	DataStruct->Acc_Y = GY86_ReadReg(MPU6050_ADDRESS, MPU6050_ACCEL_YOUT_H)<<8 | GY86_ReadReg(MPU6050_ADDRESS, MPU6050_ACCEL_YOUT_L);
 	DataStruct->Acc_Z = GY86_ReadReg(MPU6050_ADDRESS, MPU6050_ACCEL_ZOUT_H)<<8 | GY86_ReadReg(MPU6050_ADDRESS, MPU6050_ACCEL_ZOUT_L);
-}
-
-void MPU6050_GetGyroData(MPU6050_GyroDataTypeDef* DataStruct)
-{
 	DataStruct->Gyro_X = GY86_ReadReg(MPU6050_ADDRESS, MPU6050_GYRO_XOUT_H)<<8 | GY86_ReadReg(MPU6050_ADDRESS, MPU6050_GYRO_XOUT_L);
 	DataStruct->Gyro_Y = GY86_ReadReg(MPU6050_ADDRESS, MPU6050_GYRO_YOUT_H)<<8 | GY86_ReadReg(MPU6050_ADDRESS, MPU6050_GYRO_YOUT_L);
 	DataStruct->Gyro_Z = GY86_ReadReg(MPU6050_ADDRESS, MPU6050_GYRO_ZOUT_H)<<8 | GY86_ReadReg(MPU6050_ADDRESS, MPU6050_GYRO_ZOUT_L);
@@ -286,6 +282,7 @@ void MS5611_Calculate(MS5611_Prom_DataTypeDef* Prom, uint32_t Dtemp, uint32_t Dp
 
 void GY86_Init(void)
 {
+	MyI2C_Init();
 	MPU6050_Init();
 	HMC5883L_Init();
 	MS5611_Reset();

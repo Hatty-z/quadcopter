@@ -14,7 +14,7 @@ typedef struct {
     float q4;
 }SEQTypeDef;
 
-void MadgwickUpdate(MPU6050_AccDataTypeDef *accdata, MPU6050_GyroDataTypeDef *gyrodata, HMC5883L_DataTypeDef *magdata, SEQTypeDef *Q);
+void MadgwickUpdate(MPU6050_DataTypeDef *imudata, HMC5883L_DataTypeDef *magdata, SEQTypeDef *Q, float dt);
 void Quaternion2Euler(SEQTypeDef *Q, float *roll, float *pitch, float *yaw);
 
 #endif

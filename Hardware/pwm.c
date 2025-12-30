@@ -21,7 +21,7 @@ void GPIO_Config(void){
 void TIM1_Config(void){
     RCC->APB2ENR|=RCC_APB2ENR_TIM1EN;//使能时钟
     
-    TIM1->PSC=100-1;
+    TIM1->PSC=84-1;
     TIM1->ARR=20000-1;
     TIM1->RCR=0;
     
@@ -50,10 +50,10 @@ void TIM1_Config(void){
     TIM1->CCMR2 &=~TIM_CCMR2_OC4M;
     TIM1->CCMR2 |=TIM_CCMR2_OC4M_1|TIM_CCMR2_OC4M_2;
 
-    TIM1->CCR1 = 1500; 
-    TIM1->CCR2 = 1500;
-    TIM1->CCR3 = 1500;
-    TIM1->CCR4 = 1500;
+    TIM1->CCR1 = 1000; 
+    TIM1->CCR2 = 1000;
+    TIM1->CCR3 = 1000;
+    TIM1->CCR4 = 1000;
 
 
     TIM1->CCER &=~(TIM_CCER_CC1P|TIM_CCER_CC2P|TIM_CCER_CC3P|TIM_CCER_CC4P);//高电平有效

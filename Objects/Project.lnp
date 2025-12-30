@@ -46,6 +46,8 @@
 ".\objects\main.o"
 ".\objects\service.o"
 ".\objects\delay.o"
+".\objects\tim_sched.o"
+".\objects\dwt_time.o"
 ".\objects\pwm.o"
 ".\objects\gy86.o"
 ".\objects\oled.o"

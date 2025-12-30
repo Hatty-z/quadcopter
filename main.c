@@ -10,8 +10,8 @@ int main()
 	
 	while(1)
 	{
-//		test();
-		Madgwick_Test();             
-
+		PID_Test();
+//		test_1();
+		// printf("ch1:%d, ch2:%d, ch3:%d, ch4:%d\n", PPM[0], PPM[1], PPM[2], PPM[3]);
 	}
 }			

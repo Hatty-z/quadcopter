@@ -110,6 +110,14 @@ void Ano_SendData(int8_t *data, uint8_t len, uint8_t id)
     USART_SendArray(MyData, len + 6);
 } 
 
+void Vofa_SendData(float *data)
+{
+	printf("q1:%f\n", data[0]);
+	printf("q2:%f\n", data[1]);
+	printf("q3:%f\n", data[2]);
+	printf("q4:%f\n", data[3]);
+}
+
 void USART_SendString(char *str)
 {
 	while(*str != '\0')
